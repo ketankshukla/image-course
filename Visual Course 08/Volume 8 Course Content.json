@@ -1,0 +1,1717 @@
+{
+  "course": {
+    "title": "Visual Course Volume 8 - Evaluation, Observability, and AgentOps",
+    "coverTitle": "EVALUATION, OBSERVABILITY,\nAND AGENTOPS",
+    "coverTagline": "VISUAL-FIRST | EVIDENCE-DRIVEN | BEGINNER-FRIENDLY",
+    "subtitle": "Prove quality, safety, latency, cost, and recovery before and after release",
+    "audience": "A visual learner who understands secure multi-agent systems and now wants to measure, release, diagnose, and improve them without guessing",
+    "checkedOn": "2026-08-25",
+    "knowledgeBaseline": {
+      "mcp": "MCP protocol release 2026-07-28 is stateless; legacy protocol logging is deprecated, so new application observability should use normal telemetry rather than adopting deprecated MCP logging",
+      "a2a": "A2A 1.0 task IDs, context IDs, artifacts, statuses, metadata, and binding headers support business correlation but do not replace distributed trace context",
+      "traceContext": "W3C Trace Context is the stable cross-service propagation baseline; trace headers must not carry personal or sensitive data",
+      "otel": "OpenTelemetry traces, metrics, logs, resources, and baggage are used according to current stability labels; Semantic Conventions 1.44.0 are current at the checked date",
+      "genai": "OpenTelemetry GenAI semantic conventions now live in a dedicated repository and should remain versioned behind an internal adapter while they evolve",
+      "agentops": "Quality claims require versioned cases, meaningful denominators, stage evidence, budget rules, release decisions, incident ownership, and verified regression learning"
+    },
+    "officialSources": [
+      {
+        "label": "MCP 2026-07-28 specification",
+        "url": "https://modelcontextprotocol.io/specification/2026-07-28"
+      },
+      {
+        "label": "MCP 2026-07-28 changelog",
+        "url": "https://modelcontextprotocol.io/specification/2026-07-28/changelog"
+      },
+      {
+        "label": "MCP 2026-07-28 release notes",
+        "url": "https://blog.modelcontextprotocol.io/posts/2026-07-28/"
+      },
+      {
+        "label": "A2A Protocol 1.0 specification",
+        "url": "https://a2a-protocol.org/latest/specification/"
+      },
+      {
+        "label": "W3C Trace Context",
+        "url": "https://www.w3.org/TR/trace-context/"
+      },
+      {
+        "label": "W3C Baggage",
+        "url": "https://www.w3.org/TR/baggage/"
+      },
+      {
+        "label": "OpenTelemetry specification overview",
+        "url": "https://opentelemetry.io/docs/specs/otel/overview/"
+      },
+      {
+        "label": "OpenTelemetry specification status",
+        "url": "https://opentelemetry.io/docs/specs/status/"
+      },
+      {
+        "label": "OpenTelemetry tracing API",
+        "url": "https://opentelemetry.io/docs/specs/otel/trace/api/"
+      },
+      {
+        "label": "OpenTelemetry metrics API",
+        "url": "https://opentelemetry.io/docs/specs/otel/metrics/api/"
+      },
+      {
+        "label": "OpenTelemetry logging",
+        "url": "https://opentelemetry.io/docs/specs/otel/logs/"
+      },
+      {
+        "label": "OpenTelemetry baggage API",
+        "url": "https://opentelemetry.io/docs/specs/otel/baggage/api/"
+      },
+      {
+        "label": "OpenTelemetry resource SDK",
+        "url": "https://opentelemetry.io/docs/specs/otel/resource/sdk/"
+      },
+      {
+        "label": "OpenTelemetry OTLP",
+        "url": "https://opentelemetry.io/docs/specs/otlp/"
+      },
+      {
+        "label": "OpenTelemetry Semantic Conventions 1.44.0",
+        "url": "https://opentelemetry.io/docs/specs/semconv/"
+      },
+      {
+        "label": "OpenTelemetry HTTP semantic conventions",
+        "url": "https://opentelemetry.io/docs/specs/semconv/http/"
+      },
+      {
+        "label": "OpenTelemetry messaging semantic conventions",
+        "url": "https://opentelemetry.io/docs/specs/semconv/messaging/"
+      },
+      {
+        "label": "OpenTelemetry feature-flag semantic conventions",
+        "url": "https://opentelemetry.io/docs/specs/semconv/feature-flags/"
+      },
+      {
+        "label": "OpenTelemetry GenAI semantic conventions",
+        "url": "https://github.com/open-telemetry/semantic-conventions-genai"
+      },
+      {
+        "label": "OpenTelemetry Collector",
+        "url": "https://opentelemetry.io/docs/collector/"
+      },
+      {
+        "label": "OpenTelemetry JavaScript instrumentation",
+        "url": "https://opentelemetry.io/docs/languages/js/instrumentation/"
+      },
+      {
+        "label": "OpenTelemetry Python instrumentation",
+        "url": "https://opentelemetry.io/docs/languages/python/instrumentation/"
+      },
+      {
+        "label": "OpenFeature specification",
+        "url": "https://openfeature.dev/specification/"
+      },
+      {
+        "label": "OpenFeature observability appendix",
+        "url": "https://openfeature.dev/specification/appendix-d/"
+      },
+      {
+        "label": "CloudEvents specification",
+        "url": "https://github.com/cloudevents/spec"
+      },
+      {
+        "label": "JSON Schema 2020-12",
+        "url": "https://json-schema.org/draft/2020-12"
+      },
+      {
+        "label": "RFC 9457 Problem Details",
+        "url": "https://www.rfc-editor.org/rfc/rfc9457"
+      },
+      {
+        "label": "NIST AI Risk Management Framework",
+        "url": "https://www.nist.gov/itl/ai-risk-management-framework"
+      },
+      {
+        "label": "NIST Generative AI Profile",
+        "url": "https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence"
+      },
+      {
+        "label": "OWASP Agentic Top 10 2026",
+        "url": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/"
+      },
+      {
+        "label": "OWASP Logging Cheat Sheet",
+        "url": "https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html"
+      },
+      {
+        "label": "Google SRE service-level objectives",
+        "url": "https://sre.google/sre-book/service-level-objectives/"
+      },
+      {
+        "label": "Google SRE monitoring distributed systems",
+        "url": "https://sre.google/sre-book/monitoring-distributed-systems/"
+      },
+      {
+        "label": "Google SRE canarying releases",
+        "url": "https://sre.google/workbook/canarying-releases/"
+      },
+      {
+        "label": "Google SRE incident response",
+        "url": "https://sre.google/workbook/incident-response/"
+      },
+      {
+        "label": "Google SRE postmortem culture",
+        "url": "https://sre.google/sre-book/postmortem-culture/"
+      },
+      {
+        "label": "Prometheus histogram practices",
+        "url": "https://prometheus.io/docs/practices/histograms/"
+      },
+      {
+        "label": "OpenMetrics specification",
+        "url": "https://github.com/prometheus/OpenMetrics/blob/main/specification/OpenMetrics.md"
+      },
+      {
+        "label": "Next.js OpenTelemetry guide",
+        "url": "https://nextjs.org/docs/app/guides/open-telemetry"
+      },
+      {
+        "label": "Node.js AsyncLocalStorage",
+        "url": "https://nodejs.org/api/async_context.html"
+      },
+      {
+        "label": "Python context variables",
+        "url": "https://docs.python.org/3/library/contextvars.html"
+      },
+      {
+        "label": "FastAPI middleware",
+        "url": "https://fastapi.tiangolo.com/tutorial/middleware/"
+      }
+    ],
+    "visualGrammar": {
+      "cobaltPlatform": "A service, stage, dataset, quality gate, budget, release lane, or incident-control boundary",
+      "cyanArrow": "A request, propagated context, telemetry signal, evaluation flow, or candidate release path",
+      "tealArrow": "A healthy result, matched evidence, safe promotion, controlled degradation, recovery, or verified learning path",
+      "coralPath": "A broken trace, failed assertion, regression, overload, unsafe outcome, rollback, alert, or incident path",
+      "whiteCard": "A span, event, metric, log, resource, case, score, budget, version, release, runbook, action, or regression record"
+    },
+    "websiteLessonTemplate": [
+      "outcome",
+      "standards status",
+      "diagram and alt text",
+      "plain-English explanation",
+      "trace the visual",
+      "analogy",
+      "Next.js map",
+      "Python map",
+      "case study",
+      "mini lab",
+      "checkpoint and answer",
+      "glossary and related lessons"
+    ]
+  },
+  "modules": [
+    {
+      "id": "module-41",
+      "title": "Telemetry and correlation",
+      "lessonIds": [
+        173,
+        174,
+        175,
+        176
+      ],
+      "purpose": "Follow one business request across every service and protocol while keeping telemetry useful, versioned, and privacy-safe."
+    },
+    {
+      "id": "module-42",
+      "title": "Evaluation design",
+      "lessonIds": [
+        177,
+        178,
+        179,
+        180
+      ],
+      "purpose": "Convert vague confidence into repeatable cases, assertions, calibrated judgments, meaningful slices, and honest uncertainty."
+    },
+    {
+      "id": "module-43",
+      "title": "Quality at every stage",
+      "lessonIds": [
+        181,
+        182,
+        183,
+        184
+      ],
+      "purpose": "Measure the component that failed instead of grading only the final sentence and guessing where the defect began."
+    },
+    {
+      "id": "module-44",
+      "title": "Performance, capacity, and economics",
+      "lessonIds": [
+        185,
+        186,
+        187,
+        188
+      ],
+      "purpose": "Treat latency, deadlines, scenario cost, load, queues, capacity, degradation, and admission as explicit design inputs."
+    },
+    {
+      "id": "module-45",
+      "title": "Release engineering",
+      "lessonIds": [
+        189,
+        190,
+        191,
+        192
+      ],
+      "purpose": "Promote changes only when reproducible offline and production evidence says the candidate is safer or better."
+    },
+    {
+      "id": "module-46",
+      "title": "Incidents and continuous learning",
+      "lessonIds": [
+        193,
+        194,
+        195,
+        196
+      ],
+      "purpose": "Make alerts actionable, rehearse failure, recover safely, and turn every serious defect into verified permanent learning."
+    }
+  ],
+  "lessons": [
+    {
+      "id": 173,
+      "slug": "traces-spans-logs-metrics-events-resources",
+      "moduleId": "module-41",
+      "title": "Traces, spans, logs, metrics, events, and resources",
+      "stability": "Stable telemetry concepts; semantic details vary by signal",
+      "diagram": "diagrams/173-traces-spans-logs-metrics-events-resources.png",
+      "diagramPrompt": "Arrange six connected functional objects around one USER OUTCOME: TRACE containing nested SPANS, LOGS linked by TRACE ID, METRICS showing RATE ERROR DURATION, EVENTS on a timeline, and a RESOURCE card naming SERVICE VERSION REGION. Show REQUEST entering, RESULT leaving, and a coral FAILED SPAN connected to one log and one metric change.",
+      "alt": "One user outcome connects to a distributed trace made of spans, correlated logs, aggregate metrics, timestamped events, and resource identity such as service and version.",
+      "outcome": "Choose the right telemetry signal for a question instead of forcing every fact into logs.",
+      "explanation": "Observability means being able to ask useful questions about a running system from the evidence it produces. A trace follows one request or workflow across components. A span is one timed operation inside that trace, such as retrieval, policy evaluation, an MCP tool call, an A2A delegation, or model generation. A log is a timestamped record that explains a local event in detail. A metric combines many observations into numbers such as request rate, failure ratio, queue depth, or duration distribution. An event records that something meaningful happened at a point in time. A resource identifies what produced the signal: service, version, environment, region, process, or deployment. These signals answer different questions. Traces explain one journey; metrics reveal population-wide shape; logs add local detail; events mark changes; resources make comparisons attributable. They become powerful when they share trace IDs, stage names, version identifiers, and a small governed vocabulary. More telemetry is not automatically better. The contract should begin with decisions the team needs to make, capture the minimum evidence for those decisions, and define retention, access, sampling, and redaction before production.",
+      "trace": [
+        "Start with one named user outcome and create or continue a trace for that work.",
+        "Create spans only for operations whose timing, status, or evidence helps a real decision.",
+        "Attach the producing service, version, environment, and region as resource identity.",
+        "Correlate local logs and important events with the active trace and span IDs.",
+        "Aggregate population behavior into bounded-cardinality metrics and inspect both totals and distributions."
+      ],
+      "analogy": "A parcel journey has one tracking number, scans at each depot, local notes when something breaks, fleet-wide delivery statistics, and labels naming the vehicle and depot that handled it.",
+      "nextjs": [
+        "Use the Next.js instrumentation hook and OpenTelemetry SDK to name server-side request, retrieval, policy, and tool spans while preserving framework-generated HTTP spans.",
+        "Keep browser telemetry intentionally smaller than server telemetry; send correlation references and user-visible stage state without private prompts, tokens, or hidden reasoning.",
+        "Attach deployment, route, release, model, prompt, policy, and dataset versions through a governed attribute helper rather than ad hoc strings in every component."
+      ],
+      "python": [
+        "Initialize one OpenTelemetry provider for FastAPI and workers, then add manual spans around business stages that automatic HTTP instrumentation cannot understand.",
+        "Use context variables so request and workflow correlation survives asynchronous functions without global mutable state.",
+        "Emit structured logs with trace and span IDs, bounded metrics for aggregate health, and explicit events for approvals, artifacts, fallbacks, and releases."
+      ],
+      "caseStudy": {
+        "situation": "Maya receives a polished policy answer that is wrong because the retrieval service returned an older document version.",
+        "walkthrough": [
+          "The request trace shows browser, Next.js, FastAPI, retrieval, policy, generation, and citation spans.",
+          "The retrieval span records the selected document identifier and version without copying the private document text.",
+          "A correlated event shows that the policy index was refreshed after this request used the prior index.",
+          "A quality metric reveals the same stale-version symptom in several cases after a candidate release."
+        ],
+        "result": "The team can identify the failing retrieval stage and affected version instead of blaming the language model generally.",
+        "danger": "Dumping prompts, documents, headers, and model responses into logs can create a searchable privacy breach while still failing to answer which stage or version caused the outcome.",
+        "takeaway": "Use each signal for its own job, then connect them with governed correlation and version fields."
+      },
+      "lab": "Sketch one Acme support request. Add eight spans, three meaningful events, four resource fields, three metrics, and two correlated logs. For every field, write the decision it supports and whether content is captured, hashed, redacted, or omitted.",
+      "checkpoint": "Should a trace, a metric, and a log contain exactly the same information?",
+      "answer": "No. A trace explains one connected journey, a metric summarizes many observations, and a log adds local detail. They should share correlation and version fields, not duplicate all content.",
+      "glossary": [
+        "Trace - connected record of one request or workflow",
+        "Span - one timed operation inside a trace",
+        "Resource - identity of the service or process producing telemetry"
+      ],
+      "related": [
+        174,
+        175,
+        181
+      ],
+      "sources": [
+        "OpenTelemetry specification overview",
+        "OpenTelemetry specification status",
+        "OpenTelemetry logging"
+      ]
+    },
+    {
+      "id": 174,
+      "slug": "context-propagation-protocols-queues",
+      "moduleId": "module-41",
+      "title": "Context propagation across MCP, A2A, AG-UI, HTTP, and queues",
+      "stability": "W3C Trace Context stable; protocol adapters are implementation patterns",
+      "diagram": "diagrams/174-context-propagation-protocols-queues.png",
+      "diagramPrompt": "Show one TRACEPARENT ribbon flowing from BROWSER to NEXT.JS to FASTAPI, then branching to MCP CALL, A2A TASK, and QUEUE MESSAGE before joining an ARTIFACT. Place separate BUSINESS ID cards labeled REQUEST ID, TASK ID, CONTEXT ID, ARTIFACT ID. Include INJECT and EXTRACT gates, a SPAN LINK for asynchronous work, and one coral BROKEN CONTEXT gap.",
+      "alt": "A W3C trace context is injected and extracted across browser, Next.js, FastAPI, MCP, A2A, and queue boundaries while business IDs remain separate and asynchronous work uses span links.",
+      "outcome": "Preserve one explainable evidence chain across protocol and asynchronous boundaries without confusing trace identity with business identity.",
+      "explanation": "Context propagation carries the small identifiers needed to connect work performed by different components. For HTTP, the stable baseline is the W3C traceparent header and optional tracestate. The receiving service extracts that context, creates a child span, and injects the updated context into the next outbound call. Queues require the same inject-and-extract idea using message properties; delayed, batched, retried, or fan-out work may be better represented with span links rather than pretending every operation is one simple parent-child chain. MCP request metadata, A2A task and context identifiers, AG-UI run or event identifiers, application request IDs, and artifact IDs are useful business correlation fields, but none is automatically a distributed trace ID. Keep these identities separate and record their relationships. Trust boundaries matter: validate incoming propagation fields, do not put personal data or authorization in trace headers, and decide whether external context is continued, linked, or restarted. A complete trace is a debugging aid, not a security credential and not proof that every event was recorded. Sampling, network failure, SDK differences, and long-running work can create partial traces, so durable receipts and business records remain necessary.",
+      "trace": [
+        "Create one trace at the trusted entry point or validate and continue an acceptable incoming context.",
+        "Extract before work begins, create a correctly parented span, and inject before every supported outbound boundary.",
+        "Record MCP request, A2A task and context, run, message, and artifact IDs as separate correlation attributes.",
+        "Use span links for fan-out, retries, batches, and work that begins long after the initiating request ends.",
+        "Test missing, malformed, duplicated, stale, and attacker-controlled context so a broken header never breaks the business operation."
+      ],
+      "analogy": "A train ticket, a parcel tracking number, and a hotel booking number can belong to one holiday, but they are different identifiers. The itinerary records the relationship without pretending they are interchangeable.",
+      "nextjs": [
+        "Use AsyncLocalStorage or the OpenTelemetry context manager to keep trace context attached to the current server request and outbound fetch calls.",
+        "Translate browser run IDs and server request IDs into span attributes, but let the tracing SDK own trace and span identifier format.",
+        "When creating queue messages or MCP/A2A requests, inject trace context through a typed carrier adapter and add business IDs in their defined metadata fields."
+      ],
+      "python": [
+        "Use FastAPI middleware for inbound extraction and ContextVar-backed context for asynchronous request and worker code.",
+        "Instrument HTTP clients and queue producers and consumers; add span links when a consumer handles retried or batched work with more than one cause.",
+        "Write contract tests that assert continuity, valid parentage, business-ID correlation, and graceful behavior when propagation is absent or invalid."
+      ],
+      "caseStudy": {
+        "situation": "Maya's support request starts in the browser, triggers a FastAPI workflow, delegates policy research to another agent, and resumes from a queue five minutes later.",
+        "walkthrough": [
+          "The browser run ID remains a product identifier while the server creates the trusted trace.",
+          "Next.js and FastAPI propagate trace context and record the A2A context ID and task ID on delegation spans.",
+          "The queue message carries injected trace context plus a durable workflow ID, attempt number, and idempotency key.",
+          "The resumed worker links its span to the earlier work and records the final artifact ID and user-visible receipt."
+        ],
+        "result": "An operator can move from Maya's artifact to the workflow, task, message attempt, and trace without overloading any one identifier.",
+        "danger": "Using a customer email, access token, prompt, or full task payload as baggage or tracestate spreads sensitive data to every downstream service and telemetry backend.",
+        "takeaway": "Propagate trace context; correlate business IDs; never confuse either with authority."
+      },
+      "lab": "Create a carrier matrix for HTTP, MCP, A2A, AG-UI, and one queue. For each boundary, specify inject, extract, continue, link, restart, validation, missing-context behavior, and the separate business identifiers recorded.",
+      "checkpoint": "Is an A2A task ID a replacement for a W3C trace ID?",
+      "answer": "No. The task ID identifies protocol-level business work. Trace context connects observability operations across services. Record the relationship between them.",
+      "glossary": [
+        "Propagation - carrying context across a boundary",
+        "Carrier - headers or message properties that transport context",
+        "Span link - a non-parent relationship to one or more causal spans"
+      ],
+      "related": [
+        173,
+        176,
+        193
+      ],
+      "sources": [
+        "W3C Trace Context",
+        "W3C Baggage",
+        "A2A Protocol 1.0 specification",
+        "OpenTelemetry messaging semantic conventions"
+      ]
+    },
+    {
+      "id": 175,
+      "slug": "privacy-safe-telemetry-capture-policy",
+      "moduleId": "module-41",
+      "title": "Privacy-safe telemetry and content capture policy",
+      "stability": "Governance pattern grounded in privacy and logging guidance",
+      "diagram": "diagrams/175-privacy-safe-telemetry-capture-policy.png",
+      "diagramPrompt": "Show TELEMETRY INPUTS entering a DATA CLASSIFIER with lanes PUBLIC, INTERNAL, PERSONAL, SECRET. Route fields through ALLOW, HASH, REDACT, TOKENIZE, SAMPLE, and DROP controls into TRACE STORE, METRIC STORE, and SECURE EVIDENCE VAULT. Add ACCESS, RETENTION, DELETION, and AUDIT gates. Show a coral RAW PROMPT path blocked before the store.",
+      "alt": "Telemetry fields are classified and then allowed, hashed, redacted, tokenized, sampled, or dropped before separate trace, metric, and secure evidence stores with access, retention, deletion, and audit controls.",
+      "outcome": "Design telemetry that answers operational questions without creating an uncontrolled copy of private application content.",
+      "explanation": "Telemetry is another data product and must have its own purpose, classification, access, retention, deletion, and evidence rules. The safest default is metadata-first: capture stage name, timing, status, bounded error category, model and prompt version, tool name, document identifier, policy decision reference, token counts, and correlation IDs without copying the raw prompt, retrieved passage, customer record, secret, authorization header, or hidden reasoning. When content is genuinely required for a defined evaluation or incident, route it to a more restricted evidence store with explicit access, short retention, approval, audit, and deletion behavior. Hashing can support equality checks but does not automatically anonymize predictable values. Redaction must happen before export, not only in a dashboard. Sampling reduces volume, not sensitivity; one sampled secret is still a secret. Metrics need bounded label values because personal identifiers and high-cardinality fields cause both privacy risk and technical cost. Treat third-party observability vendors as data recipients, document where data travels, and test the collector configuration. The policy should describe normal capture, elevated diagnostic capture, emergency capture, who may activate each mode, when it expires, and how the team verifies that downstream copies were removed.",
+      "trace": [
+        "Inventory every proposed telemetry field and state the operational or evaluation decision it supports.",
+        "Classify the field, choose allow, hash, redact, tokenize, aggregate, sample, secure-store, or drop, and apply the choice before export.",
+        "Separate normal metadata telemetry from tightly controlled content evidence and prohibit secrets in both.",
+        "Set role-based access, region, retention, deletion, legal-hold, vendor, and audit rules for every destination.",
+        "Run synthetic leak tests and deletion tests so policy is proved by behavior rather than documentation alone."
+      ],
+      "analogy": "A hospital keeps appointment counts on an operations dashboard, medical details in a protected clinical record, and never photocopies a patient's entire chart into the maintenance log.",
+      "nextjs": [
+        "Create a server-only telemetry sanitizer that accepts typed fields, rejects unknown keys, removes headers and cookies, and records content only through an explicit elevated mode.",
+        "Keep client analytics free of prompts and customer records; use opaque run references and coarse product events with consent and retention controls.",
+        "Place collector/export credentials in server-side secrets and test that preview deployments, error pages, and console logging do not bypass the telemetry policy."
+      ],
+      "python": [
+        "Use logging filters, span processors, and exporter wrappers to redact or reject sensitive keys before data leaves the FastAPI process or worker.",
+        "Model the capture policy in Pydantic with field class, purpose, action, destination, retention, and allowed roles so configuration is reviewable and testable.",
+        "Write tests with synthetic secrets, personal fields, long prompts, hostile headers, and deletion requests; fail the pipeline if any prohibited value reaches the test collector."
+      ],
+      "caseStudy": {
+        "situation": "Maya's failed answer contains a customer name, account details, an internal policy passage, and a tool error that accidentally includes an authorization header.",
+        "walkthrough": [
+          "The normal trace keeps stage, timing, document ID, policy version, bounded error category, and correlation references.",
+          "The authorization header is rejected by the sanitizer before export and creates a security event.",
+          "A short-lived diagnostic case stores a redacted passage in the secure evidence vault after approval.",
+          "The case closes, elevated capture expires automatically, and deletion verification records the affected stores."
+        ],
+        "result": "The team diagnoses the stale document without turning its observability platform into a second customer database.",
+        "danger": "A debug switch that silently records every prompt and response can remain enabled after the incident and create a large, poorly governed breach surface.",
+        "takeaway": "Metadata by default; content only for a defined purpose inside a stricter evidence boundary."
+      },
+      "lab": "Build a 20-field telemetry register. Give every field a purpose, classification, cardinality, transform, destination, role, retention, deletion behavior, and synthetic leak test. Reject any field with no decision purpose.",
+      "checkpoint": "Does sampling make raw prompts safe to export?",
+      "answer": "No. Sampling changes how many records are stored, not how sensitive each stored record is. Classify, minimize, redact, and control access before sampling decisions.",
+      "glossary": [
+        "Data minimization - collecting only what a defined purpose needs",
+        "Cardinality - number of distinct values a field can take",
+        "Diagnostic capture - temporary elevated evidence collection under stricter controls"
+      ],
+      "related": [
+        173,
+        174,
+        194
+      ],
+      "sources": [
+        "W3C Trace Context",
+        "OWASP Logging Cheat Sheet",
+        "NIST Generative AI Profile"
+      ]
+    },
+    {
+      "id": 176,
+      "slug": "business-outcomes-artifacts-receipts-traces",
+      "moduleId": "module-41",
+      "title": "Business outcomes, artifacts, receipts, and trace references",
+      "stability": "Durable evidence pattern; identifiers remain protocol-specific",
+      "diagram": "diagrams/176-business-outcomes-artifacts-receipts-traces.png",
+      "diagramPrompt": "Show USER GOAL entering a BUSINESS WORKFLOW with stages REQUEST, DECISION, TOOL EFFECT, ARTIFACT, USER RECEIPT. Beneath it place a connected TRACE with stage SPANS. Draw reference links between BUSINESS RECORD ID, POLICY RECEIPT, A2A TASK, MCP CALL, ARTIFACT ID, and TRACE ID. Add a coral COMPLETE TRACE BUT WRONG OUTCOME card and a teal VERIFIED OUTCOME card.",
+      "alt": "A durable business workflow and its receipts link to a supporting distributed trace, while a warning shows that a technically complete trace can still accompany a wrong user outcome.",
+      "outcome": "Connect technical telemetry to durable user and business evidence without treating a trace as the system of record.",
+      "explanation": "A trace can show what software did, but the business system must still record what was requested, authorized, changed, produced, shown to the user, and finally accepted or reversed. A support artifact, policy-decision receipt, tool-effect receipt, approval record, A2A task, MCP request, user-visible message, and trace each has a different lifecycle. The durable record should contain stable business identifiers and references to the trace or relevant spans. The trace should contain the business identifiers needed for authorized lookup, not the whole business payload. This separation protects recovery: traces may be sampled, delayed, dropped, or retained for a shorter period, while the workflow and artifact must survive. It also protects correctness: a green HTTP status and complete trace do not prove that the answer was current, grounded, authorized, clear, or useful. Define the outcome state machine and evidence obligations first. Then make telemetry explain how the system reached each state. For long-running work, store checkpoints and receipts as business data, create new traces for resumed execution when appropriate, and link them through the durable workflow rather than forcing one enormous trace to remain open.",
+      "trace": [
+        "Define the user goal, business state transitions, unacceptable outcomes, and the authoritative system of record.",
+        "Create durable request, decision, effect, artifact, and user-receipt records with stable identifiers.",
+        "Attach trace and span references to those records and attach safe business references to telemetry.",
+        "Treat resumed, retried, and delegated work as linked execution evidence around the durable workflow.",
+        "Verify the final business outcome independently of technical completion and preserve reversal or recovery evidence."
+      ],
+      "analogy": "A bank statement is the durable record of a transfer; security-camera footage helps investigate the visit but is not the account ledger and may be kept for a different period.",
+      "nextjs": [
+        "Return a typed receipt to the React interface containing business status, artifact references, approval or denial reference, trace support code, and safe next actions.",
+        "Store workflow and artifact state in durable server-side data; never reconstruct authoritative business state by searching observability logs.",
+        "Expose a support lookup that resolves a user-safe receipt to authorized business records and then to traces, with separate access checks for each system."
+      ],
+      "python": [
+        "Model workflow transitions and receipts as durable Pydantic records with idempotency, version, actor, time, policy, effect, artifact, and trace-reference fields.",
+        "Emit spans around state transitions but commit business state and outbox events transactionally so telemetry failure cannot lose the outcome.",
+        "Implement recovery commands from durable state, then start or link new traces for resumed work and record the new evidence references."
+      ],
+      "caseStudy": {
+        "situation": "Maya sees a success message for a policy answer, but the response used stale evidence and must be corrected after the request trace has already expired.",
+        "walkthrough": [
+          "The durable artifact records the cited policy ID, version, generated answer, review state, and original trace reference.",
+          "A later freshness check changes the artifact to needs-review and creates a correction task.",
+          "The recovery workflow starts a new trace linked through the artifact and previous decision receipt.",
+          "Maya receives a correction receipt that explains the changed evidence and preserves both versions."
+        ],
+        "result": "The team can recover correctly even when the original trace is incomplete or no longer retained.",
+        "danger": "Using trace search as the only record of approvals, tool effects, or customer-facing outcomes makes recovery depend on sampled operational data.",
+        "takeaway": "Business records prove the outcome; traces explain the execution; references connect them."
+      },
+      "lab": "Design an Acme answer receipt with twelve fields. Mark which system owns each field, its retention, who may read it, and how it links to task, artifact, policy, tool effect, and trace evidence without copying private payloads.",
+      "checkpoint": "If a trace shows every span succeeded, does that prove the user received a correct outcome?",
+      "answer": "No. Technical completion is only one kind of evidence. Correctness, freshness, authorization, clarity, and recovery must be checked against durable business records and evaluation rules.",
+      "glossary": [
+        "System of record - authoritative durable source for business state",
+        "Receipt - evidence describing a decision, effect, or user-visible outcome",
+        "Correlation reference - identifier that connects records without making them the same object"
+      ],
+      "related": [
+        174,
+        184,
+        195
+      ],
+      "sources": [
+        "A2A Protocol 1.0 specification",
+        "MCP 2026-07-28 specification",
+        "OpenTelemetry tracing API"
+      ]
+    },
+    {
+      "id": 177,
+      "slug": "evaluation-case-anatomy",
+      "moduleId": "module-42",
+      "title": "The anatomy of a useful evaluation case",
+      "stability": "Versioned evaluation design pattern",
+      "diagram": "diagrams/177-evaluation-case-anatomy.png",
+      "diagramPrompt": "Build one EVAL CASE card with compartments INPUT, CONTEXT, EXPECTED EVIDENCE, PERMITTED ACTIONS, FORBIDDEN OUTCOMES, RUBRIC, SCORERS, SLICE TAGS, and VERSION PINS. Send it through SYSTEM UNDER TEST to OUTPUT, TRACE, ARTIFACT, TOOL RECEIPTS, then a SCORECARD with PASS, FAIL, REVIEW. Add a coral UNDERSPECIFIED CASE beside it.",
+      "alt": "A versioned evaluation case defines input, context, expected evidence, permitted actions, forbidden outcomes, rubric, scorers, slices, and version pins before judging outputs, traces, artifacts, and tool receipts.",
+      "outcome": "Write an evaluation case that can diagnose behavior and be rerun fairly after the system changes.",
+      "explanation": "An evaluation case is more than a question and a preferred sentence. It defines the input, starting context, user goal, relevant evidence, permitted actions, forbidden outcomes, expected artifacts, scoring rubric, scorer configuration, slice tags, and exact versions needed for replay. Some expectations are deterministic: a schema must validate, a forbidden tool must not run, a citation must point to the selected document version, or a transaction must remain unchanged. Other expectations allow several good answers and need a rubric for correctness, groundedness, clarity, or recovery. The case should state what evidence a scorer may inspect: final text, retrieved documents, trace stages, policy receipts, tool effects, artifacts, or user-control events. Keep the dataset versioned and reviewable. A golden dataset means carefully maintained, not eternally true; policies, products, and acceptable behavior change, so cases need owners and review dates. Include ordinary cases, hard boundary cases, known regressions, unsafe cases, partial failures, and recovery paths. Avoid writing cases that merely reward one model's wording. A useful case distinguishes the intended outcome from one exact surface form and records why the case exists.",
+      "trace": [
+        "Name the user goal, starting state, relevant context, and unacceptable outcomes before writing an expected answer.",
+        "Specify required evidence, permitted tools or effects, forbidden actions, artifact expectations, and recovery behavior.",
+        "Separate deterministic assertions from rubric-scored qualities and identify which evidence each scorer may inspect.",
+        "Tag meaningful slices, difficulty, risk, provenance, owner, creation reason, and review date.",
+        "Pin dataset, model, prompt, policy, retrieval corpus, index, tool, schema, and code versions for reproducible comparison."
+      ],
+      "analogy": "A driving test includes the route, weather, vehicle, allowed maneuvers, automatic failures, examiner rubric, and score sheet; it is not just a destination and a preferred description of the trip.",
+      "nextjs": [
+        "Represent cases with a JSON Schema or TypeScript type and validate them on ingestion, including explicit forbidden outcomes and scorer evidence permissions.",
+        "Build a review interface that shows case history, owner, slice tags, version diffs, expected evidence, and why the case entered the dataset.",
+        "Keep eval execution in server-side jobs; stream progress and summarized scorecards to React without exposing private source material or hidden grader reasoning."
+      ],
+      "python": [
+        "Define Pydantic models for Case, Expectation, Assertion, Rubric, Scorer, Slice, VersionManifest, and EvaluationResult.",
+        "Load frozen fixtures for tools, retrieval, policy, and time so the same case can run deterministically when that is the evaluation goal.",
+        "Store raw evidence separately from normalized scores and keep the scorer and rubric version with every judgment."
+      ],
+      "caseStudy": {
+        "situation": "Maya asks whether a refund exception is still allowed. The current policy permits it only for a documented delivery failure and requires supervisor approval.",
+        "walkthrough": [
+          "The case includes the customer situation, current policy document ID and version, and a synthetic delivery record.",
+          "It requires citation of current evidence and a supervisor-approval proposal before any refund effect.",
+          "It forbids use of the stale policy, invented delivery facts, direct payment execution, and disclosure of private account data.",
+          "Assertions inspect retrieval and tool receipts while a rubric scores the explanation and recovery choices."
+        ],
+        "result": "A future candidate can be judged on evidence, authority, and user outcome rather than whether it repeats one reference paragraph.",
+        "danger": "A case containing only prompt, reference answer, and exact-string match can punish valid answers while missing unsafe tool use, stale evidence, or wrong business effects.",
+        "takeaway": "Define the whole situation, allowed behavior, forbidden outcomes, evidence, rubric, and versions."
+      },
+      "lab": "Write one complete Acme evaluation case with at least four deterministic assertions, three rubric dimensions, two forbidden outcomes, five slice tags, eight version pins, and a short note explaining why the case belongs in the dataset.",
+      "checkpoint": "Does a golden evaluation case need one exact correct sentence?",
+      "answer": "No. Some facts and contracts may be exact, but many tasks permit several good explanations. Define outcome and evidence requirements, then use an appropriate rubric for flexible qualities.",
+      "glossary": [
+        "Evaluation case - versioned test situation plus expectations",
+        "Rubric - explicit criteria for a judgment",
+        "Golden dataset - reviewed versioned set of representative cases"
+      ],
+      "related": [
+        178,
+        179,
+        180
+      ],
+      "sources": [
+        "JSON Schema 2020-12",
+        "NIST Generative AI Profile",
+        "NIST AI Risk Management Framework"
+      ]
+    },
+    {
+      "id": 178,
+      "slug": "deterministic-contracts-behavioral-assertions",
+      "moduleId": "module-42",
+      "title": "Deterministic contracts, schemas, and behavioral assertions",
+      "stability": "Stable testing principles applied to probabilistic systems",
+      "diagram": "diagrams/178-deterministic-contracts-behavioral-assertions.png",
+      "diagramPrompt": "Show SYSTEM OUTPUT splitting into six CHECK GATES: JSON SCHEMA, REQUIRED CITATION, ALLOWED TOOL, FORBIDDEN EFFECT, POLICY RECEIPT, ARTIFACT STATE. Green checks join CONTRACT PASS; coral violations join FAIL WITH EVIDENCE. Beside them show a MODEL RUBRIC lane for qualities that cannot be deterministic. Label TEST THE ENVELOPE, NOT THE WORDING.",
+      "alt": "System evidence passes deterministic schema, citation, tool, effect, policy, and artifact assertions while flexible language quality is judged in a separate rubric lane.",
+      "outcome": "Use exact assertions for exact contracts and reserve probabilistic graders for qualities that truly require judgment.",
+      "explanation": "Probabilistic generation does not make every test probabilistic. Many important properties are exact: JSON must validate, required fields must exist, a selected tool must be on an allowlist, a forbidden side effect must not occur, a citation must resolve to evidence used, an approval must precede a consequential action, a tenant key must match, an artifact must reach an allowed state, and a deadline or budget must not be exceeded. These are behavioral assertions against outputs, traces, receipts, and state transitions. They form the safe envelope inside which language can vary. Write assertions at the most authoritative boundary. Do not infer tool use by searching final prose when a tool receipt exists. Do not infer policy compliance from a model explanation when a policy decision record exists. Make failure messages explain expected, observed, evidence reference, and responsible stage. Deterministic tests can still be wrong if fixtures are stale or assertions encode accidental wording, so version and review them. Combine them with rubric scoring for qualities such as helpfulness or clarity and with human review for high-impact ambiguity. The goal is not to eliminate uncertainty; it is to avoid wasting uncertainty on properties the system can prove exactly.",
+      "trace": [
+        "List every requirement and ask whether an authoritative machine-readable fact can prove it.",
+        "Validate shapes and types with schemas before judging meaning or style.",
+        "Assert permitted and forbidden tools, effects, state transitions, citations, approvals, tenants, and budgets from receipts.",
+        "Return a structured failure with expected value, observed value, stage, and evidence reference.",
+        "Send only genuinely subjective qualities to rubric graders or humans and keep those judgments separate."
+      ],
+      "analogy": "Airport security checks a passport format, boarding pass, gate, and prohibited items exactly; a human may still judge whether a travel explanation is credible, but the scanner does not ask an essay grader whether the barcode exists.",
+      "nextjs": [
+        "Use runtime schema validation at server boundaries and retain validation errors as structured evaluation evidence rather than converting them to generic strings.",
+        "Test Route Handlers and Server Actions with synthetic identities, policies, tools, and clocks; assert emitted receipts and durable state, not React copy alone.",
+        "Render assertion results as accessible pass, fail, and review cards with text labels, expected-versus-observed detail, and links to authorized evidence."
+      ],
+      "python": [
+        "Use Pydantic validation plus pytest assertions over typed artifacts, policy decisions, tool receipts, and workflow state transitions.",
+        "Inject deterministic clocks, IDs, tool adapters, retrieval fixtures, and policy versions so contract tests fail for behavior rather than environmental noise.",
+        "Produce machine-readable assertion results that can be compared across candidates and consumed by the release gate."
+      ],
+      "caseStudy": {
+        "situation": "A candidate answers Maya correctly in prose but calls the refund tool before supervisor approval and then hides that sequence in the final summary.",
+        "walkthrough": [
+          "The output schema passes and the wording rubric scores highly.",
+          "A deterministic trace assertion finds a refund-effect receipt before the required approval receipt.",
+          "The forbidden-transition assertion fails with tool call, policy, and workflow evidence references.",
+          "The release gate blocks the candidate despite its attractive final text."
+        ],
+        "result": "The quality system catches an unsafe business effect that a text-only grader would miss.",
+        "danger": "Asking a model grader whether the system probably followed policy replaces machine-verifiable evidence with another probabilistic opinion.",
+        "takeaway": "Test exact behavior exactly; grade flexible qualities with explicit judgment."
+      },
+      "lab": "Take one Volume 7 security lesson and convert it into ten deterministic assertions: schema, tenant, audience, policy, approval order, tool allowlist, forbidden effect, evidence version, artifact state, and audit receipt. Add two qualities that still need a rubric.",
+      "checkpoint": "Should a model grader decide whether a JSON response satisfies a known schema?",
+      "answer": "Usually no. Use deterministic schema validation. A model grader may judge meaning or clarity after structural validity is established.",
+      "glossary": [
+        "Deterministic assertion - check with the same result for the same evidence",
+        "Behavioral contract - allowed and required observable behavior",
+        "Safe envelope - exact constraints inside which flexible generation may vary"
+      ],
+      "related": [
+        177,
+        182,
+        189
+      ],
+      "sources": [
+        "JSON Schema 2020-12",
+        "RFC 9457 Problem Details",
+        "NIST Generative AI Profile"
+      ]
+    },
+    {
+      "id": 179,
+      "slug": "graders-humans-calibration-disagreement",
+      "moduleId": "module-42",
+      "title": "Model graders, human rubrics, calibration, and disagreement",
+      "stability": "Evaluation practice; grader behavior must be measured and versioned",
+      "diagram": "diagrams/179-graders-humans-calibration-disagreement.png",
+      "diagramPrompt": "Show the same CASE EVIDENCE sent to DETERMINISTIC CHECKS, MODEL GRADER A, MODEL GRADER B, and HUMAN REVIEWERS. Their SCORE CARDS flow into CALIBRATION SET, CONFUSION MATRIX, AGREEMENT, DISAGREEMENT QUEUE, and RUBRIC UPDATE. Add a coral GRADER DRIFT arrow from VERSION CHANGE and a teal ADJUDICATED LABEL path.",
+      "alt": "The same evidence is judged by deterministic checks, model graders, and humans, then compared through calibration, agreement measures, disagreement review, adjudication, and rubric updates while grader drift is monitored.",
+      "outcome": "Treat graders as measuring instruments that need calibration, disagreement handling, and their own evaluation.",
+      "explanation": "A model grader is not an oracle; it is another versioned component with failure modes. It may favor verbosity, copy style from a reference, miss tool evidence, change after a model update, or behave differently across languages and topics. Begin with a clear rubric containing named dimensions, anchors, permitted evidence, automatic failures, and instructions for uncertainty. Build a calibration set judged by qualified humans, including easy examples, boundary cases, disagreements, and unacceptable outcomes. Compare grader decisions with adjudicated labels using more than one number: agreement by class, false-pass and false-fail rates, confusion matrix, and slice behavior. For high-impact safety gates, false passes may matter much more than false fails. Use blinded review where practical and avoid showing the candidate identity to graders. Send low-confidence cases and important disagreements to human review. Record grader model, prompt, rubric, temperature or decoding settings, evidence supplied, and output. Recalibrate after any change. Humans also disagree, so define reviewer qualifications, examples, adjudication, and how rubric defects are corrected. The aim is a transparent measurement process with known limits, not a magical universal quality score.",
+      "trace": [
+        "Define one rubric dimension at a time with clear anchors, automatic failures, and allowed evidence.",
+        "Create a human-reviewed calibration set containing representative, difficult, unsafe, and disagreement cases.",
+        "Measure grader agreement, false passes, false fails, confusion by class, and important slice behavior.",
+        "Route uncertainty and high-impact disagreements to qualified human adjudication and record the reason.",
+        "Version the grader and rerun calibration after model, prompt, rubric, evidence, or configuration changes."
+      ],
+      "analogy": "A thermometer must be checked against known temperatures. Two thermometers can agree and still both be wrong, so calibration needs trusted references and attention to where errors matter most.",
+      "nextjs": [
+        "Build a review console that hides candidate identity, shows only authorized evidence, captures dimension-level judgments, confidence, rationale category, and adjudication outcome.",
+        "Keep model grading in server jobs with pinned configuration; never run privileged evidence or grader credentials in the browser.",
+        "Visualize disagreement and class-specific false-pass rates, not only one average agreement percentage."
+      ],
+      "python": [
+        "Implement grader adapters with a shared typed result schema containing dimension scores, confidence, evidence references, refusal, error, and version manifest.",
+        "Use a calibration job to compute confusion tables and slice summaries against adjudicated labels while retaining denominators.",
+        "Queue uncertain or high-risk disagreements for human review and store the adjudication as a new immutable label version."
+      ],
+      "caseStudy": {
+        "situation": "The grader marks Maya's stale answer as correct because it is fluent and includes a citation, while human reviewers notice the cited policy version is obsolete.",
+        "walkthrough": [
+          "A deterministic freshness assertion is added as an automatic failure before the language rubric.",
+          "The calibration set gains stale-but-plausible examples across several policy categories.",
+          "The team measures false passes by freshness slice and revises the grader evidence package and rubric.",
+          "The updated grader remains advisory until the false-pass rate meets the release rule on the calibration set."
+        ],
+        "result": "The system stops treating fluency as correctness and gains a measured boundary for grader trust.",
+        "danger": "Replacing every human review with one uncalibrated model judge can automate the same bias and blind spot across the entire dataset.",
+        "takeaway": "Evaluate the grader, preserve disagreement, and escalate uncertainty where consequences matter."
+      },
+      "lab": "Create a 20-case calibration set with adjudicated labels. Define a three-class rubric, then calculate a confusion matrix by hand from sample grader results. Decide which false-pass class blocks release and which disagreements require human review.",
+      "checkpoint": "If two model graders agree, is the judgment automatically correct?",
+      "answer": "No. They may share training biases, prompt defects, or missing evidence. Agreement is useful, but calibration against trusted human-reviewed cases is still required.",
+      "glossary": [
+        "Calibration - checking a measuring process against trusted examples",
+        "False pass - unacceptable behavior incorrectly judged acceptable",
+        "Adjudication - reviewed decision that resolves a disagreement"
+      ],
+      "related": [
+        177,
+        180,
+        189
+      ],
+      "sources": [
+        "NIST Generative AI Profile",
+        "NIST AI Risk Management Framework"
+      ]
+    },
+    {
+      "id": 180,
+      "slug": "slices-denominators-confidence-variance",
+      "moduleId": "module-42",
+      "title": "Slices, denominators, confidence, variance, and significance",
+      "stability": "Statistical measurement practice; avoid universal thresholds",
+      "diagram": "diagrams/180-slices-denominators-confidence-variance.png",
+      "diagramPrompt": "Show OVERALL SCORE 92 PERCENT breaking into slices LANGUAGE, CHANNEL, ISSUE TYPE, TENANT TIER, TOOL PATH, RISK. Reveal one coral slice STALE POLICY 58 PERCENT. Beside every rate show PASSED / ELIGIBLE denominator cards. Add repeated RUNS forming a DISTRIBUTION with MEAN, RANGE, CONFIDENCE, and a DECISION THRESHOLD marked PROPOSED.",
+      "alt": "A high overall score is broken into meaningful slices and denominators, revealing a weak stale-policy slice, while repeated runs show variance, confidence, and a proposed decision threshold.",
+      "outcome": "Read evaluation numbers honestly and find important failures hidden by averages or tiny denominators.",
+      "explanation": "A rate without its denominator can mislead. Ninety percent may mean nine of ten or nine thousand of ten thousand, and those results support different confidence. Always report numerator, denominator, exclusions, missing data, case version, and measurement window. Then examine slices that correspond to different user needs or failure mechanisms: language, channel, issue type, document age, tool path, tenant tier, accessibility need, risk class, region, or workflow length. Choose slices before looking for flattering results, and do not create so many tiny groups that random noise becomes a story. Generative systems can vary across repeated runs even with the same input, so record the run count, configuration, distribution, variance, and worst unacceptable outcome rather than one average. Confidence intervals or resampling can express uncertainty, but statistical significance does not equal business importance. A small quality change may matter greatly on a high-risk slice, while a statistically detectable change may be too small to justify cost or latency. Release rules should combine minimum sample size, practical effect, safety constraints, and uncertainty handling. Mark all numbers in this course as illustrative scenarios unless they were actually measured in a later project.",
+      "trace": [
+        "Report passed, failed, excluded, missing, and total eligible cases before publishing a rate.",
+        "Predefine slices tied to user groups, workflows, risks, data age, or technical paths.",
+        "Repeat probabilistic cases enough times to observe distribution, variance, and unacceptable tail outcomes.",
+        "Compare practical effect and safety importance alongside uncertainty or statistical significance.",
+        "Require minimum denominators and route sparse or conflicting evidence to review instead of forcing a conclusion."
+      ],
+      "analogy": "A school average can look excellent while one classroom lacks books. You need class sizes, subject breakdowns, repeated assessments, and attention to the students most affected before declaring success.",
+      "nextjs": [
+        "Build scorecards that always display numerator, denominator, exclusions, dataset version, run count, and slice definition beside each rate.",
+        "Use server-side aggregation with a controlled dimension allowlist so users cannot create unbounded metrics or expose small private groups.",
+        "Provide comparison views with confidence and practical-effect notes, and label all proposed thresholds as policy choices rather than universal facts."
+      ],
+      "python": [
+        "Represent each result as case ID, run ID, slice tags, score, failure class, and version manifest before aggregation.",
+        "Use reproducible analysis functions for counts, rates, distributions, bootstrap intervals when appropriate, and minimum-sample warnings.",
+        "Test aggregation against missing results, duplicated runs, overlapping slices, tiny groups, and Simpson's-paradox-style reversals."
+      ],
+      "caseStudy": {
+        "situation": "Acme's candidate scores 92% overall, but stale-policy cases score 58% and Spanish stale-policy cases contain only four evaluations.",
+        "walkthrough": [
+          "The dashboard reveals the exact numerators and denominators instead of showing only 92%. ",
+          "The stale-policy slice blocks release because it represents the known high-impact failure mechanism.",
+          "The Spanish subgroup is marked insufficient evidence rather than declared good or bad from four cases.",
+          "The team expands representative cases and repeats variable runs before making the subgroup decision."
+        ],
+        "result": "The release decision protects the known failure slice and avoids pretending that a tiny subgroup estimate is precise.",
+        "danger": "Optimizing one overall average can improve common easy cases while making rare, expensive, or vulnerable cases worse.",
+        "takeaway": "Every score needs a denominator, meaningful slices, repeated evidence, and an honest uncertainty rule."
+      },
+      "lab": "Create a synthetic 40-case result table with six slices and two repeated runs. Calculate overall and slice rates, list denominators and exclusions, flag insufficient groups, and write one release rule based on practical harm rather than the best-looking average.",
+      "checkpoint": "Can a statistically significant change still be unimportant?",
+      "answer": "Yes. Significance describes evidence against chance under assumptions; it does not decide whether the effect is large, useful, safe, or worth its cost.",
+      "glossary": [
+        "Slice - meaningful subgroup of evaluation cases",
+        "Denominator - total eligible opportunities behind a rate",
+        "Variance - how spread out repeated results are"
+      ],
+      "related": [
+        177,
+        179,
+        185
+      ],
+      "sources": [
+        "NIST Generative AI Profile",
+        "Google SRE service-level objectives"
+      ]
+    },
+    {
+      "id": 181,
+      "slug": "intent-routing-retrieval-quality",
+      "moduleId": "module-43",
+      "title": "Intent, routing, and retrieval quality",
+      "stability": "Stage-evaluation pattern with established information-retrieval measures",
+      "diagram": "diagrams/181-intent-routing-retrieval-quality.png",
+      "diagramPrompt": "Show USER REQUEST flowing through INTENT LABEL to ROUTER to RETRIEVAL. At each stage place EXPECTED and OBSERVED cards. Retrieval fans into CANDIDATES, FILTER, RERANK, SELECTED EVIDENCE with measures HIT RATE, PRECISION, RECALL, RANK, FRESHNESS, COVERAGE. A coral STALE DOCUMENT reaches generation while a teal CURRENT POLICY is highlighted.",
+      "alt": "A user request passes intent, routing, retrieval, filtering, reranking, and evidence selection stages, each compared with expectations and measured for relevance, rank, freshness, and coverage.",
+      "outcome": "Locate whether a bad answer began with misunderstanding, wrong routing, or weak evidence retrieval.",
+      "explanation": "A final answer can fail long before generation. Intent quality asks whether the system correctly understood the user's job, entities, constraints, urgency, risk, and need for clarification. Routing quality asks whether it selected the right workflow, specialist, model, tool set, policy path, or human escalation. Retrieval quality asks whether relevant, current, authorized evidence entered the candidate set, survived filters, ranked high enough, and was actually selected for synthesis. Evaluate these stages separately. For intent, use labeled examples, confusion by class, missing-clarification checks, and high-cost misroute rates. For routing, compare expected and observed destinations, fallback behavior, latency, and cost. For retrieval, define relevance judgments and report measures such as hit rate, precision, recall, reciprocal rank, or normalized discounted cumulative gain only when they match the task. Agent systems also need freshness, authorization, tenant filtering, source diversity, coverage, citation resolution, and no-evidence behavior. A high retrieval score on an outdated corpus is still wrong. Preserve query, filter, index, embedding, reranker, document, and policy versions so a regression is attributable.",
+      "trace": [
+        "Label the user intent, entities, constraints, ambiguity, and required clarification or escalation.",
+        "Record the expected route and compare it with the chosen workflow, specialist, model, and fallback.",
+        "Judge whether relevant current authorized evidence entered the retrieval candidate set.",
+        "Measure filters, ranking, selection, freshness, coverage, and citation resolution with explicit denominators.",
+        "Test no-evidence and conflicting-evidence cases so the system asks or abstains instead of inventing certainty."
+      ],
+      "analogy": "A librarian must understand the patron's question, send it to the correct department, find the current edition, and place the useful pages on the desk. Beautiful summarization cannot repair the wrong shelf or old book.",
+      "nextjs": [
+        "Capture a typed intent and routing decision on the server, including confidence category, clarification need, selected path, fallback, and version references.",
+        "Build an evidence inspector that displays authorized document IDs, versions, ranks, filters, and selection reason without leaking inaccessible text.",
+        "Evaluate search and routing in server jobs against frozen corpora and fixtures; keep React focused on review, comparison, and user control."
+      ],
+      "python": [
+        "Create separate evaluator interfaces for intent classification, route selection, candidate retrieval, filtering, reranking, selection, and freshness.",
+        "Use frozen query and corpus fixtures with explicit relevance and authorization labels, then compute stage measures with denominators and version manifests.",
+        "Emit stage results into the trace and evaluation record so the final scorer can identify the earliest failed dependency."
+      ],
+      "caseStudy": {
+        "situation": "Maya asks for the current exception policy. The system understands the request and chooses the policy workflow, but retrieval ranks an older policy above the current one.",
+        "walkthrough": [
+          "Intent and routing assertions pass, narrowing the investigation.",
+          "The current policy appears in the candidate set, so candidate recall passes.",
+          "A freshness-aware reranking assertion fails because the obsolete version is selected first.",
+          "The fix changes selection policy and adds stale-current document pairs to the regression dataset."
+        ],
+        "result": "The team repairs freshness-aware ranking instead of changing the prompt or blaming generation.",
+        "danger": "Grading only the final citation can miss that retrieval repeatedly excluded useful evidence and the model merely got lucky on one run.",
+        "takeaway": "Measure understanding, routing, candidates, filters, rank, freshness, and selection as separate stages."
+      },
+      "lab": "Create ten synthetic policy queries with expected intents, routes, current evidence, forbidden tenant documents, and no-evidence cases. Score candidate recall, selected-evidence freshness, wrong-route rate, and clarification behavior separately.",
+      "checkpoint": "If the correct document appears somewhere in the top 20 candidates, is retrieval automatically good enough?",
+      "answer": "No. The document must survive authorization and freshness filters, rank where the system can use it, cover the question, and be selected or cited appropriately.",
+      "glossary": [
+        "Recall - fraction of relevant items that were found",
+        "Precision - fraction of retrieved items that were relevant",
+        "Reranker - component that reorders candidates using additional signals"
+      ],
+      "related": [
+        177,
+        180,
+        183
+      ],
+      "sources": [
+        "OpenTelemetry GenAI semantic conventions",
+        "NIST Generative AI Profile"
+      ]
+    },
+    {
+      "id": 182,
+      "slug": "tool-policy-business-effect-quality",
+      "moduleId": "module-43",
+      "title": "Tool contracts, policy decisions, and business effects",
+      "stability": "Deterministic effect-evaluation pattern",
+      "diagram": "diagrams/182-tool-policy-business-effect-quality.png",
+      "diagramPrompt": "Show PROPOSED ACTION entering TOOL SCHEMA then POLICY DECISION then APPROVAL then IDEMPOTENCY GATE then BUSINESS EFFECT. Under each place EXPECTED / OBSERVED receipts. Add coral lanes WRONG TOOL, INVALID ARGUMENT, DENIED BUT CALLED, DUPLICATE EFFECT. A teal lane ends VERIFIED EFFECT and USER RECEIPT.",
+      "alt": "A proposed action passes tool schema, policy, approval, and idempotency gates before a business effect, with receipts detecting wrong tools, invalid arguments, denied calls, and duplicate effects.",
+      "outcome": "Evaluate what the agent actually attempted and changed, not merely what it said it would do.",
+      "explanation": "Tool quality has several layers. Selection quality asks whether the system chose an appropriate tool. Contract quality asks whether arguments match the declared schema and business invariants. Policy quality asks whether the action was allowed for this actor, tenant, resource, purpose, amount, destination, and time. Approval quality asks whether required human authorization was valid and bound to the exact proposal. Execution quality asks whether the tool returned a truthful typed result. Effect quality asks whether the authoritative business state changed exactly once as intended. Recovery quality asks what happens on timeout, partial success, duplicate delivery, rejection, or uncertain completion. Evaluate these layers from typed requests, policy decisions, approval receipts, idempotency records, tool results, and system-of-record state. A model's final sentence is not authoritative evidence of a refund, email, database update, or file deletion. Include negative assertions for forbidden tools, unexpected arguments, policy denial followed by a call, cross-tenant effects, duplicate effects, and missing receipts. Mock tools for most offline runs, but maintain a controlled conformance environment that proves adapters match real contracts.",
+      "trace": [
+        "Compare expected and selected tool, declared capability, schema version, and exact typed arguments.",
+        "Assert policy decision, authority, tenant, approval, and transaction binding before execution.",
+        "Use idempotency and effect identifiers to prove retries cannot create duplicate business changes.",
+        "Compare the typed tool result with authoritative system-of-record state and the user-facing receipt.",
+        "Test denial, timeout, partial success, unknown completion, retry, compensation, and recovery paths."
+      ],
+      "analogy": "A restaurant order is not complete because the waiter says 'served.' The ticket, kitchen acceptance, allergy check, prepared dish, table delivery, and bill must all agree.",
+      "nextjs": [
+        "Keep privileged tool adapters behind authenticated server boundaries and validate typed proposals before policy and approval rendering.",
+        "Show users exact proposed effects, approval scope, expiry, and safe recovery choices; never infer completion from an optimistic spinner.",
+        "Write integration tests that assert policy, idempotency, adapter request, authoritative effect, and receipt across success and ambiguous failures."
+      ],
+      "python": [
+        "Define Pydantic tool requests and results with schema versions, idempotency keys, actor and tenant context, proposal hash, and effect reference.",
+        "Inject policy and tool fakes for offline cases, then run adapter conformance tests in an isolated environment against documented service behavior.",
+        "Record separate spans and assertion results for proposal, policy, approval, call, result, effect verification, and recovery."
+      ],
+      "caseStudy": {
+        "situation": "The candidate tells Maya that a refund was approved, but the policy service denied the action and a buggy adapter still called the payment provider twice.",
+        "walkthrough": [
+          "The policy assertion detects a deny decision followed by an outbound tool span.",
+          "The idempotency assertion detects two distinct effect references for one proposal.",
+          "Authoritative payment state and the user receipt disagree with the final text.",
+          "The release is blocked and the adapter gains deny-path and duplicate-effect regression cases."
+        ],
+        "result": "The evaluation protects real money even though the answer sounds confident and reassuring.",
+        "danger": "A text-only evaluation can award full credit to an answer that describes the desired effect while the underlying tool call failed, was denied, or executed twice.",
+        "takeaway": "Score proposal, permission, execution, effect, and recovery from receipts and state."
+      },
+      "lab": "Design eight tool-effect assertions for a refund: selection, schema, tenant, policy, approval binding, idempotency, authoritative effect, and user receipt. Add three ambiguous-failure scenarios and specify the safe recovery for each.",
+      "checkpoint": "Is a successful HTTP response from a tool enough to prove the business effect occurred correctly?",
+      "answer": "No. Verify the typed result, idempotency, and authoritative business state, then connect them to a durable effect receipt.",
+      "glossary": [
+        "Idempotency - repeated delivery produces one intended effect",
+        "Effect receipt - durable evidence of a business change",
+        "Conformance test - check that an adapter follows the real contract"
+      ],
+      "related": [
+        178,
+        184,
+        194
+      ],
+      "sources": [
+        "MCP 2026-07-28 specification",
+        "JSON Schema 2020-12",
+        "NIST Generative AI Profile"
+      ]
+    },
+    {
+      "id": 183,
+      "slug": "planning-delegation-synthesis-groundedness",
+      "moduleId": "module-43",
+      "title": "Planning, delegation, synthesis, and groundedness",
+      "stability": "Agent-stage evaluation pattern",
+      "diagram": "diagrams/183-planning-delegation-synthesis-groundedness.png",
+      "diagramPrompt": "Show USER GOAL becoming PLAN with STEPS, DEPENDENCIES, BUDGET, STOP CONDITIONS. PLAN delegates to SPECIALIST A and SPECIALIST B through A2A TASK cards. Their ARTIFACTS enter SYNTHESIS with CITATION LINKS and CONTRADICTION CHECK. Coral paths show LOOP, WRONG SPECIALIST, LOST CONSTRAINT, UNSUPPORTED CLAIM; teal path shows GROUNDED RESULT.",
+      "alt": "A user goal becomes a bounded plan, delegates to specialists, and combines their artifacts through citation and contradiction checks while detecting loops, wrong specialists, lost constraints, and unsupported claims.",
+      "outcome": "Measure whether multi-step agent work stays bounded, delegates appropriately, preserves constraints, and synthesizes grounded evidence.",
+      "explanation": "Planning quality is not whether a model prints an impressive checklist. A useful plan covers the required work, respects dependencies, keeps user and policy constraints, allocates time and cost, defines approval points, and stops when evidence is insufficient or the budget is exhausted. Delegation quality asks whether the chosen specialist advertises the needed capability, receives the minimum task context, returns a usable artifact, and stays within authority. Coordination quality asks whether retries, parallel work, dependency failures, and duplicated results are handled correctly. Synthesis quality asks whether the final result is supported by the returned artifacts, resolves or exposes contradictions, preserves source and version references, and distinguishes fact from inference. Evaluate the plan graph, A2A tasks, specialist artifacts, citations, constraint ledger, and stop reasons. Detect loops, unnecessary delegation, wrong specialist selection, context loss, budget overrun, ignored failure, unsupported claims, and accidental mixing of tenant or case data. Final-answer quality alone cannot show whether the system used ten wasteful agents or fabricated a conclusion after every specialist failed.",
+      "trace": [
+        "Compare the plan with required steps, dependencies, constraints, budgets, approvals, and explicit stop conditions.",
+        "Check specialist capability, authority, task scope, supplied context, deadline, and expected artifact contract.",
+        "Measure retry, parallelism, dependency, duplicate, cancellation, and partial-failure behavior.",
+        "Trace every synthesized claim to one or more returned artifacts and expose contradictions or missing evidence.",
+        "Score usefulness, groundedness, efficiency, and safe stopping separately rather than rewarding longer plans."
+      ],
+      "analogy": "A building contractor needs a dependency-aware schedule, qualified specialists, bounded work orders, inspection records, and a final handover tied to evidence. A long list of tasks is not a safe construction plan.",
+      "nextjs": [
+        "Render plan stages, specialist tasks, budgets, approvals, artifacts, failures, and stop reasons from typed server events rather than parsing prose.",
+        "Keep the authoritative plan and constraint ledger server-side; let users approve, cancel, or steer through explicit commands bound to versions.",
+        "Build evaluation views that connect each final claim to specialist artifact references and show unresolved contradictions accessibly."
+      ],
+      "python": [
+        "Represent the plan as a typed dependency graph with budget, deadline, authority, expected artifact, retry, and stop fields per node.",
+        "Wrap A2A clients with evaluation hooks that record selected Agent Card version, task and context IDs, artifact schema, status history, and failure class.",
+        "Run graph assertions for cycles, missing dependencies, lost constraints, unsupported claims, and completion after a required failure."
+      ],
+      "caseStudy": {
+        "situation": "Acme delegates Maya's policy question to a research specialist and a finance specialist. Research returns the current policy; finance times out after using an older cached rule.",
+        "walkthrough": [
+          "The plan marks finance evidence as required for a consequential recommendation.",
+          "The timeout creates a partial result and triggers the defined stop condition instead of silent completion.",
+          "Synthesis preserves the research artifact, exposes missing finance confirmation, and offers a safe handoff.",
+          "The case scores constraint preservation and recovery positively while correctly marking the final recommendation incomplete."
+        ],
+        "result": "Maya receives useful partial evidence and an honest next step instead of an unsupported confident answer.",
+        "danger": "Rewarding task completion can teach an orchestrator to hide failed specialists and synthesize certainty from incomplete evidence.",
+        "takeaway": "A good agent plan is bounded, evidence-aware, failure-aware, and willing to stop."
+      },
+      "lab": "Draw a six-node plan for Maya's case with dependencies, two specialists, one approval, one parallel branch, a latency and cost budget, expected artifacts, and three stop conditions. Write assertions for a loop, timeout, contradiction, and missing required evidence.",
+      "checkpoint": "Is a longer, more detailed plan necessarily better?",
+      "answer": "No. A good plan is sufficient, dependency-aware, bounded, and testable. Unnecessary steps and agents increase latency, cost, attack surface, and failure opportunities.",
+      "glossary": [
+        "Plan graph - dependency structure of intended work",
+        "Stop condition - rule that ends or pauses work safely",
+        "Grounded synthesis - conclusion supported by identified evidence artifacts"
+      ],
+      "related": [
+        181,
+        182,
+        188
+      ],
+      "sources": [
+        "A2A Protocol 1.0 specification",
+        "OpenTelemetry GenAI semantic conventions",
+        "NIST Generative AI Profile"
+      ]
+    },
+    {
+      "id": 184,
+      "slug": "user-outcome-control-recovery-quality",
+      "moduleId": "module-43",
+      "title": "User outcome, clarity, control, and recovery quality",
+      "stability": "Human-centered outcome evaluation pattern",
+      "diagram": "diagrams/184-user-outcome-control-recovery-quality.png",
+      "diagramPrompt": "Show TECHNICAL RESULT entering USER EXPERIENCE gates CORRECT, CURRENT, CLEAR, ACTIONABLE, CONTROLLED, ACCESSIBLE, RECOVERABLE. Include PROGRESS, EVIDENCE, APPROVAL, CANCEL, RETRY, EDIT, HUMAN HELP, RECEIPT cards. A coral TECHNICALLY GREEN / USER FAILED path contrasts with a teal UNDERSTOOD AND RECOVERED path.",
+      "alt": "A technical result is evaluated for correctness, freshness, clarity, actionability, user control, accessibility, and recovery, with explicit progress, evidence, approval, cancel, retry, edit, help, and receipt controls.",
+      "outcome": "Judge success from the user's real outcome and ability to understand, control, and recover from the system.",
+      "explanation": "Agent quality ends with a person or business outcome, not an HTTP status. The system may be technically healthy while the user receives stale evidence, confusing language, no clear action, a hidden partial failure, an inaccessible control, or no safe recovery. Define outcome measures from what users care about: was the problem resolved, was the evidence current and understandable, were consequential actions visible and approved, could the user correct assumptions, did progress match reality, was partial work preserved, and could failure be recovered without repeating harm? Combine system evidence with carefully designed user feedback, task completion, support escalation, correction, cancellation, and appeal records. Avoid dark metrics such as longer session time when the product goal is fast resolution. Do not expose private chain-of-thought as an explanation; provide concise decision summaries, evidence, actions, uncertainty, and receipts instead. Evaluate accessibility with keyboard, text alternatives, focus, readable status, and reduced motion. Include users who abandon, retry, escalate, or never receive a result in the denominator. A helpful average must not hide users trapped by one error path.",
+      "trace": [
+        "Define the real user job, acceptable outcomes, unacceptable outcomes, and authoritative completion evidence.",
+        "Evaluate correctness, freshness, clarity, actionability, uncertainty, and evidence presentation separately.",
+        "Test approvals, steering, cancel, retry, edit, undo, escalation, and preserved partial work as explicit controls.",
+        "Include accessibility, abandonment, correction, appeal, and unresolved cases in measurements and denominators.",
+        "Connect product feedback to traces and artifacts with consent and privacy controls, then turn recurring failures into cases."
+      ],
+      "analogy": "A flight is not successful merely because the aircraft landed. The passenger must reach the correct destination, retrieve baggage, understand changes, receive assistance, and have a remedy when the airline makes a mistake.",
+      "nextjs": [
+        "Render authoritative stage, artifact, approval, failure, and recovery state from typed events; never infer business completion from a loading animation.",
+        "Instrument user controls such as cancel, retry, edit, escalate, and correction with product events that link to receipts without capturing private text by default.",
+        "Run accessibility and recovery scenario tests for keyboard, screen reader labels, focus order, reconnect, partial success, and expired approvals."
+      ],
+      "python": [
+        "Model user-visible status and recovery options as typed workflow state so API responses remain consistent with durable business state.",
+        "Emit outcome and recovery events with reason categories, artifact references, and trace support codes, then aggregate them with complete denominators.",
+        "Create end-to-end cases that assert backend state, user-facing event sequence, accessible control availability, and final receipt together."
+      ],
+      "caseStudy": {
+        "situation": "Acme correctly detects that Maya's answer used stale evidence, but the interface shows only 'Something went wrong' and discards the useful research already completed.",
+        "walkthrough": [
+          "The outcome evaluation marks diagnosis correct but clarity, preservation, and recovery as failed.",
+          "The redesigned flow keeps the valid research artifact and labels the stale policy stage precisely.",
+          "Maya can retry only retrieval, inspect current evidence, cancel, or send the case to a human.",
+          "The correction receipt explains what changed without revealing hidden model reasoning."
+        ],
+        "result": "The system turns a backend failure into an understandable, recoverable user experience.",
+        "danger": "A dashboard can report 99% successful requests while users face inaccessible approval controls, lost partial work, or meaningless error messages.",
+        "takeaway": "Quality is the user's understood, controlled, recoverable outcome - not merely a green backend span."
+      },
+      "lab": "Write one end-to-end evaluation for a stale answer. Include backend evidence, visible stage sequence, accessible error text, preserved artifact, four recovery controls, human handoff, correction receipt, and denominators for abandoned and unresolved cases.",
+      "checkpoint": "Should user outcome quality be measured only with a satisfaction survey?",
+      "answer": "No. Surveys can help, but combine them with task resolution, corrections, recovery, abandonment, escalation, accessibility, durable receipts, and system evidence.",
+      "glossary": [
+        "Outcome quality - whether the user's real job was completed well",
+        "Recovery affordance - visible safe action after failure",
+        "Abandonment - user leaves before successful resolution"
+      ],
+      "related": [
+        176,
+        182,
+        193
+      ],
+      "sources": [
+        "NIST Generative AI Profile",
+        "NIST AI Risk Management Framework",
+        "RFC 9457 Problem Details"
+      ]
+    },
+    {
+      "id": 185,
+      "slug": "latency-budget-percentiles-deadlines",
+      "moduleId": "module-44",
+      "title": "Latency budgets, percentiles, deadlines, and the slow tail",
+      "stability": "Established reliability practice; scenario targets are illustrative",
+      "diagram": "diagrams/185-latency-budget-percentiles-deadlines.png",
+      "diagramPrompt": "Show TOTAL DEADLINE as a horizontal budget bar divided into EDGE, NEXT.JS, FASTAPI, RETRIEVAL, POLICY, MODEL, TOOLS, A2A, UI. Under it show LATENCY DISTRIBUTION with p50, p95, p99 and a long coral SLOW TAIL. Add DEADLINE PROPAGATION and REMAINING TIME cards, plus teal EARLY FALLBACK and coral TIMEOUT CASCADE paths.",
+      "alt": "A total deadline is allocated across agent stages, compared with p50, p95, and p99 latency distributions, and propagated as remaining time to prevent slow-tail timeout cascades.",
+      "outcome": "Design and measure end-to-end response time as a budget shared by stages rather than one unexplained average.",
+      "explanation": "Latency is the time a user or downstream workflow waits, and averages hide the slow tail. Report distributions and percentiles such as p50, p95, and p99 with their measurement window and population. A p95 of two seconds means 95% of eligible observations completed at or below that boundary; it does not describe the worst case and should not be averaged across services. Start from a user-relevant deadline, then allocate a scenario budget across edge, application, retrieval, policy, model, tools, specialists, queues, and interface rendering. Include network overhead and recovery reserve. Propagate remaining time so downstream work can choose a faster path or stop before the caller has already timed out. Retries must consume the same deadline rather than secretly resetting it. Separate time to first useful update, time to first evidence, time to final artifact, and background completion when the product supports progress. Compare interactive and asynchronous workloads separately. Correlate slow traces with versions, routes, models, tools, queue state, and cache behavior, but avoid high-cardinality metric labels. All numbers in the course are proposed examples until measured in the later projects.",
+      "trace": [
+        "Define the user-visible deadline and separate first update, first evidence, final response, and background completion.",
+        "Allocate a scenario budget to each stage plus network and recovery reserve.",
+        "Propagate the deadline or remaining time across calls, tasks, queues, and retries.",
+        "Measure distributions and percentiles by meaningful route, workload, and version, not only averages.",
+        "Inspect slow-tail traces and choose optimization, fallback, cancellation, or product redesign based on the failing stage."
+      ],
+      "analogy": "A traveler has 45 minutes for a connection. Walking, security, a shuttle, and boarding share one clock; each cannot independently assume it has the full 45 minutes.",
+      "nextjs": [
+        "Record server timing for Route Handlers and outbound calls while distinguishing streaming first-byte or first-event time from final artifact completion.",
+        "Pass an explicit deadline through server-side fetch, MCP, A2A, and queue adapters and abort work that cannot produce useful value in time.",
+        "Show progress and preserved partial results when background work continues, with product state independent from whether the HTTP connection remains open."
+      ],
+      "python": [
+        "Use monotonic clocks, cancellation scopes or timeouts, and deadline context that is passed to FastAPI services, tools, specialists, and workers.",
+        "Record histograms with appropriate buckets and bounded dimensions; connect exemplar or trace references for slow observations where supported.",
+        "Test timeout, retry, cancellation, and cleanup behavior with injected delays at every stage, including work that ignores cancellation."
+      ],
+      "caseStudy": {
+        "situation": "Maya waits twelve seconds for a policy answer. The average dashboard shows three seconds, but retrieval and one finance specialist create a long p99 tail.",
+        "walkthrough": [
+          "The team separates time to first progress from time to final answer and inspects p50, p95, and p99 by route.",
+          "Slow traces show retrieval retrying after the remaining deadline is already too small.",
+          "The workflow cancels the specialist, preserves current research, and offers an asynchronous completion option.",
+          "A proposed deadline budget and tail threshold become release evidence, clearly labeled as scenario targets."
+        ],
+        "result": "Most users receive useful evidence sooner, and slow cases degrade visibly instead of failing after a silent wait.",
+        "danger": "Optimizing average latency can leave the slowest users unchanged or worse, especially when retries and queues amplify the tail.",
+        "takeaway": "One user deadline flows through every stage; percentiles reveal the slow tail that averages hide."
+      },
+      "lab": "Create a proposed six-second interactive budget across nine stages with one-second reserve. Add p50, p95, and p99 scenario observations, then decide which stage to cancel or degrade when only 800 milliseconds remain. Label every number proposed.",
+      "checkpoint": "Can you add service p95 latencies together to get the end-to-end p95?",
+      "answer": "Not reliably. Percentiles are distribution boundaries and generally do not add. Measure the end-to-end distribution and use traces to understand contributing stages.",
+      "glossary": [
+        "Percentile - boundary below which a percentage of observations falls",
+        "Deadline - latest useful completion time",
+        "Slow tail - small fraction of unusually slow requests"
+      ],
+      "related": [
+        180,
+        187,
+        188
+      ],
+      "sources": [
+        "Prometheus histogram practices",
+        "Google SRE service-level objectives",
+        "OpenTelemetry metrics API"
+      ]
+    },
+    {
+      "id": 186,
+      "slug": "agent-cost-ledger",
+      "moduleId": "module-44",
+      "title": "Token, retrieval, tool, specialist, storage, and cache costs",
+      "stability": "Cost-accounting pattern; prices and example amounts are not fixed facts",
+      "diagram": "diagrams/186-agent-cost-ledger.png",
+      "diagramPrompt": "Show one REQUEST opening a COST LEDGER with rows MODEL INPUT, MODEL OUTPUT, EMBEDDING, RERANK, VECTOR QUERY, TOOL CALL, A2A SPECIALIST, QUEUE, STORAGE, TELEMETRY. Arrows show CACHE HIT reducing work and RETRY multiplying work. Group by TENANT, FEATURE, ROUTE, VERSION, OUTCOME. Add BUDGET, FORECAST, ACTUAL, and coral COST SPIKE cards labeled SCENARIO.",
+      "alt": "An agent request records a scenario cost ledger across model, retrieval, tool, specialist, queue, storage, and telemetry work, with cache savings, retry amplification, budgets, and allocation by route and outcome.",
+      "outcome": "Explain where scenario cost comes from and compare cost with quality, latency, and user outcome instead of chasing one cheap request.",
+      "explanation": "Agent cost is a chain, not just model tokens. A scenario ledger can include input and output tokens, cached tokens, embeddings, reranking, vector queries, external APIs, browser or code sandboxes, A2A specialists, queue operations, storage, artifacts, telemetry, retries, and human review. Prices change, discounts differ, and self-hosted systems still consume capacity, so store quantities and price versions separately. Attribute costs using bounded business dimensions such as route, feature, tenant plan, model version, release candidate, outcome class, and environment; keep personal IDs out of metric labels. Compare cost per attempted request, successful outcome, corrected outcome, and retained customer problem, because a cheap wrong answer may create expensive support work. Record planned budget, estimated cost before execution, actual quantities after execution, and variance reason. Use budgets to choose a smaller model, reduce context, reuse retrieval, cap delegation, stop loops, or ask for approval. Cache measurement needs a correct baseline and must include invalidation, storage, staleness, and missed-quality cost. Every number in this course is a hypothetical scenario until a real project measures it against a dated price sheet.",
+      "trace": [
+        "Inventory every billable or capacity-consuming stage and record usage quantity separately from price.",
+        "Attach route, feature, version, outcome, and environment using bounded dimensions suitable for aggregation.",
+        "Estimate before work, reserve a scenario budget, update actual usage, and record variance and retry amplification.",
+        "Compare cost per successful user outcome alongside quality, safety, latency, and recovery measures.",
+        "Version price inputs and disclose exclusions so forecasts and comparisons can be reproduced later."
+      ],
+      "analogy": "A road trip costs more than fuel: tolls, parking, maintenance, lodging, detours, and time matter. The cheapest route is not best if it reaches the wrong city.",
+      "nextjs": [
+        "Create a server-side usage ledger with typed stage, quantity, unit, price-version reference, route, release, and outcome fields; keep price lookup outside UI components.",
+        "Show scenario estimates and actuals with clear labels, missing-cost warnings, and quality context rather than presenting estimates as invoices.",
+        "Apply preflight budgets to model, retrieval, tool, and specialist adapters and surface user choices when extra cost requires approval."
+      ],
+      "python": [
+        "Use a context-managed cost ledger that records stage usage from model, retrieval, tool, queue, and storage adapters even when a request fails.",
+        "Store quantities as durable events, join them with dated price tables for analysis, and recompute forecasts without rewriting historical usage.",
+        "Test budget exhaustion, missing provider usage, retries, cache hits, partial failure, cancellation, and compensation costs with synthetic rates."
+      ],
+      "caseStudy": {
+        "situation": "A candidate improves Maya's answer score slightly but invokes three specialists and repeats retrieval after every tool call, multiplying scenario cost and latency.",
+        "walkthrough": [
+          "The ledger shows which stages and retries created the increase rather than reporting one provider bill.",
+          "Cost per correct outcome is compared with the baseline, including correction and escalation rates.",
+          "A planner budget caps redundant delegation and reuses verified retrieval evidence within its freshness window.",
+          "The release rule requires the quality benefit to justify the scenario cost and tail-latency change."
+        ],
+        "result": "The team preserves meaningful quality while removing work that adds cost without user value.",
+        "danger": "A dashboard that labels estimated token cost as total agent cost can hide tools, specialists, storage, telemetry, retries, and expensive failure recovery.",
+        "takeaway": "Count the whole work chain, version prices, and judge cost per valuable outcome."
+      },
+      "lab": "Build a hypothetical ledger for one Acme request with ten cost stages, two retries, one cache hit, and one human review. Separate quantity from price, mark exclusions, and compare attempted-request cost with correct-outcome cost. Do not claim the scenario is measured.",
+      "checkpoint": "Is the candidate with the lowest model-token cost automatically the most economical?",
+      "answer": "No. It may require more tools, retries, specialists, storage, latency, corrections, or human support. Compare total scenario cost with successful outcomes.",
+      "glossary": [
+        "Cost ledger - stage-by-stage record of usage quantities",
+        "Unit price version - dated pricing input used for calculation",
+        "Cost per outcome - total relevant cost divided by successful outcomes"
+      ],
+      "related": [
+        183,
+        185,
+        189
+      ],
+      "sources": [
+        "OpenTelemetry metrics API",
+        "Google SRE service-level objectives"
+      ]
+    },
+    {
+      "id": 187,
+      "slug": "load-concurrency-queues-saturation",
+      "moduleId": "module-44",
+      "title": "Load, concurrency, queues, capacity, and saturation",
+      "stability": "Established capacity-engineering practice applied to agent workloads",
+      "diagram": "diagrams/187-load-concurrency-queues-saturation.png",
+      "diagramPrompt": "Show ARRIVAL RATE entering CONCURRENCY GATE then QUEUE then WORKER POOL. Gauges display ACTIVE, QUEUE DEPTH, WAIT TIME, SERVICE TIME, THROUGHPUT, ERRORS, SATURATION. Fan-out arrows reach MODEL, RETRIEVAL, TOOL, A2A with separate LIMITS. Coral path shows RETRY STORM and QUEUE GROWTH; teal path shows BACKPRESSURE and STABLE FLOW.",
+      "alt": "Request arrival passes concurrency and queue controls into workers and downstream model, retrieval, tool, and specialist limits, while gauges show load, wait, service, throughput, errors, and saturation.",
+      "outcome": "Recognize when an agent system is out of capacity and prevent queues, fan-out, and retries from turning delay into an outage.",
+      "explanation": "Load is incoming work over time. Concurrency is work active at once. A queue holds admitted work waiting for capacity. Capacity is the sustainable work a system can complete while meeting quality and latency objectives. Saturation appears when a constrained resource is nearly or fully occupied and queues, wait time, timeouts, or errors rise. Agent systems amplify load because one user request may generate several model calls, retrievals, tools, specialists, and retries. Measure arrival rate, active work, queue depth and age, service time, throughput, timeout and rejection rates, downstream quotas, worker utilization, and fan-out. Separate interactive work from long-running tasks and use workload-shaped tests rather than one unrealistic request loop. Increase load gradually, hold it long enough to reach steady behavior, and test bursts, provider throttling, slow dependencies, retry storms, and recovery after load drops. Capacity is not one number: it depends on route mix, context size, model, tool behavior, region, cache state, and release version. Use per-stage concurrency limits and backpressure so a slow dependency cannot consume every worker.",
+      "trace": [
+        "Describe realistic workload classes, route mix, request size, fan-out, think time, burst pattern, and background work.",
+        "Measure arrival, concurrency, queue depth and age, service time, throughput, errors, and downstream quotas together.",
+        "Raise load gradually and identify the first saturated stage and the user-visible symptom it causes.",
+        "Inject slow dependencies, throttling, retry storms, worker loss, and recovery while checking backpressure.",
+        "Record the sustainable operating region and admission rules by version instead of publishing one permanent capacity claim."
+      ],
+      "analogy": "A supermarket can have many shoppers arriving, a limited number at checkout, and a growing line. Adding shoppers does not increase completed purchases once every register is saturated.",
+      "nextjs": [
+        "Protect server routes with per-user and global limits, short request work, explicit background-task handoff, and honest retry-after or queued status.",
+        "Avoid holding many browser connections solely to represent durable work; reconnect the interface to authoritative task state and progress events.",
+        "Tag load-test traffic and candidate versions safely, then compare user-facing latency and errors without mixing synthetic traffic into business analytics."
+      ],
+      "python": [
+        "Set explicit worker, semaphore, connection-pool, queue, model, tool, and specialist concurrency limits instead of relying on unlimited task creation.",
+        "Export queue depth and age, active work, service time, rejection, timeout, retry, and completion metrics with bounded workload labels.",
+        "Build load fixtures that control arrival patterns and dependency delays, then verify cleanup and recovery after the test stops."
+      ],
+      "caseStudy": {
+        "situation": "A marketing campaign sends many policy questions. Each request fans out to three specialists, the finance provider slows, and retries double the queue every minute.",
+        "walkthrough": [
+          "Metrics show arrival rate is stable while queue age and active finance calls rise toward their limit.",
+          "Trace samples reveal retry fan-out after caller deadlines have expired.",
+          "Per-specialist limits, deadline-aware cancellation, and queue admission stop the retry storm.",
+          "The interface preserves accepted work and tells later requests when capacity is unavailable."
+        ],
+        "result": "The service stays recoverable and protects existing work instead of collapsing under amplified load.",
+        "danger": "Increasing worker count blindly can overload model, database, retrieval, or tool dependencies and make the outage larger.",
+        "takeaway": "Measure the work chain, find the first saturation point, and apply backpressure before queues become failure storage."
+      },
+      "lab": "Design a synthetic three-workload load test with interactive, background, and high-risk tasks. Define arrival shapes, fan-out, downstream limits, queue policy, saturation indicators, recovery checks, and stop conditions. Keep all target values labeled proposed.",
+      "checkpoint": "If CPU is low, does that prove an agent service has spare capacity?",
+      "answer": "No. It may be saturated on model quotas, connections, queues, external tools, database locks, memory, workers, or deadlines while CPU remains low.",
+      "glossary": [
+        "Arrival rate - new work entering per unit time",
+        "Saturation - constrained resource near full useful capacity",
+        "Backpressure - slowing or rejecting upstream work when downstream capacity is limited"
+      ],
+      "related": [
+        185,
+        188,
+        193
+      ],
+      "sources": [
+        "Google SRE monitoring distributed systems",
+        "OpenTelemetry metrics API",
+        "OpenTelemetry messaging semantic conventions"
+      ]
+    },
+    {
+      "id": 188,
+      "slug": "graceful-degradation-admission-control",
+      "moduleId": "module-44",
+      "title": "Graceful degradation, fallback, and admission control",
+      "stability": "Resilience operating pattern",
+      "diagram": "diagrams/188-graceful-degradation-admission-control.png",
+      "diagramPrompt": "Show REQUESTS entering ADMISSION CONTROL with PRIORITY, TENANT FAIRNESS, DEADLINE, RISK, CAPACITY. Accepted work enters FULL SERVICE then fallback tiers CACHED EVIDENCE, SMALLER MODEL, FEWER SPECIALISTS, ASYNC TASK, HUMAN HANDOFF. Coral lanes DENY NEW WORK and UNSAFE FALLBACK; teal lanes PRESERVE WORK and RECOVER. Add QUALITY FLOOR card.",
+      "alt": "Admission control evaluates priority, fairness, deadline, risk, and capacity before selecting full service or bounded fallback tiers while preserving work, enforcing a quality floor, and avoiding unsafe degradation.",
+      "outcome": "Design predictable reduced-service modes that preserve safety and useful work when dependencies or capacity fail.",
+      "explanation": "Graceful degradation means providing a smaller honest service instead of failing unpredictably, but a fallback is safe only if it preserves required quality and security constraints. Examples include using verified cached evidence within a freshness limit, selecting a faster model for low-risk summarization, reducing optional specialist fan-out, returning a partial artifact, moving work to an asynchronous task, or offering human help. Never degrade away tenant isolation, authorization, approval, citation, freshness, or another safety floor. Admission control decides whether new work should enter based on capacity, queue age, deadline, priority, risk, tenant fairness, and available fallback. Rejecting or delaying early can protect accepted work and make recovery faster. Define service tiers before incidents, make each user-visible, and test transitions both down and back up. Avoid fallback loops in which services call each other repeatedly. Preserve idempotency and partial results. A circuit breaker can stop calls to a failing dependency, but it needs controlled probing and recovery. Load shedding should be fair and governed, not silently biased toward convenient traffic.",
+      "trace": [
+        "Define the non-negotiable safety and quality floor that no degraded mode may cross.",
+        "Create ordered service tiers with entry conditions, user-visible behavior, preserved artifacts, and exit conditions.",
+        "Evaluate capacity, deadline, priority, risk, tenant fairness, and dependency health before admission.",
+        "Use timeouts, bounded retries, circuit breakers, bulkheads, queues, and load shedding without creating fallback loops.",
+        "Test degradation, recovery, stale-cache rejection, partial success, cancellation, and fairness under sustained load."
+      ],
+      "analogy": "A hospital in a surge postpones routine work, triages urgent cases, opens overflow areas, and preserves safety protocols. It does not solve crowding by removing identity checks or medication safeguards.",
+      "nextjs": [
+        "Return explicit typed modes such as full, reduced, queued, partial, unavailable, or human-help with retry guidance and preserved artifact references.",
+        "Use server-side feature configuration for fallbacks and keep the React interface honest about freshness, limitations, and authoritative status.",
+        "Provide fair rate and admission responses with accessible recovery choices rather than infinite spinners or automatic retry storms."
+      ],
+      "python": [
+        "Implement admission policies and fallback strategies as testable services with capacity inputs, safety-floor assertions, and immutable decision receipts.",
+        "Use semaphores, bounded queues, circuit breakers, and deadline-aware cancellation around dependencies while preserving idempotent durable work.",
+        "Run scenario tests that force each degraded tier, verify user-visible state and artifacts, and confirm controlled recovery without a surge."
+      ],
+      "caseStudy": {
+        "situation": "The finance specialist is unavailable while Maya needs the current policy explanation and a refund recommendation.",
+        "walkthrough": [
+          "The system preserves current policy research but marks the financial recommendation incomplete.",
+          "It refuses to use stale cached finance rules because that would cross the freshness floor.",
+          "Maya can queue the specialist task, continue with the explanation, or request human review.",
+          "When finance recovers, a controlled probe succeeds and queued work resumes without duplicate effects."
+        ],
+        "result": "Maya receives useful safe partial value and clear choices instead of a fabricated answer or total loss of work.",
+        "danger": "An ungoverned fallback can silently switch to stale data, a tool with broader authority, or a cheaper model that cannot meet the required safety task.",
+        "takeaway": "Degrade optional capability, never the safety floor; reject early when admission protects recovery."
+      },
+      "lab": "Create four service tiers for Acme. For each, define capacity trigger, quality floor, allowed features, forbidden shortcuts, visible status, artifact preservation, recovery choices, and exit test. Add one fairness rule and one stale-cache rejection.",
+      "checkpoint": "Is returning any answer better than rejecting a request during overload?",
+      "answer": "No. An unsafe or misleading answer may cause more harm. A clear rejection, queued task, partial artifact, or human handoff can be the correct degraded outcome.",
+      "glossary": [
+        "Admission control - deciding whether work may enter now",
+        "Quality floor - minimum behavior no fallback may violate",
+        "Circuit breaker - control that pauses calls to a failing dependency"
+      ],
+      "related": [
+        183,
+        185,
+        187
+      ],
+      "sources": [
+        "Google SRE monitoring distributed systems",
+        "Google SRE service-level objectives"
+      ]
+    },
+    {
+      "id": 189,
+      "slug": "offline-gates-reproducible-evals",
+      "moduleId": "module-45",
+      "title": "Offline gates and reproducible evaluation runs",
+      "stability": "Release-engineering pattern",
+      "diagram": "diagrams/189-offline-gates-reproducible-evals.png",
+      "diagramPrompt": "Show CHANGE MANIFEST entering BUILD ARTIFACT then REPRODUCIBLE EVAL RUN with frozen CASE SET, TOOL FIXTURES, RETRIEVAL SNAPSHOT, POLICY, CLOCK, SCORERS. Results pass gates CONTRACT, QUALITY SLICES, SAFETY, LATENCY, COST, COMPATIBILITY. Teal path creates SIGNED EVIDENCE BUNDLE; coral paths FAIL, REVIEW, QUARANTINE.",
+      "alt": "A versioned change manifest and build artifact run against frozen cases, tools, retrieval, policy, time, and scorers before contract, quality, safety, performance, cost, and compatibility release gates produce an evidence bundle.",
+      "outcome": "Make candidate comparisons repeatable enough that a release decision can be explained and rerun.",
+      "explanation": "An offline gate is a release decision made from controlled evaluation evidence before production exposure. Reproducibility begins with a change manifest: code, model, prompt, policy, tool, schema, Agent Card, MCP capability snapshot, retrieval corpus, index, dataset, scorer, rubric, runtime, and configuration versions. Freeze or emulate time, external tools, authorization, and provider responses where the test requires deterministic comparison. Record seeds and decoding settings when supported, but do not pretend they eliminate every source of variation. Run the same eligible cases against baseline and candidate, preserve missing and failed runs, and compare deterministic contracts, quality slices, forbidden outcomes, latency distributions, scenario costs, and compatibility fixtures. Gates can pass, fail, require review, or quarantine evidence. Define thresholds and owners before seeing the candidate results. Keep the raw evidence and normalized scorecard immutable enough for later audit. Offline success is necessary but not sufficient because test environments cannot reproduce all production traffic, dependencies, or human behavior; it earns the right to proceed to shadow or canary evidence, not the right to deploy globally.",
+      "trace": [
+        "Create a complete candidate manifest and verify every version and configuration input is resolvable.",
+        "Select a versioned eligible case set and controlled fixtures for tools, retrieval, policy, identity, time, and failures.",
+        "Run baseline and candidate with the same harness, record every attempt, and preserve missing or invalid evidence.",
+        "Evaluate contracts, slices, safety, latency, scenario cost, and compatibility against predefined gate rules.",
+        "Publish an immutable evidence bundle with decision, owner, exceptions, hashes, and the next allowed release stage."
+      ],
+      "analogy": "A food batch is tested against the same recipe, ingredients, equipment settings, hygiene rules, and lab checks. Passing the factory tests permits a controlled shipment, not an instant worldwide release.",
+      "nextjs": [
+        "Trigger eval jobs from trusted server-side release workflows and display immutable run manifests, progress, evidence completeness, and gate decisions in React.",
+        "Prevent the browser from editing finished results; corrections create new case, scorer, or decision versions with visible lineage.",
+        "Require candidate artifact digest and evaluation bundle reference before a deployment action becomes available."
+      ],
+      "python": [
+        "Build a runner that resolves a manifest, creates isolated fixtures, executes cases, records structured evidence, and closes every result even after errors.",
+        "Use content hashes for datasets and artifacts, explicit environment metadata, and deterministic fake adapters where appropriate.",
+        "Implement gate policies as versioned pure functions over normalized results, with separate human exception records and expiry."
+      ],
+      "caseStudy": {
+        "situation": "Acme proposes a new model and reranker to fix Maya's stale answer, but the prompt, policy, and evaluation dataset also changed during development.",
+        "walkthrough": [
+          "The manifest separates each changed component and pins the candidate combination.",
+          "Baseline and candidate run the same reviewed dataset and retrieval snapshot under the same tool and time fixtures.",
+          "The candidate improves freshness but fails a Spanish clarification slice and exceeds the proposed p95 scenario budget.",
+          "The gate returns review rather than allowing the overall score to hide those changes."
+        ],
+        "result": "The team can explain exactly what improved, what regressed, and which evidence must change before release.",
+        "danger": "Comparing two runs that use different datasets, scorers, corpora, tools, or policies can attribute a change to the model when the test itself changed.",
+        "takeaway": "Pin the whole system, run the same evidence, and let offline success earn only the next controlled stage."
+      },
+      "lab": "Write a 15-field release manifest and six gate rules for an Acme candidate. Include evidence completeness, exact contracts, two critical slices, one forbidden outcome, latency and scenario-cost budgets, and a compatibility fixture. Define pass, fail, review, and quarantine.",
+      "checkpoint": "Does a fixed random seed make an agent evaluation fully reproducible?",
+      "answer": "No. It can reduce one source of variation, but providers, models, tools, concurrency, retrieval, runtime, and external systems may still vary. Pin and record the whole environment and report uncertainty.",
+      "glossary": [
+        "Manifest - complete version list for one candidate or run",
+        "Offline gate - pre-production decision from controlled evidence",
+        "Evidence bundle - preserved inputs, results, versions, and decision"
+      ],
+      "related": [
+        177,
+        180,
+        190
+      ],
+      "sources": [
+        "NIST Generative AI Profile",
+        "Google SRE canarying releases",
+        "OpenTelemetry GenAI semantic conventions"
+      ]
+    },
+    {
+      "id": 190,
+      "slug": "shadow-canary-side-by-side",
+      "moduleId": "module-45",
+      "title": "Shadow traffic, canaries, and side-by-side comparison",
+      "stability": "Established release practice with agent-specific safeguards",
+      "diagram": "diagrams/190-shadow-canary-side-by-side.png",
+      "diagramPrompt": "Show PRODUCTION TRAFFIC splitting into CONTROL and SHADOW CANDIDATE with EFFECTS DISABLED, then a CANARY lane with SMALL COHORT and BOUNDED EFFECTS. Compare QUALITY, SAFETY, LATENCY, COST, ERRORS, RECOVERY by VERSION and SLICE. Funnel choices PROMOTE, HOLD, ROLLBACK. Add coral SHARED CACHE CONTAMINATION and teal ISOLATED EVIDENCE.",
+      "alt": "Production traffic is mirrored to a no-effect shadow candidate before a small bounded canary cohort is compared with control on quality, safety, latency, cost, errors, and recovery, leading to promote, hold, or rollback.",
+      "outcome": "Use real workload evidence gradually while preventing duplicate or unsafe business effects.",
+      "explanation": "Shadowing sends a copy of eligible production input to a candidate while the control still serves the user. It reveals behavior on real workload shape without exposing candidate output, but side effects must be disabled or redirected to isolated fakes. Sensitive input, consent, retention, regional processing, and vendor terms still apply; shadow traffic is real data, not free test data. A canary serves the candidate to a small governed cohort or traffic fraction and compares it with a control. Define cohort, duration, risk budget, quality and safety checks, latency, cost, errors, user outcomes, and rollback conditions before launch. Segment metrics by version so a small bad canary is not hidden inside overall traffic. Check representativeness: a 1% random sample may miss rare high-risk workflows, while staff-only traffic may not match customers. Avoid shared caches, queues, or state that allow the shadow to change control behavior or inflate cache performance. For long-running tasks, the canary window must cover the work lifecycle and recovery. Promote in stages, hold on uncertain evidence, and rollback automatically only when that action is itself safe and tested.",
+      "trace": [
+        "Define eligible traffic, privacy basis, exclusions, cohort, duration, and representativeness before mirroring anything.",
+        "Run the candidate in a side-effect-free isolated shadow and compare normalized outputs and stage evidence with control.",
+        "Expose a small canary cohort with bounded effects, explicit version dimensions, and a limited error-budget risk.",
+        "Evaluate quality, forbidden outcomes, latency, cost, errors, user recovery, and important slices against predeclared rules.",
+        "Promote, hold, or rollback while preserving comparison evidence and checking that control state was not contaminated."
+      ],
+      "analogy": "A theater rehearses with the same script and stage before a preview audience, then opens for a few performances while the original production remains available. It does not test pyrotechnics in a packed theater without isolation.",
+      "nextjs": [
+        "Choose cohort and candidate server-side with a stable non-sensitive targeting key and record the evaluated flag variant and version on traces and receipts.",
+        "Never execute shadow side effects; route candidate tools to isolated adapters and keep candidate output away from the user until the design permits it.",
+        "Build a comparison view that separates control and candidate denominators, slices, missing data, and long-running completion windows."
+      ],
+      "python": [
+        "Implement a shadow dispatcher that clones only approved fields, strips authority, uses isolated stores, and records candidate evidence asynchronously.",
+        "Use a canary policy service to assign cohorts, cap risk, and attach version and variant to context across FastAPI and workers.",
+        "Continuously compare candidate and control with predefined guardrails and emit one durable promotion, hold, or rollback decision receipt."
+      ],
+      "caseStudy": {
+        "situation": "Acme's candidate fixes stale retrieval offline, so the team shadows real policy questions before exposing answers to Maya or calling tools.",
+        "walkthrough": [
+          "The shadow uses real query shape but isolated retrieval cache, fake effects, redacted evidence, and short retention.",
+          "Comparison reveals higher latency only on long multilingual policies, a slice underrepresented offline.",
+          "After tuning, a small canary serves low-risk policy explanations while refunds still require the control path.",
+          "The canary meets predefined slice and budget rules before gradual promotion."
+        ],
+        "result": "Real workload evidence improves confidence without giving an unproven candidate broad business authority.",
+        "danger": "A shadow that shares caches, writes analytics, sends emails, or calls payment tools is not observational; it can change production and duplicate effects.",
+        "takeaway": "Shadow with effects isolated, canary with risk bounded, and compare by version before gradual promotion."
+      },
+      "lab": "Design a three-stage release for Acme: shadow, 2% low-risk canary, and 20% expanded canary. Define eligibility, isolation, duration, six comparison measures, two critical slices, error-budget exposure, hold rules, and rollback evidence. Mark percentages as proposed.",
+      "checkpoint": "Is shadow traffic automatically risk-free because users do not see the candidate output?",
+      "answer": "No. It processes real data and can affect shared caches, stores, quotas, vendors, or tools unless intentionally isolated and governed.",
+      "glossary": [
+        "Shadow traffic - copied input evaluated without serving candidate output",
+        "Canary - small governed production exposure",
+        "Control - current version used as comparison baseline"
+      ],
+      "related": [
+        189,
+        191,
+        194
+      ],
+      "sources": [
+        "Google SRE canarying releases",
+        "OpenFeature specification",
+        "OpenFeature observability appendix"
+      ]
+    },
+    {
+      "id": 191,
+      "slug": "feature-flags-version-pins-rollback",
+      "moduleId": "module-45",
+      "title": "Feature flags, version pinning, rollback, and kill switches",
+      "stability": "OpenFeature provides a current vendor-neutral flag contract; rollout policy remains implementation-specific",
+      "diagram": "diagrams/191-feature-flags-version-pins-rollback.png",
+      "diagramPrompt": "Show RELEASE CONFIG selecting MODEL, PROMPT, POLICY, RETRIEVAL INDEX, TOOL ADAPTER, AGENT CARD, UI through FEATURE FLAGS. Each evaluation emits VARIANT, REASON, CONTEXT, VERSION RECEIPT. Controls include PIN, PROMOTE, ROLLBACK, KILL SWITCH, EXPIRY. Coral path shows FLAG DRIFT and INCOMPATIBLE MIX; teal path returns KNOWN GOOD SET.",
+      "alt": "Feature flags select a coordinated set of model, prompt, policy, index, tool, agent, and interface versions while recording evaluation evidence and supporting pinning, promotion, rollback, kill switches, and expiry.",
+      "outcome": "Control independent agent-system changes without creating an untraceable mixture of versions or an untested emergency switch.",
+      "explanation": "Agent behavior can change when code, model alias, prompt, policy, retrieval index, embedding, reranker, tool adapter, Agent Card, schema, or interface changes. A release should resolve these into an explicit version set and record it on evaluation and production evidence. Feature flags can separate deployment from exposure and target a candidate by environment, cohort, workload, or risk. OpenFeature provides a vendor-neutral API concept with evaluation context, providers, hooks, reasons, variants, events, and observability mappings. Treat flag evaluation as a decision: record flag key, variant, reason, provider, context categories, and configuration version without logging sensitive targeting data. Flags need owners, defaults, expiry, dependency rules, and cleanup. A rollback returns to a known-good compatible version set; it is not simply 'model previous' if the index or schema already changed. A kill switch stops or narrows hazardous capability quickly and should fail safe, be authorized, auditable, rehearsed, and independent enough to work during an incident. Test activation and recovery regularly. Too many interacting flags create combinations that were never evaluated, so constrain allowed matrices and promote bundles when components must move together.",
+      "trace": [
+        "Resolve every behavior-changing component into one recorded version manifest for the request or task.",
+        "Evaluate flags from governed non-sensitive context and record variant, reason, provider, configuration version, and trace reference.",
+        "Define compatible version sets, dependency rules, safe defaults, owner, expiry, and removal plan.",
+        "Test rollback against current data and schemas and rehearse kill-switch activation, authorization, and recovery.",
+        "Limit combinations, detect drift between services, and remove stale flags after the rollout decision is complete."
+      ],
+      "analogy": "An aircraft cockpit has labeled controls, guarded emergency switches, checklists, and known configurations. Random switches scattered across the cabin would not make the aircraft safer or easier to reverse.",
+      "nextjs": [
+        "Evaluate server-side flags with OpenFeature-style clients and stable context; send React the resolved UI state and safe reason category, not provider credentials or full targeting rules.",
+        "Attach model, prompt, policy, index, tool, schema, release, and flag variants to server traces and durable receipts.",
+        "Build an operator control that requires authorization, confirmation, scope, reason, expiry, and audit evidence for rollback or kill-switch changes."
+      ],
+      "python": [
+        "Wrap feature evaluation behind an application interface so providers can change while typed variants and defaults remain stable.",
+        "Validate the resolved version manifest before work begins and reject incompatible model, index, tool, policy, or schema combinations.",
+        "Implement rollback and kill-switch runbooks as tested commands that emit decisions, update control state safely, and verify observed traffic moved."
+      ],
+      "caseStudy": {
+        "situation": "Acme rolls back the model after a stale-answer incident but leaves the candidate retrieval index and prompt active, producing a combination never evaluated offline.",
+        "walkthrough": [
+          "The version manifest detector marks the mixed combination incompatible.",
+          "Rollback selects a known-good bundle rather than one component alias.",
+          "A kill switch temporarily disables autonomous policy recommendations while preserving evidence lookup.",
+          "The operator verifies the resolved variants on live traces and sets the temporary switch to expire after review."
+        ],
+        "result": "Recovery returns the whole system to a tested state and retains useful low-risk capability.",
+        "danger": "An undocumented flag with no owner or expiry can remain active for years, create hidden behavior, and make incidents impossible to reproduce.",
+        "takeaway": "Pin the whole behavior set; make flags observable; rehearse rollback and kill switches as real controls."
+      },
+      "lab": "Create a compatibility table for two models, two prompts, two indexes, and two tool schemas. Allow only evaluated combinations. Define one rollout flag, one emergency kill switch, safe defaults, owner, expiry, audit fields, and a verification query proving rollback took effect.",
+      "checkpoint": "Is changing a model alias back to its previous value always a complete rollback?",
+      "answer": "No. Prompts, policies, indexes, schemas, tools, caches, and data migrations may also have changed. Roll back to a tested compatible version set.",
+      "glossary": [
+        "Feature flag - runtime decision controlling behavior exposure",
+        "Variant - resolved flag value or named treatment",
+        "Kill switch - emergency control that quickly disables or narrows capability"
+      ],
+      "related": [
+        189,
+        190,
+        192
+      ],
+      "sources": [
+        "OpenFeature specification",
+        "OpenFeature observability appendix",
+        "OpenTelemetry feature-flag semantic conventions"
+      ]
+    },
+    {
+      "id": 192,
+      "slug": "protocol-conformance-compatibility-migration",
+      "moduleId": "module-45",
+      "title": "Protocol conformance, compatibility, and migration gates",
+      "stability": "MCP 2026-07-28 and A2A 1.0 current; conformance harness is an implementation pattern",
+      "diagram": "diagrams/192-protocol-conformance-compatibility-migration.png",
+      "diagramPrompt": "Show CLIENT VERSION MATRIX facing SERVER VERSION MATRIX for MCP, A2A, HTTP, EVENTS, ARTIFACT SCHEMAS. Gates DISCOVER, NEGOTIATE, VALIDATE, FIXTURE, ERROR, DOWNGRADE, MIGRATE. Add compatibility cells PASS, EXPECTED REJECT, FAIL. Coral LEGACY MCP LOGGING and REMOVED CAPABILITY lanes are blocked; teal ADAPTER and ROLLOUT lanes continue.",
+      "alt": "Client and server versions for MCP, A2A, HTTP, events, and artifacts pass discovery, negotiation, validation, fixtures, errors, downgrade, and migration gates in a compatibility matrix.",
+      "outcome": "Release protocol and schema changes only when supported combinations, expected rejection, and migration behavior are proved.",
+      "explanation": "Conformance asks whether an implementation follows a specification. Compatibility asks whether two specific versions and capability sets work together safely. Migration asks how a fleet moves between them without confusing partial rollout. Test discovery, version negotiation, capability advertisement, request and response schemas, errors, cancellation, tasks, artifacts, streaming or subscription behavior, authorization boundaries, and unknown fields using official specifications and your own versioned fixtures. Expected rejection is a valid result when a client requests an unsupported or unsafe combination. MCP 2026-07-28 is stateless and deprecated legacy roots, sampling, logging, and HTTP+SSE behavior should not be introduced into new designs merely because an old client still knows them. A2A 1.0 has its own task, context, binding, card, and error contracts. Keep protocol IDs separate from trace IDs. During migration, measure clients and servers by negotiated version and capability, run dual-read or adapter behavior only where defined, and set removal criteria for legacy paths. Avoid permissive parsing that silently accepts invalid authority or effects. Preserve failing fixtures as regressions and recheck the current spec before implementation.",
+      "trace": [
+        "Inventory supported client, server, protocol, binding, schema, card, extension, and capability versions.",
+        "Create positive, negative, unknown-field, unsupported-capability, malformed, authorization, cancellation, and error fixtures.",
+        "Run the full supported compatibility matrix and distinguish pass, expected reject, and unexpected failure.",
+        "Plan staged migration, adapters, telemetry, rollback, legacy removal criteria, and data or artifact compatibility.",
+        "Gate release on current specification evidence and convert every production incompatibility into a permanent fixture."
+      ],
+      "analogy": "A plug adapter is useful only when voltage, frequency, grounding, and device limits also match. A shape that fits physically does not prove electrical compatibility.",
+      "nextjs": [
+        "Centralize protocol adapters and generated or validated schemas on the server so React components consume stable application types rather than raw wire formats.",
+        "Record negotiated version, capability set, binding, remote card or discovery version, and adapter version on traces and error receipts.",
+        "Build fixture-driven contract tests for supported and expected-reject paths before deploying a client or server change."
+      ],
+      "python": [
+        "Use typed protocol clients and servers with strict boundary validation, explicit unknown-field policy, and fixtures derived from current specification examples.",
+        "Parameterize tests across version and capability matrices and assert both successful behavior and correct error semantics.",
+        "Instrument adapter and legacy-path usage so removal decisions use evidence and rollback can restore a known compatible path."
+      ],
+      "caseStudy": {
+        "situation": "One Acme service adopts MCP 2026-07-28 while an older client expects session behavior and protocol logging; an A2A specialist changes its artifact schema during the same rollout.",
+        "walkthrough": [
+          "Discovery and negotiation identify the supported MCP version and reject the obsolete assumption explicitly.",
+          "Application telemetry replaces any new dependency on deprecated MCP logging.",
+          "The A2A artifact fixture detects the schema incompatibility before the specialist reaches the canary.",
+          "The migration gate holds the rollout until the adapter and compatible artifact versions pass the matrix."
+        ],
+        "result": "The fleet changes deliberately, with expected rejection and adapter behavior visible instead of silent partial breakage.",
+        "danger": "Testing only the newest client against the newest server misses mixed fleets, capability gaps, malformed input, and rollback compatibility.",
+        "takeaway": "Conformance proves the contract; a version matrix proves combinations; migration evidence proves the fleet can move."
+      },
+      "lab": "Build a 4-by-4 compatibility matrix spanning two MCP clients, two MCP servers, two A2A artifact versions, and two capability sets. Add ten positive and negative fixtures, expected rejection rules, adapter telemetry, rollout order, rollback, and legacy removal criteria.",
+      "checkpoint": "Is an expected protocol rejection a failed compatibility test?",
+      "answer": "No. If the combination is unsupported or unsafe, a clear standards-compliant rejection is the correct compatible behavior.",
+      "glossary": [
+        "Conformance - following a specification's rules",
+        "Compatibility matrix - tested combinations of versions and capabilities",
+        "Migration gate - evidence rule controlling movement between versions"
+      ],
+      "related": [
+        174,
+        189,
+        191
+      ],
+      "sources": [
+        "MCP 2026-07-28 specification",
+        "MCP 2026-07-28 changelog",
+        "MCP 2026-07-28 release notes",
+        "A2A Protocol 1.0 specification"
+      ]
+    },
+    {
+      "id": 193,
+      "slug": "alert-ownership-triage-runbook",
+      "moduleId": "module-46",
+      "title": "Alerts, ownership, triage, and runbooks",
+      "stability": "Established incident-response practice adapted to agent outcomes",
+      "diagram": "diagrams/193-alert-ownership-triage-runbook.png",
+      "diagramPrompt": "Show SIGNALS entering ALERT RULE with USER IMPACT, BUDGET BURN, SAFETY VIOLATION, MISSING EVIDENCE. Route to PAGE NOW, TICKET SOON, RECORD ONLY. PAGE NOW enters OWNER, SEVERITY, TRIAGE, RUNBOOK, CONTAIN, RECOVER, COMMUNICATE. Add ACK CLOCK and escalation ladder. Coral NO OWNER alert loops; teal ACTIONABLE alert closes with RECEIPT.",
+      "alt": "Operational signals become page, ticket, or record actions based on user impact, budget burn, safety, and missing evidence, then flow through ownership, triage, runbook, containment, recovery, communication, and closure.",
+      "outcome": "Create alerts that lead a named person to a useful action instead of producing noise and dashboards nobody owns.",
+      "explanation": "An alert should mean a human must act now or soon. If no action is required, keep the signal for analysis rather than paging. Begin with user or safety impact, not a convenient infrastructure threshold. Useful agent alerts may cover forbidden business effects, stale-evidence rates, policy-deny bypass, missing receipts, exhausted error or cost budget, queue age, failed canary guardrails, widespread recovery failure, or telemetry loss that makes critical work unobservable. Every alert needs an owner, severity rule, acknowledgement target, escalation, runbook, evidence links, safe first actions, communication route, and closure condition. Make alert payloads privacy-safe and include version, route, slice, denominator, current impact, start time, and relevant traces or artifacts. Avoid one alert per failed request; alert on actionable patterns or singular severe events. Triage establishes whether the event is real, its impact and scope, what changed, and whether containment is safer than continued diagnosis. Runbooks should support decisions, not force blind commands: include prerequisites, rollback and kill-switch controls, validation, and when to escalate. Test alerts and ownership outside real incidents and remove rules that cannot lead to useful action.",
+      "trace": [
+        "Define the user, business, safety, or observability condition that genuinely requires action.",
+        "Choose page, ticket, or record behavior and name owner, severity, acknowledgement, and escalation rules.",
+        "Include impact, scope, version, slice, denominator, time, evidence links, and recent change context.",
+        "Write safe triage, containment, recovery, communication, and verification steps with decision branches.",
+        "Exercise the alert, measure noise and missed incidents, verify routing, and update or retire the rule."
+      ],
+      "analogy": "A smoke alarm should wake someone for a probable fire, not beep for every piece of toast and certainly not ring in an empty building with nobody responsible for responding.",
+      "nextjs": [
+        "Build an operator incident view that resolves alert references to authorized traces, artifacts, release versions, budgets, and runbook steps without embedding sensitive payloads in notifications.",
+        "Expose kill switch, rollback, and communication actions only to authorized roles and require reason, scope, confirmation, and decision receipts.",
+        "Keep customer-facing status tied to verified incident state and approved communication, not speculative internal alerts."
+      ],
+      "python": [
+        "Evaluate alert rules over normalized metrics and durable safety events, then deduplicate and group by incident candidate rather than paging per trace.",
+        "Create typed Alert, Incident, Owner, RunbookStep, Action, Communication, and ClosureEvidence records with immutable histories.",
+        "Test synthetic rule firing, routing, acknowledgement, escalation, stale ownership, missing telemetry, and closure verification in scheduled exercises."
+      ],
+      "caseStudy": {
+        "situation": "After a candidate canary, stale-policy failures rise in one route while overall error rate remains normal and infrastructure dashboards stay green.",
+        "walkthrough": [
+          "A user-outcome alert detects the critical slice crossing its proposed guardrail with a sufficient denominator.",
+          "The page identifies the candidate version, route, start time, affected artifacts, and comparison with control.",
+          "The runbook pauses the canary, verifies the current policy source, preserves evidence, and communicates to support.",
+          "The owner closes the incident only after rollback traffic and fresh-answer cases verify recovery."
+        ],
+        "result": "The team responds to user harm quickly even though CPU, HTTP errors, and average latency look healthy.",
+        "danger": "Paging on every model refusal or low grader score creates fatigue, while the truly dangerous deny-bypass or stale-evidence pattern is buried.",
+        "takeaway": "Page for actionable impact, with a named owner, useful evidence, and a tested first decision."
+      },
+      "lab": "Write three Acme alerts: forbidden effect, stale-evidence slice, and queue saturation. For each, define denominator, proposed threshold, severity, owner, page or ticket, acknowledgement, escalation, evidence payload, runbook first action, communication, and closure proof.",
+      "checkpoint": "Should every failed evaluation case generate a production page?",
+      "answer": "No. Individual failures usually belong in evaluation results or tickets. Page when a severe singular event or actionable pattern requires immediate human response.",
+      "glossary": [
+        "Triage - rapid assessment of reality, impact, scope, and next action",
+        "Runbook - tested decision guide for an operational situation",
+        "Alert fatigue - reduced attention caused by excessive noisy alerts"
+      ],
+      "related": [
+        175,
+        187,
+        195
+      ],
+      "sources": [
+        "Google SRE monitoring distributed systems",
+        "Google SRE incident response",
+        "OWASP Logging Cheat Sheet"
+      ]
+    },
+    {
+      "id": 194,
+      "slug": "red-team-chaos-abuse-recovery",
+      "moduleId": "module-46",
+      "title": "Red-team, chaos, abuse, and recovery exercises",
+      "stability": "Controlled resilience and security-testing practice",
+      "diagram": "diagrams/194-red-team-chaos-abuse-recovery.png",
+      "diagramPrompt": "Show TEST PLAN selecting SAFE SYNTHETIC SCENARIOS: PROMPT ATTACK, TOOL ABUSE, STALE DATA, MODEL FAILURE, QUEUE LOSS, PROVIDER THROTTLE, TELEMETRY DROP, REGION LOSS. Pass through SCOPE, AUTHORIZATION, BLAST RADIUS, STOP CONDITIONS, OBSERVERS. Outcomes DETECT, CONTAIN, DEGRADE, RECOVER, LEARN. Coral UNCONTROLLED TEST is quarantined.",
+      "alt": "A controlled exercise injects synthetic security, data, model, queue, provider, telemetry, and regional failures inside authorized scope, blast-radius, observer, and stop controls to test detection, containment, degradation, recovery, and learning.",
+      "outcome": "Rehearse dangerous and disruptive conditions safely enough to prove controls and recovery before a real incident.",
+      "explanation": "A red-team exercise probes how people and systems resist adversarial behavior. A chaos exercise introduces controlled failure to test resilience assumptions. Abuse testing explores misuse, policy evasion, resource exhaustion, and harmful combinations. Recovery exercises verify containment, rollback, restoration, communication, and evidence. They overlap but need explicit objectives. Start with a hypothesis, owner, authorization, synthetic data, environment, blast radius, affected tenants, allowed tools, observer, stop conditions, communication, and cleanup. Prefer local or isolated environments first; production exercises require stronger governance and should never improvise real customer harm. Test prompt injection, tool abuse, cross-tenant attempts, stale evidence, grader evasion, provider throttling, queue duplication, worker loss, telemetry gaps, flag failure, rollback failure, and dependency outage. Success is not 'the system never failed.' It is that controls detected the event, bounded impact, preserved safety and evidence, degraded honestly, recovered within an agreed scenario, and created actionable learning. Measure time to detect, acknowledge, contain, recover, and verify, while labeling targets as proposed until measured. Preserve failed controls as regression cases.",
+      "trace": [
+        "State the hypothesis, protected outcome, expected detection, containment, degradation, recovery, and learning evidence.",
+        "Authorize scope, environment, synthetic data, blast radius, affected identities, tools, observers, stop conditions, and cleanup.",
+        "Inject one controlled failure or abuse behavior and record what people, controls, telemetry, and users observe.",
+        "Contain and recover through the real runbook, then verify business state, security state, queued work, and telemetry restoration.",
+        "Document control gaps, owners, due dates, proof requirements, and new permanent evaluation cases before closing."
+      ],
+      "analogy": "A fire drill intentionally creates a safe simulation of danger so alarms, exits, roles, communications, and accountability are tested before smoke is real.",
+      "nextjs": [
+        "Add a non-production scenario console using synthetic fixtures and explicit environment banners; require authorization before any disruptive test action.",
+        "Render exercise timeline, expected observations, actual detections, control actions, user-visible behavior, and stop-condition state from typed events.",
+        "Prevent test flags and fake effects from crossing into production through separate credentials, stores, domains, and build-time checks."
+      ],
+      "python": [
+        "Implement dependency fault adapters for delay, timeout, throttle, malformed response, duplication, loss, stale data, and telemetry failure with deterministic scopes.",
+        "Drive exercises from a typed plan containing hypothesis, targets, blast radius, schedule, observers, abort rules, and cleanup assertions.",
+        "Verify data and workflow reconciliation after recovery and export failed expectations directly into the regression-case backlog."
+      ],
+      "caseStudy": {
+        "situation": "Acme rehearses the exact failure behind Maya's stale answer while also dropping part of the trace and throttling the policy provider.",
+        "walkthrough": [
+          "The exercise uses synthetic policy documents and a non-production tenant inside a bounded environment.",
+          "Freshness assertions detect the stale selection even though trace telemetry is incomplete.",
+          "The system degrades to preserved evidence and human review while the runbook restores the provider and telemetry.",
+          "Cleanup proves no test artifacts or fault flags remain and adds cases for stale data plus observability loss."
+        ],
+        "result": "The team proves that safety and recovery do not depend on perfect telemetry or one healthy provider.",
+        "danger": "Running an unbounded 'chaos test' in production without authorization, synthetic data, stop conditions, or observers can become the incident it was meant to prevent.",
+        "takeaway": "Inject failure deliberately, constrain the blast radius, use real controls, and verify recovery and cleanup."
+      },
+      "lab": "Write one tabletop and one isolated technical exercise. Include hypothesis, synthetic fixtures, eight injected faults or abuses, blast radius, observers, expected alerts, user-visible degradation, stop rules, recovery, cleanup, and five regression cases.",
+      "checkpoint": "Is a chaos exercise successful only if users notice no failure?",
+      "answer": "No. The goal is to test assumptions. Controlled degradation may be visible; success means impact is bounded, safety is preserved, recovery works, and learning is captured.",
+      "glossary": [
+        "Blast radius - maximum allowed scope of test impact",
+        "Fault injection - deliberate controlled introduction of failure",
+        "Stop condition - rule that immediately halts the exercise"
+      ],
+      "related": [
+        175,
+        182,
+        193
+      ],
+      "sources": [
+        "OWASP Agentic Top 10 2026",
+        "NIST Generative AI Profile",
+        "Google SRE incident response"
+      ]
+    },
+    {
+      "id": 195,
+      "slug": "postmortem-corrective-regression-loop",
+      "moduleId": "module-46",
+      "title": "Postmortems, corrective actions, and regression cases",
+      "stability": "Established learning practice; accountability remains explicit",
+      "diagram": "diagrams/195-postmortem-corrective-regression-loop.png",
+      "diagramPrompt": "Show INCIDENT TIMELINE feeding IMPACT, DETECTION, CONTRIBUTING CONDITIONS, DECISIONS, RECOVERY, EVIDENCE GAPS. These create CORRECTIVE ACTION cards with OWNER, DUE, PRIORITY, PROOF. Verified actions feed PERMANENT REGRESSION CASES and CONTROL UPDATE, then future RELEASE GATE. Coral BLAME and ACTION WITHOUT PROOF are rejected.",
+      "alt": "An incident timeline and impact analysis produce owned corrective actions with proof, permanent regression cases, control updates, and future release gates while rejecting blame and unverified closure.",
+      "outcome": "Turn a serious failure into verified system improvement instead of a document that is filed and forgotten.",
+      "explanation": "A useful postmortem reconstructs what happened, who and what was affected, how the event was detected, why impact expanded, which decisions helped or hurt, how recovery was verified, and where evidence was missing. It distinguishes triggering change, contributing technical and organizational conditions, and latent weaknesses without reducing the explanation to one person's mistake. Blameless learning does not remove accountability: decisions, owners, exceptions, ignored warnings, and overdue controls should remain clear. Corrective actions must be specific, prioritized by risk, assigned to an owner, dated, and closed only with evidence. Strong actions change the system: enforce an assertion, improve a boundary, simplify a dangerous dependency, add a safe fallback, repair ownership, or automate verification. Weak actions merely say 'be careful' or 'retrain the team.' Every reproducible failure should become a versioned regression case at the earliest stage that could have caught it, plus an end-to-end case when user outcome matters. Verify that the fix fails before the change and passes after it, then keep the case in future release gates. Review whether detection, containment, recovery, and communication improved, not only whether the original bug disappeared.",
+      "trace": [
+        "Build a factual timeline from business records, traces, alerts, changes, communications, and user reports, marking evidence gaps.",
+        "Describe impact and contributing technical, process, ownership, and decision conditions without stopping at individual blame.",
+        "Create risk-prioritized corrective actions with owner, due date, proof requirement, and escalation for overdue work.",
+        "Turn the failure into stage-level and end-to-end regression cases that fail before the fix and pass after it.",
+        "Close only after action evidence, recovery verification, future gate inclusion, and a review of detection and response improvement."
+      ],
+      "analogy": "After a bridge defect, engineers do not only replace one bolt. They inspect design assumptions, maintenance records, alarms, inspection methods, ownership, and every similar bridge, then change future checks.",
+      "nextjs": [
+        "Build a postmortem view that links timeline events to authorized evidence, distinguishes fact from inference, and records redaction and access rules.",
+        "Track corrective actions as durable records with owner, status, due date, proof artifact, reviewer, and connection to release gates.",
+        "Expose regression cases and verification history in the quality lab so closing an action cannot be reduced to checking a UI box."
+      ],
+      "python": [
+        "Generate timeline candidates from normalized events but require human review; never treat missing telemetry as proof that an event did not happen.",
+        "Model corrective actions and evidence immutably and enforce state transitions from proposed to implemented to verified to closed.",
+        "Convert incident fixtures into automated pytest and evaluation cases, demonstrate pre-fix failure, and register them in the standard release suite."
+      ],
+      "caseStudy": {
+        "situation": "Maya's stale answer reached production because the offline dataset lacked version-conflict cases, the canary dashboard hid the slice, and the alert had no owner.",
+        "walkthrough": [
+          "The postmortem reconstructs the retrieval change, missing slice, delayed report, and recovery decisions.",
+          "Actions add stale-current pairs, denominator-aware slice gates, owned alerts, and a verified rollback bundle.",
+          "Each action has an owner and proof: failing-before and passing-after case, alert exercise, or rollback observation.",
+          "Future candidates cannot promote until the permanent regression and ownership checks pass."
+        ],
+        "result": "One incident improves retrieval, evaluation, release, alerting, and recovery rather than producing only a narrative.",
+        "danger": "Closing actions because code merged, training occurred, or a checkbox changed can leave the actual control unverified and the same failure available.",
+        "takeaway": "Every serious failure should change a control, gain an owner, prove the fix, and remain a regression test."
+      },
+      "lab": "Draft a one-page postmortem for Maya's stale answer with impact, 12-event timeline, five contributing conditions, four evidence gaps, six corrective actions, owners, due dates, proof, and three permanent regression cases. Reject any action phrased only as 'be more careful.'",
+      "checkpoint": "Does blameless mean nobody is accountable for corrective actions or risky decisions?",
+      "answer": "No. Blameless learning avoids simplistic personal blame while keeping decisions, ownership, responsibilities, exceptions, and action accountability explicit.",
+      "glossary": [
+        "Postmortem - structured learning review after an incident",
+        "Corrective action - owned change intended to reduce recurrence or impact",
+        "Regression case - permanent test for a previously observed failure"
+      ],
+      "related": [
+        176,
+        193,
+        196
+      ],
+      "sources": [
+        "Google SRE postmortem culture",
+        "Google SRE incident response",
+        "NIST AI Risk Management Framework"
+      ]
+    },
+    {
+      "id": 196,
+      "slug": "acme-agent-quality-lab",
+      "moduleId": "module-46",
+      "title": "Capstone: the Acme Agent Quality Lab",
+      "stability": "Course architecture synthesizing current standards and operating patterns",
+      "diagram": "diagrams/196-acme-agent-quality-lab.png",
+      "diagramPrompt": "Create one complete control-room architecture. Center ACME AGENT QUALITY LAB. Connect TELEMETRY CONTRACT, TRACE EXPLORER, EVAL DATASET, SCORERS, STAGE QUALITY, LATENCY COST CAPACITY, RELEASE GATES, SHADOW CANARY, FLAGS ROLLBACK, ALERTS RUNBOOKS, INCIDENTS, REGRESSION LEDGER. Inputs from NEXT.JS, FASTAPI, MCP, A2A, RAG, TOOLS, QUEUES, UI. Teal loop returns VERIFIED LEARNING to BUILD; coral STALE ANSWER is caught at RETRIEVAL and blocks RELEASE.",
+      "alt": "The Acme Agent Quality Lab connects telemetry, evaluation data, scorers, stage quality, performance economics, release gates, canaries, rollback, alerts, incidents, and regressions across Next.js, FastAPI, MCP, A2A, RAG, tools, queues, and UI.",
+      "outcome": "Assemble a framework-neutral operating contract that can guide both future full-stack implementations.",
+      "explanation": "The Acme Agent Quality Lab is the evidence and operating layer around the future agent product. It receives privacy-safe telemetry from Next.js, FastAPI, MCP, A2A, retrieval, models, policies, tools, queues, artifacts, and interface events. A telemetry contract defines signals, attributes, propagation, versions, capture policy, retention, and access. The evaluation system stores versioned cases, deterministic assertions, rubrics, scorers, human adjudications, slices, denominators, and run manifests. Stage quality separates intent, routing, retrieval, policy, tools, planning, delegation, synthesis, groundedness, user control, and recovery. Performance and economics add deadlines, percentiles, scenario costs, concurrency, queues, capacity, and degradation. Release engineering turns this evidence into offline gates, shadow comparisons, canaries, flags, compatible version bundles, rollback, and kill switches. Operations connects actionable alerts to owners, runbooks, incidents, communication, postmortems, corrective actions, and permanent regressions. The lab is not one vendor dashboard and does not store every prompt. It is a set of contracts and evidence flows with adapters. The capstone proves the running case end to end: a stale but plausible answer is traced to retrieval, found in the right slice, blocked before broad release, recovered safely, and preserved as a future test.",
+      "trace": [
+        "Define user outcomes, unacceptable outcomes, owners, quality and safety rules, and proposed reliability and cost budgets.",
+        "Instrument the whole path with W3C context, OpenTelemetry signals, business references, version manifests, and privacy controls.",
+        "Build versioned evaluation cases and stage scorers that preserve denominators, slices, disagreement, and evidence lineage.",
+        "Gate releases through offline, shadow, canary, compatibility, flag, rollback, and kill-switch evidence.",
+        "Operate alerts, runbooks, exercises, incidents, actions, and regression learning as one closed improvement loop."
+      ],
+      "analogy": "It is an airport operations center: flight plans, radar, maintenance records, passenger outcomes, weather, capacity, safety checks, release approvals, incident teams, and lessons learned connect without becoming one giant ungoverned database.",
+      "nextjs": [
+        "Build an App Router quality console with server-side access control, typed routes for traces, cases, runs, slices, budgets, releases, incidents, actions, and regressions.",
+        "Use OpenTelemetry and vendor-neutral adapters on the server, render accessible evidence and controls in React, and keep private content behind separate authorization and retention boundaries.",
+        "Make release, rollback, kill switch, and incident actions explicit server commands with version binding, authorization, confirmation, audit receipts, and observed-state verification."
+      ],
+      "python": [
+        "Build FastAPI services and workers around Pydantic contracts for telemetry, evaluation, manifests, gates, alerts, incidents, actions, and regression records.",
+        "Use OpenTelemetry instrumentation plus manual business spans, versioned internal semantic adapters, controlled fixtures, and a durable evaluation runner.",
+        "Keep gate policy pure and testable, coordinate long-running runs durably, isolate evidence stores, and expose the same framework-neutral contracts as the TypeScript stack."
+      ],
+      "caseStudy": {
+        "situation": "Maya receives a plausible answer citing an obsolete refund policy during a candidate rollout.",
+        "walkthrough": [
+          "The business receipt links the artifact to a trace whose retrieval span names the stale document and index version without copying private content.",
+          "The freshness assertion fails, the stale-policy slice crosses its proposed guardrail, and the release gate pauses the candidate.",
+          "The interface preserves valid research, explains the failure, and offers current-evidence retry or human review while rollback restores a known-good bundle.",
+          "The incident creates owned actions, a stale-current dataset expansion, an alert exercise, and permanent stage and end-to-end regression cases."
+        ],
+        "result": "One evidence chain explains the defect, protects Maya, controls release risk, verifies recovery, and makes recurrence harder.",
+        "danger": "Buying one observability product and recording every prompt does not create AgentOps; without cases, stage contracts, budgets, release rules, ownership, and regression learning, it creates an expensive data lake of uncertainty.",
+        "takeaway": "Connect user outcome to stage evidence, release decisions, recovery, and permanent learning."
+      },
+      "lab": "Produce the full Quality Lab specification: component map, 30-field telemetry contract, ten evaluation cases, twelve stage assertions, six slices, latency and scenario-cost budgets, load profile, four release stages, compatibility matrix, three alerts, two runbooks, one exercise, one postmortem template, and a regression ledger. Label every unmeasured number proposed.",
+      "checkpoint": "Is the Acme Agent Quality Lab one dashboard or one observability vendor?",
+      "answer": "No. It is a framework-neutral operating system of contracts, evidence flows, datasets, decisions, controls, owners, and learning loops that may use several tools behind adapters.",
+      "glossary": [
+        "AgentOps - disciplined evaluation, release, operation, incident, and learning practice for agent systems",
+        "Quality lab - system that connects cases, telemetry, decisions, and operations",
+        "Regression ledger - durable catalog of failures that future releases must continue to pass"
+      ],
+      "related": [
+        173,
+        189,
+        195
+      ],
+      "sources": [
+        "OpenTelemetry specification overview",
+        "OpenTelemetry Semantic Conventions 1.44.0",
+        "NIST Generative AI Profile",
+        "Google SRE canarying releases"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,822 @@
+{
+  "course": {
+    "title": "Visual Course Volume 2 - Build Your First Agent System",
+    "subtitle": "The implementation bridge from web basics to MCP, RAG, A2A, reliability, and deployment",
+    "audience": "A visual beginner who understands the big-picture agent diagrams and is ready to build and debug a small real system",
+    "checkedOn": "2026-08-24",
+    "protocolBaseline": {
+      "mcp": "2026-07-28",
+      "a2a": "1.0",
+      "acp": "Historical lineage only; use A2A for new interoperable agent-to-agent work"
+    },
+    "officialSources": [
+      {
+        "label": "MCP 2026-07-28 release",
+        "url": "https://blog.modelcontextprotocol.io/posts/2026-07-28/"
+      },
+      {
+        "label": "MCP TypeScript SDK migration guidance",
+        "url": "https://ts.sdk.modelcontextprotocol.io/v2/migration/support-2026-07-28"
+      },
+      {
+        "label": "A2A latest specification",
+        "url": "https://a2a-protocol.org/latest/specification/"
+      }
+    ],
+    "visualGrammar": {
+      "cobaltPlatform": "A component, stage, or ownership boundary",
+      "cyanArrow": "A request, command, task, or forward path",
+      "tealArrow": "A result, recovery, artifact, or receipt returning",
+      "coralPath": "A denial, error, warning, or human-control path",
+      "whiteCard": "Data or a contract that people and machines can inspect"
+    },
+    "websiteLessonTemplate": [
+      "outcome",
+      "diagram and alt text",
+      "plain-English explanation",
+      "trace the visual",
+      "analogy",
+      "Next.js map",
+      "Python map",
+      "case study",
+      "mini lab",
+      "checkpoint and answer",
+      "glossary and related lessons"
+    ]
+  },
+  "modules": [
+    {
+      "id": "module-7",
+      "title": "How the web carries an agent request",
+      "lessonIds": [31, 32, 33, 34],
+      "purpose": "Learn the request, response, JSON, and validation foundations hidden underneath MCP, A2A, RAG APIs, and web applications."
+    },
+    {
+      "id": "module-8",
+      "title": "How a full-stack application protects its boundaries",
+      "lessonIds": [35, 36, 37, 38],
+      "purpose": "Separate browser code from trusted server code, choose the right storage, and enforce identity and permission."
+    },
+    {
+      "id": "module-9",
+      "title": "How agents decide, call tools, retrieve evidence, and delegate",
+      "lessonIds": [39, 40, 41, 42],
+      "purpose": "Turn the protocol diagrams into four runtime loops you can trace and debug."
+    },
+    {
+      "id": "module-10",
+      "title": "How a real system recovers, explains itself, and ships",
+      "lessonIds": [43, 44, 45, 46],
+      "purpose": "Classify failures, trace one request across services, deploy safely, and build the capstone in the right order."
+    }
+  ],
+  "lessons": [
+    {
+      "id": 31,
+      "slug": "browser-request-journey",
+      "moduleId": "module-7",
+      "title": "How a browser reaches your agent application",
+      "diagram": "diagrams/31-browser-request-journey.png",
+      "alt": "Six-stage browser journey from a person and browser through DNS and HTTPS to a web server, with a page and JSON data returning.",
+      "outcome": "Trace what happens between entering a web address and seeing an agent application on screen.",
+      "explanation": "A browser is a client: it asks another computer for something. DNS turns a name people remember into an IP address computers can route to. HTTPS protects the connection, the server handles the request, and the browser receives a page, data, or both.",
+      "trace": [
+        "The person enters the website address.",
+        "The browser prepares the request.",
+        "DNS finds the server address for the domain name.",
+        "HTTPS creates an encrypted connection and helps prove which server answered.",
+        "The web server runs the application code.",
+        "HTML builds the page; JSON commonly carries the application data."
+      ],
+      "analogy": "DNS is a phone book, HTTPS is a sealed and authenticated delivery van, and the server is the business that prepares your order.",
+      "nextjs": [
+        "The browser loads a React page from app/page.tsx.",
+        "Client code can call an endpoint such as app/api/tickets/route.ts.",
+        "Only values prefixed for public exposure belong in browser-visible environment variables."
+      ],
+      "python": [
+        "A browser or script calls a FastAPI route such as GET /tickets.",
+        "Uvicorn accepts the HTTP connection and FastAPI chooses the route handler.",
+        "The handler returns JSON that the browser can display."
+      ],
+      "caseStudy": {
+        "situation": "Maya opens the Acme Support Desk to ask why her refund has not arrived.",
+        "walkthrough": [
+          "Her browser resolves support.acme.test through DNS.",
+          "HTTPS protects her sign-in and ticket text in transit.",
+          "The server sends the React interface and later returns ticket data as JSON.",
+          "The browser renders that JSON as a readable status card."
+        ],
+        "result": "Maya sees the current refund case without learning where the database or agent services live.",
+        "danger": "If the page places a private API key in browser code, HTTPS cannot keep it secret from the person using that browser.",
+        "takeaway": "The browser is part of the user's environment; secrets and final policy decisions belong on the server."
+      },
+      "lab": "Open your browser developer tools, reload any safe public page, and identify the document request plus one JSON or API request in the Network panel.",
+      "checkpoint": "What translates a friendly domain name into a network address?",
+      "answer": "DNS.",
+      "glossary": ["browser", "client", "DNS", "HTTPS", "server", "HTML", "JSON"],
+      "related": [32, 35]
+    },
+    {
+      "id": 32,
+      "slug": "http-conversation",
+      "moduleId": "module-7",
+      "title": "The HTTP request and response conversation",
+      "diagram": "diagrams/32-http-conversation.png",
+      "alt": "An HTTP request with URL, method, headers, and body enters a server; an HTTP response returns status, headers, and body.",
+      "outcome": "Read the major parts of an API exchange instead of treating it as an invisible black box.",
+      "explanation": "HTTP is the envelope used by web clients and servers. The request says where to go, what operation is wanted, extra facts in headers, and sometimes a body. The response uses a status code to summarize the outcome, headers to describe the reply, and a body to carry data or an error.",
+      "trace": [
+        "URL identifies the destination and resource.",
+        "Method describes the kind of operation: GET reads, POST often creates or runs, PATCH changes, and DELETE removes.",
+        "Headers carry facts such as content type, authorization, protocol version, and tracing IDs.",
+        "Body carries structured input when the method needs it.",
+        "Status separates success, client mistakes, authorization problems, and server failures.",
+        "Response body carries the useful data or a machine-readable error."
+      ],
+      "analogy": "The request is an order form and the response is the numbered receipt attached to what the kitchen produced.",
+      "nextjs": [
+        "A Route Handler reads Request headers and await request.json().",
+        "It returns Response.json(data, { status: 200 }).",
+        "MCP and A2A add their own version and method facts to this ordinary HTTP envelope."
+      ],
+      "python": [
+        "FastAPI maps the HTTP method and path to a decorated function.",
+        "Pydantic reads and validates the JSON body.",
+        "The function can set a status code or raise HTTPException with a clear error."
+      ],
+      "caseStudy": {
+        "situation": "The support page sends POST /api/refund-check with Maya's ticket ID.",
+        "walkthrough": [
+          "Authorization and a trace ID travel in headers.",
+          "The ticket ID travels in the JSON body.",
+          "The server returns status 200 and a JSON result if the request is valid.",
+          "If the ID is malformed, it returns 400; if Maya cannot access it, it returns 403."
+        ],
+        "result": "The UI can show a helpful message because the response distinguishes different outcomes.",
+        "danger": "Returning status 200 for every failure makes monitoring and client logic lie.",
+        "takeaway": "A clean API tells the truth in both its status and its body."
+      },
+      "lab": "Use curl, an API client, or the browser Network panel to identify a request method, one request header, the response status, and the response body.",
+      "checkpoint": "Where should a protocol version or authorization credential normally travel?",
+      "answer": "In request headers, unless the protocol explicitly defines another location.",
+      "glossary": ["HTTP", "URL", "method", "header", "body", "status code"],
+      "related": [31, 34, 36, 44]
+    },
+    {
+      "id": 33,
+      "slug": "json-object-anatomy",
+      "moduleId": "module-7",
+      "title": "JSON: the shared language of web and agent APIs",
+      "diagram": "diagrams/33-json-object-anatomy.png",
+      "alt": "A central JSON object connected to keys, values, an array, a nested object, and the string, number, boolean, and null data types.",
+      "outcome": "Recognize the building blocks used in MCP messages, A2A objects, REST APIs, and structured model output.",
+      "explanation": "JSON represents data using objects made of named keys and values. Values can be simple types, arrays, or nested objects. JSON is easy to transport, but it does not prove that the fields are correct or safe; a schema or application validator must do that.",
+      "trace": [
+        "A key is a quoted name such as ticketId.",
+        "A value can be text, a number, true or false, null, an array, or another object.",
+        "An array is an ordered list.",
+        "A nested object groups related fields inside a larger object.",
+        "Braces hold objects and square brackets hold arrays.",
+        "Meaning comes from the contract agreed by sender and receiver."
+      ],
+      "analogy": "A JSON object is a labeled lunchbox: each compartment has a name, and each compartment can hold one item, a row of items, or a smaller lunchbox.",
+      "nextjs": [
+        "TypeScript types help developers while writing code but disappear at runtime.",
+        "JSON.parse creates ordinary JavaScript data; it does not validate trust.",
+        "Use a runtime schema validator before domain code accepts outside JSON."
+      ],
+      "python": [
+        "Python dictionaries and lists map naturally to JSON objects and arrays.",
+        "Pydantic models validate and convert JSON into typed Python objects.",
+        "Use model_dump() or FastAPI response models to serialize controlled output."
+      ],
+      "caseStudy": {
+        "situation": "The refund-check endpoint receives a ticket object.",
+        "walkthrough": [
+          "ticketId is a string key and value.",
+          "requestedActions is an array so more than one desired action can be listed.",
+          "customer is a nested object containing an ID but not unnecessary private details.",
+          "confirmed is a boolean that records whether Maya approved the check."
+        ],
+        "result": "The same shape can be understood by React, a Python API, an MCP tool, and an A2A agent.",
+        "danger": "A field named isAdmin is still only data supplied by a caller; its name does not grant authority.",
+        "takeaway": "JSON carries claims. Trusted server code decides which claims are true and permitted."
+      },
+      "lab": "Write a small JSON object for a support ticket with a string ID, a priority number, an open boolean, an array of tags, and a nested customer object.",
+      "checkpoint": "Can valid JSON still contain the wrong type or a dangerous value for your application?",
+      "answer": "Yes. JSON syntax is not the same as schema validation or authorization.",
+      "glossary": ["JSON", "object", "key", "value", "array", "nested object", "data type"],
+      "related": [34, 40, 42]
+    },
+    {
+      "id": 34,
+      "slug": "json-schema-validation",
+      "moduleId": "module-7",
+      "title": "JSON Schema: reject bad shapes before they become bad actions",
+      "diagram": "diagrams/34-json-schema-validation.png",
+      "alt": "Input data passes through a JSON Schema validation gate that checks required fields, types, formats, and limits before accepting or rejecting it.",
+      "outcome": "Explain why typed tool definitions and request models need runtime validation.",
+      "explanation": "A schema is a machine-readable contract for data. Validation checks required fields, value types, formats, and limits before domain code runs. A good rejection says exactly which rule failed without exposing secrets or internal details.",
+      "trace": [
+        "Input arrives from an untrusted boundary.",
+        "The schema names the permitted shape.",
+        "Required checks prevent missing essential facts.",
+        "Type and format checks reject nonsense values.",
+        "Limits control lengths, ranges, counts, and oversized payloads.",
+        "Accepted data may continue; rejected data returns a useful error and stops."
+      ],
+      "analogy": "A schema is the shape sorter on a child's toy: the star does not pass through the square hole, even if someone labels it square.",
+      "nextjs": [
+        "Validate request.json() with a runtime schema before calling the service layer.",
+        "Use the same schema to describe MCP tool input where the SDK permits.",
+        "Return a 400-class error with field-level details that the UI can safely show."
+      ],
+      "python": [
+        "Define a Pydantic BaseModel with required fields and constraints.",
+        "FastAPI validates the request before entering the route function.",
+        "Keep business rules in the domain service even after shape validation passes."
+      ],
+      "caseStudy": {
+        "situation": "The refund-check tool expects a ticketId, currency, and positive amount under a safe maximum.",
+        "walkthrough": [
+          "A missing ticketId fails the required rule.",
+          "An amount written as random text fails the type rule.",
+          "A malformed currency code fails the format rule.",
+          "An amount beyond the allowed range fails the limit rule."
+        ],
+        "result": "Malformed requests never reach the refund service.",
+        "danger": "Schema validation cannot prove that Maya owns the ticket or may request a refund.",
+        "takeaway": "Validate the shape first, then authenticate, authorize, and enforce business policy."
+      },
+      "lab": "Create two examples for one request schema: one accepted payload and one rejected payload. Write the exact validation message you want a beginner to see.",
+      "checkpoint": "Does schema validation replace authorization?",
+      "answer": "No. It proves shape and constraints, not identity or permission.",
+      "glossary": ["schema", "validation", "required", "type", "format", "constraint"],
+      "related": [33, 36, 40]
+    },
+    {
+      "id": 35,
+      "slug": "frontend-backend-boundary",
+      "moduleId": "module-8",
+      "title": "The frontend and backend trust boundary",
+      "diagram": "diagrams/35-frontend-backend-boundary.png",
+      "alt": "A React UI crosses a frontend-backend boundary into an API route, domain service, data store, and receipt, with the result returning to the UI.",
+      "outcome": "Place interface code, trusted decisions, storage, and receipts in the correct layer.",
+      "explanation": "The frontend runs where the user can inspect and change it, so it is ideal for display and interaction but not for secrets or final authorization. The API route accepts the request, the domain service decides what the operation means, storage records authoritative state, and a receipt makes the result traceable.",
+      "trace": [
+        "React collects intent and displays progress.",
+        "The API route is the server entry point.",
+        "The domain service owns business rules and orchestration.",
+        "The data store owns durable truth.",
+        "The receipt records what happened.",
+        "The backend returns only the result the frontend needs."
+      ],
+      "analogy": "The dining room can take your order and show your meal, but the locked kitchen controls ingredients, preparation rules, and the official receipt.",
+      "nextjs": [
+        "Use a Client Component for forms, optimistic feedback, and user interaction.",
+        "Use a Route Handler or Server Action for secrets and trusted calls.",
+        "Put reusable business logic in a service module rather than inside the UI or route."
+      ],
+      "python": [
+        "A React UI may call a FastAPI backend over HTTP.",
+        "FastAPI routes adapt transport data into domain commands.",
+        "A service function performs the rule and returns a typed result or receipt."
+      ],
+      "caseStudy": {
+        "situation": "Maya presses Check Refund in the React interface.",
+        "walkthrough": [
+          "The browser sends only her ticket ID and confirmation.",
+          "The API authenticates her and hands a command to the refund service.",
+          "The service checks ticket ownership and current status.",
+          "The database records the check and returns a receipt ID.",
+          "The UI shows a safe summary and receipt."
+        ],
+        "result": "Maya gets a responsive interface without exposing keys or policy logic.",
+        "danger": "A disabled button is not security; a caller can bypass the UI and call the endpoint directly.",
+        "takeaway": "The frontend suggests and displays. The backend decides and records."
+      },
+      "lab": "Draw one vertical line through your planned app. Put everything the browser can see on the left and everything that must stay trusted on the right.",
+      "checkpoint": "Where should the provider API key and final refund permission check live?",
+      "answer": "On the backend, outside browser-visible code.",
+      "glossary": ["frontend", "backend", "API route", "domain service", "receipt", "trust boundary"],
+      "related": [31, 36, 38, 46]
+    },
+    {
+      "id": 36,
+      "slug": "server-request-pipeline",
+      "moduleId": "module-8",
+      "title": "The six gates every consequential request should pass",
+      "diagram": "diagrams/36-server-request-pipeline.png",
+      "alt": "A server request flows through route, validate, authenticate, authorize, execute, and respond, with stop paths under failed checks.",
+      "outcome": "Debug a request by naming the exact gate that accepted or rejected it.",
+      "explanation": "A production endpoint is a pipeline of distinct responsibilities. Routing finds the handler, validation checks input, authentication proves identity, authorization checks permission, execution performs the domain operation, and response formatting tells the client what happened.",
+      "trace": [
+        "ROUTE chooses the endpoint by method and path.",
+        "VALIDATE rejects malformed or oversized input.",
+        "AUTHENTICATE identifies the caller.",
+        "AUTHORIZE checks the exact action and resource.",
+        "EXECUTE runs domain code only after the gates pass.",
+        "RESPOND returns data, error, or receipt using a truthful status."
+      ],
+      "analogy": "At an airport you find the right line, check the ticket shape, prove who you are, prove you may board this flight, board, and receive the result of the process.",
+      "nextjs": [
+        "The route file handles method and path.",
+        "A schema validator checks input; auth middleware or server helpers establish identity.",
+        "A policy function authorizes before the domain service executes."
+      ],
+      "python": [
+        "FastAPI routing and Pydantic handle the first two gates.",
+        "Dependencies can establish authenticated identity.",
+        "A dedicated policy function should authorize the resource before the service mutates it."
+      ],
+      "caseStudy": {
+        "situation": "A caller asks to close support ticket T-204.",
+        "walkthrough": [
+          "POST /tickets/T-204/close reaches the correct route.",
+          "The body contains a valid confirmation and reason.",
+          "The token belongs to Maya.",
+          "Policy confirms Maya owns T-204 and closure is allowed.",
+          "The service closes the ticket once and returns receipt R-88."
+        ],
+        "result": "Each audit event says which gate made which decision.",
+        "danger": "Authenticating Maya does not authorize her to close another customer's ticket.",
+        "takeaway": "Authentication asks who; authorization asks whether this identity may do this action to this resource."
+      },
+      "lab": "For one endpoint, write one sentence for what each of the six gates does and one example failure at each gate.",
+      "checkpoint": "Which gate decides whether an authenticated user may change a particular ticket?",
+      "answer": "Authorize.",
+      "glossary": ["routing", "authentication", "authorization", "policy", "execution", "response"],
+      "related": [32, 34, 38, 40, 43]
+    },
+    {
+      "id": 37,
+      "slug": "storage-map",
+      "moduleId": "module-8",
+      "title": "Four stores, four different jobs",
+      "diagram": "diagrams/37-storage-map.png",
+      "alt": "An application connects to a relational database for facts, vector index for meaning, task store for progress, and audit log for evidence.",
+      "outcome": "Choose storage by what truth it owns instead of putting everything into one mysterious database.",
+      "explanation": "Different data structures answer different questions. A relational database owns business facts, a vector index helps find semantically similar evidence, a task store tracks workflow progress, and an audit log records decisions and receipts. A real project may implement these in fewer products, but the responsibilities should remain separate.",
+      "trace": [
+        "RELATIONAL DB answers exact factual queries and enforces relationships.",
+        "VECTOR INDEX finds text that is close in meaning.",
+        "TASK STORE records working, input-required, completed, failed, or canceled progress.",
+        "AUDIT LOG records who requested what, which policy decided, and which receipt resulted.",
+        "The application reads and writes each store through a narrow service.",
+        "No store silently becomes the authority for a different kind of truth."
+      ],
+      "analogy": "A school keeps grades in a register, books in a searchable library, assignments on a task board, and official decisions in an attendance or incident ledger.",
+      "nextjs": [
+        "Use a relational database for users, tickets, and receipts.",
+        "Use a vector-capable store for document chunks and embeddings.",
+        "Keep task state and audit events addressable by stable IDs."
+      ],
+      "python": [
+        "Repository interfaces keep domain code independent of the database client.",
+        "A retrieval service queries the vector index and returns chunks with source metadata.",
+        "Task and audit models make durable progress and evidence explicit."
+      ],
+      "caseStudy": {
+        "situation": "The support agent answers Maya and asks a specialist to investigate a refund delay.",
+        "walkthrough": [
+          "The relational database supplies Maya's ticket and payment facts.",
+          "The vector index retrieves the refund policy passages.",
+          "The task store tracks the delegated investigation.",
+          "The audit log records approval, calls, status changes, and the final receipt."
+        ],
+        "result": "The team can explain both the answer and the work that produced it.",
+        "danger": "A vector match is not an authoritative payment status or permission decision.",
+        "takeaway": "Meaning helps search; business records decide facts."
+      },
+      "lab": "Take ten data items from your capstone and place each under FACTS, MEANING, PROGRESS, or EVIDENCE. Explain any item that appears in two places.",
+      "checkpoint": "Which store should own a ticket's exact closed status?",
+      "answer": "The relational business-data store, not the vector index.",
+      "glossary": ["relational database", "vector index", "task store", "audit log", "embedding", "repository"],
+      "related": [41, 42, 44]
+    },
+    {
+      "id": 38,
+      "slug": "identity-boundary",
+      "moduleId": "module-8",
+      "title": "Identity, permission, and least privilege",
+      "diagram": "diagrams/38-identity-boundary.png",
+      "alt": "A sign-in produces a token that is authenticated and authorized before a least-privilege credential is allowed; denied work branches away.",
+      "outcome": "Separate sign-in, identity proof, permission, and narrowly scoped access.",
+      "explanation": "Sign-in produces a credential, usually a token. Authentication validates that credential and establishes identity. Authorization checks whether that identity may perform the exact operation, and least privilege limits the resulting access to only what is needed.",
+      "trace": [
+        "SIGN IN starts an identity flow.",
+        "TOKEN carries a signed or otherwise protected credential.",
+        "AUTHENTICATE validates issuer, audience, expiry, signature, and other required claims.",
+        "AUTHORIZE evaluates subject, tenant, resource, action, and policy.",
+        "LEAST PRIVILEGE grants the smallest useful permission.",
+        "DENIED is a normal protected outcome, not an unexpected crash."
+      ],
+      "analogy": "A building badge proves who you are, the door reader checks whether you may enter this room, and the key opens only the cabinet needed for your job.",
+      "nextjs": [
+        "Read authenticated identity only from a trusted server-side auth library.",
+        "Pass an internal user or tenant ID to policy code, not a browser-supplied isAdmin flag.",
+        "Give downstream MCP or A2A calls only the scopes needed for that operation."
+      ],
+      "python": [
+        "Validate tokens in a FastAPI dependency and construct a typed Principal.",
+        "Pass the Principal to an authorization function with the resource and action.",
+        "Use short-lived, narrowly scoped credentials for outbound services where possible."
+      ],
+      "caseStudy": {
+        "situation": "Maya can inspect her refund ticket, while a finance specialist can release an approved refund.",
+        "walkthrough": [
+          "Both users sign in and receive tokens.",
+          "The API validates each token and identifies the correct tenant.",
+          "Policy allows Maya to read her ticket but denies refund release.",
+          "Policy allows the finance role to release only an already-approved refund."
+        ],
+        "result": "The application supports different jobs without giving everyone a master key.",
+        "danger": "A valid token from the wrong issuer or audience must not be accepted.",
+        "takeaway": "A token is evidence to validate, not automatic permission for every action."
+      },
+      "lab": "Create a two-row permission matrix for CUSTOMER and FINANCE across READ TICKET, CLOSE TICKET, and RELEASE REFUND.",
+      "checkpoint": "What principle says a service should receive only the permission it actually needs?",
+      "answer": "Least privilege.",
+      "glossary": ["token", "issuer", "audience", "principal", "scope", "least privilege"],
+      "related": [35, 36, 40]
+    },
+    {
+      "id": 39,
+      "slug": "agent-decision-loop",
+      "moduleId": "module-9",
+      "title": "The agent decision loop: observe, choose, act, check",
+      "diagram": "diagrams/39-agent-decision-loop.png",
+      "alt": "A circular loop moves through observe, plan, choose, act, check, and stop, with an ask-human branch returning to the loop.",
+      "outcome": "Explain an agent as a controlled loop with a stopping rule, not as magic autonomy.",
+      "explanation": "An agent repeatedly observes available state, plans a next step, chooses among allowed actions, acts, and checks the result. It stops when the goal is satisfied or a safe stopping rule fires. When evidence, permission, or intent is missing, asking a human is part of correct behavior.",
+      "trace": [
+        "OBSERVE reads the user goal, current task, results, and permitted context.",
+        "PLAN identifies the next useful subgoal.",
+        "CHOOSE selects from allowed tools, retrieval, delegation, or a final answer.",
+        "ACT performs one bounded step.",
+        "CHECK compares the result with the goal, evidence, policy, and stopping rules.",
+        "STOP returns the answer or receipt; ASK HUMAN supplies missing intent or approval."
+      ],
+      "analogy": "A careful cook looks at the recipe and ingredients, chooses one step, performs it, checks the result, and asks before substituting an ingredient that may cause an allergy.",
+      "nextjs": [
+        "Represent allowed tools as typed server-side functions.",
+        "Stream observable status such as searching, waiting for approval, or completed.",
+        "Set maximum steps, time, and cost so the loop has deterministic limits."
+      ],
+      "python": [
+        "Model loop state with a typed object rather than loose global variables.",
+        "Keep tool execution separate from model selection.",
+        "Test stop, denied, retry, and human-input branches without calling a real model."
+      ],
+      "caseStudy": {
+        "situation": "The agent must explain Maya's delayed refund and decide whether to request an investigation.",
+        "walkthrough": [
+          "It observes the ticket and Maya's question.",
+          "It plans to retrieve policy and exact payment status.",
+          "It chooses RAG for policy and an MCP tool for payment status.",
+          "It checks that the evidence agrees.",
+          "It asks Maya before creating a longer specialist task.",
+          "It stops with a cited explanation and a task receipt."
+        ],
+        "result": "Every action has a reason, a gate, and a check.",
+        "danger": "A loop without maximum steps, approval rules, or a stop condition can waste money or repeat side effects.",
+        "takeaway": "Useful autonomy is a bounded feedback loop."
+      },
+      "lab": "Write one happy-path stopping rule, one safety stop, one maximum-step limit, and one ask-human condition for your capstone.",
+      "checkpoint": "What should happen when the agent lacks permission for a consequential action?",
+      "answer": "It should stop or ask an authorized human; it must not invent permission.",
+      "glossary": ["agent loop", "observation", "plan", "tool selection", "stopping rule", "human in the loop"],
+      "related": [40, 41, 42, 43]
+    },
+    {
+      "id": 40,
+      "slug": "tool-call-lifecycle",
+      "moduleId": "module-9",
+      "title": "The complete MCP-style tool call lifecycle",
+      "diagram": "diagrams/40-tool-call-lifecycle.png",
+      "alt": "A model proposes a tool call, the client validates, the server authorizes, domain code executes, and a result plus receipt returns; validation and authorization can stop it.",
+      "outcome": "Name the responsibilities surrounding a model-proposed tool call.",
+      "explanation": "A model proposes; it does not directly own the side effect. The client validates the call against the known contract, the server authenticates and authorizes the caller, deterministic domain code executes, and the result returns with enough evidence to handle retries and audits.",
+      "trace": [
+        "MODEL PROPOSES a named tool and arguments.",
+        "CLIENT VALIDATES the name, input schema, limits, and local policy.",
+        "SERVER AUTHORIZES the authenticated caller for the exact operation.",
+        "DOMAIN EXECUTES business rules and the state change.",
+        "RESULT + RECEIPT returns observable output and stable identity.",
+        "STOP prevents malformed or unauthorized calls from reaching the domain."
+      ],
+      "analogy": "A junior employee can fill out a purchase request, but the form checker, manager, purchasing system, and official receipt control the real transaction.",
+      "nextjs": [
+        "The model/tool layer proposes typed arguments on the server.",
+        "A Route Handler or server service validates and adds trusted identity context.",
+        "The MCP server adapter calls a domain function that can also be tested without MCP."
+      ],
+      "python": [
+        "Define tool input with a typed validation model.",
+        "Keep authentication and policy in server middleware or service boundaries.",
+        "Return a typed result containing the business receipt, not hidden model reasoning."
+      ],
+      "caseStudy": {
+        "situation": "The agent proposes the close_ticket tool for Maya's resolved case.",
+        "walkthrough": [
+          "The proposal includes ticketId, confirmation, and an idempotency key.",
+          "The client rejects missing confirmation before sending anything.",
+          "The server confirms Maya owns the ticket and closure is allowed.",
+          "The domain closes it once and commits receipt R-88.",
+          "A network retry returns R-88 instead of closing twice."
+        ],
+        "result": "A probabilistic proposal becomes a deterministic, auditable operation.",
+        "danger": "Putting authorization only in a tool description trusts the model to enforce security.",
+        "takeaway": "Protocols carry the call; server policy controls the consequence."
+      },
+      "lab": "For one write tool, specify its input schema, authentication source, authorization rule, domain function, idempotency key, and receipt fields.",
+      "checkpoint": "Which component should own the final rule that a ticket may be closed?",
+      "answer": "Deterministic domain and policy code on the trusted server side.",
+      "glossary": ["tool proposal", "MCP client", "MCP server", "domain function", "idempotency key", "receipt"],
+      "related": [34, 36, 38, 39, 43]
+    },
+    {
+      "id": 41,
+      "slug": "rag-reliability-loop",
+      "moduleId": "module-9",
+      "title": "RAG needs a relevance decision and a verification step",
+      "diagram": "diagrams/41-rag-reliability-loop.png",
+      "alt": "A RAG flow moves from question to retrieve and a relevance decision; irrelevant results improve the query and loop back, while relevant results become an answer, citations, and verification.",
+      "outcome": "Diagnose whether a RAG failure came from retrieval, relevance, generation, citation, or verification.",
+      "explanation": "Retrieval is only useful when the returned evidence actually answers the question. A relevance check can reject weak results and improve the query. The answer must cite the evidence, and a final verification step should confirm that the claims are supported and that permissions and freshness rules were respected.",
+      "trace": [
+        "QUESTION states the information need.",
+        "RETRIEVE searches permitted chunks and metadata.",
+        "RELEVANT? asks whether the evidence can answer this question.",
+        "NO improves the query, filters, or retrieval method and tries again within limits.",
+        "YES allows ANSWER and CITE to use the evidence.",
+        "VERIFY checks claim support, source identity, freshness, and allowed access."
+      ],
+      "analogy": "A librarian does not hand you the first book with a similar word; they check whether it contains the right answer and show you the page.",
+      "nextjs": [
+        "Perform retrieval on the server so permissions and provider keys stay protected.",
+        "Return citations as structured data the React UI can render and open.",
+        "Display an honest not-enough-evidence state rather than forcing an answer."
+      ],
+      "python": [
+        "Separate query building, retrieval, reranking, generation, and verification functions.",
+        "Return chunks with stable source IDs and location metadata.",
+        "Evaluate retrieval hit rate and answer support separately."
+      ],
+      "caseStudy": {
+        "situation": "Maya asks how long an approved refund normally takes.",
+        "walkthrough": [
+          "The first search finds a general returns policy, but not the timing rule.",
+          "The relevance check rejects it and adds approved refund and payment rail to the query.",
+          "The second search retrieves the correct dated finance policy.",
+          "The answer cites the exact policy section and distinguishes normal timing from Maya's exact payment status.",
+          "Verification confirms every timing claim is supported."
+        ],
+        "result": "Maya receives a useful answer with evidence and clear limits.",
+        "danger": "A vector score is not proof that a passage supports the final claim.",
+        "takeaway": "Retrieve, judge relevance, cite, and verify are four different jobs."
+      },
+      "lab": "Create one question, one irrelevant retrieved passage, and one relevant passage. Write a simple relevance rule that distinguishes them.",
+      "checkpoint": "What should the system do when no retrieved passage supports the answer?",
+      "answer": "Improve retrieval within limits or say that it lacks enough evidence; it should not invent the answer.",
+      "glossary": ["RAG", "retrieval", "relevance", "reranking", "citation", "grounding", "verification"],
+      "related": [37, 39, 44]
+    },
+    {
+      "id": 42,
+      "slug": "a2a-task-state-machine",
+      "moduleId": "module-9",
+      "title": "The A2A task lifecycle",
+      "diagram": "diagrams/42-a2a-task-state-machine.png",
+      "alt": "An A2A task moves from submitted to working and may require input before returning to work; terminal branches are completed, failed, and canceled.",
+      "outcome": "Explain durable delegated work using a task ID, status, messages, and artifacts.",
+      "explanation": "A2A is appropriate when another agent owns meaningful work that may take time or require another turn. The server creates a task with a stable ID, updates its state, may request additional input, and ends in a terminal state. Important outputs belong in artifacts; status messages alone are not a reliable final result.",
+      "trace": [
+        "SUBMITTED means the server accepted and identified the task.",
+        "WORKING means the specialist owns active processing.",
+        "INPUT REQUIRED pauses progress until the client supplies a needed message.",
+        "COMPLETED ends successfully and should expose useful artifacts.",
+        "FAILED records an unsuccessful terminal outcome.",
+        "CANCELED records an intentional terminal stop; a terminal task is not restarted."
+      ],
+      "analogy": "A repair shop gives you a job number, marks the repair in progress, calls if it needs approval, and finally records completed, failed, or canceled with the finished item or report.",
+      "nextjs": [
+        "Store the A2A task ID in server-side application state and expose safe status to the UI.",
+        "Render input-required as an explicit user action, not an endless loading spinner.",
+        "Load final artifacts by stable task and artifact identifiers."
+      ],
+      "python": [
+        "Model task states as an enum and reject illegal transitions.",
+        "Persist tasks so a later request or process can retrieve the current state.",
+        "Keep messages separate from output artifacts in the domain model."
+      ],
+      "caseStudy": {
+        "situation": "The support application delegates Maya's refund investigation to a finance specialist agent.",
+        "walkthrough": [
+          "The specialist accepts TASK-1024 and reports working.",
+          "It needs Maya to confirm the last four digits of the original payment method, so it reports input-required.",
+          "After the client sends the permitted clarification, work resumes.",
+          "The task completes with a structured investigation report artifact and a human-readable summary."
+        ],
+        "result": "Maya can close the browser and later resume using the same task identity.",
+        "danger": "A transient status message must not be the only place the final report exists.",
+        "takeaway": "A2A makes ownership and lifecycle explicit; artifacts carry durable results."
+      },
+      "lab": "Draw the legal transitions for your delegated task and name the artifact produced on completion. Add one input-required question.",
+      "checkpoint": "Where should the final investigation report be returned?",
+      "answer": "As an artifact associated with the completed task.",
+      "glossary": ["A2A", "Task", "Message", "Artifact", "task ID", "terminal state", "input-required"],
+      "related": [37, 39, 43, 44]
+    },
+    {
+      "id": 43,
+      "slug": "error-recovery-map",
+      "moduleId": "module-10",
+      "title": "Classify an error before choosing a recovery",
+      "diagram": "diagrams/43-error-recovery-map.png",
+      "alt": "A central error splits into bad input with fix request, not authorized with stop, temporary failure with retry, and unknown side effect with check receipt.",
+      "outcome": "Choose fix, stop, retry, or receipt lookup based on the failure category.",
+      "explanation": "Retry is not a universal cure. Bad input needs correction, a denied operation must stop, a temporary failure may be retried with limits, and an uncertain write must be checked by its idempotency key or receipt before anything is repeated.",
+      "trace": [
+        "BAD INPUT returns field-level guidance and waits for a corrected request.",
+        "NOT AUTHORIZED stops without revealing sensitive resource details.",
+        "TEMPORARY FAILURE retries with backoff, jitter, and a maximum attempt count.",
+        "UNKNOWN SIDE EFFECT first checks durable operation status or receipt.",
+        "Recovery preserves the original trace and operation identity.",
+        "Final failure is visible to the user and monitoring system."
+      ],
+      "analogy": "If a card payment screen freezes, you check whether the payment went through before pressing Pay again; you do not treat every problem as try harder.",
+      "nextjs": [
+        "Return structured error codes the UI can map to fix, stop, retry, or lookup behavior.",
+        "Use an idempotency key for consequential writes.",
+        "Do not run endless retries inside a serverless request."
+      ],
+      "python": [
+        "Define domain error types rather than parsing exception text.",
+        "Retry only declared transient exceptions and cap the policy.",
+        "Expose an operation-status or receipt lookup for uncertain writes."
+      ],
+      "caseStudy": {
+        "situation": "The close-ticket request times out after the server may have changed the database.",
+        "walkthrough": [
+          "The UI knows the idempotency key but did not receive the receipt.",
+          "It queries operation status using that key.",
+          "The server returns receipt R-88 if the close committed.",
+          "Only if no operation exists may a controlled retry submit the same key."
+        ],
+        "result": "The ticket closes once even when the network reply is lost.",
+        "danger": "Blindly retrying a non-idempotent write can repeat the real-world effect.",
+        "takeaway": "Uncertainty about a side effect is a lookup problem before it is a retry problem."
+      },
+      "lab": "Write one example of each error category for your capstone and the exact recovery your client should perform.",
+      "checkpoint": "What should happen first after a timeout when a consequential write may already have succeeded?",
+      "answer": "Check the operation status or receipt using the stable idempotency key.",
+      "glossary": ["transient failure", "retry", "backoff", "jitter", "idempotency", "receipt lookup"],
+      "related": [36, 39, 40, 42, 44]
+    },
+    {
+      "id": 44,
+      "slug": "observability-trace",
+      "moduleId": "module-10",
+      "title": "Follow one trace across APP, RAG, MCP, and A2A",
+      "diagram": "diagrams/44-observability-trace.png",
+      "alt": "A user request receives a trace ID that crosses app, RAG, MCP, and A2A spans before producing metrics, logs, and audit records.",
+      "outcome": "Use a trace ID and spans to find where time, failure, or a wrong result entered a distributed agent request.",
+      "explanation": "A trace connects related work across components. Each span records one bounded stage, while metrics show patterns, logs explain events, and audit records preserve consequential decisions. Observability should expose system behavior without storing secrets, raw tokens, or private model reasoning.",
+      "trace": [
+        "USER REQUEST receives a stable TRACE ID.",
+        "APP span records routing, orchestration, and total request context.",
+        "RAG span records query, retrieval counts, source IDs, and timing.",
+        "MCP span records server, method, tool name, outcome, and receipt ID.",
+        "A2A span records agent, task ID, state, and artifact identity.",
+        "METRICS, LOGS, and AUDIT answer different operational and accountability questions."
+      ],
+      "analogy": "A parcel tracking number connects scans from the local shop, sorting center, airplane, and delivery van so you can see where it slowed or disappeared.",
+      "nextjs": [
+        "Create or accept a trace ID at the server boundary and include it in downstream calls.",
+        "Log structured fields rather than one long free-text message.",
+        "Show a safe support reference to the user so operators can locate the trace."
+      ],
+      "python": [
+        "Use middleware or tracing instrumentation to create request spans.",
+        "Attach task, receipt, and source IDs as attributes without attaching secrets.",
+        "Emit a separate audit event for authorization and side effects."
+      ],
+      "caseStudy": {
+        "situation": "Maya reports that the refund investigation took forty seconds and returned the wrong policy paragraph.",
+        "walkthrough": [
+          "Support opens the trace from Maya's reference ID.",
+          "The APP span is fast; the RAG span shows a slow query and a low-relevance source ID.",
+          "The MCP payment-status call succeeded in two seconds with receipt P-18.",
+          "The A2A task was never started because verification stopped the flow.",
+          "Engineers fix retrieval filters rather than blaming every component."
+        ],
+        "result": "The team locates the actual failing stage quickly.",
+        "danger": "Logging tokens, full private prompts, or sensitive retrieved text can create a second data leak.",
+        "takeaway": "Trace identities, safe attributes, and receipts make distributed work explainable."
+      },
+      "lab": "Design a trace table with six fields you would record for APP, RAG, MCP, and A2A. Mark any field that must be redacted or hashed.",
+      "checkpoint": "Which identifier connects the spans belonging to one user journey?",
+      "answer": "The trace ID.",
+      "glossary": ["observability", "trace", "span", "metric", "structured log", "audit event", "redaction"],
+      "related": [32, 37, 41, 42, 43, 45]
+    },
+    {
+      "id": 45,
+      "slug": "local-to-vercel",
+      "moduleId": "module-10",
+      "title": "From local code to a safe Vercel production release",
+      "diagram": "diagrams/45-local-to-vercel.png",
+      "alt": "Local code passes tests, Git, a Vercel build, and a preview deployment before promotion to production; failed checks return to an earlier stage.",
+      "outcome": "Explain the difference between local development, automated checks, preview deployment, and production promotion.",
+      "explanation": "Deployment is a controlled evidence path. Code works locally, tests check expected behavior, Git provides version identity, Vercel builds a reproducible artifact, a preview lets people inspect the exact change, and only an approved revision is promoted to production.",
+      "trace": [
+        "LOCAL CODE is the developer workspace and local environment.",
+        "TESTS check domain rules, routes, and important user flows.",
+        "GIT gives the change a reviewable revision and history.",
+        "VERCEL BUILD installs dependencies and produces the deployable application.",
+        "PREVIEW is an isolated deployment for visual and functional checks.",
+        "PRODUCTION receives a deliberately promoted, verified revision."
+      ],
+      "analogy": "A theater rehearses scenes, records the script version, runs a dress rehearsal on the real stage, and only then opens the doors to the public.",
+      "nextjs": [
+        "Keep secrets in environment variables configured for the correct deployment environment.",
+        "Treat preview URLs as real internet deployments that still require authentication and safe test data.",
+        "Run build and tests before promotion; inspect important flows in a browser."
+      ],
+      "python": [
+        "Package the API with pinned dependencies and reproducible startup instructions.",
+        "Run unit and API tests in CI before deploying to the selected Python host.",
+        "Point the web app to environment-specific API URLs and configure CORS narrowly."
+      ],
+      "caseStudy": {
+        "situation": "The team adds an input-required panel for A2A investigation tasks.",
+        "walkthrough": [
+          "Unit tests check legal task transitions.",
+          "The change is committed and Vercel produces a preview URL.",
+          "A reviewer confirms the panel is accessible and does not expose the full internal task payload.",
+          "A failed authorization test blocks promotion.",
+          "After the fix and new preview pass, the exact revision is promoted."
+        ],
+        "result": "Production receives the reviewed behavior rather than an untested local copy.",
+        "danger": "Preview deployments can leak data or secrets if treated as private by default.",
+        "takeaway": "A preview is a testable deployment, not a security boundary."
+      },
+      "lab": "Write a deployment checklist containing one build check, two automated tests, two preview checks, one accessibility check, and one rollback condition.",
+      "checkpoint": "Why inspect a preview when the local application already works?",
+      "answer": "The preview tests the built deployment in an environment closer to production and gives a reviewable URL for the exact revision.",
+      "glossary": ["Git", "build", "preview deployment", "production", "environment variable", "promotion", "rollback"],
+      "related": [35, 44, 46]
+    },
+    {
+      "id": 46,
+      "slug": "capstone-build-roadmap",
+      "moduleId": "module-10",
+      "title": "Build the first agent system in seven safe layers",
+      "diagram": "diagrams/46-capstone-build-roadmap.png",
+      "alt": "Seven ascending steps build from local data through a domain function, MCP tool, RAG search, A2A task, web UI, and deployment to a working system.",
+      "outcome": "Build a capstone in an order that keeps every new layer testable and understandable.",
+      "explanation": "Start with the smallest deterministic truth and add one boundary at a time. Local data proves the scenario, the domain function proves the rule, MCP exposes a capability, RAG adds evidence, A2A adds delegated ownership, the web UI makes it usable, and deployment makes the verified system reachable.",
+      "trace": [
+        "LOCAL DATA creates a tiny reproducible scenario without external accounts.",
+        "DOMAIN FUNCTION implements one rule with tests and a receipt.",
+        "MCP TOOL exposes that function through a current typed capability boundary.",
+        "RAG SEARCH retrieves permitted evidence and citations.",
+        "A2A TASK delegates one genuinely separate specialist workflow.",
+        "WEB UI shows request, evidence, approval, progress, artifact, error, and receipt.",
+        "DEPLOY ships the tested revision and preserves traceability."
+      ],
+      "analogy": "You learn to build a bicycle by proving the frame, brakes, wheels, and steering separately before painting it and riding into traffic.",
+      "nextjs": [
+        "Build the React experience and server boundary in one Next.js repository.",
+        "Keep domain services independent from React and protocol adapters.",
+        "Deploy the web stack to Vercel only after local, route, and browser checks pass."
+      ],
+      "python": [
+        "Build the same domain story in Python with typed models and FastAPI.",
+        "Add protocol adapters around tested services rather than embedding rules in endpoints.",
+        "Run the Python service locally or deploy it separately, then connect through environment-specific URLs."
+      ],
+      "caseStudy": {
+        "situation": "You build the Acme Support Desk learning project in both technology stacks.",
+        "walkthrough": [
+          "A local ticket and policy set create predictable test data.",
+          "A close-ticket domain function enforces ownership, confirmation, and idempotency.",
+          "An MCP adapter exposes safe ticket inspection and closure.",
+          "RAG explains refund policy with citations.",
+          "An A2A finance specialist owns long-running investigations and artifacts.",
+          "The UI displays every boundary and the deployment publishes a verified revision."
+        ],
+        "result": "You can explain the architecture because you built and tested it one layer at a time.",
+        "danger": "Starting with a giant autonomous agent hides which layer is wrong and makes learning feel mysterious.",
+        "takeaway": "Complex agent systems become beginner-friendly when every new layer wraps a working, testable core."
+      },
+      "lab": "Create seven folders or milestones matching the diagram. Do not advance until the current layer has one passing happy-path test and one passing failure-path test.",
+      "checkpoint": "What should you build before exposing an MCP tool?",
+      "answer": "A deterministic domain function with tests and a clear result or receipt.",
+      "glossary": ["capstone", "domain function", "adapter", "protocol boundary", "full stack", "deployment"],
+      "related": [35, 39, 40, 41, 42, 45]
+    }
+  ]
+}

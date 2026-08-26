@@ -1,0 +1,1648 @@
+{
+  "course": {
+    "title": "Visual Course Volume 6 - Durable Orchestration and Multi-Agent Workflows",
+    "coverTitle": "DURABLE ORCHESTRATION\nAND MULTI-AGENT WORKFLOWS",
+    "coverTagline": "VISUAL-FIRST · FAILURE-AWARE · BEGINNER-FRIENDLY",
+    "subtitle": "Coordinate long-running work that survives retries, restarts, people, and partial failure",
+    "audience": "A visual learner who understands protocols and knowledge systems and now wants to coordinate reliable work across queues, workers, specialist agents, approvals, and external systems",
+    "checkedOn": "2026-08-24",
+    "knowledgeBaseline": {
+      "state": "Conversation, run, task, and workflow state are different records with different lifetimes",
+      "durability": "Business progress is reconstructed from durable history and artifacts, not trusted to one process's memory",
+      "delivery": "Duplicate delivery is normal, so side-effecting workers need idempotency and durable receipts",
+      "coordination": "Orchestration and choreography are design choices; neither removes partial failure",
+      "control": "Budgets, approvals, cancellation, and final authority are explicit workflow contracts",
+      "recovery": "Chaos tests and recovery drills prove that incomplete work can be found and safely resumed"
+    },
+    "officialSources": [
+      {
+        "label": "A2A Protocol 1.0 specification",
+        "url": "https://a2a-protocol.org/latest/specification/"
+      },
+      {
+        "label": "A2A protocol definitions",
+        "url": "https://a2a-protocol.org/latest/definitions/"
+      },
+      {
+        "label": "A2A agent discovery",
+        "url": "https://a2a-protocol.org/latest/topics/agent-discovery/"
+      },
+      {
+        "label": "A2A key concepts",
+        "url": "https://a2a-protocol.org/latest/topics/key-concepts/"
+      },
+      {
+        "label": "Temporal Workflow Execution",
+        "url": "https://docs.temporal.io/workflow-execution"
+      },
+      {
+        "label": "Temporal Events and Event History",
+        "url": "https://docs.temporal.io/workflow-execution/event"
+      },
+      {
+        "label": "Temporal Continue-As-New",
+        "url": "https://docs.temporal.io/workflow-execution/continue-as-new"
+      },
+      {
+        "label": "Temporal Child Workflows",
+        "url": "https://docs.temporal.io/child-workflows"
+      },
+      {
+        "label": "Temporal TypeScript message passing",
+        "url": "https://docs.temporal.io/develop/typescript/workflows/message-passing"
+      },
+      {
+        "label": "Temporal Python message passing",
+        "url": "https://docs.temporal.io/develop/python/workflows/message-passing"
+      },
+      {
+        "label": "Temporal TypeScript cancellation",
+        "url": "https://docs.temporal.io/develop/typescript/workflows/cancellation"
+      },
+      {
+        "label": "Amazon SQS visibility timeout",
+        "url": "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html"
+      },
+      {
+        "label": "Amazon SQS dead-letter queues",
+        "url": "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html"
+      },
+      {
+        "label": "AWS retry with backoff",
+        "url": "https://docs.aws.amazon.com/prescriptive-guidance/latest/cloud-design-patterns/retry-backoff.html"
+      },
+      {
+        "label": "AWS idempotent APIs",
+        "url": "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/"
+      },
+      {
+        "label": "Google Pub/Sub flow control",
+        "url": "https://cloud.google.com/pubsub/docs/flow-control-messages"
+      },
+      {
+        "label": "Google Pub/Sub exactly-once delivery",
+        "url": "https://cloud.google.com/pubsub/docs/exactly-once-delivery"
+      },
+      {
+        "label": "RabbitMQ acknowledgements and confirms",
+        "url": "https://www.rabbitmq.com/docs/confirms"
+      },
+      {
+        "label": "CloudEvents 1.0.2 specification",
+        "url": "https://github.com/cloudevents/spec/blob/ce@v1.0.2/cloudevents/spec.md"
+      },
+      {
+        "label": "CloudEvents primer",
+        "url": "https://github.com/cloudevents/spec/blob/ce@v1.0.2/cloudevents/primer.md"
+      },
+      {
+        "label": "Azure Saga pattern",
+        "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/saga"
+      },
+      {
+        "label": "Azure Compensating Transaction pattern",
+        "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/compensating-transaction"
+      },
+      {
+        "label": "Azure Queue-Based Load Leveling",
+        "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/queue-based-load-leveling"
+      },
+      {
+        "label": "OpenTelemetry messaging conventions",
+        "url": "https://opentelemetry.io/docs/specs/semconv/messaging/messaging-spans/"
+      },
+      {
+        "label": "JSON Schema 2020-12",
+        "url": "https://json-schema.org/draft/2020-12"
+      },
+      {
+        "label": "RFC 9110 HTTP semantics",
+        "url": "https://www.rfc-editor.org/rfc/rfc9110"
+      },
+      {
+        "label": "Original Saga paper",
+        "url": "https://dl.acm.org/doi/10.1145/38713.38742"
+      }
+    ],
+    "visualGrammar": {
+      "cobaltPlatform": "A durable store, queue, worker, agent, service, or control boundary",
+      "cyanArrow": "A command, normal work item, delegation, or forward-progress path",
+      "tealArrow": "An event, acknowledgement, receipt, checkpoint, review, or successful resume path",
+      "coralPath": "A timeout, duplicate, denial, race, stale result, poison item, or compensation path",
+      "whiteCard": "A command, event, task, artifact, budget, approval, lease, state record, or receipt"
+    },
+    "websiteLessonTemplate": [
+      "outcome",
+      "pattern status",
+      "diagram and alt text",
+      "plain-English explanation",
+      "trace the visual",
+      "analogy",
+      "Next.js map",
+      "Python map",
+      "case study",
+      "mini lab",
+      "checkpoint and answer",
+      "glossary and related lessons"
+    ]
+  },
+  "modules": [
+    {
+      "id": "module-29",
+      "title": "Durable state and event history",
+      "lessonIds": [
+        125,
+        126,
+        127,
+        128
+      ],
+      "purpose": "Separate state by lifetime, record legal change, rebuild progress, and preserve business evidence outside one process."
+    },
+    {
+      "id": "module-30",
+      "title": "Queues, workers, and backpressure",
+      "lessonIds": [
+        129,
+        130,
+        131,
+        132
+      ],
+      "purpose": "Move work safely, prevent overload, tolerate duplicate delivery, and stop or undo work deliberately."
+    },
+    {
+      "id": "module-31",
+      "title": "Distributed workflow patterns",
+      "lessonIds": [
+        133,
+        134,
+        135,
+        136
+      ],
+      "purpose": "Choose coordination patterns for parallel, event-driven, scheduled, and long-running business work."
+    },
+    {
+      "id": "module-32",
+      "title": "Multi-agent delegation",
+      "lessonIds": [
+        137,
+        138,
+        139,
+        140
+      ],
+      "purpose": "Discover specialist agents, delegate bounded tasks, propagate ownership, and resolve competing results."
+    },
+    {
+      "id": "module-33",
+      "title": "Planning, budgets, and human control",
+      "lessonIds": [
+        141,
+        142,
+        143,
+        144
+      ],
+      "purpose": "Separate planning from execution and keep cost, authority, interruption, and replanning under explicit control."
+    },
+    {
+      "id": "module-34",
+      "title": "Distributed correctness and recovery",
+      "lessonIds": [
+        145,
+        146,
+        147,
+        148
+      ],
+      "purpose": "Detect races and stale work, inject failure, rehearse recovery, and assemble the complete case-resolution network."
+    }
+  ],
+  "lessons": [
+    {
+      "id": 125,
+      "slug": "state-layer-map",
+      "moduleId": "module-29",
+      "title": "Conversation state, run state, task state, and workflow state",
+      "stability": "Durable-system foundation",
+      "diagram": "diagrams/125-state-layer-map.png",
+      "diagramPrompt": "Show four separate layers labeled CONVERSATION, AGENT RUN, A2A TASK, BUSINESS WORKFLOW. Give each a different ID, OWNER, LIFETIME, and STORE. Use dashed CORRELATION ID links across layers. A coral MERGED SESSION STORE collapses all four and is labeled LOST OWNERSHIP.",
+      "alt": "Four distinct state layers for conversation, agent run, A2A task, and business workflow are correlated without being merged, while one combined session store is rejected.",
+      "outcome": "Choose the correct state record and identity for a chat turn, model attempt, delegated task, or long-running business case.",
+      "explanation": "A conversation remembers what people said. An agent run records one attempt to decide or act. An A2A task represents stateful work exchanged between agents. A business workflow owns the real case from start to final outcome, even across many conversations and runs. The important beginner move is to treat the lifetime and owner of each state layer as an explicit contract, not as hidden framework behavior. The safety rule is: closing a browser tab or retrying a model run must not erase or duplicate the business case. The durable record must say what was requested, which identity owns it, what changed, which attempt produced the change, and what may legally happen next. Frameworks can store and replay that record in different ways, but a restart must never change the business meaning. Keep protocol messages, queue delivery, model reasoning, and business truth separate: a transport can retry, a worker can disappear, and an agent can revise its proposal while the authoritative workflow record remains inspectable.",
+      "trace": [
+        "A conversation ID groups messages for the user's experience.",
+        "A run ID isolates one model-and-tool attempt and its telemetry.",
+        "A task ID tracks delegated work, status, messages, and artifacts.",
+        "A workflow ID owns business progress, approvals, side effects, and receipts.",
+        "Correlation IDs connect the layers without pretending that they are one record."
+      ],
+      "analogy": "It is like a hospital visit: the conversation is what you say, the test run is one examination, the referral is a specialist task, and the patient case is the durable medical journey.",
+      "nextjs": [
+        "Define branded ConversationId, RunId, TaskId, and WorkflowId types in a shared contracts package.",
+        "Render a case page that groups runs and delegated tasks under one workflow timeline.",
+        "Start or resume workflows in Route Handlers or Server Actions and return the durable workflow ID immediately. Keep the browser view read-only with respect to workflow truth; mutations go through authenticated server boundaries and return stable IDs or receipts."
+      ],
+      "python": [
+        "Create Pydantic identity models and a correlation envelope shared by FastAPI and workers.",
+        "Persist workflow state separately from transient model traces and chat messages.",
+        "Expose start, status, input, and cancel endpoints around a workflow service. Model commands, events, states, and error outcomes as typed records so tests can replay the same fixture without network calls."
+      ],
+      "caseStudy": {
+        "situation": "Maya opens a refund chat, refreshes the page, and later a supervisor continues the same case from another device.",
+        "walkthrough": [
+          "The new chat receives a conversation ID but attaches to the existing case workflow ID.",
+          "Each model attempt receives a new run ID.",
+          "The finance specialist receives its own A2A task ID.",
+          "All records carry one correlation ID and the stable case ID."
+        ],
+        "result": "The interface can reconstruct the complete case without treating a refreshed chat or retried run as a new refund.",
+        "danger": "One giant session object gives unrelated records the same lifetime, loses ownership, and makes recovery guesswork.",
+        "takeaway": "Correlate state layers; do not collapse them."
+      },
+      "lab": "Draw four boxes for one customer case. Give each state layer an owner, ID, store, retention period, and one event that creates or closes it.",
+      "checkpoint": "Which record should prove that Maya's refund was issued?",
+      "answer": "The authoritative business workflow and refund receipt, not the conversation transcript or model run.",
+      "glossary": [
+        "Conversation state - user-facing message context",
+        "Run state - one agent execution attempt",
+        "Workflow state - durable business progress"
+      ],
+      "related": [
+        126,
+        128,
+        139
+      ],
+      "sources": [
+        "A2A Protocol 1.0 specification",
+        "Temporal Workflow Execution"
+      ]
+    },
+    {
+      "id": 126,
+      "slug": "command-event-state-machine",
+      "moduleId": "module-29",
+      "title": "State machines, events, commands, and invariants",
+      "stability": "Mature correctness pattern",
+      "diagram": "diagrams/126-command-event-state-machine.png",
+      "diagramPrompt": "Show USER COMMAND entering VALIDATE INVARIANTS. Valid path emits an EVENT into APPEND-ONLY HISTORY and a reducer moves STATE from OPEN to WAITING APPROVAL. Coral invalid path emits COMMAND REJECTED and leaves state unchanged. Labels: COMMAND, INVARIANT, EVENT, STATE.",
+      "alt": "A command is checked against invariants, accepted as an event that changes state, or rejected without changing state.",
+      "outcome": "Model workflow change as commands checked by rules, facts recorded as events, and legal states derived from those facts.",
+      "explanation": "A command asks for something to happen; it may be refused. An event states that something did happen; history should not rewrite it. A state machine lists the legal states and transitions. Invariants are rules that must remain true before and after every accepted transition. The important beginner move is to treat the line between requested intent and recorded fact as an explicit contract, not as hidden framework behavior. The safety rule is: a refund cannot move to completed unless approval and payment evidence already exist. The durable record must say what was requested, which identity owns it, what changed, which attempt produced the change, and what may legally happen next. Frameworks can store and replay that record in different ways, but a restart must never change the business meaning. Keep protocol messages, queue delivery, model reasoning, and business truth separate: a transport can retry, a worker can disappear, and an agent can revise its proposal while the authoritative workflow record remains inspectable.",
+      "trace": [
+        "Receive a typed command with actor, target, expected version, and idempotency key.",
+        "Load current authoritative state and evaluate permission plus business invariants.",
+        "Reject illegal intent without pretending an event occurred.",
+        "Append the accepted event and project the next state deterministically.",
+        "Publish derived work only after the state change is durably committed."
+      ],
+      "analogy": "A command is asking a referee to award a goal; the event is the referee recording it; the scoreboard is the derived state.",
+      "nextjs": [
+        "Validate command input at the server boundary and include the expected workflow version.",
+        "Keep transition rules in a domain module rather than inside React components.",
+        "Return a conflict result when a stale command no longer matches the current state. Keep the browser view read-only with respect to workflow truth; mutations go through authenticated server boundaries and return stable IDs or receipts."
+      ],
+      "python": [
+        "Use Pydantic discriminated unions for commands and events.",
+        "Implement a pure transition function that returns accepted events or a typed rejection.",
+        "Append events and an outbox record in one database transaction. Model commands, events, states, and error outcomes as typed records so tests can replay the same fixture without network calls."
+      ],
+      "caseStudy": {
+        "situation": "Maya clicks Approve after another supervisor has already rejected the same refund.",
+        "walkthrough": [
+          "The command carries the version Maya saw.",
+          "The workflow loads a newer REJECTED state.",
+          "The transition table says REJECTED to APPROVED is illegal without a reopen command.",
+          "The system returns a conflict and records the attempted action in the audit trail."
+        ],
+        "result": "The state remains truthful and Maya is shown the current decision instead of overwriting it.",
+        "danger": "Updating a status field directly can create impossible combinations that no replay or audit can explain.",
+        "takeaway": "Commands may fail; accepted events are facts; state follows legal transitions."
+      },
+      "lab": "Create a five-state refund machine. Write two allowed transitions, two forbidden transitions, and one invariant for every terminal state.",
+      "checkpoint": "Why not record every command as a successful event?",
+      "answer": "A command is intent; validation may reject it. Recording it as success would make history lie.",
+      "glossary": [
+        "Command - request to change something",
+        "Event - durable fact that occurred",
+        "Invariant - rule that must always hold"
+      ],
+      "related": [
+        125,
+        127,
+        145
+      ],
+      "sources": [
+        "Temporal Workflow Execution",
+        "CloudEvents 1.0.2 specification"
+      ]
+    },
+    {
+      "id": 127,
+      "slug": "snapshot-replay-schema-evolution",
+      "moduleId": "module-29",
+      "title": "Checkpoints, snapshots, replay, and schema evolution",
+      "stability": "Durable execution pattern",
+      "diagram": "diagrams/127-snapshot-replay-schema-evolution.png",
+      "diagramPrompt": "Show APPEND-ONLY EVENTS 1 TO 900 flowing into SNAPSHOT AT 800, then REPLAY 801 TO 900 to rebuild CURRENT STATE. Above, CODE V1 and CODE V2 cross a VERSION GATE. Coral INCOMPATIBLE EVENT goes to MIGRATION TEST. Include CONTINUE AS NEW as a clean-history branch.",
+      "alt": "A snapshot plus later events rebuilds current state while code versions and migration tests protect replay compatibility, with a continue-as-new branch for long histories.",
+      "outcome": "Recover workflow state quickly while preserving replay correctness as histories and code change.",
+      "explanation": "An event history is the durable recipe for rebuilding progress. A snapshot is a performance shortcut that captures state at a known event, not a replacement for business evidence. Replay applies later events again. Because old histories may run against new code, workflow logic and event schemas need compatible evolution or explicit version gates. The important beginner move is to treat the compatibility boundary between stored history and deployed workflow code as an explicit contract, not as hidden framework behavior. The safety rule is: replaying the same accepted history must produce the same decisions and commands. The durable record must say what was requested, which identity owns it, what changed, which attempt produced the change, and what may legally happen next. Frameworks can store and replay that record in different ways, but a restart must never change the business meaning. Keep protocol messages, queue delivery, model reasoning, and business truth separate: a transport can retry, a worker can disappear, and an agent can revise its proposal while the authoritative workflow record remains inspectable.",
+      "trace": [
+        "Persist ordered events with stable types, versions, and identifiers.",
+        "Create a snapshot only after a known durable history position.",
+        "Restore the snapshot and replay only the later events.",
+        "Test old histories against candidate code before deployment.",
+        "Use version markers, migrations, or a new execution when history growth or incompatible change demands it."
+      ],
+      "analogy": "It is like resuming a long book from a trustworthy bookmark while keeping the earlier chapters available for proof.",
+      "nextjs": [
+        "Show snapshots and event positions in an operator-only workflow inspector.",
+        "Version serialized event schemas in a shared package and keep compatibility fixtures.",
+        "Deploy UI changes independently from workflow-code migrations. Keep the browser view read-only with respect to workflow truth; mutations go through authenticated server boundaries and return stable IDs or receipts."
+      ],
+      "python": [
+        "Write replay tests that load recorded histories into pure reducers.",
+        "Use upcasters or version-specific decoders for stored event payloads.",
+        "Checkpoint derived state but retain authoritative events and receipts according to policy. Model commands, events, states, and error outcomes as typed records so tests can replay the same fixture without network calls."
+      ],
+      "caseStudy": {
+        "situation": "Acme deploys a new refund rule while Maya's case has been waiting for approval for two days.",
+        "walkthrough": [
+          "The old history includes the workflow version selected when the case began.",
+          "Candidate code is replay-tested against that history.",
+          "The existing case follows its compatible rule branch.",
+          "New cases start under the new version and emit the new event shape."
+        ],
+        "result": "The deployment does not retroactively change Maya's recorded business journey.",
+        "danger": "Changing workflow code as if no old histories exist can cause nondeterministic replay or silently different decisions.",
+        "takeaway": "History is an API consumed by future code; evolve it deliberately."
+      },
+      "lab": "Write a V1 event, a V2 event with one added field, and a replay test proving both rebuild the intended state. State how missing data is interpreted.",
+      "checkpoint": "Does a snapshot replace the event history?",
+      "answer": "No. It speeds restoration from a known point; the history and durable business records still explain what happened.",
+      "glossary": [
+        "Replay - rebuilding progress from recorded events",
+        "Snapshot - state captured at a known history position",
+        "Schema evolution - changing stored contracts safely"
+      ],
+      "related": [
+        126,
+        136,
+        144
+      ],
+      "sources": [
+        "Temporal Events and Event History",
+        "Temporal Continue-As-New",
+        "JSON Schema 2020-12"
+      ]
+    },
+    {
+      "id": 128,
+      "slug": "artifact-receipt-business-record",
+      "moduleId": "module-29",
+      "title": "Durable artifacts, receipts, and business records",
+      "stability": "Auditability foundation",
+      "diagram": "diagrams/128-artifact-receipt-business-record.png",
+      "diagramPrompt": "Show WORKFLOW creating three distinct outputs: A2A ARTIFACT, SIDE-EFFECT RECEIPT, BUSINESS RECORD. Each has ID, VERSION, HASH, ACTOR, TIME, and CORRELATION. A teal LINEAGE path reaches the source request. Coral CHAT ONLY is labeled NOT PROOF.",
+      "alt": "A workflow produces a task artifact, side-effect receipt, and authoritative business record with identity and lineage, while chat text alone is rejected as proof.",
+      "outcome": "Separate agent-produced deliverables from side-effect evidence and authoritative business records.",
+      "explanation": "An artifact is a task output such as a report. A receipt proves an operation attempt and its result, such as a payment provider accepting a refund key. A business record is the system-of-record fact used by the organization. These objects can refer to one another, but they are not interchangeable. The important beginner move is to treat the ownership and authority of each durable output as an explicit contract, not as hidden framework behavior. The safety rule is: a pleasant agent message must never be the only evidence that money moved or a case closed. The durable record must say what was requested, which identity owns it, what changed, which attempt produced the change, and what may legally happen next. Frameworks can store and replay that record in different ways, but a restart must never change the business meaning. Keep protocol messages, queue delivery, model reasoning, and business truth separate: a transport can retry, a worker can disappear, and an agent can revise its proposal while the authoritative workflow record remains inspectable.",
+      "trace": [
+        "Give every output a stable identity and content or payload hash.",
+        "Record actor, policy version, timestamps, correlation, and originating command.",
+        "Store A2A deliverables as task artifacts with typed parts.",
+        "Store provider responses and idempotency keys as side-effect receipts.",
+        "Update the business record only through the owning domain boundary."
+      ],
+      "analogy": "A consultant's report, a shop receipt, and the bank ledger may describe one purchase, but each proves a different thing.",
+      "nextjs": [
+        "Render artifacts, receipts, and business status in separate labeled panels.",
+        "Protect downloads with authorization and versioned content URLs.",
+        "Link a completed UI state to the authoritative record rather than optimistic chat text. Keep the browser view read-only with respect to workflow truth; mutations go through authenticated server boundaries and return stable IDs or receipts."
+      ],
+      "python": [
+        "Define ArtifactRecord, OperationReceipt, and BusinessRecord as separate models.",
+        "Persist immutable receipt payload hashes and redact secrets before logging.",
+        "Use repository boundaries so only the domain service changes the business record. Model commands, events, states, and error outcomes as typed records so tests can replay the same fixture without network calls."
+      ],
+      "caseStudy": {
+        "situation": "The finance agent returns a refund report, the payment provider accepts the request, and the case system later marks the refund settled.",
+        "walkthrough": [
+          "The report is stored as an A2A artifact.",
+          "The provider response becomes an immutable operation receipt.",
+          "The case record moves to REFUND SUBMITTED, not yet SETTLED.",
+          "A later settlement event updates the authoritative business record."
+        ],
+        "result": "Maya can explain what was proposed, what was submitted, and what has actually settled.",
+        "danger": "Treating a generated report as proof of a side effect can display success when the external operation never happened.",
+        "takeaway": "Artifacts explain, receipts prove attempts, and business records own truth."
+      },
+      "lab": "For one refund, design the minimal fields of its task artifact, provider receipt, and case record. Mark which team owns each object.",
+      "checkpoint": "Which object should a reconciliation job compare with the payment provider?",
+      "answer": "The side-effect receipt and authoritative business record, using stable external and internal operation identities.",
+      "glossary": [
+        "Artifact - durable task output",
+        "Receipt - evidence of an operation and result",
+        "Business record - authoritative domain fact"
+      ],
+      "related": [
+        125,
+        139,
+        147
+      ],
+      "sources": [
+        "A2A Protocol 1.0 specification",
+        "A2A key concepts"
+      ]
+    },
+    {
+      "id": 129,
+      "slug": "queue-lease-ack-visibility",
+      "moduleId": "module-30",
+      "title": "Queues, workers, leases, acknowledgements, and visibility",
+      "stability": "Mature messaging pattern",
+      "diagram": "diagrams/129-queue-lease-ack-visibility.png",
+      "diagramPrompt": "Show PRODUCER to DURABLE QUEUE to WORKER A. Delivery creates a LEASE or VISIBILITY WINDOW. Success returns ACK and removes the item. A coral WORKER CRASH lets the lease expire and WORKER B receives the same item. Include RECEIPT before ACK.",
+      "alt": "A queue leases work to a worker; success records a receipt and acknowledges it, while a crash lets the lease expire so another worker receives the same item.",
+      "outcome": "Explain why a worker owns a delivery temporarily and why acknowledgement happens only after durable success.",
+      "explanation": "A durable queue separates the producer's speed from the worker's speed. Receiving an item normally creates a temporary lease or visibility window, not permanent ownership. The worker finishes the durable result and then acknowledges. If it crashes first, the item becomes available again. The important beginner move is to treat the temporary ownership represented by the delivery lease as an explicit contract, not as hidden framework behavior. The safety rule is: a work item is acknowledged only after the result or receipt needed for recovery is durable. The durable record must say what was requested, which identity owns it, what changed, which attempt produced the change, and what may legally happen next. Frameworks can store and replay that record in different ways, but a restart must never change the business meaning. Keep protocol messages, queue delivery, model reasoning, and business truth separate: a transport can retry, a worker can disappear, and an agent can revise its proposal while the authoritative workflow record remains inspectable.",
+      "trace": [
+        "The producer writes a small typed work envelope to a durable queue.",
+        "A worker receives it with a delivery identity and temporary lease.",
+        "The worker heartbeats or extends visibility only while it is genuinely progressing.",
+        "It commits its result and receipt before acknowledging the delivery.",
+        "A crash or expired lease causes redelivery to the same or another worker."
+      ],
+      "analogy": "It is like taking a library book from the returns cart with a temporary claim ticket; if you vanish, someone else can finish shelving it.",
+      "nextjs": [
+        "Enqueue slow work from a server boundary and return a status URL instead of holding the browser request.",
+        "Stream or poll durable status without exposing queue credentials.",
+        "Display attempts and current lease only in an authenticated operator view. Keep the browser view read-only with respect to workflow truth; mutations go through authenticated server boundaries and return stable IDs or receipts."
+      ],
+      "python": [
+        "Implement workers that validate envelopes before starting domain work.",
+        "Extend leases through heartbeats only for bounded active work.",
+        "Commit result plus receipt before sending the queue acknowledgement. Model commands, events, states, and error outcomes as typed records so tests can replay the same fixture without network calls."
+      ],
+      "caseStudy": {
+        "situation": "The payment worker loses power after the provider accepts the refund but before the queue acknowledgement.",
+        "walkthrough": [
+          "The lease expires and the message returns.",
+          "A second worker receives the same operation identity.",
+          "It checks the receipt or idempotency record before calling the provider.",
+          "It returns the existing result and safely acknowledges."
+        ],
+        "result": "The queue recovers the unfinished delivery without creating a second refund.",
+        "danger": "Acknowledging before durable completion loses work; acting without idempotency duplicates effects after redelivery.",
+        "takeaway": "Lease, do durable work, record proof, then acknowledge."
+      },
+      "lab": "Draw a timeline with delivery, lease start, heartbeat, commit, and acknowledgement. Add a crash at three different points and state what happens next.",
+      "checkpoint": "Does a visibility timeout guarantee one worker will ever see the message?",
+      "answer": "No. It reduces simultaneous processing, but redelivery and duplicate processing are still possible.",
+      "glossary": [
+        "Lease - temporary right to process",
+        "Acknowledgement - confirmation that delivery may finish",
+        "Visibility timeout - period hiding an in-flight message"
+      ],
+      "related": [
+        131,
+        145,
+        147
+      ],
+      "sources": [
+        "Amazon SQS visibility timeout",
+        "RabbitMQ acknowledgements and confirms"
+      ]
+    },
+    {
+      "id": 130,
+      "slug": "backpressure-admission-priority",
+      "moduleId": "module-30",
+      "title": "Backpressure, rate limits, admission control, and priorities",
+      "stability": "Reliability and fairness pattern",
+      "diagram": "diagrams/130-backpressure-admission-priority.png",
+      "diagramPrompt": "Show REQUEST FLOOD entering ADMISSION GATE with CAPACITY, TENANT LIMIT, PRIORITY, and DEADLINE checks. Accepted work enters HIGH, NORMAL, BULK queues and sized WORKER POOLS. Coral OVERLOAD returns RETRY LATER. Teal CAPACITY SIGNAL flows backward.",
+      "alt": "An admission gate uses capacity, tenant limits, priority, and deadlines to route accepted work into separate queues while overload returns a retry-later result and capacity signals flow upstream.",
+      "outcome": "Protect workers and important users by limiting intake before a queue becomes an invisible failure reservoir.",
+      "explanation": "Backpressure is the downstream system telling producers to slow down. Rate limits protect a boundary over time. Admission control decides whether new work should enter now. Priorities choose which accepted work goes first, but fairness prevents one urgent tenant from starving everyone else. The important beginner move is to treat the admission gate between demand and available capacity as an explicit contract, not as hidden framework behavior. The safety rule is: the system must reject or defer excess work before queues, budgets, and deadlines become unrecoverable. The durable record must say what was requested, which identity owns it, what changed, which attempt produced the change, and what may legally happen next. Frameworks can store and replay that record in different ways, but a restart must never change the business meaning. Keep protocol messages, queue delivery, model reasoning, and business truth separate: a transport can retry, a worker can disappear, and an agent can revise its proposal while the authoritative workflow record remains inspectable.",
+      "trace": [
+        "Measure queue depth, oldest age, worker saturation, and external quotas.",
+        "Classify work by tenant, risk, deadline, and service class.",
+        "Admit only work that has a realistic capacity and budget path.",
+        "Use separate lanes or weighted fairness for urgent, normal, and bulk work.",
+        "Return an explicit retry-after, deferred status, or safe degradation when overloaded."
+      ],
+      "analogy": "A restaurant controls seating at the door because filling every hallway with waiting diners does not create more cooks.",
+      "nextjs": [
+        "Return 429 or 202 with truthful retry or status metadata from overloaded server boundaries.",
+        "Show queued and deferred states instead of an endless spinner.",
+        "Use per-tenant quotas and signed job identities at the admission layer. Keep the browser view read-only with respect to workflow truth; mutations go through authenticated server boundaries and return stable IDs or receipts."
+      ],
+      "python": [
+        "Collect queue depth, age, service time, and saturation metrics.",
+        "Implement bounded concurrency with separate worker pools or semaphores.",
+        "Reject, defer, or shed optional work before allocating expensive model or tool calls. Model commands, events, states, and error outcomes as typed records so tests can replay the same fixture without network calls."
+      ],
+      "caseStudy": {
+        "situation": "A bulk re-analysis job arrives while Maya waits for a supervisor decision and thousands of customers open support chats.",
+        "walkthrough": [
+          "The gate reserves capacity for approval and interactive lanes.",
+          "Bulk jobs enter a low-priority bounded queue.",
+          "Per-tenant limits stop one customer from consuming every worker.",
+          "The UI gives delayed jobs a durable status instead of pretending they started."
+        ],
+        "result": "Critical cases keep moving and overload is visible, bounded, and recoverable.",
+        "danger": "An unbounded queue converts a capacity problem into huge latency, expired work, high cost, and a painful recovery backlog.",
+        "takeaway": "Control entry while the system can still make an honest promise."
+      },
+      "lab": "Design three service classes for Acme. Give each an admission rule, queue limit, worker share, expiration policy, and overload response.",
+      "checkpoint": "Why is priority alone insufficient?",
+      "answer": "Without capacity limits and fairness, high-priority traffic can overload the same workers or starve normal work forever.",
+      "glossary": [
+        "Backpressure - signal to slow producers",
+        "Admission control - deciding whether work may enter",
+        "Load shedding - deliberately refusing optional work"
+      ],
+      "related": [
+        129,
+        142,
+        145
+      ],
+      "sources": [
+        "Google Pub/Sub flow control",
+        "Azure Queue-Based Load Leveling",
+        "AWS retry with backoff"
+      ]
+    },
+    {
+      "id": 131,
+      "slug": "retry-idempotency-poison-work",
+      "moduleId": "module-30",
+      "title": "Retries, idempotency keys, deduplication, and poison work",
+      "stability": "Essential side-effect safety pattern",
+      "diagram": "diagrams/131-retry-idempotency-poison-work.png",
+      "diagramPrompt": "Show WORK ITEM with IDEMPOTENCY KEY entering ATTEMPT 1 TIMEOUT then ATTEMPT 2. Both check DEDUP STORE. Existing RECEIPT returns SAME RESULT. Repeated deterministic failure goes to POISON or DEAD LETTER after RETRY BUDGET. No infinite loop.",
+      "alt": "Retried attempts share an idempotency key and deduplication store so an existing receipt returns the same result, while repeated nonrecoverable failure moves to a poison-work lane.",
+      "outcome": "Retry transient failure without repeating the intended business effect or trapping bad work in an infinite loop.",
+      "explanation": "A retry creates another attempt, not another user intention. An idempotency key names that stable intention. The receiver stores the key with a request fingerprint, status, and result so the same request can return the same outcome. Poison work is repeatedly unprocessable because of bad data, incompatible code, or a permanent rule failure. The important beginner move is to treat the deduplication boundary around one intended side effect as an explicit contract, not as hidden framework behavior. The safety rule is: all attempts for one intention share one key, and the same key cannot be reused for a different request. The durable record must say what was requested, which identity owns it, what changed, which attempt produced the change, and what may legally happen next. Frameworks can store and replay that record in different ways, but a restart must never change the business meaning. Keep protocol messages, queue delivery, model reasoning, and business truth separate: a transport can retry, a worker can disappear, and an agent can revise its proposal while the authoritative workflow record remains inspectable.",
+      "trace": [
+        "Classify errors as transient, permanent, ambiguous, or policy failure.",
+        "Generate the idempotency key before the first side-effect attempt.",
+        "Atomically reserve or read the key and compare the request fingerprint.",
+        "Return the stored outcome when the intended effect already completed.",
+        "Stop at a retry budget and quarantine poison work with diagnostics and ownership."
+      ],
+      "analogy": "It is like a numbered coat-check ticket: asking again with the same ticket retrieves the same coat, not a second coat.",
+      "nextjs": [
+        "Create the operation key at the authenticated server boundary and preserve it across UI retries.",
+        "Show existing accepted or completed results for repeated submissions.",
+        "Never let React generate a fresh business-operation key on every render. Keep the browser view read-only with respect to workflow truth; mutations go through authenticated server boundaries and return stable IDs or receipts."
+      ],
+      "python": [
+        "Use a unique database constraint on scope plus idempotency key.",
+        "Store request hash, status, result reference, and expiry in the idempotency record.",
+        "Route exhausted or permanent failures to a dead-letter workflow with redrive controls. Model commands, events, states, and error outcomes as typed records so tests can replay the same fixture without network calls."
+      ],
+      "caseStudy": {
+        "situation": "Maya submits the refund, sees a timeout, and clicks again while the first request may already have reached the payment provider.",
+        "walkthrough": [
+          "Both requests use the same refund operation key.",
+          "The second attempt finds the first operation in progress or completed.",
+          "If completed, the saved receipt is returned.",
+          "If the payload differs, the system rejects key reuse rather than guessing."
+        ],
+        "result": "Maya receives one refund and one stable operation history despite ambiguous transport failure.",
+        "danger": "Blind retry can convert a temporary timeout into duplicate money movement; endless retry can block healthy work behind one poison item.",
+        "takeaway": "Retry attempts; deduplicate intentions; quarantine work that cannot become healthy."
+      },
+      "lab": "Design an idempotency table for refunds. Include scope, key, request hash, status, result, timestamps, expiry, and the response for a mismatched payload.",
+      "checkpoint": "Is a message ID always a sufficient idempotency key?",
+      "answer": "No. Redelivery IDs may change or one intention may cross transports. Use a stable business-operation identity with a defined scope.",
+      "glossary": [
+        "Idempotency key - identity of one intended operation",
+        "Deduplication - recognizing repeated work",
+        "Poison work - item that repeatedly cannot be processed"
+      ],
+      "related": [
+        129,
+        132,
+        145
+      ],
+      "sources": [
+        "AWS idempotent APIs",
+        "AWS retry with backoff",
+        "Amazon SQS dead-letter queues"
+      ]
+    },
+    {
+      "id": 132,
+      "slug": "deadline-cancel-timeout-compensation",
+      "moduleId": "module-30",
+      "title": "Deadlines, cancellation, timeout, and compensation",
+      "stability": "Long-running control pattern",
+      "diagram": "diagrams/132-deadline-cancel-timeout-compensation.png",
+      "diagramPrompt": "Show WORKFLOW with absolute DEADLINE flowing into STEP A then STEP B. USER CANCEL sends cooperative CANCELLATION. A TIMER creates TIMEOUT. Completed reversible STEP A has coral COMPENSATE A path. IRREVERSIBLE STEP B has POINT OF NO RETURN and MANUAL RECOVERY.",
+      "alt": "A workflow carries a deadline, responds cooperatively to cancellation and timeout, compensates a completed reversible step, and treats an irreversible step as a point of no return.",
+      "outcome": "Distinguish a request to stop, a timer expiring, and business work required to repair completed effects.",
+      "explanation": "A deadline is the latest useful completion time and should travel with the work. Cancellation is a request to stop; a worker may need a safe checkpoint before honoring it. A timeout is the system deciding that a wait exceeded its bound. Compensation is new business work that counteracts a completed effect; it is not a database rewind. The important beginner move is to treat the point where waiting ends but previously committed effects remain real as an explicit contract, not as hidden framework behavior. The safety rule is: after the point of no return, the workflow must finish forward or enter an explicit manual recovery state. The durable record must say what was requested, which identity owns it, what changed, which attempt produced the change, and what may legally happen next. Frameworks can store and replay that record in different ways, but a restart must never change the business meaning. Keep protocol messages, queue delivery, model reasoning, and business truth separate: a transport can retry, a worker can disappear, and an agent can revise its proposal while the authoritative workflow record remains inspectable.",
+      "trace": [
+        "Compute one absolute deadline and derive smaller step timeouts from its remaining budget.",
+        "Propagate cancellation to cancellable children and activities.",
+        "Record which steps completed before deciding the recovery path.",
+        "Run idempotent compensation only for effects that have a valid business inverse.",
+        "Expose cancelled, timed-out, compensated, and manual-recovery outcomes separately."
+      ],
+      "analogy": "Stopping a cake recipe is easy before baking; after it is baked, you cannot unbake it, so recovery means a different action.",
+      "nextjs": [
+        "Offer cancel only when the workflow contract allows it and show what cancellation can still undo.",
+        "Pass one operation deadline from server entry into downstream commands.",
+        "Render timeout, cancelled, compensated, and manual states with distinct explanations. Keep the browser view read-only with respect to workflow truth; mutations go through authenticated server boundaries and return stable IDs or receipts."
+      ],
+      "python": [
+        "Use cancellation scopes or tokens and check them at safe activity boundaries.",
+        "Persist completed steps and compensation data before advancing.",
+        "Make compensation commands independently retryable and observable. Model commands, events, states, and error outcomes as typed records so tests can replay the same fixture without network calls."
+      ],
+      "caseStudy": {
+        "situation": "Maya cancels after the policy check completed but while the refund provider call is still uncertain.",
+        "walkthrough": [
+          "The workflow records the cancellation request.",
+          "It stops new reversible work and queries the provider using the stable operation key.",
+          "If no refund exists, it cancels cleanly; if accepted, it follows the defined reversal or manual path.",
+          "Every branch ends with a durable status and receipt."
+        ],
+        "result": "Cancellation does not pretend an ambiguous external effect disappeared.",
+        "danger": "Killing processes without recording progress leaves unknown effects that later retries may duplicate.",
+        "takeaway": "Stopping computation is not the same as undoing business effects."
+      },
+      "lab": "For a three-step refund flow, mark each step cancellable, compensable, retryable, or irreversible. Add an absolute deadline and recovery state.",
+      "checkpoint": "Can every completed action be rolled back?",
+      "answer": "No. Some effects need business-specific compensation, forward completion, or manual repair, and some are irreversible.",
+      "glossary": [
+        "Deadline - latest useful completion time",
+        "Cancellation - request to stop safely",
+        "Compensation - new action counteracting an earlier effect"
+      ],
+      "related": [
+        131,
+        135,
+        143
+      ],
+      "sources": [
+        "Temporal TypeScript cancellation",
+        "Azure Compensating Transaction pattern"
+      ]
+    },
+    {
+      "id": 133,
+      "slug": "orchestration-vs-choreography",
+      "moduleId": "module-31",
+      "title": "Orchestration versus choreography",
+      "stability": "Core distributed workflow choice",
+      "diagram": "diagrams/133-orchestration-vs-choreography.png",
+      "diagramPrompt": "Split canvas. Left ORCHESTRATION: one COORDINATOR sends COMMANDS to POLICY, FINANCE, NOTIFY and receives RESULTS. Right CHOREOGRAPHY: services publish FACT EVENTS through EVENT BUS and react independently. Bottom compares GLOBAL VIEW, COUPLING, RECOVERY, and OWNERSHIP.",
+      "alt": "A side-by-side comparison shows a coordinator directing services in orchestration and services reacting to fact events through a bus in choreography, with ownership and recovery trade-offs.",
+      "outcome": "Choose deliberate central coordination, event reactions, or a hybrid based on ownership and recovery needs.",
+      "explanation": "In orchestration, one workflow decides which command comes next and owns the end-to-end state. In choreography, participants publish facts and other participants react without one controller knowing the full route. Orchestration makes global progress and recovery visible; choreography reduces central coupling but can hide the business journey across many reactions. The important beginner move is to treat the owner of the end-to-end business decision as an explicit contract, not as hidden framework behavior. The safety rule is: every cross-service business process still needs a discoverable owner and recovery policy even when no single runtime coordinates every step. The durable record must say what was requested, which identity owns it, what changed, which attempt produced the change, and what may legally happen next. Frameworks can store and replay that record in different ways, but a restart must never change the business meaning. Keep protocol messages, queue delivery, model reasoning, and business truth separate: a transport can retry, a worker can disappear, and an agent can revise its proposal while the authoritative workflow record remains inspectable.",
+      "trace": [
+        "Start with the business owner and required global invariants.",
+        "Use commands for requested work and events for facts already committed.",
+        "Choose orchestration where ordered recovery and human control need one view.",
+        "Choose choreography for independent reactions to stable domain facts.",
+        "Use correlation, event contracts, and observability in either design."
+      ],
+      "analogy": "An orchestra follows a conductor; a dance floor coordinates through shared rhythm. Both need rules, but control is located differently.",
+      "nextjs": [
+        "Expose one case timeline even when backend participants use both patterns.",
+        "Send commands through protected server APIs and consume public status events through adapters.",
+        "Avoid putting distributed coordination logic in client components. Keep the browser view read-only with respect to workflow truth; mutations go through authenticated server boundaries and return stable IDs or receipts."
+      ],
+      "python": [
+        "Implement an orchestrator as a state machine with explicit participant commands.",
+        "Implement choreographed reactions as idempotent event consumers with narrow ownership.",
+        "Trace both commands and events under the same business correlation identity. Model commands, events, states, and error outcomes as typed records so tests can replay the same fixture without network calls."
+      ],
+      "caseStudy": {
+        "situation": "A completed refund should close the case, notify Maya, update analytics, and invite a satisfaction survey.",
+        "walkthrough": [
+          "The refund workflow orchestrates policy, approval, and payment because their order and recovery matter.",
+          "It publishes REFUND SETTLED as a fact.",
+          "Notification, analytics, and survey services react independently.",
+          "The case timeline correlates both coordinated and choreographed work."
+        ],
+        "result": "Critical business correctness has one owner while optional reactions remain decoupled.",
+        "danger": "Turning every event reaction into an invisible business workflow creates circular dependencies and no obvious recovery owner.",
+        "takeaway": "Choose where decisions live; do not confuse fact publication with responsibility."
+      },
+      "lab": "Classify six Acme steps as orchestrated command or choreographed event reaction. Explain who owns failure and completion for each.",
+      "checkpoint": "Does choreography mean there is no business owner?",
+      "answer": "No. It removes a central technical controller, not the need for ownership, contracts, observability, and recovery.",
+      "glossary": [
+        "Orchestration - coordinator directs work",
+        "Choreography - participants react to facts",
+        "Domain event - durable business fact"
+      ],
+      "related": [
+        126,
+        135,
+        136
+      ],
+      "sources": [
+        "Azure Saga pattern",
+        "CloudEvents primer"
+      ]
+    },
+    {
+      "id": 134,
+      "slug": "fan-out-fan-in-join",
+      "moduleId": "module-31",
+      "title": "Parallel work, fan-out, fan-in, and joins",
+      "stability": "Parallel workflow pattern",
+      "diagram": "diagrams/134-fan-out-fan-in-join.png",
+      "diagramPrompt": "Show PARENT WORKFLOW fanning out to POLICY, LEDGER, FRAUD, CUSTOMER HISTORY workers. Each returns typed RESULT or ERROR to JOIN GATE. Gate has REQUIRED ALL, QUORUM, OPTIONAL, DEADLINE rules. Coral STRAGGLER and DUPLICATE paths are visible. End at AGGREGATED EVIDENCE.",
+      "alt": "A parent workflow fans out to four workers and joins typed outcomes under required, quorum, optional, and deadline rules before creating aggregated evidence.",
+      "outcome": "Run independent work in parallel and define exactly when the parent may continue.",
+      "explanation": "Fan-out starts several independent branches. Fan-in collects their outcomes. A join rule states what is required: all results, a quorum, the first valid answer, or required plus optional evidence until a deadline. Parallel speed is useful only when branch identity, cancellation, duplicate results, and missing outcomes are explicit. The important beginner move is to treat the join gate that converts many branch outcomes into one parent decision as an explicit contract, not as hidden framework behavior. The safety rule is: the parent cannot silently treat a timeout, duplicate, or missing required branch as a successful result. The durable record must say what was requested, which identity owns it, what changed, which attempt produced the change, and what may legally happen next. Frameworks can store and replay that record in different ways, but a restart must never change the business meaning. Keep protocol messages, queue delivery, model reasoning, and business truth separate: a transport can retry, a worker can disappear, and an agent can revise its proposal while the authoritative workflow record remains inspectable.",
+      "trace": [
+        "Create stable branch identities under the parent workflow.",
+        "Start only work whose inputs are independent and authorized.",
+        "Collect success, typed failure, timeout, and cancelled outcomes separately.",
+        "Apply a declared join policy and ignore duplicate terminal results.",
+        "Cancel unnecessary stragglers or preserve them as optional late artifacts by contract."
+      ],
+      "analogy": "It is like sending four people to different shops and agreeing beforehand whether dinner waits for everyone or only the essential ingredients.",
+      "nextjs": [
+        "Render one progress card per branch with required or optional status.",
+        "Let the server aggregate branch events into a stable parent view.",
+        "Show partial completion only when the join contract permits a meaningful partial result. Keep the browser view read-only with respect to workflow truth; mutations go through authenticated server boundaries and return stable IDs or receipts."
+      ],
+      "python": [
+        "Use structured concurrency for local parallel calls and durable child tasks for long work.",
+        "Persist branch keys and terminal outcomes before evaluating the join.",
+        "Apply deadlines and cancellation through the parent workflow, not ad hoc worker timers. Model commands, events, states, and error outcomes as typed records so tests can replay the same fixture without network calls."
+      ],
+      "caseStudy": {
+        "situation": "Maya's case needs policy, ledger, fraud, and customer-history evidence; the customer-history service is slow.",
+        "walkthrough": [
+          "The workflow marks policy and ledger required, fraud conditionally required, and history optional.",
+          "All branches start with distinct IDs and a shared deadline.",
+          "Required evidence arrives before the deadline.",
+          "The join proceeds and cancels the optional straggler according to policy."
+        ],
+        "result": "Maya gets a timely decision without confusing optional missing context with a failed required check.",
+        "danger": "A generic Promise.all or gather call can make one optional timeout fail everything or leave cancelled side effects running invisibly.",
+        "takeaway": "Parallelism needs branch identities and a business-aware join rule."
+      },
+      "lab": "Design a four-branch join with required, optional, and conditional inputs. Add deadline, duplicate, and late-result behavior.",
+      "checkpoint": "When is first-success a safe join rule?",
+      "answer": "Only when any valid branch independently satisfies the business need and losing other results does not violate policy or evidence requirements.",
+      "glossary": [
+        "Fan-out - start multiple branches",
+        "Fan-in - collect branch outcomes",
+        "Join policy - rule for parent continuation"
+      ],
+      "related": [
+        130,
+        137,
+        140
+      ],
+      "sources": [
+        "Temporal Child Workflows",
+        "Temporal Workflow Execution"
+      ]
+    },
+    {
+      "id": 135,
+      "slug": "saga-compensation-irreversible-effects",
+      "moduleId": "module-31",
+      "title": "Sagas, compensations, and irreversible effects",
+      "stability": "Mature distributed transaction pattern",
+      "diagram": "diagrams/135-saga-compensation-irreversible-effects.png",
+      "diagramPrompt": "Show SAGA steps RESERVE FUNDS, UPDATE CASE, SEND REFUND. Under each reversible step place a coral COMPENSATION. Mark PIVOT or POINT OF NO RETURN before irreversible SEND. Forward failures trigger reverse or business-specific compensation, then MANUAL REVIEW if compensation fails.",
+      "alt": "A saga sequences local transactions with compensations, marks a point of no return before an irreversible refund, and escalates failed compensation to manual review.",
+      "outcome": "Design a long business transaction that can recover from partial completion without pretending distributed rollback is automatic.",
+      "explanation": "A saga breaks one large business operation into local transactions. Each completed compensable step records how to counteract its effect. A pivot marks the point after which earlier compensation no longer solves the problem; later steps must usually retry forward to completion. Compensation is domain logic and can itself fail. The important beginner move is to treat the pivot between reversible preparation and committed external effect as an explicit contract, not as hidden framework behavior. The safety rule is: irreversible work starts only after required validations, authority, and compensation data are durable. The durable record must say what was requested, which identity owns it, what changed, which attempt produced the change, and what may legally happen next. Frameworks can store and replay that record in different ways, but a restart must never change the business meaning. Keep protocol messages, queue delivery, model reasoning, and business truth separate: a transport can retry, a worker can disappear, and an agent can revise its proposal while the authoritative workflow record remains inspectable.",
+      "trace": [
+        "List local transactions and the service that owns each state change.",
+        "Classify each step as compensable, pivot, retryable, or irreversible.",
+        "Record compensation parameters when the forward step succeeds.",
+        "Prefer forward recovery after the pivot and idempotent compensation before it.",
+        "Escalate failed compensation with full correlation and operator instructions."
+      ],
+      "analogy": "Planning a trip can undo a hotel reservation, but boarding the flight is a point after which recovery must follow a new plan.",
+      "nextjs": [
+        "Explain pending, compensating, compensated, and manual states in the case UI.",
+        "Require a fresh approval immediately before the pivot when risk demands it.",
+        "Do not label a compensation as complete until its own receipt exists. Keep the browser view read-only with respect to workflow truth; mutations go through authenticated server boundaries and return stable IDs or receipts."
+      ],
+      "python": [
+        "Represent saga steps and compensation commands as durable typed records.",
+        "Execute each participant through an idempotent adapter with a stored receipt.",
+        "Write tests that fail after every forward and compensation boundary. Model commands, events, states, and error outcomes as typed records so tests can replay the same fixture without network calls."
+      ],
+      "caseStudy": {
+        "situation": "Acme reserves refund funds, updates the case, then the payment call fails ambiguously.",
+        "walkthrough": [
+          "The workflow determines whether the payment provider accepted the stable operation key.",
+          "If not accepted and still before the pivot, it releases the reserve and restores the case through compensations.",
+          "If accepted, it completes forward and reconciles the case.",
+          "If truth remains unknown, it pauses for manual recovery instead of guessing."
+        ],
+        "result": "Partial failure becomes an explainable business state with a deterministic next action.",
+        "danger": "A blanket 'rollback' assumption can overwrite concurrent changes or attempt to reverse an effect that has no valid inverse.",
+        "takeaway": "Plan compensation before the forward step and name the point of no return."
+      },
+      "lab": "Create a saga table with step, owner, local commit, compensation data, idempotency key, pivot status, timeout, and manual recovery owner.",
+      "checkpoint": "Must compensation restore the exact original data?",
+      "answer": "No. It applies business-specific corrective work that returns the overall process to a valid state while respecting later concurrent changes.",
+      "glossary": [
+        "Saga - sequence of local business transactions",
+        "Pivot - point of no return",
+        "Compensable step - step with a valid counteraction"
+      ],
+      "related": [
+        132,
+        133,
+        147
+      ],
+      "sources": [
+        "Original Saga paper",
+        "Azure Saga pattern",
+        "Azure Compensating Transaction pattern"
+      ]
+    },
+    {
+      "id": 136,
+      "slug": "schedule-event-external-resume",
+      "moduleId": "module-31",
+      "title": "Scheduled, event-triggered, and externally resumed work",
+      "stability": "Durable trigger pattern",
+      "diagram": "diagrams/136-schedule-event-external-resume.png",
+      "diagramPrompt": "Show three entry paths into one WORKFLOW ID: SCHEDULE TIMER, DOMAIN EVENT, EXTERNAL CALLBACK. Each passes DEDUP AND CORRELATION GATE. Workflow may WAIT WITHOUT WORKER, then RESUME. Coral UNKNOWN CALLBACK and EXPIRED DEADLINE are rejected.",
+      "alt": "Scheduled timers, domain events, and external callbacks pass through deduplication and correlation before resuming a waiting workflow without holding a worker.",
+      "outcome": "Let work sleep for minutes or months and resume from timers, facts, or authenticated callbacks without holding a process open.",
+      "explanation": "A long workflow should be able to wait durably without keeping a thread, function, or container alive. A schedule starts work according to a calendar. A domain event starts or advances work because a fact occurred. An external callback resumes a known wait and must be authenticated, correlated, deduplicated, and checked against the current state. The important beginner move is to treat the authenticated resume gate around a waiting workflow as an explicit contract, not as hidden framework behavior. The safety rule is: only an expected trigger for the current workflow version may advance the wait. The durable record must say what was requested, which identity owns it, what changed, which attempt produced the change, and what may legally happen next. Frameworks can store and replay that record in different ways, but a restart must never change the business meaning. Keep protocol messages, queue delivery, model reasoning, and business truth separate: a transport can retry, a worker can disappear, and an agent can revise its proposal while the authoritative workflow record remains inspectable.",
+      "trace": [
+        "Persist the wait condition, correlation key, deadline, and allowed trigger type.",
+        "Release compute while the durable timer or subscription remains active.",
+        "Validate source identity and payload when the trigger arrives.",
+        "Deduplicate repeated timers, events, and callbacks before transition.",
+        "Resume from authoritative state and ignore expired or already-consumed triggers."
+      ],
+      "analogy": "It is like leaving a signed note for the next shift: nobody must stand beside the desk, but the right person can continue from the recorded instructions.",
+      "nextjs": [
+        "Return 202 with a status location for work that will resume later.",
+        "Secure webhook routes with signatures, replay protection, and tenant-aware correlation.",
+        "Update the UI from durable status rather than keeping one server request open indefinitely. Keep the browser view read-only with respect to workflow truth; mutations go through authenticated server boundaries and return stable IDs or receipts."
+      ],
+      "python": [
+        "Model timers and external signals as workflow events rather than sleeping worker processes.",
+        "Validate webhook signatures and store raw delivery identity before processing.",
+        "Use idempotent signal handlers that check current state and expected correlation. Model commands, events, states, and error outcomes as typed records so tests can replay the same fixture without network calls."
+      ],
+      "caseStudy": {
+        "situation": "Maya's refund waits overnight for a supervisor, then a signed approval callback arrives twice.",
+        "walkthrough": [
+          "The workflow stores WAITING APPROVAL and releases compute.",
+          "The callback identity, signature, case ID, and approval role are validated.",
+          "The first delivery records APPROVAL RECEIVED.",
+          "The duplicate finds the consumed correlation key and returns the existing state."
+        ],
+        "result": "The case resumes once after a long wait without an always-running process or duplicate approval.",
+        "danger": "A public callback that trusts only a case ID lets attackers or stale systems move workflows illegally.",
+        "takeaway": "Wait durably; resume only through authenticated, expected, idempotent triggers."
+      },
+      "lab": "Design a resume token record with workflow ID, wait name, allowed actor, expiry, nonce, consumed time, and duplicate response.",
+      "checkpoint": "Why is a worker sleep unsuitable for a multi-day wait?",
+      "answer": "It holds fragile compute and loses progress on restart; a durable timer or external event can resume from stored state.",
+      "glossary": [
+        "Durable timer - persisted future wake-up",
+        "Signal - external input to a running workflow",
+        "Callback - remote request that resumes known work"
+      ],
+      "related": [
+        127,
+        143,
+        144
+      ],
+      "sources": [
+        "Temporal Workflow Execution",
+        "Temporal TypeScript message passing",
+        "CloudEvents 1.0.2 specification"
+      ]
+    },
+    {
+      "id": 137,
+      "slug": "agent-role-capability-contract",
+      "moduleId": "module-32",
+      "title": "Agent roles, skills, contracts, and capability discovery",
+      "stability": "Current A2A 1.0-aligned pattern",
+      "diagram": "diagrams/137-agent-role-capability-contract.png",
+      "diagramPrompt": "Show COORDINATOR reading three AGENT CARDS: POLICY SPECIALIST, FINANCE SPECIALIST, CUSTOMER SPECIALIST. Each card lists SKILLS, INPUT MODES, OUTPUT MODES, SECURITY, INTERFACE, VERSION. A POLICY FILTER selects one. Coral DESCRIPTION ONLY is labeled NOT AUTHORITY.",
+      "alt": "A coordinator compares three Agent Cards containing skills, modes, security, interfaces, and versions, then applies policy before selecting a specialist.",
+      "outcome": "Describe specialist roles as discoverable capabilities while keeping authorization and business authority outside marketing descriptions.",
+      "explanation": "A role says why an agent exists. A skill declares a bounded capability and the kinds of input and output it supports. In A2A 1.0, the Agent Card is the discoverable description of identity, skills, interfaces, protocol versions, security requirements, and optional capabilities. Discovery narrows candidates; policy decides whether one may be used. The important beginner move is to treat the policy gate between advertised capability and authorized delegation as an explicit contract, not as hidden framework behavior. The safety rule is: an Agent Card may describe what an agent can do but cannot grant itself business authority. The durable record must say what was requested, which identity owns it, what changed, which attempt produced the change, and what may legally happen next. Frameworks can store and replay that record in different ways, but a restart must never change the business meaning. Keep protocol messages, queue delivery, model reasoning, and business truth separate: a transport can retry, a worker can disappear, and an agent can revise its proposal while the authoritative workflow record remains inspectable.",
+      "trace": [
+        "Fetch the Agent Card from a trusted location or registry.",
+        "Validate supported interface, protocol version, security scheme, and required extensions.",
+        "Match declared skills and input or output modes to the task contract.",
+        "Apply tenant policy, allowlists, risk, data residency, and current health.",
+        "Pin the selected card version or hash to the delegated task record."
+      ],
+      "analogy": "A business card tells you someone's services and phone number; it does not give them permission to sign your company's checks.",
+      "nextjs": [
+        "Render an operator-only catalog of trusted Agent Cards and policy status.",
+        "Resolve cards on the server and cache them with HTTP validation metadata.",
+        "Display selected skill, interface, version, and authority decision on the task view. Keep the browser view read-only with respect to workflow truth; mutations go through authenticated server boundaries and return stable IDs or receipts."
+      ],
+      "python": [
+        "Validate Agent Cards against the current A2A schema before registration.",
+        "Implement a capability matcher separate from the authorization policy engine.",
+        "Persist selected card identity and version beside every delegated task. Model commands, events, states, and error outcomes as typed records so tests can replay the same fixture without network calls."
+      ],
+      "caseStudy": {
+        "situation": "The coordinator needs a finance specialist for Maya's refund and discovers two agents that both advertise payment skills.",
+        "walkthrough": [
+          "Both cards pass schema and interface checks.",
+          "Only one provider is allowlisted for Acme's tenant and region.",
+          "Its selected skill accepts the required structured input and produces a report artifact.",
+          "The delegation record pins the selected Agent Card version."
+        ],
+        "result": "Capability discovery remains flexible without turning self-description into trust.",
+        "danger": "Automatically calling any agent whose prose sounds relevant creates a supply-chain and authorization vulnerability.",
+        "takeaway": "Discover capability, verify the card, then apply independent policy."
+      },
+      "lab": "Draft an Agent Card checklist covering identity, skills, modes, interfaces, versions, security, extensions, cache validation, and trust source.",
+      "checkpoint": "Does a matching skill prove an agent may access Maya's case?",
+      "answer": "No. It proves declared capability only; authorization, tenant policy, and least privilege decide access.",
+      "glossary": [
+        "Agent Card - discoverable A2A agent description",
+        "Skill - declared bounded capability",
+        "Capability discovery - finding a suitable interface"
+      ],
+      "related": [
+        138,
+        139,
+        142
+      ],
+      "sources": [
+        "A2A Protocol 1.0 specification",
+        "A2A agent discovery",
+        "A2A protocol definitions"
+      ]
+    },
+    {
+      "id": 138,
+      "slug": "a2a-delegation-task-creation",
+      "moduleId": "module-32",
+      "title": "A2A discovery, delegation, and task creation",
+      "stability": "Current A2A 1.0 protocol contract",
+      "diagram": "diagrams/138-a2a-delegation-task-creation.png",
+      "diagramPrompt": "Show CLIENT AGENT resolving AGENT CARD then sending MESSAGE with CONTEXT ID and REQUEST ID through A2A INTERFACE. REMOTE AGENT returns TASK ID and WORKING status, later STATUS UPDATE and ARTIFACT. Coral VERSION FALLBACK is blocked. Labels include A2A-VERSION 1.0.",
+      "alt": "A client resolves an Agent Card, sends a versioned A2A message, receives a durable task ID, follows status updates, and obtains an artifact while silent version fallback is blocked.",
+      "outcome": "Delegate bounded work through A2A 1.0 and distinguish the request message, durable task, context, status, and artifact.",
+      "explanation": "A2A lets one agent collaborate with another through declared interfaces without exposing internal reasoning or tools. The client selects a supported interface and protocol version, sends a message, and may receive a stateful Task with a unique ID. Messages support communication; completed task outputs belong in Artifacts. Context can group related tasks without replacing each task identity. The important beginner move is to treat the versioned A2A interface between client and remote agent as an explicit contract, not as hidden framework behavior. The safety rule is: the client stores the remote task identity before relying on streaming or push updates. The durable record must say what was requested, which identity owns it, what changed, which attempt produced the change, and what may legally happen next. Frameworks can store and replay that record in different ways, but a restart must never change the business meaning. Keep protocol messages, queue delivery, model reasoning, and business truth separate: a transport can retry, a worker can disappear, and an agent can revise its proposal while the authoritative workflow record remains inspectable.",
+      "trace": [
+        "Resolve and validate the Agent Card, then select the first compatible trusted interface.",
+        "Send the requested A2A version and a bounded message with no unnecessary data.",
+        "Persist task ID, context ID, remote agent, selected interface, and local workflow correlation.",
+        "Receive status or artifact updates idempotently and verify their task identity.",
+        "Fetch current task state after reconnect; do not treat transient messages as guaranteed business evidence."
+      ],
+      "analogy": "It is like opening a tracked work order with a specialist company instead of shouting instructions through an unrecorded phone call.",
+      "nextjs": [
+        "Call remote A2A interfaces only from protected server code.",
+        "Project remote task states into the local case timeline using a typed adapter.",
+        "Offer reconnect and refresh behavior based on stored task ID rather than the last streamed message. Keep the browser view read-only with respect to workflow truth; mutations go through authenticated server boundaries and return stable IDs or receipts."
+      ],
+      "python": [
+        "Use the current A2A SDK or generated protocol types behind a narrow client adapter.",
+        "Persist local-to-remote task correlation before subscribing to updates.",
+        "Validate exactly one stream response type and treat artifact updates as idempotent deltas. Model commands, events, states, and error outcomes as typed records so tests can replay the same fixture without network calls."
+      ],
+      "caseStudy": {
+        "situation": "The coordinator delegates a refund-evidence review to the trusted finance specialist and Maya closes her browser.",
+        "walkthrough": [
+          "The coordinator resolves the finance Agent Card and selects its A2A 1.0 interface.",
+          "The send operation returns a task ID in WORKING state.",
+          "The local workflow persists that identity and continues independently of the browser.",
+          "Later it retrieves the completed artifact and validates the expected output contract."
+        ],
+        "result": "The remote work survives disconnection and can be recovered by task identity.",
+        "danger": "Assuming every response is final or silently falling back to an older protocol version can lose task semantics or newer guarantees.",
+        "takeaway": "Delegate through a pinned interface and track the resulting task as durable remote work."
+      },
+      "lab": "Write the fields in a local delegation record: workflow, remote agent, card hash, interface, protocol version, context, task, status, deadline, and artifact contract.",
+      "checkpoint": "Should an A2A Message carry the final report?",
+      "answer": "The current specification says results should be returned as Artifacts associated with a Task; Messages support initiation, clarification, status, and interaction.",
+      "glossary": [
+        "A2A Task - stateful remote unit of work",
+        "Context ID - grouping identity for related interactions",
+        "Artifact - durable task output"
+      ],
+      "related": [
+        137,
+        139,
+        140
+      ],
+      "sources": [
+        "A2A Protocol 1.0 specification",
+        "A2A key concepts"
+      ]
+    },
+    {
+      "id": 139,
+      "slug": "ownership-handoff-artifact-status",
+      "moduleId": "module-32",
+      "title": "Ownership, handoff, artifacts, and status propagation",
+      "stability": "Multi-agent responsibility pattern",
+      "diagram": "diagrams/139-ownership-handoff-artifact-status.png",
+      "diagramPrompt": "Show PARENT WORKFLOW owning CASE. It delegates TASK to FINANCE AGENT with INPUT ARTIFACT and ACCEPTANCE CONTRACT. Status moves SUBMITTED, WORKING, INPUT REQUIRED, COMPLETED. A HANDOFF LEDGER records FROM, TO, SCOPE, DEADLINE. Output ARTIFACT returns; ownership of CASE never moves.",
+      "alt": "A parent workflow retains case ownership while a scoped finance task moves through statuses under a handoff ledger and returns an output artifact.",
+      "outcome": "Delegate responsibility for a bounded task without losing ownership of the customer outcome.",
+      "explanation": "Delegation transfers responsibility for a defined piece of work, not necessarily ownership of the parent case. A handoff contract names the sender, receiver, scope, inputs, deadline, permitted data, expected artifact, acceptance test, and escalation path. Status propagation maps the specialist's lifecycle into the parent's state without erasing either history. The important beginner move is to treat the handoff contract between parent ownership and specialist responsibility as an explicit contract, not as hidden framework behavior. The safety rule is: exactly one named owner remains accountable for the customer outcome at every point. The durable record must say what was requested, which identity owns it, what changed, which attempt produced the change, and what may legally happen next. Frameworks can store and replay that record in different ways, but a restart must never change the business meaning. Keep protocol messages, queue delivery, model reasoning, and business truth separate: a transport can retry, a worker can disappear, and an agent can revise its proposal while the authoritative workflow record remains inspectable.",
+      "trace": [
+        "Write the delegation scope and acceptance rule before sending work.",
+        "Record who owns the case and who owns the delegated task.",
+        "Map remote statuses to explicit parent workflow events.",
+        "Treat requested input as a durable wait with a responsible responder.",
+        "Validate and accept the returned artifact before completing the parent milestone."
+      ],
+      "analogy": "A doctor refers a scan to a radiologist, but the doctor still owns the patient's treatment plan.",
+      "nextjs": [
+        "Show case owner and current task owner as separate labels.",
+        "Display requested input, deadline, and accepted artifact version on the timeline.",
+        "Require server-side acceptance before marking a delegated milestone complete. Keep the browser view read-only with respect to workflow truth; mutations go through authenticated server boundaries and return stable IDs or receipts."
+      ],
+      "python": [
+        "Persist a HandoffRecord before dispatch with scope and acceptance schema.",
+        "Translate remote task states into local domain events through an adapter.",
+        "Run artifact validation and policy checks before accepting completion. Model commands, events, states, and error outcomes as typed records so tests can replay the same fixture without network calls."
+      ],
+      "caseStudy": {
+        "situation": "The finance specialist pauses Maya's review because the payment reference is missing.",
+        "walkthrough": [
+          "The remote task enters INPUT REQUIRED with a structured request.",
+          "The parent workflow records who must supply the reference and by when.",
+          "Maya provides it through the authorized case boundary.",
+          "The parent forwards it to the same task and later accepts the validated report artifact."
+        ],
+        "result": "Everyone can see who is waiting on whom, and the case remains accountable through the pause.",
+        "danger": "Informal handoffs create orphan tasks where every participant assumes someone else owns the next action.",
+        "takeaway": "Delegate work with a contract; keep outcome ownership visible."
+      },
+      "lab": "Create a handoff form with owner, assignee, scope, inputs, forbidden data, deadline, status map, artifact schema, acceptance test, and escalation.",
+      "checkpoint": "When is delegated work complete for the parent?",
+      "answer": "When the specialist reaches a terminal state and the parent validates and accepts the required artifact under the handoff contract.",
+      "glossary": [
+        "Handoff - transfer of bounded responsibility",
+        "Acceptance contract - test for usable output",
+        "Status propagation - mapping child progress to parent state"
+      ],
+      "related": [
+        128,
+        138,
+        143
+      ],
+      "sources": [
+        "A2A Protocol 1.0 specification",
+        "A2A protocol definitions"
+      ]
+    },
+    {
+      "id": 140,
+      "slug": "aggregation-disagreement-final-authority",
+      "moduleId": "module-32",
+      "title": "Aggregation, disagreement, escalation, and final authority",
+      "stability": "Decision-governance pattern",
+      "diagram": "diagrams/140-aggregation-disagreement-final-authority.png",
+      "diagramPrompt": "Show POLICY AGENT, FINANCE AGENT, RISK AGENT returning RESULT CARDS with CLAIM, EVIDENCE, CONFIDENCE, LIMITS. AGGREGATOR preserves agreements and conflicts. POLICY ENGINE chooses AUTO ACCEPT, REQUEST MORE, HUMAN ESCALATE. FINAL AUTHORITY is a named role, not MAJORITY VOTE.",
+      "alt": "Three specialist result cards enter an aggregator that preserves agreement and conflict, then policy selects acceptance, more evidence, or human escalation under a named final authority.",
+      "outcome": "Combine specialist outputs without averaging away disagreement or letting agent confidence replace authority.",
+      "explanation": "Aggregation should preserve each specialist's claim, evidence, assumptions, confidence calibration, and limitations. Agreement may strengthen a conclusion, but majority vote is unsafe when specialists have different authority. A policy rule names which source or role decides each claim and when disagreement requires more evidence or human escalation. The important beginner move is to treat the final-authority gate between recommendations and a binding decision as an explicit contract, not as hidden framework behavior. The safety rule is: no number of advisory agents can overrule the system or human role that owns a regulated or financial decision. The durable record must say what was requested, which identity owns it, what changed, which attempt produced the change, and what may legally happen next. Frameworks can store and replay that record in different ways, but a restart must never change the business meaning. Keep protocol messages, queue delivery, model reasoning, and business truth separate: a transport can retry, a worker can disappear, and an agent can revise its proposal while the authoritative workflow record remains inspectable.",
+      "trace": [
+        "Normalize specialist outputs into a typed result contract.",
+        "Compare claims and evidence rather than only final labels.",
+        "Separate complementary results from direct contradictions.",
+        "Apply claim-specific authority and confidence thresholds.",
+        "Escalate unresolved high-impact conflict with the complete evidence bundle."
+      ],
+      "analogy": "Three people may advise a judge, but the loudest two do not automatically become the court.",
+      "nextjs": [
+        "Render side-by-side specialist claims with evidence and limitations.",
+        "Show the policy rule and named final authority beside the decision.",
+        "Provide an approval or escalation action only to the authorized role. Keep the browser view read-only with respect to workflow truth; mutations go through authenticated server boundaries and return stable IDs or receipts."
+      ],
+      "python": [
+        "Define a SpecialistResult schema with claims, evidence references, limits, and status.",
+        "Implement deterministic conflict and authority rules before any synthesis prompt.",
+        "Store the aggregation manifest and final decision receipt together. Model commands, events, states, and error outcomes as typed records so tests can replay the same fixture without network calls."
+      ],
+      "caseStudy": {
+        "situation": "The policy agent says Maya is eligible, finance says the transaction cannot be found, and risk says identity confidence is low.",
+        "walkthrough": [
+          "The aggregator keeps all three findings separate.",
+          "Eligibility does not prove a transaction exists.",
+          "Policy requires transaction proof and verified identity before money movement.",
+          "The workflow asks for missing evidence or escalates instead of voting two-to-one."
+        ],
+        "result": "Disagreement becomes useful information and the final decision follows authority, not model popularity.",
+        "danger": "A synthesis model can produce smooth prose that hides a missing required fact or a direct contradiction.",
+        "takeaway": "Aggregate evidence, preserve conflict, and name who may decide."
+      },
+      "lab": "Create three specialist result cards for one case. Define claim-specific authority, conflict categories, thresholds, and escalation outcomes.",
+      "checkpoint": "When is majority vote appropriate?",
+      "answer": "Only when the contract deliberately defines peers with comparable authority and calibrated independent errors; it is not a default for business truth.",
+      "glossary": [
+        "Aggregation - combining structured outcomes",
+        "Disagreement - incompatible claims or evidence",
+        "Final authority - role allowed to bind the decision"
+      ],
+      "related": [
+        134,
+        141,
+        143
+      ],
+      "sources": [
+        "A2A Protocol 1.0 specification",
+        "A2A key concepts"
+      ]
+    },
+    {
+      "id": 141,
+      "slug": "planner-executor-reviewer-policy",
+      "moduleId": "module-33",
+      "title": "Planner, executor, reviewer, and policy roles",
+      "stability": "Agent-control separation pattern",
+      "diagram": "diagrams/141-planner-executor-reviewer-policy.png",
+      "diagramPrompt": "Show USER GOAL entering PLANNER, producing a BOUNDED PLAN. POLICY GATE checks every proposed action. EXECUTOR performs allowed steps through tools. REVIEWER compares OUTPUT to acceptance tests and evidence. Coral PLAN CANNOT EXECUTE and REVIEWER CANNOT APPROVE OWN HIGH-RISK ACTION.",
+      "alt": "A user goal becomes a bounded plan, policy checks actions, an executor performs allowed steps, and a reviewer tests the output with separation-of-duty warnings.",
+      "outcome": "Separate proposing, acting, checking, and authorizing so one model response does not silently own the whole system.",
+      "explanation": "The planner decomposes a goal into proposed steps. The executor performs permitted steps through tools or workers. The reviewer checks outputs against acceptance criteria and evidence. Policy is deterministic authority that allows, denies, limits, or requires human approval. These may be separate agents or ordinary code modules; the responsibility split matters more than the labels. The important beginner move is to treat the policy and acceptance boundaries around proposed and completed actions as an explicit contract, not as hidden framework behavior. The safety rule is: a plan cannot grant itself new permissions, and a high-risk executor cannot be its only reviewer. The durable record must say what was requested, which identity owns it, what changed, which attempt produced the change, and what may legally happen next. Frameworks can store and replay that record in different ways, but a restart must never change the business meaning. Keep protocol messages, queue delivery, model reasoning, and business truth separate: a transport can retry, a worker can disappear, and an agent can revise its proposal while the authoritative workflow record remains inspectable.",
+      "trace": [
+        "Translate the user goal into a bounded plan with dependencies and stop conditions.",
+        "Evaluate each proposed action against identity, resource, risk, and budget policy.",
+        "Execute only approved steps and record tool receipts.",
+        "Review result schema, evidence, policy compliance, and acceptance tests.",
+        "Replan or escalate using explicit review findings rather than vague dissatisfaction."
+      ],
+      "analogy": "An architect draws the plan, builders do the work, an inspector checks it, and the building code decides what is allowed.",
+      "nextjs": [
+        "Show plan, approvals, execution receipts, and review findings as separate timeline items.",
+        "Keep policy evaluation on trusted server boundaries.",
+        "Require authorized user confirmation for consequential plans before dispatch. Keep the browser view read-only with respect to workflow truth; mutations go through authenticated server boundaries and return stable IDs or receipts."
+      ],
+      "python": [
+        "Define typed PlanStep, PolicyDecision, ExecutionResult, and ReviewResult models.",
+        "Run deterministic policy before tool adapters and after any material replan.",
+        "Test each role with fixtures and allow non-agent code to fill roles where possible. Model commands, events, states, and error outcomes as typed records so tests can replay the same fixture without network calls."
+      ],
+      "caseStudy": {
+        "situation": "The planner proposes verifying Maya's case, calling finance, issuing the refund, and emailing confirmation.",
+        "walkthrough": [
+          "Policy allows evidence reads but marks money movement approval-required.",
+          "The executor gathers evidence and pauses.",
+          "Maya's supervisor approves the exact refund amount and operation key.",
+          "The executor acts, then the reviewer verifies receipt, case state, and notification content."
+        ],
+        "result": "Planning remains flexible while authority and acceptance stay inspectable.",
+        "danger": "Letting one unconstrained agent plan, execute, approve, and declare success creates no independent control boundary.",
+        "takeaway": "Separate proposal, permission, action, and proof."
+      },
+      "lab": "Take a five-step agent plan and label planner output, policy decision, executor input, receipt, and reviewer acceptance for each step.",
+      "checkpoint": "Must each role be a separate model?",
+      "answer": "No. Roles are responsibilities; deterministic code, different services, humans, or agents can fill them according to risk.",
+      "glossary": [
+        "Planner - proposes a route",
+        "Executor - performs allowed work",
+        "Reviewer - checks evidence and acceptance"
+      ],
+      "related": [
+        140,
+        142,
+        144
+      ],
+      "sources": [
+        "Temporal Workflow Execution",
+        "A2A Protocol 1.0 specification"
+      ]
+    },
+    {
+      "id": 142,
+      "slug": "multi-dimensional-budget-ledger",
+      "moduleId": "module-33",
+      "title": "Time, cost, token, tool, and retry budgets",
+      "stability": "Bounded-agent reliability pattern",
+      "diagram": "diagrams/142-multi-dimensional-budget-ledger.png",
+      "diagramPrompt": "Show PARENT BUDGET LEDGER with TIME, MONEY, TOKENS, TOOL CALLS, RETRIES, CONCURRENCY. It allocates smaller CHILD ENVELOPES to three agents. Every spend returns a RECEIPT and REMAINING amount. Coral BUDGET EXHAUSTED routes to PARTIAL RESULT, DEGRADE, or ESCALATE.",
+      "alt": "A parent budget ledger allocates time, money, tokens, calls, retries, and concurrency to child agents, records spend, and routes exhaustion to explicit safe outcomes.",
+      "outcome": "Bound agent work with several independent budgets and make exhaustion a normal workflow outcome.",
+      "explanation": "An agent can consume more than tokens: it spends wall-clock time, money, tool quotas, retries, concurrency, and human attention. A budget ledger begins at the parent workflow, reserves envelopes for child tasks, records actual spend, and returns unused capacity. A deadline and a retry count answer different questions and should not be merged. The important beginner move is to treat the budget ledger controlling resource allocation across parent and child work as an explicit contract, not as hidden framework behavior. The safety rule is: a child cannot spend capacity that the parent did not reserve or explicitly extend. The durable record must say what was requested, which identity owns it, what changed, which attempt produced the change, and what may legally happen next. Frameworks can store and replay that record in different ways, but a restart must never change the business meaning. Keep protocol messages, queue delivery, model reasoning, and business truth separate: a transport can retry, a worker can disappear, and an agent can revise its proposal while the authoritative workflow record remains inspectable.",
+      "trace": [
+        "Declare hard limits and soft targets before starting work.",
+        "Reserve child budgets without double-counting shared capacity.",
+        "Record estimated and actual spend under the workflow identity.",
+        "Stop optional branches early when remaining value is lower than expected cost.",
+        "Choose partial result, simpler method, wait, or escalation when a dimension is exhausted."
+      ],
+      "analogy": "It is like giving each shopper an envelope of cash and a return time instead of one unlimited family credit card.",
+      "nextjs": [
+        "Show remaining time and meaningful budget state without exposing sensitive provider costs.",
+        "Require server-side reservation before dispatching child work.",
+        "Render budget exhaustion as a supported outcome with the best available artifact. Keep the browser view read-only with respect to workflow truth; mutations go through authenticated server boundaries and return stable IDs or receipts."
+      ],
+      "python": [
+        "Create a Budget model with independent dimensions and reservation records.",
+        "Wrap tool adapters with atomic reserve, spend, release, and receipt operations.",
+        "Propagate remaining deadlines and retry budgets to workers and remote tasks. Model commands, events, states, and error outcomes as typed records so tests can replay the same fixture without network calls."
+      ],
+      "caseStudy": {
+        "situation": "Maya's case has a two-minute target, three retrieval calls, one finance delegation, and one permitted payment retry.",
+        "walkthrough": [
+          "The parent reserves evidence and finance envelopes.",
+          "An optional customer-history branch is skipped when its expected latency exceeds the remaining deadline.",
+          "Finance consumes its call budget but returns required evidence.",
+          "The payment retry uses the same operation key and the final receipt records total spend."
+        ],
+        "result": "The system reaches a correct bounded answer without an invisible retry or tool-call spiral.",
+        "danger": "A token limit alone cannot stop expensive tools, long waits, recursive delegation, or a retry storm.",
+        "takeaway": "Budget every scarce resource and define the safe exhaustion result."
+      },
+      "lab": "Create a budget ledger for one case with initial, reserved, spent, remaining, and exceeded columns across six dimensions.",
+      "checkpoint": "Should a child receive the parent's full remaining budget?",
+      "answer": "Usually no. Reserve a bounded envelope so one branch cannot starve siblings or the recovery path.",
+      "glossary": [
+        "Budget envelope - reserved resource limits",
+        "Reservation - capacity held for a child",
+        "Degradation - cheaper or simpler safe behavior"
+      ],
+      "related": [
+        130,
+        137,
+        141
+      ],
+      "sources": [
+        "AWS retry with backoff",
+        "Temporal Workflow Execution"
+      ]
+    },
+    {
+      "id": 143,
+      "slug": "human-interrupt-approval-input",
+      "moduleId": "module-33",
+      "title": "Human interrupts, approvals, and missing input",
+      "stability": "Human-in-the-loop control pattern",
+      "diagram": "diagrams/143-human-interrupt-approval-input.png",
+      "diagramPrompt": "Show WORKFLOW reaching WAITING HUMAN with three cards: APPROVAL REQUEST, MISSING INPUT, OPERATOR INTERRUPT. Each card includes EXACT ACTION, EVIDENCE, RISK, AMOUNT, EXPIRY, APPROVER. Human sends APPROVE, DENY, EDIT, or SUPPLY INPUT. Coral STALE APPROVAL is revalidated.",
+      "alt": "A workflow waits durably for approval, missing input, or an operator interrupt using a precise request contract, then handles approve, deny, edit, or supply-input outcomes with stale approvals revalidated.",
+      "outcome": "Pause safely for a person and make the request specific enough for an informed, attributable decision.",
+      "explanation": "Human-in-the-loop is not a generic pause button. An approval request should identify the exact action, amount or scope, evidence, risk, policy basis, expiry, and authorized approver. Missing input asks for facts needed to continue. An operator interrupt can stop or steer work because of an incident. Each response is authenticated, recorded, and checked against current state. The important beginner move is to treat the durable authorization gate between machine preparation and human decision as an explicit contract, not as hidden framework behavior. The safety rule is: approval applies only to the exact reviewed action and expires when material inputs, amount, policy, or state change. The durable record must say what was requested, which identity owns it, what changed, which attempt produced the change, and what may legally happen next. Frameworks can store and replay that record in different ways, but a restart must never change the business meaning. Keep protocol messages, queue delivery, model reasoning, and business truth separate: a transport can retry, a worker can disappear, and an agent can revise its proposal while the authoritative workflow record remains inspectable.",
+      "trace": [
+        "Create a durable wait with a reason and responsible human role.",
+        "Present the proposed action, evidence, alternatives, risk, and expiry.",
+        "Authenticate the responder and verify authority for this tenant and amount.",
+        "Record approve, deny, edit, or supplied input as a typed event.",
+        "Revalidate current state before executing and request fresh approval if material facts changed."
+      ],
+      "analogy": "Signing a blank cheque is not approval; a safe approval shows the payee, amount, purpose, and expiry.",
+      "nextjs": [
+        "Build an accessible approval card with evidence links, exact action, expiry, and clear alternatives.",
+        "Use server actions that verify approver authority and optimistic version.",
+        "After response, show an immutable decision receipt and the resulting workflow state. Keep the browser view read-only with respect to workflow truth; mutations go through authenticated server boundaries and return stable IDs or receipts."
+      ],
+      "python": [
+        "Persist ApprovalRequest and HumanResponse as separate typed records.",
+        "Use signals or message handlers that validate identity and current version.",
+        "Re-run policy and material-change checks immediately before the side effect. Model commands, events, states, and error outcomes as typed records so tests can replay the same fixture without network calls."
+      ],
+      "caseStudy": {
+        "situation": "Maya's supervisor approves a $40 refund, but the evidence is later corrected to $60 before execution.",
+        "walkthrough": [
+          "The workflow detects that the approved amount no longer matches the proposed action.",
+          "The original approval remains in history but becomes stale for execution.",
+          "A new request explains the changed evidence and exact $60 action.",
+          "Only a fresh authorized approval can cross the payment boundary."
+        ],
+        "result": "The human controls the actual consequential action, not an outdated approximation.",
+        "danger": "A vague 'looks good' click can be replayed against changed data or a larger action than the person reviewed.",
+        "takeaway": "Ask a precise human question and bind the answer to the reviewed state."
+      },
+      "lab": "Design an approval payload with actor, role, action hash, amount, evidence versions, policy version, expiry, alternatives, and material-change rule.",
+      "checkpoint": "Can an old approval remain historically valid but unusable now?",
+      "answer": "Yes. It proves what the person approved then, but changed material inputs can require fresh authorization before execution.",
+      "glossary": [
+        "Approval contract - exact decision presented to a human",
+        "Material change - change affecting the decision",
+        "Interrupt - external request to pause or steer"
+      ],
+      "related": [
+        132,
+        136,
+        144
+      ],
+      "sources": [
+        "A2A Protocol 1.0 specification",
+        "Temporal Python message passing",
+        "Azure Compensating Transaction pattern"
+      ]
+    },
+    {
+      "id": 144,
+      "slug": "steering-replan-invalidate-resume",
+      "moduleId": "module-33",
+      "title": "Steering, replanning, invalidation, and resume",
+      "stability": "Controlled adaptation pattern",
+      "diagram": "diagrams/144-steering-replan-invalidate-resume.png",
+      "diagramPrompt": "Show ORIGINAL GOAL to PLAN V1 with completed and pending steps. NEW INPUT enters IMPACT ANALYSIS. Unaffected completed work stays VALID; pending branches become INVALIDATED. PLAN V2 is POLICY CHECKED, new budgets reserved, then RESUME. Coral PATCH IN PLACE is blocked.",
+      "alt": "New input triggers impact analysis that preserves valid completed work, invalidates affected pending branches, creates a checked second plan, and resumes without patching state invisibly.",
+      "outcome": "Change direction during long work without erasing history, reusing stale results, or restarting everything blindly.",
+      "explanation": "Steering changes priorities or constraints while work is active. Replanning creates a new version of the route. Invalidation marks which pending or completed results can no longer support the current goal. Resume continues from the last valid durable point. The workflow keeps both plan versions and the reason for change. The important beginner move is to treat the impact-analysis gate between old commitments and a revised plan as an explicit contract, not as hidden framework behavior. The safety rule is: no result is reused after a changed assumption invalidates its inputs, permission, evidence, or acceptance test. The durable record must say what was requested, which identity owns it, what changed, which attempt produced the change, and what may legally happen next. Frameworks can store and replay that record in different ways, but a restart must never change the business meaning. Keep protocol messages, queue delivery, model reasoning, and business truth separate: a transport can retry, a worker can disappear, and an agent can revise its proposal while the authoritative workflow record remains inspectable.",
+      "trace": [
+        "Record new input as an event rather than mutating the old plan silently.",
+        "Compare changed assumptions with dependencies of every step and artifact.",
+        "Keep completed work only when its inputs and acceptance remain valid.",
+        "Cancel or ignore affected pending branches and release their budgets.",
+        "Policy-check the new plan, reserve fresh budgets, and resume from a durable checkpoint."
+      ],
+      "analogy": "Changing a train destination may keep the first part of the journey but invalidates tickets and connections after the branching station.",
+      "nextjs": [
+        "Show plan versions, changed assumptions, invalidated steps, and preserved evidence.",
+        "Submit steering instructions through an authenticated versioned server command.",
+        "Explain which work was cancelled, reused, or repeated before the user confirms a high-impact replan. Keep the browser view read-only with respect to workflow truth; mutations go through authenticated server boundaries and return stable IDs or receipts."
+      ],
+      "python": [
+        "Represent plans as immutable versions with explicit dependency edges.",
+        "Implement impact analysis as a deterministic function over changed facts and step inputs.",
+        "Propagate cancellation and create new child identities for invalidated work. Model commands, events, states, and error outcomes as typed records so tests can replay the same fixture without network calls."
+      ],
+      "caseStudy": {
+        "situation": "During Maya's review, she clarifies that the purchase was a gift card, changing the applicable policy exception.",
+        "walkthrough": [
+          "The clarification becomes a new input event.",
+          "Payment proof remains valid, but the previous policy result is invalidated.",
+          "The workflow cancels pending payment work and re-runs policy under the new fact.",
+          "The revised plan reaches an ineligible outcome with an explanation and no refund call."
+        ],
+        "result": "Useful completed evidence is preserved while the decision branch affected by new input is safely replaced.",
+        "danger": "Patching variables inside a running plan hides which outputs became stale and can execute a consequential step under old assumptions.",
+        "takeaway": "Version the plan, invalidate by dependency, and resume from the last valid point."
+      },
+      "lab": "Draw a plan dependency graph, change one input, and mark every preserved, invalidated, cancelled, repeated, and newly added step.",
+      "checkpoint": "Why not restart the whole workflow after every change?",
+      "answer": "A full restart wastes valid work and can repeat effects; dependency-based invalidation preserves safe results while replacing affected work.",
+      "glossary": [
+        "Steering - changing active-work direction",
+        "Invalidation - marking a result unusable",
+        "Replan - new version of the execution route"
+      ],
+      "related": [
+        127,
+        141,
+        143
+      ],
+      "sources": [
+        "Temporal TypeScript message passing",
+        "Temporal TypeScript cancellation",
+        "Temporal Events and Event History"
+      ]
+    },
+    {
+      "id": 145,
+      "slug": "race-duplicate-order-stale-state",
+      "moduleId": "module-34",
+      "title": "Races, duplicates, out-of-order events, and stale state",
+      "stability": "Distributed correctness foundation",
+      "diagram": "diagrams/145-race-duplicate-order-stale-state.png",
+      "diagramPrompt": "Show four hazards entering STATE STORE: RACE between two commands, DUPLICATE event, OUT OF ORDER event 12 before 11, STALE WRITE version 7 against current 9. Guards are EXPECTED VERSION, UNIQUE KEY, SEQUENCE, and MONOTONIC STATE. Rejected paths are coral and observable.",
+      "alt": "Race, duplicate, out-of-order, and stale inputs meet version, uniqueness, sequence, and monotonic-state guards before changing authoritative state.",
+      "outcome": "Recognize the four common concurrency hazards and choose guards that preserve legal business state.",
+      "explanation": "A race occurs when concurrent actors try incompatible changes. A duplicate repeats an already-seen fact or command. Out-of-order delivery presents a later sequence before an earlier one. Stale state means an actor decides from an old version. No single lock or queue solves all four across services. The important beginner move is to treat the compare-and-commit gate protecting authoritative state as an explicit contract, not as hidden framework behavior. The safety rule is: a transition commits only when its expected version, unique identity, sequence rule, and current legal state all agree. The durable record must say what was requested, which identity owns it, what changed, which attempt produced the change, and what may legally happen next. Frameworks can store and replay that record in different ways, but a restart must never change the business meaning. Keep protocol messages, queue delivery, model reasoning, and business truth separate: a transport can retry, a worker can disappear, and an agent can revise its proposal while the authoritative workflow record remains inspectable.",
+      "trace": [
+        "Give commands expected versions and effects stable unique keys.",
+        "Use atomic compare-and-set or database constraints at the owning store.",
+        "Track source sequence or causal identity where ordering matters.",
+        "Make terminal business states monotonic unless an explicit reopen event exists.",
+        "Record rejected stale, duplicate, and out-of-order inputs as observable outcomes."
+      ],
+      "analogy": "Two people editing the same paper need revision numbers; otherwise the last save can erase a newer decision.",
+      "nextjs": [
+        "Send the version shown in the UI with every state-changing request.",
+        "On conflict, refresh and explain the newer state instead of silently retrying the old decision.",
+        "Disable optimistic UI for irreversible actions until the server receipt returns. Keep the browser view read-only with respect to workflow truth; mutations go through authenticated server boundaries and return stable IDs or receipts."
+      ],
+      "python": [
+        "Use unique constraints and conditional updates inside transactions.",
+        "Implement inbox deduplication and sequence handling per external source.",
+        "Property-test transition functions with permutations and duplicate events. Model commands, events, states, and error outcomes as typed records so tests can replay the same fixture without network calls."
+      ],
+      "caseStudy": {
+        "situation": "Two supervisors act at nearly the same time: one approves Maya's refund while the other rejects it.",
+        "walkthrough": [
+          "Both commands carry expected workflow version 8.",
+          "The first valid command commits version 9.",
+          "The second conditional write fails because current version is 9.",
+          "The system shows the recorded decision and requires an explicit authorized reopen to change it."
+        ],
+        "result": "The case has one explainable outcome rather than whichever request arrived last at a web server.",
+        "danger": "Last-write-wins can erase approvals, rejections, and evidence without any visible conflict.",
+        "takeaway": "Identity, version, ordering, and legal state are separate concurrency guards."
+      },
+      "lab": "Write a table with hazard, detection key, atomic guard, user response, metric, and recovery for four concurrency failures.",
+      "checkpoint": "Does a FIFO queue prevent all stale writes?",
+      "answer": "No. Ordering may apply only within a queue or group; other actors and stores still need version and state checks.",
+      "glossary": [
+        "Race - competing concurrent changes",
+        "Stale write - decision based on old state",
+        "Compare-and-set - update only if version matches"
+      ],
+      "related": [
+        126,
+        129,
+        131
+      ],
+      "sources": [
+        "Google Pub/Sub exactly-once delivery",
+        "Amazon SQS visibility timeout",
+        "RFC 9110 HTTP semantics"
+      ]
+    },
+    {
+      "id": 146,
+      "slug": "chaos-test-matrix",
+      "moduleId": "module-34",
+      "title": "Fault injection and agent workflow chaos tests",
+      "stability": "Reliability verification practice",
+      "diagram": "diagrams/146-chaos-test-matrix.png",
+      "diagramPrompt": "Show a CHAOS MATRIX. Rows: BEFORE COMMIT, AFTER SIDE EFFECT, DURING ACK, DURING APPROVAL, DURING HANDOFF, DURING COMPENSATION. Columns: CRASH, TIMEOUT, DUPLICATE, REORDER, PARTITION, STALE INPUT. Each cell points to EXPECTED INVARIANT, RECEIPT, METRIC, RECOVERY.",
+      "alt": "A chaos-test matrix combines six workflow boundaries with crash, timeout, duplicate, reorder, partition, and stale-input faults, requiring expected invariants and recovery evidence.",
+      "outcome": "Prove workflow safety by injecting failure at business boundaries rather than merely restarting random servers.",
+      "explanation": "Chaos testing is useful when each injected failure has a hypothesis. For agent workflows, the best injection points surround durable commits, external side effects, queue acknowledgements, approvals, handoffs, and compensation. The test checks business invariants, receipts, telemetry, and recoverability, not just whether a process restarted. The important beginner move is to treat the test boundary immediately before and after each durable or external effect as an explicit contract, not as hidden framework behavior. The safety rule is: every injected fault ends in one legal state with no duplicate consequence and a discoverable recovery action. The durable record must say what was requested, which identity owns it, what changed, which attempt produced the change, and what may legally happen next. Frameworks can store and replay that record in different ways, but a restart must never change the business meaning. Keep protocol messages, queue delivery, model reasoning, and business truth separate: a transport can retry, a worker can disappear, and an agent can revise its proposal while the authoritative workflow record remains inspectable.",
+      "trace": [
+        "Choose a business invariant and exact injection point.",
+        "Run the failure against deterministic fixtures and stable operation identities.",
+        "Observe state, queue delivery, external receipt, trace, and user-visible status.",
+        "Recover through the documented automated or manual path.",
+        "Repeat the same scenario to prove idempotency and close any unowned failure state."
+      ],
+      "analogy": "A fire drill is valuable because it tests a known escape route and headcount, not because someone randomly turns off lights.",
+      "nextjs": [
+        "Create an operator-only synthetic demo page that triggers named safe fault fixtures.",
+        "Show expected and actual state, receipt, alert, and recovery outcome.",
+        "Never expose production chaos controls to ordinary users. Keep the browser view read-only with respect to workflow truth; mutations go through authenticated server boundaries and return stable IDs or receipts."
+      ],
+      "python": [
+        "Inject faults through adapter interfaces before and after commits.",
+        "Use fake clocks, deterministic provider doubles, and repeatable event schedules.",
+        "Assert domain invariants and absence of duplicate external operations after recovery. Model commands, events, states, and error outcomes as typed records so tests can replay the same fixture without network calls."
+      ],
+      "caseStudy": {
+        "situation": "Acme tests a crash immediately after the payment provider accepts Maya's refund but before the local workflow records completion.",
+        "walkthrough": [
+          "The provider double stores the idempotency key and receipt.",
+          "The worker crashes at the named hook.",
+          "Redelivery queries or retries with the same key and receives the existing outcome.",
+          "The workflow records the receipt, completes once, and emits the expected duplicate-detected metric."
+        ],
+        "result": "The team has evidence that the highest-risk ambiguous boundary is safe, not merely a design claim.",
+        "danger": "Random infrastructure disruption without a business hypothesis can produce noise while missing the exact duplicate-effect window.",
+        "takeaway": "Inject faults around commitments and verify business invariants plus recovery evidence."
+      },
+      "lab": "Build a 6-by-6 chaos matrix. Select six high-value cells and write setup, injection, expected state, forbidden outcome, metric, and recovery proof.",
+      "checkpoint": "What is the strongest pass condition for a side-effect chaos test?",
+      "answer": "One legal business outcome, no duplicate effect, durable evidence, visible status, and successful documented recovery.",
+      "glossary": [
+        "Fault injection - deliberate controlled failure",
+        "Chaos hypothesis - expected invariant under failure",
+        "Failure window - vulnerable interval around a boundary"
+      ],
+      "related": [
+        131,
+        145,
+        147
+      ],
+      "sources": [
+        "AWS idempotent APIs",
+        "Amazon SQS visibility timeout",
+        "Temporal Events and Event History"
+      ]
+    },
+    {
+      "id": 147,
+      "slug": "recovery-runbook-receipt-chain",
+      "moduleId": "module-34",
+      "title": "Recovery drills, runbooks, ownership, and receipts",
+      "stability": "Operational readiness pattern",
+      "diagram": "diagrams/147-recovery-runbook-receipt-chain.png",
+      "diagramPrompt": "Show ALERT to TRIAGE to IDENTIFY WORKFLOW to FREEZE OR CONTINUE to RECONCILE EXTERNAL EFFECTS to REDRIVE OR COMPENSATE to VERIFY to CLOSE. A RUNBOOK beside it lists OWNER, ACCESS, COMMANDS, SAFETY CHECKS, ROLLBACK, EVIDENCE. Teal RECEIPT CHAIN follows every action.",
+      "alt": "An operational recovery flow moves from alert through triage, reconciliation, controlled redrive or compensation, verification, and closure, guided by an owned runbook and receipt chain.",
+      "outcome": "Turn a failure alert into a safe, rehearsed recovery sequence with clear authority and evidence.",
+      "explanation": "A runbook is an executable decision guide for a known operational problem. It names the owner, required access, detection query, safety checks, allowed commands, rollback or compensation, escalation, and closure evidence. A recovery drill proves the runbook while the system is healthy enough to learn safely. The important beginner move is to treat the operator authorization and evidence gate around repair actions as an explicit contract, not as hidden framework behavior. The safety rule is: manual repair must be as attributable, idempotent, and reviewable as automated work. The durable record must say what was requested, which identity owns it, what changed, which attempt produced the change, and what may legally happen next. Frameworks can store and replay that record in different ways, but a restart must never change the business meaning. Keep protocol messages, queue delivery, model reasoning, and business truth separate: a transport can retry, a worker can disappear, and an agent can revise its proposal while the authoritative workflow record remains inspectable.",
+      "trace": [
+        "Start from an alert that identifies affected workflows and a business symptom.",
+        "Determine authoritative state and reconcile external effects before redrive.",
+        "Freeze dangerous automation while preserving unrelated healthy work.",
+        "Execute one bounded recovery command with a stable repair identity.",
+        "Verify business state, queues, artifacts, receipts, customer communication, and follow-up action."
+      ],
+      "analogy": "A pilot checklist names who does what and what instruments to verify; memory and improvisation are not the recovery system.",
+      "nextjs": [
+        "Build a least-privilege operator console with preview, confirmation, and repair receipts.",
+        "Separate diagnose, approve, execute, and verify permissions.",
+        "Link every recovery action to the affected workflow and incident timeline. Keep the browser view read-only with respect to workflow truth; mutations go through authenticated server boundaries and return stable IDs or receipts."
+      ],
+      "python": [
+        "Create explicit reconcile, redrive, compensate, and close-incident commands.",
+        "Make repair commands idempotent and require reason plus actor identity.",
+        "Automate post-recovery invariants and store the resulting evidence bundle. Model commands, events, states, and error outcomes as typed records so tests can replay the same fixture without network calls."
+      ],
+      "caseStudy": {
+        "situation": "An alert shows five refund tasks in manual recovery after a payment-provider outage.",
+        "walkthrough": [
+          "The on-call owner identifies each workflow and freezes automatic redrive.",
+          "The reconciliation command checks provider receipts using stable keys.",
+          "Already accepted refunds are completed locally; unaccepted ones follow the approved retry path.",
+          "A reviewer verifies counts, receipts, customer status, and the absence of duplicates before closure."
+        ],
+        "result": "Recovery is fast enough to operate, careful enough to trust, and complete enough to audit.",
+        "danger": "A generic 'replay all failed messages' button can duplicate effects, break ordering, and erase the clues needed to understand the incident.",
+        "takeaway": "Reconcile truth first, repair with bounded commands, and close with evidence."
+      },
+      "lab": "Write a one-page runbook for ambiguous refund completion with trigger, owner, access, diagnosis, freeze, reconciliation, repair, verification, escalation, and closure receipt.",
+      "checkpoint": "Why reconcile before redrive?",
+      "answer": "The external effect may already have happened. Reconciliation determines truth so redrive cannot blindly repeat it.",
+      "glossary": [
+        "Runbook - rehearsed recovery instructions",
+        "Redrive - reintroducing failed work",
+        "Reconciliation - comparing internal and external truth"
+      ],
+      "related": [
+        128,
+        135,
+        146
+      ],
+      "sources": [
+        "Amazon SQS dead-letter queues",
+        "Azure Compensating Transaction pattern",
+        "OpenTelemetry messaging conventions"
+      ]
+    },
+    {
+      "id": 148,
+      "slug": "acme-case-resolution-network",
+      "moduleId": "module-34",
+      "title": "Capstone: the Acme Case Resolution Network",
+      "stability": "Framework-neutral capstone architecture",
+      "diagram": "diagrams/148-acme-case-resolution-network.png",
+      "diagramPrompt": "Create a complete left-to-right architecture titled ACME CASE RESOLUTION NETWORK. Lanes: 1 INTAKE AND IDENTITY, 2 WORKFLOW AND EVENT HISTORY, 3 QUEUES AND WORKERS, 4 SPECIALIST AGENTS VIA A2A 1.0, 5 HUMAN CONTROL, 6 SIDE EFFECTS AND RECEIPTS, 7 OBSERVABILITY AND RECOVERY. Show Maya's refund surviving timeout and completing once. Keep labels crisp.",
+      "alt": "The complete Acme network connects intake, durable workflow history, queues, specialist A2A tasks, human approval, idempotent side effects, receipts, observability, and recovery into one case journey.",
+      "outcome": "Combine all twenty-three patterns into one implementation-neutral contract for future Next.js and Python projects.",
+      "explanation": "The Acme Case Resolution Network treats the customer case as the durable owner. It correlates conversations and agent runs, retrieves governed evidence, delegates bounded A2A tasks, uses queues for slow work, pauses for precise human approval, protects payment with idempotency, and records artifacts, receipts, traces, and recovery ownership. Each component can be replaced if its contract remains true. The important beginner move is to treat the complete chain of ownership from authenticated intent to final business receipt as an explicit contract, not as hidden framework behavior. The safety rule is: for every case, the network can explain current state, next owner, accepted evidence, spent budget, external effects, and safe recovery action. The durable record must say what was requested, which identity owns it, what changed, which attempt produced the change, and what may legally happen next. Frameworks can store and replay that record in different ways, but a restart must never change the business meaning. Keep protocol messages, queue delivery, model reasoning, and business truth separate: a transport can retry, a worker can disappear, and an agent can revise its proposal while the authoritative workflow record remains inspectable.",
+      "trace": [
+        "Authenticate Maya and create or correlate the durable case workflow.",
+        "Fan out permitted evidence and specialist tasks under budgets and deadlines.",
+        "Aggregate results, preserve disagreement, and request exact supervisor approval.",
+        "Issue the refund through one idempotent operation and reconcile ambiguous timeout.",
+        "Complete the case with task artifacts, business receipt, trace, metrics, and a tested recovery path."
+      ],
+      "analogy": "It is an air-traffic system for work: every journey has an identity, controller, route, handoff, fuel budget, landing proof, and emergency procedure.",
+      "nextjs": [
+        "Build an App Router case portal from one shared workflow-contract package.",
+        "Use server boundaries for start, input, approve, cancel, status, artifact, and recovery operations.",
+        "Deploy UI and adapters independently while preserving stable workflow IDs and compatibility tests. Keep the browser view read-only with respect to workflow truth; mutations go through authenticated server boundaries and return stable IDs or receipts."
+      ],
+      "python": [
+        "Build FastAPI boundaries, typed domain transitions, queue workers, and durable-engine adapters.",
+        "Use the same JSON fixtures and acceptance scenarios as the TypeScript build.",
+        "Package replay, concurrency, chaos, recovery, and protocol-contract tests as graduation evidence. Model commands, events, states, and error outcomes as typed records so tests can replay the same fixture without network calls."
+      ],
+      "caseStudy": {
+        "situation": "Maya requests a refund. Evidence comes from several systems, finance work runs remotely, a supervisor must approve, and the payment provider times out after accepting the request.",
+        "walkthrough": [
+          "The case workflow records identities, budget, deadline, and evidence plan.",
+          "Required branches complete; the finance A2A task returns a validated artifact.",
+          "The supervisor approves the exact action and the payment adapter uses one operation key.",
+          "After timeout, recovery reads the existing provider receipt, completes the case once, and preserves the complete trace."
+        ],
+        "result": "Maya sees one truthful outcome, operators can recover it, and both future tech stacks can prove equivalent behavior.",
+        "danger": "A polished multi-agent demo without durable state, ownership, idempotency, and recovery can fail exactly where real business value begins.",
+        "takeaway": "The workflow owns progress; agents contribute bounded work; receipts prove effects; recovery is part of the product."
+      },
+      "lab": "Produce the capstone proof set: state machine, event catalog, queue topology, idempotency register, saga map, A2A handoffs, approval contract, budget ledger, chaos matrix, and recovery runbook.",
+      "checkpoint": "What is the capstone's most important component?",
+      "answer": "Not a product or framework: the durable business contract that keeps ownership, invariants, side effects, evidence, and recovery true across every component.",
+      "glossary": [
+        "Durable orchestration - recoverable coordination of long work",
+        "Case resolution network - complete multi-party workflow",
+        "Graduation evidence - artifacts proving operational correctness"
+      ],
+      "related": [
+        125,
+        138,
+        147
+      ],
+      "sources": [
+        "A2A Protocol 1.0 specification",
+        "Temporal Workflow Execution",
+        "AWS idempotent APIs",
+        "OpenTelemetry messaging conventions"
+      ]
+    }
+  ]
+}

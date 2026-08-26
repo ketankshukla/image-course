@@ -1,0 +1,1649 @@
+{
+  "course": {
+    "title": "Visual Course Volume 5 - Knowledge Systems and Advanced RAG",
+    "coverTitle": "KNOWLEDGE SYSTEMS\nAND ADVANCED RAG",
+    "coverTagline": "VISUAL-FIRST · EVIDENCE-DRIVEN · BEGINNER-FRIENDLY",
+    "subtitle": "Build permission-aware, fresh, explainable, and measurable evidence systems",
+    "audience": "A visual learner who understands agent and protocol boundaries and now wants to build a knowledge layer that finds the right permitted evidence, preserves provenance, handles disagreement, and proves retrieval quality",
+    "checkedOn": "2026-08-24",
+    "knowledgeBaseline": {
+      "foundation": "RAG is a modular evidence pipeline, not simply a vector database or a large prompt",
+      "retrieval": "Lexical, dense, sparse, late-interaction, reranking, graph, structured, and multimodal methods are replaceable components",
+      "evaluation": "Retrieval and generation are measured separately before end-to-end quality is trusted",
+      "security": "Authorization is enforced before evidence is exposed; retrieved text is untrusted data",
+      "freshness": "Immutable source versions and explicit valid-time rules make current and historical answers reproducible"
+    },
+    "officialSources": [
+      {
+        "label": "Original RAG paper",
+        "url": "https://arxiv.org/abs/2005.11401"
+      },
+      {
+        "label": "W3C PROV-O recommendation",
+        "url": "https://www.w3.org/TR/prov-o/"
+      },
+      {
+        "label": "Docling document model",
+        "url": "https://docling-project.github.io/docling/concepts/docling_document/"
+      },
+      {
+        "label": "Docling chunking concepts",
+        "url": "https://docling-project.github.io/docling/concepts/chunking/"
+      },
+      {
+        "label": "Docling confidence scores",
+        "url": "https://docling-project.github.io/docling/concepts/confidence_scores/"
+      },
+      {
+        "label": "ColPali visual document retrieval",
+        "url": "https://arxiv.org/abs/2407.01449"
+      },
+      {
+        "label": "ViDoRe V3 multimodal RAG benchmark",
+        "url": "https://arxiv.org/abs/2601.08620"
+      },
+      {
+        "label": "BEIR retrieval benchmark",
+        "url": "https://arxiv.org/abs/2104.08663"
+      },
+      {
+        "label": "MTEB embedding benchmark",
+        "url": "https://arxiv.org/abs/2210.07316"
+      },
+      {
+        "label": "BRIGHT reasoning-intensive retrieval benchmark",
+        "url": "https://arxiv.org/abs/2407.12883"
+      },
+      {
+        "label": "ColBERTv2 late-interaction retrieval",
+        "url": "https://arxiv.org/abs/2112.01488"
+      },
+      {
+        "label": "SPLADE v2 sparse retrieval",
+        "url": "https://arxiv.org/abs/2109.10086"
+      },
+      {
+        "label": "HyDE query expansion",
+        "url": "https://arxiv.org/abs/2212.10496"
+      },
+      {
+        "label": "Rewrite-Retrieve-Read",
+        "url": "https://arxiv.org/abs/2305.14283"
+      },
+      {
+        "label": "FLARE active retrieval",
+        "url": "https://arxiv.org/abs/2305.06983"
+      },
+      {
+        "label": "MultiHop-RAG benchmark",
+        "url": "https://arxiv.org/abs/2401.15391"
+      },
+      {
+        "label": "Microsoft GraphRAG documentation",
+        "url": "https://microsoft.github.io/graphrag/"
+      },
+      {
+        "label": "pgvector documentation",
+        "url": "https://github.com/pgvector/pgvector"
+      },
+      {
+        "label": "PostgreSQL row security policies",
+        "url": "https://www.postgresql.org/docs/current/ddl-rowsecurity.html"
+      },
+      {
+        "label": "OWASP RAG Security Cheat Sheet",
+        "url": "https://cheatsheetseries.owasp.org/cheatsheets/RAG_Security_Cheat_Sheet.html"
+      },
+      {
+        "label": "RAGAS evaluation framework",
+        "url": "https://arxiv.org/abs/2309.15217"
+      },
+      {
+        "label": "RAGChecker diagnostic evaluation",
+        "url": "https://arxiv.org/abs/2408.08067"
+      },
+      {
+        "label": "ALCE citation evaluation",
+        "url": "https://arxiv.org/abs/2305.14627"
+      },
+      {
+        "label": "Lost in the Middle",
+        "url": "https://arxiv.org/abs/2307.03172"
+      },
+      {
+        "label": "Reciprocal Rank Fusion paper",
+        "url": "https://research.google/pubs/reciprocal-rank-fusion-outperforms-condorcet-and-individual-rank-learning-methods/"
+      }
+    ],
+    "visualGrammar": {
+      "cobaltPlatform": "A source, processing stage, index, service, or ownership boundary",
+      "cyanArrow": "A normal intake, search, ranking, or evidence-delivery path",
+      "tealArrow": "Provenance, citation, validation, or feedback returning",
+      "coralPath": "A denial, conflict, stale record, low-confidence result, or abstention path",
+      "whiteCard": "A source record, chunk, query, candidate, evidence item, version, metric, or citation"
+    },
+    "websiteLessonTemplate": [
+      "outcome",
+      "pattern status",
+      "diagram and alt text",
+      "plain-English explanation",
+      "trace the visual",
+      "analogy",
+      "Next.js map",
+      "Python map",
+      "case study",
+      "mini lab",
+      "checkpoint and answer",
+      "glossary and related lessons"
+    ]
+  },
+  "modules": [
+    {
+      "id": "module-23",
+      "title": "Source intake and authority",
+      "lessonIds": [
+        101,
+        102,
+        103,
+        104
+      ],
+      "purpose": "Know what entered the knowledge system, who owns it, how faithfully it was parsed, and who may see it."
+    },
+    {
+      "id": "module-24",
+      "title": "Representation and index design",
+      "lessonIds": [
+        105,
+        106,
+        107,
+        108
+      ],
+      "purpose": "Preserve meaning while creating searchable units, complementary representations, and tenant-safe indexes."
+    },
+    {
+      "id": "module-25",
+      "title": "Retrieval and evidence assembly",
+      "lessonIds": [
+        109,
+        110,
+        111,
+        112
+      ],
+      "purpose": "Turn a question into a small, diverse, authorized, citable evidence packet."
+    },
+    {
+      "id": "module-26",
+      "title": "Advanced reasoning over evidence",
+      "lessonIds": [
+        113,
+        114,
+        115,
+        116
+      ],
+      "purpose": "Use multiple sources and data shapes without hiding gaps, inventing relationships, or searching forever."
+    },
+    {
+      "id": "module-27",
+      "title": "Freshness and temporal knowledge",
+      "lessonIds": [
+        117,
+        118,
+        119,
+        120
+      ],
+      "purpose": "Make current answers fresh and historical answers reproducible through versions, updates, promotion, and as-of-time rules."
+    },
+    {
+      "id": "module-28",
+      "title": "Evidence policy and RAG evaluation",
+      "lessonIds": [
+        121,
+        122,
+        123,
+        124
+      ],
+      "purpose": "Prove where claims came from, handle disagreement honestly, and measure retrieval separately from generation."
+    }
+  ],
+  "lessons": [
+    {
+      "id": 101,
+      "slug": "source-authority-map",
+      "moduleId": "module-23",
+      "title": "Source inventory, authority, ownership, and purpose",
+      "stability": "Governance foundation",
+      "diagram": "diagrams/101-source-authority-map.png",
+      "diagramPrompt": "Show four source platforms labeled POLICY, CASE RECORD, PAYMENT LEDGER, CUSTOMER UPLOAD feeding a SOURCE REGISTER. Each source card has OWNER, AUTHORITY, PURPOSE, REFRESH, and SENSITIVITY. A coral UNKNOWN OWNER card stops before ingestion. End at an APPROVED INTAKE CONTRACT.",
+      "alt": "Four different source types enter a governed source register where ownership, authority, purpose, refresh expectations, and sensitivity are checked before an intake contract is approved.",
+      "outcome": "Create a source register that explains why each source exists, who is responsible, and when it may answer a question.",
+      "explanation": "A knowledge system should not begin with files; it should begin with accountable sources. The source register names the business owner, technical custodian, authority level, intended questions, refresh expectation, retention rule, and permitted audience. Authority is question-specific: the payment ledger can prove a charge occurred, while the policy manual decides whether it should be refunded. Unknown ownership or an unclear purpose is a stop condition, not a reason to ingest first and ask later.",
+      "trace": [
+        "List every source before creating chunks or embeddings.",
+        "Name the business owner and technical custodian separately.",
+        "State which questions the source is authoritative for.",
+        "Record refresh, retention, sensitivity, and permitted audience.",
+        "Reject or quarantine sources with unknown ownership or purpose."
+      ],
+      "analogy": "It is like a courtroom witness list: each witness can speak only about what they actually know.",
+      "nextjs": [
+        "Define a typed SourceContract in src/knowledge/contracts.ts.",
+        "Create an admin source-register page with owner, purpose, status, and last successful intake.",
+        "Block ingestion jobs unless the contract is approved and versioned."
+      ],
+      "python": [
+        "Define a Pydantic SourceContract model and validation rules.",
+        "Persist source registrations before scheduling an intake job.",
+        "Fail closed when owner, authority, audience, or retention is missing."
+      ],
+      "caseStudy": {
+        "situation": "Maya asks whether a refund is allowed, but Acme has a policy page, a case note, a payment record, and an uploaded screenshot.",
+        "walkthrough": [
+          "The policy team owns eligibility rules.",
+          "The case system owns the customer interaction record.",
+          "The payment ledger owns settlement facts.",
+          "The uploaded screenshot is supporting evidence, not final authority."
+        ],
+        "result": "The answer can distinguish policy authority from transaction proof and customer-supplied evidence.",
+        "danger": "Treating every retrieved source as equally authoritative lets an old note overrule a controlled policy.",
+        "takeaway": "Inventory first, assign authority by question, and refuse ownerless knowledge."
+      },
+      "lab": "Choose four sources in a support system. For each, write owner, authoritative questions, refresh target, sensitivity, and one question it must not answer.",
+      "checkpoint": "Can one source be authoritative for every kind of fact?",
+      "answer": "Usually no. Authority depends on the claim: policy, transaction, identity, and customer intent often belong to different systems.",
+      "glossary": [
+        "Authority - right to decide a specific fact",
+        "Custodian - team operating the technical source",
+        "Purpose limitation - use data only for the declared reason"
+      ],
+      "related": [
+        102,
+        104,
+        121
+      ],
+      "sources": [
+        "W3C PROV-O",
+        "OWASP RAG Security"
+      ]
+    },
+    {
+      "id": 102,
+      "slug": "layout-aware-parsing",
+      "moduleId": "module-23",
+      "title": "Layout-aware parsing for pages, headings, tables, and lists",
+      "stability": "Current document-engineering pattern",
+      "diagram": "diagrams/102-layout-aware-parsing.png",
+      "diagramPrompt": "Show an INPUT PDF page with HEADING, PARAGRAPH, TABLE, LIST, and FOOTNOTE regions. It flows through LAYOUT PARSER to a DOCUMENT TREE. Every node keeps PAGE, BOUNDING BOX, PARENT, and ORDER. A coral FLAT TEXT path loses table columns and is marked CONTEXT LOST.",
+      "alt": "A visually structured PDF becomes a document tree whose headings, paragraphs, tables, lists, page numbers, bounding boxes, parent relationships, and reading order remain connected.",
+      "outcome": "Preserve document structure and page provenance instead of flattening every page into an unreliable stream of text.",
+      "explanation": "Documents communicate through layout as well as words. A heading gives scope to the paragraphs below it; a table cell gets meaning from its row and column headers; a footnote may qualify a rule. Layout-aware parsing creates typed elements in reading order and keeps page and bounding-box provenance. Flattening too early can join unrelated columns, separate a table value from its header, or lose the page location needed for a trustworthy citation.",
+      "trace": [
+        "Detect page regions before creating searchable text.",
+        "Classify headings, paragraphs, tables, lists, figures, captions, and furniture.",
+        "Build a parent-child document tree in reading order.",
+        "Keep page number and bounding box on every evidence element.",
+        "Send low-confidence or structurally impossible pages to review."
+      ],
+      "analogy": "It is like unpacking a filing cabinet while keeping every folder tab and page number attached.",
+      "nextjs": [
+        "Store parser output as versioned JSON rather than only Markdown.",
+        "Expose a page preview route that highlights the cited bounding box.",
+        "Keep parser confidence and warnings beside each element in the admin UI."
+      ],
+      "python": [
+        "Use a layout-aware converter and validate its typed document model.",
+        "Serialize page, bbox, hierarchy, and reading order into immutable parse records.",
+        "Create regression fixtures for multi-column pages, repeated headers, and split tables."
+      ],
+      "caseStudy": {
+        "situation": "Acme's refund policy contains a two-column eligibility table and a footnote excluding gift cards.",
+        "walkthrough": [
+          "The parser identifies the table as a table, not six unrelated lines.",
+          "Column headers repeat when rows are divided into chunks.",
+          "The footnote remains linked to the relevant policy section.",
+          "The citation points to the exact page and region."
+        ],
+        "result": "Maya sees the correct eligibility row together with the gift-card exception.",
+        "danger": "Plain text extraction can turn a correct table into a confidently wrong relationship.",
+        "takeaway": "Preserve structure until the evidence packet is assembled; flatten only for a specific consumer."
+      },
+      "lab": "Draw a two-column policy page. Mark the element types, reading order, parents, and provenance fields your parser must emit.",
+      "checkpoint": "Why is a page number alone sometimes insufficient provenance?",
+      "answer": "Because a page can contain several unrelated regions; a bounding box and element path identify the exact supporting evidence.",
+      "glossary": [
+        "Layout - spatial organization carrying meaning",
+        "Bounding box - coordinates of a page region",
+        "Reading order - intended sequence of elements"
+      ],
+      "related": [
+        101,
+        103,
+        105
+      ],
+      "sources": [
+        "Docling document model",
+        "Docling confidence scores"
+      ]
+    },
+    {
+      "id": 103,
+      "slug": "multimodal-evidence-intake",
+      "moduleId": "module-23",
+      "title": "OCR, images, attachments, and multimodal evidence",
+      "stability": "Emerging multimodal pattern; benchmark before adoption",
+      "diagram": "diagrams/103-multimodal-evidence-intake.png",
+      "diagramPrompt": "Show three inputs labeled SCANNED PDF, SCREENSHOT, CHART. Split into two paths: OCR AND LAYOUT and VISUAL PAGE EMBEDDING. They meet at MULTIMODAL EVIDENCE with TEXT, IMAGE, PAGE, BBOX, and CONFIDENCE. Coral LOW CONFIDENCE flows to HUMAN REVIEW.",
+      "alt": "Scanned pages, screenshots, and charts travel through OCR-layout and visual-page retrieval paths, then meet in a multimodal evidence record with provenance and confidence.",
+      "outcome": "Decide when OCR text is enough, when visual retrieval is needed, and when a human must verify the page.",
+      "explanation": "OCR converts pixels into text, but text alone may not preserve a chart, handwriting, stamps, or the relationship between a screenshot's labels and values. A robust intake path keeps the original file, extracted text, page image, regions, confidence, and model versions. Visual-page retrievers can search layout and imagery directly, but they are an additional retrieval representation, not a reason to discard OCR or provenance. Benchmark both paths on your own documents and route uncertain evidence to review.",
+      "trace": [
+        "Keep the original attachment immutable.",
+        "Run OCR and layout analysis with recorded model versions.",
+        "Create visual-page representations only for supported document classes.",
+        "Link text spans and visual regions to the same source version.",
+        "Quarantine unreadable, suspicious, or low-confidence pages for human review."
+      ],
+      "analogy": "It is like reading a map: the street names matter, but their positions and symbols carry meaning too.",
+      "nextjs": [
+        "Upload to private object storage through a signed server route.",
+        "Show OCR confidence and page thumbnails only to authorized reviewers.",
+        "Render citations as page-region previews, never as public object URLs."
+      ],
+      "python": [
+        "Create an intake worker for OCR, layout, image hashing, and page rendering.",
+        "Store separate text and visual representation records linked by source_version_id.",
+        "Use a review queue for confidence, malware, unsupported format, and corrupted-page failures."
+      ],
+      "caseStudy": {
+        "situation": "Maya uploads a screenshot showing a payment reference and a handwritten note beside it.",
+        "walkthrough": [
+          "OCR finds the printed payment reference.",
+          "The visual path keeps the note's spatial relationship to the reference.",
+          "The ledger independently verifies whether the reference exists.",
+          "A reviewer confirms the handwriting if it affects the decision."
+        ],
+        "result": "The screenshot helps locate evidence but does not silently become financial authority.",
+        "danger": "Blindly indexing noisy OCR can flood retrieval with fragments that look relevant but have no reliable meaning.",
+        "takeaway": "Keep original pixels, extracted text, layout, confidence, and independent verification as separate evidence layers."
+      },
+      "lab": "For one scanned page, list what OCR can recover, what requires visual understanding, and what must be verified elsewhere.",
+      "checkpoint": "Does better visual retrieval remove the need for OCR?",
+      "answer": "No. OCR supports exact terms and quotations, while visual retrieval captures layout and imagery; the two are complementary and should be evaluated separately.",
+      "glossary": [
+        "OCR - converting image pixels into text",
+        "Multimodal - using more than one data form",
+        "Visual retrieval - finding pages from their rendered appearance"
+      ],
+      "related": [
+        102,
+        107,
+        121
+      ],
+      "sources": [
+        "ColPali",
+        "ViDoRe V3",
+        "Docling confidence scores"
+      ]
+    },
+    {
+      "id": 104,
+      "slug": "provenance-permission-retention",
+      "moduleId": "module-23",
+      "title": "Metadata, provenance, permissions, and retention",
+      "stability": "Security and governance control",
+      "diagram": "diagrams/104-provenance-permission-retention.png",
+      "diagramPrompt": "Show an EVIDENCE RECORD at center with SOURCE ID, VERSION ID, TENANT, ACL, VALID FROM, RETAIN UNTIL, HASH. Left is PROVENANCE CHAIN: ORIGINAL to PARSE to CHUNK. Right is AUTHORIZATION GATE before SEARCH. Bottom coral paths say EXPIRED, REVOKED, WRONG TENANT.",
+      "alt": "An evidence record carries source and version identity, tenant, access policy, validity, retention, and hashes through a provenance chain, with authorization enforced before search.",
+      "outcome": "Design metadata that makes evidence traceable, permission-aware, time-bounded, and removable.",
+      "explanation": "Metadata is part of the retrieval contract, not decoration added after embeddings. Every searchable unit should link to an immutable source version and transformation chain, plus tenant, audience, classification, valid-time, retention, and deletion state. Authorization should reduce the candidate universe before content reaches ranking or a model. Retention expiry and permission revocation must remove or mask every derived representation, cache entry, and citation target while preserving the minimum audit evidence allowed by policy.",
+      "trace": [
+        "Assign stable source, version, element, and chunk identities.",
+        "Record which activity produced each derivative and with which configuration.",
+        "Attach tenant and authorization policy to every searchable representation.",
+        "Apply validity and retention rules before evidence assembly.",
+        "Propagate deletion or revocation through indexes, caches, and previews."
+      ],
+      "analogy": "It is like a library card catalog where every card also says who may borrow the book and when it must be destroyed.",
+      "nextjs": [
+        "Resolve the user's tenant and roles on the server, never from editable client fields.",
+        "Pass a server-built authorization filter into every retriever.",
+        "Use short-lived signed links for previews after a second access check."
+      ],
+      "python": [
+        "Model provenance as source version plus transformation activities.",
+        "Enforce row-level security and explicit tenant predicates in storage queries.",
+        "Run tombstone propagation jobs and verify removal from lexical, vector, visual, and cache layers."
+      ],
+      "caseStudy": {
+        "situation": "Maya may view her customer's case notes, but not another customer's case or restricted fraud-review comments.",
+        "walkthrough": [
+          "Identity resolves Maya's tenant and support role.",
+          "The authorization gate removes forbidden records before retrieval.",
+          "The retriever ranks only the allowed candidate set.",
+          "Citation previews repeat the same authorization check."
+        ],
+        "result": "Relevant evidence is returned without cross-tenant or restricted-note leakage.",
+        "danger": "Filtering after retrieval can expose forbidden content in ranks, logs, caches, traces, or model context even if it is hidden from the final screen.",
+        "takeaway": "Authorize before exposure and make every derivative traceable to its permission-bearing source version."
+      },
+      "lab": "Design a metadata record for one policy chunk and one case-note chunk. Mark which fields control authority, tenancy, validity, retention, and citation.",
+      "checkpoint": "Where should tenant authorization be applied in a RAG pipeline?",
+      "answer": "Before candidate content is exposed to ranking, reranking, packing, caching, logging, or the model, and again when a citation target is opened.",
+      "glossary": [
+        "Provenance - trace of where evidence came from",
+        "ACL - access-control rule",
+        "Tombstone - record that a source or derivative is no longer available"
+      ],
+      "related": [
+        101,
+        108,
+        111
+      ],
+      "sources": [
+        "W3C PROV-O",
+        "PostgreSQL row security",
+        "OWASP RAG Security"
+      ]
+    },
+    {
+      "id": 105,
+      "slug": "semantic-chunk-boundaries",
+      "moduleId": "module-24",
+      "title": "Chunk boundaries and semantic completeness",
+      "stability": "Core retrieval design pattern",
+      "diagram": "diagrams/105-semantic-chunk-boundaries.png",
+      "diagramPrompt": "Show a POLICY DOCUMENT tree with SECTION, PARAGRAPH, LIST, and TABLE nodes. A SEMANTIC CHUNKER creates three white chunk cards. Green WHOLE IDEA brackets stay intact; coral BAD SPLIT cuts a condition away from its exception. Each good chunk carries HEADING PATH and PAGE SPAN.",
+      "alt": "A structured policy document is divided into chunks at semantic boundaries, preserving whole ideas, heading paths, page spans, lists, tables, conditions, and exceptions.",
+      "outcome": "Choose chunk boundaries that preserve complete evidence rather than chasing one universal token size.",
+      "explanation": "A chunk is a retrieval unit, not an arbitrary slice of characters. Good chunks keep a claim with its conditions, exceptions, list context, table headers, and section path. Token limits still matter, but the first boundary should come from document meaning and the consumer's task. Record the original element IDs so a retrieved chunk can be expanded, cited, or reconstructed. Test several chunking strategies on real queries because smaller chunks can improve precision while larger chunks can preserve necessary context.",
+      "trace": [
+        "Start from typed document elements and hierarchy.",
+        "Keep conditions, exceptions, headers, and table meaning together.",
+        "Split only when a semantic unit exceeds the selected token budget.",
+        "Attach heading path, page span, element IDs, and source version.",
+        "Evaluate chunk choices with retrieval queries, not intuition alone."
+      ],
+      "analogy": "It is like cutting a recipe: never separate 'bake for 20 minutes' from 'at 180 degrees.'",
+      "nextjs": [
+        "Define ChunkRecord and ChunkStrategy identifiers in shared TypeScript.",
+        "Build an admin comparison view for two chunk strategies on the same page.",
+        "Expose parent expansion only after authorization is rechecked."
+      ],
+      "python": [
+        "Implement document-aware chunkers behind a common iterator interface.",
+        "Store strategy name, tokenizer, limits, and source element IDs with each chunk.",
+        "Run golden-query evaluation before promoting a new chunk strategy."
+      ],
+      "caseStudy": {
+        "situation": "The refund policy says purchases are eligible within 30 days, followed by a bullet excluding final-sale items.",
+        "walkthrough": [
+          "The parser links the bullet to the eligibility section.",
+          "The chunker keeps the 30-day rule and exclusion together.",
+          "The heading path adds 'Returns > Eligibility.'",
+          "The evidence packet can quote and cite the complete rule."
+        ],
+        "result": "Maya receives a complete condition instead of a misleading half-rule.",
+        "danger": "Fixed-size splitting can retrieve a rule without its exception and turn missing context into a wrong answer.",
+        "takeaway": "Chunk by meaning first, then fit the model boundary, and measure the result."
+      },
+      "lab": "Take one policy paragraph with an exception and design three chunking options. Predict which queries each option will help or hurt.",
+      "checkpoint": "Is there one best chunk size for every knowledge base?",
+      "answer": "No. The best boundary depends on document structure, question type, retriever, context budget, and evaluation results.",
+      "glossary": [
+        "Chunk - searchable unit derived from a source",
+        "Semantic completeness - enough context to preserve the idea",
+        "Heading path - hierarchy locating a chunk in its document"
+      ],
+      "related": [
+        102,
+        106,
+        123
+      ],
+      "sources": [
+        "Docling chunking",
+        "Lost in the Middle"
+      ]
+    },
+    {
+      "id": 106,
+      "slug": "parent-child-retrieval",
+      "moduleId": "module-24",
+      "title": "Parent-child, hierarchical, and document-aware retrieval",
+      "stability": "Mature architecture pattern",
+      "diagram": "diagrams/106-parent-child-retrieval.png",
+      "diagramPrompt": "Show three levels labeled DOCUMENT, SECTION, CHILD CHUNKS. A QUERY searches small CHILD CHUNKS for precision, then teal arrows EXPAND TO PARENT SECTION for context. A TOKEN BUDGET gate selects only the needed parent neighborhood. Include a coral ENTIRE DOCUMENT path labeled TOO MUCH NOISE.",
+      "alt": "A query finds precise child chunks, expands selected hits to their parent sections, and packs only the necessary neighborhood under a token budget instead of sending the whole document.",
+      "outcome": "Retrieve precisely at one level and answer safely with context from another level.",
+      "explanation": "Small child chunks are often easier to match, while their parent section contains the context needed to interpret them. Parent-child retrieval stores both levels and stable links between them. The first stage searches children; an expansion rule then fetches the parent, neighboring elements, table headers, or cited footnote. Expansion is selective and budgeted. It should not turn every hit into a complete document, because extra context can add noise, cost, and contradictory material.",
+      "trace": [
+        "Index children with parent and neighbor identifiers.",
+        "Search the smallest unit that can match the question precisely.",
+        "Group hits by parent and choose the strongest supporting regions.",
+        "Expand only the context required to interpret those hits.",
+        "Pack parents under an explicit evidence and token budget."
+      ],
+      "analogy": "It is like finding a word in a book index, then reading the surrounding paragraph instead of only the word or the entire book.",
+      "nextjs": [
+        "Create retrieval results with childHit and expandableParent fields.",
+        "Let the UI reveal why a parent was expanded and which child matched.",
+        "Keep expansion server-side so hidden siblings cannot be requested by identifier."
+      ],
+      "python": [
+        "Store document, section, element, and chunk tables with immutable links.",
+        "Implement bounded parent and neighbor expansion after the first-stage rank.",
+        "Measure child recall, parent usefulness, context size, and latency separately."
+      ],
+      "caseStudy": {
+        "situation": "A child chunk contains 'within 30 days' but not the heading 'Digital subscriptions.'",
+        "walkthrough": [
+          "The child matches Maya's question.",
+          "The parent expansion adds the product category and exception list.",
+          "A nearby effective-date element is included.",
+          "Unrelated sections remain outside the evidence packet."
+        ],
+        "result": "The answer applies the time window to the correct product category.",
+        "danger": "Expanding every match to a full document can bury the relevant rule in duplicated and stale text.",
+        "takeaway": "Search small, expand deliberately, and preserve the path from hit to context."
+      },
+      "lab": "Draw a three-level document tree. For one query, mark the searched nodes, matched child, expanded parent, excluded siblings, and final evidence budget.",
+      "checkpoint": "Why not embed only full documents?",
+      "answer": "Full documents often dilute precise signals and consume too much context; hierarchical retrieval combines precise matching with enough surrounding meaning.",
+      "glossary": [
+        "Parent-child retrieval - match a small unit and return a larger context",
+        "Neighbor expansion - adding nearby source elements",
+        "Context budget - maximum evidence size allowed"
+      ],
+      "related": [
+        105,
+        112,
+        116
+      ],
+      "sources": [
+        "Docling chunking",
+        "Lost in the Middle"
+      ]
+    },
+    {
+      "id": 107,
+      "slug": "complementary-representations",
+      "moduleId": "module-24",
+      "title": "Lexical signals, embeddings, and complementary representations",
+      "stability": "Stable information-retrieval pattern",
+      "diagram": "diagrams/107-complementary-representations.png",
+      "diagramPrompt": "Show one SOURCE CHUNK producing three representations: LEXICAL TERMS, DENSE VECTOR, TOKEN VECTORS. Queries split to EXACT MATCH, SEMANTIC MATCH, and LATE INTERACTION. Their ranked lists flow to FUSION. Labels include ERROR CODE, REFUND MEANING, and TERM ALIGNMENT.",
+      "alt": "One source chunk produces lexical, dense-vector, and token-level representations that support exact, semantic, and late-interaction retrieval before their ranked results are fused.",
+      "outcome": "Explain what lexical, dense, sparse-neural, and late-interaction representations each contribute.",
+      "explanation": "No single representation wins on every question. Lexical retrieval is strong for names, identifiers, quotations, and rare terms. Dense embeddings capture semantic similarity when wording differs. Learned sparse methods expand lexical signals while retaining inverted-index behavior. Late-interaction methods keep multiple token vectors and compare query terms more precisely than a single document vector, at greater storage and computation cost. Treat these as candidate generators to benchmark, combine, and replace rather than a hierarchy of fashionable upgrades.",
+      "trace": [
+        "Keep source text and exact terms available for lexical search.",
+        "Generate dense embeddings with a recorded model and input recipe.",
+        "Optionally test learned sparse or token-level representations on difficult slices.",
+        "Collect ranked lists with stable document identities.",
+        "Compare recall, precision, latency, storage, and tenant-filter behavior."
+      ],
+      "analogy": "It is like finding a person by exact name, by description, or by matching several facial features; each method sees something different.",
+      "nextjs": [
+        "Define a Retriever interface returning normalized candidate records.",
+        "Show per-channel matches and scores in a protected retrieval-debug page.",
+        "Never present raw scores from different retrievers as directly comparable probabilities."
+      ],
+      "python": [
+        "Implement lexical and vector retrievers as separate adapters.",
+        "Version every representation by model, tokenizer, dimensions, and preprocessing recipe.",
+        "Run the same golden-query slices across BM25-style, dense, sparse, and late-interaction candidates."
+      ],
+      "caseStudy": {
+        "situation": "Maya searches for payment code RF-1842 and also asks 'was the customer's money returned?'",
+        "walkthrough": [
+          "Lexical search finds the exact payment code.",
+          "Dense search finds refund language using different wording.",
+          "A token-level retriever may align code, product, and action terms together.",
+          "Fusion keeps both exact and semantic evidence for reranking."
+        ],
+        "result": "The candidate set covers the transaction and the policy meaning without forcing one retriever to do both jobs.",
+        "danger": "A dense-only index can miss exact identifiers, while a lexical-only index can miss paraphrased intent.",
+        "takeaway": "Use complementary signals, compare them on your queries, and preserve channel-level evidence."
+      },
+      "lab": "Create five test queries: an identifier, quotation, paraphrase, ambiguous term, and multi-concept question. Predict which representation should contribute.",
+      "checkpoint": "Are embedding similarity scores calibrated probabilities of relevance?",
+      "answer": "No. They are model- and index-specific similarity signals and must be evaluated, ranked, and combined carefully.",
+      "glossary": [
+        "Lexical retrieval - matching textual terms",
+        "Dense embedding - one semantic vector",
+        "Late interaction - token-level query-document matching"
+      ],
+      "related": [
+        103,
+        110,
+        112
+      ],
+      "sources": [
+        "BEIR",
+        "MTEB",
+        "SPLADE v2",
+        "ColBERTv2"
+      ]
+    },
+    {
+      "id": 108,
+      "slug": "tenant-safe-index-design",
+      "moduleId": "module-24",
+      "title": "Vector stores, index partitions, and tenant boundaries",
+      "stability": "Production storage pattern",
+      "diagram": "diagrams/108-tenant-safe-index-design.png",
+      "diagramPrompt": "Show TENANT A and TENANT B entering separate blue INDEX PARTITIONS. Each partition has TEXT INDEX, VECTOR INDEX, VERSION ALIAS. A central QUERY ROUTER receives server-trusted TENANT ID. Coral CROSS-TENANT ARROW is blocked. Include EXACT SEARCH and HNSW with a SPEED-RECALL dial.",
+      "alt": "Server-trusted tenant identity routes lexical and vector searches into isolated index partitions and version aliases, while cross-tenant paths are blocked and approximate search exposes a speed-recall tradeoff.",
+      "outcome": "Choose storage and partition boundaries that preserve isolation, reproducibility, and measurable search behavior.",
+      "explanation": "A vector store is an index implementation, not the knowledge system itself. Store durable source and chunk records separately from derived representations. Partition or filter by tenant and security boundary, and test whether approximate-nearest-neighbor filtering preserves enough recall. Exact search provides a truth baseline; approximate indexes trade some recall for speed. Version aliases let readers use one complete promoted index while a new build is prepared. Never accept tenant identity directly from a request body.",
+      "trace": [
+        "Keep source truth separate from derived vector rows.",
+        "Resolve tenant and access scope from trusted server identity.",
+        "Choose partitions or separate tables for strong isolation boundaries.",
+        "Compare approximate search with exact-search recall on representative filters.",
+        "Point a version alias only at a complete, validated index build."
+      ],
+      "analogy": "It is like separate locked archive rooms with a reception desk that checks your badge before choosing the room.",
+      "nextjs": [
+        "Resolve tenant scope in server middleware or route dependencies.",
+        "Keep index aliases and build status in server-only configuration.",
+        "Provide operators with recall, latency, and partition-health dashboards."
+      ],
+      "python": [
+        "Use database constraints, row security, and explicit tenant predicates.",
+        "Benchmark exact versus HNSW or IVFFlat behavior under real filters.",
+        "Build new representation versions alongside old ones and promote by alias transaction."
+      ],
+      "caseStudy": {
+        "situation": "Acme serves several business customers whose policies contain similar refund language.",
+        "walkthrough": [
+          "Maya's authenticated session resolves Acme's tenant.",
+          "The router selects only Acme's partitions.",
+          "Authorization constraints narrow candidates inside that boundary.",
+          "The exact-search canary verifies approximate recall for the filtered query."
+        ],
+        "result": "A similar policy from another company never becomes a candidate or appears in logs and caches.",
+        "danger": "A shared approximate index with weak filtering can hurt both isolation confidence and per-tenant recall.",
+        "takeaway": "Make tenant scope a storage boundary, then measure the search tradeoff inside it."
+      },
+      "lab": "Design an index layout for three tenants: one small, one large, and one highly regulated. Explain shared versus separate tables, partitions, and aliases.",
+      "checkpoint": "What does an approximate vector index trade for speed?",
+      "answer": "It may miss some true nearest neighbors, so recall must be measured against exact search, especially when metadata filters are selective.",
+      "glossary": [
+        "ANN - approximate nearest-neighbor search",
+        "Partition - isolated subset of an index",
+        "Alias - stable name pointing to a promoted index version"
+      ],
+      "related": [
+        104,
+        111,
+        119
+      ],
+      "sources": [
+        "pgvector",
+        "PostgreSQL row security",
+        "OWASP RAG Security"
+      ]
+    },
+    {
+      "id": 109,
+      "slug": "query-understanding-plan",
+      "moduleId": "module-25",
+      "title": "Query understanding, rewriting, and decomposition",
+      "stability": "Replaceable retrieval planning pattern",
+      "diagram": "diagrams/109-query-understanding-plan.png",
+      "diagramPrompt": "Show USER QUESTION entering QUERY UNDERSTANDING. It emits white cards labeled INTENT, ENTITIES, FILTERS, TIME, and AMBIGUITY. Paths lead to DIRECT QUERY, REWRITE, DECOMPOSE, or CLARIFY. Coral UNSAFE ASSUMPTION is blocked. All paths retain ORIGINAL QUESTION.",
+      "alt": "A user question is analyzed into intent, entities, filters, time, and ambiguity, then routed to direct retrieval, rewriting, decomposition, or clarification while preserving the original wording.",
+      "outcome": "Transform conversational questions into retrieval plans without silently changing user intent.",
+      "explanation": "Users ask conversational questions, but search systems often need standalone queries, explicit entities, dates, filters, or subquestions. Query understanding extracts those elements while preserving the original question for audit. Rewriting can bridge vocabulary gaps; hypothetical-document expansion can help dense search; decomposition can separate multi-part needs. Every transformation can also introduce assumptions, so store the plan, cap the number of variants, and choose clarification when a missing fact changes the answer materially.",
+      "trace": [
+        "Preserve the original question and conversation evidence.",
+        "Extract intent, entities, constraints, time, and requested answer shape.",
+        "Choose direct search, rewrite, expansion, decomposition, or clarification.",
+        "Validate generated queries against allowed scope and entity resolution.",
+        "Record which query produced every candidate."
+      ],
+      "analogy": "It is like translating a customer's request into a librarian's search form without changing what the customer asked.",
+      "nextjs": [
+        "Create a typed QueryPlan and display assumptions before high-impact searches.",
+        "Keep rewritten queries server-side but expose them in a debug or explanation view.",
+        "Require confirmation when the plan adds a customer, date, or policy scope not supplied."
+      ],
+      "python": [
+        "Use a deterministic parser first and an LLM planner only for ambiguous language.",
+        "Validate plan fields with Pydantic and bounded lists.",
+        "Evaluate direct, rewrite, HyDE-like, and decomposition strategies by query slice."
+      ],
+      "caseStudy": {
+        "situation": "Maya asks, 'Can she still get it back after last month?' without naming the product or purchase date.",
+        "walkthrough": [
+          "The planner resolves 'she' from the authorized case context.",
+          "It identifies missing product category and exact purchase date.",
+          "Because those facts change eligibility, it asks for clarification or reads approved case fields.",
+          "Only then does it create the policy and transaction queries."
+        ],
+        "result": "The system searches a precise, auditable question instead of inventing a date or product.",
+        "danger": "A fluent rewrite can quietly add a false entity, time range, or desired outcome and retrieve convincing support for the wrong question.",
+        "takeaway": "Preserve intent, expose assumptions, and clarify when missing information changes the decision."
+      },
+      "lab": "Rewrite one conversational question into a structured plan. Mark every resolved reference, assumption, filter, time constraint, and subquestion.",
+      "checkpoint": "When should a retriever ask a clarifying question instead of rewriting?",
+      "answer": "When multiple plausible interpretations would lead to materially different evidence or decisions and the missing fact cannot be resolved safely.",
+      "glossary": [
+        "Query plan - structured search intent",
+        "Rewrite - alternate wording for retrieval",
+        "Decomposition - splitting a question into bounded subquestions"
+      ],
+      "related": [
+        110,
+        113,
+        116
+      ],
+      "sources": [
+        "Rewrite-Retrieve-Read",
+        "HyDE",
+        "BRIGHT-style reasoning retrieval"
+      ]
+    },
+    {
+      "id": 110,
+      "slug": "hybrid-candidate-funnel",
+      "moduleId": "module-25",
+      "title": "Hybrid search and candidate generation",
+      "stability": "Stable multi-stage retrieval pattern",
+      "diagram": "diagrams/110-hybrid-candidate-funnel.png",
+      "diagramPrompt": "Show a QUERY splitting into LEXICAL SEARCH, DENSE SEARCH, and OPTIONAL SPECIALIST SEARCH. Each returns a ranked list of white cards. Lists enter RRF FUSION, then DEDUPLICATE, producing CANDIDATE POOL 60. A coral EMPTY CHANNEL does not erase other results.",
+      "alt": "A query runs through lexical, dense, and optional specialist search channels whose ranked lists are fused, deduplicated, and preserved as a high-recall candidate pool.",
+      "outcome": "Build a candidate stage that maximizes useful coverage before expensive precision work.",
+      "explanation": "Hybrid retrieval treats first-stage search as candidate generation. Lexical and semantic channels search independently, and specialist channels may cover tables, visual pages, graphs, or structured records. Reciprocal Rank Fusion can combine rank positions without pretending different score scales are comparable. The goal is a manageable high-recall pool, not the final answer. Preserve channel, rank, score, query variant, and matched fields so later reranking and debugging can explain why a candidate appeared.",
+      "trace": [
+        "Run authorized search channels independently.",
+        "Return more candidates than will fit in the final prompt.",
+        "Fuse by rank or a calibrated method rather than raw-score addition.",
+        "Deduplicate by canonical evidence identity while keeping channel evidence.",
+        "Pass a traceable candidate pool to reranking."
+      ],
+      "analogy": "It is like asking several librarians to make shortlists, then merging the lists before a subject expert chooses the best books.",
+      "nextjs": [
+        "Fan out retriever promises with explicit per-channel timeouts.",
+        "Render channel badges and ranks in an operator-only search trace.",
+        "Return partial channel status separately from an empty overall result."
+      ],
+      "python": [
+        "Run retrievers concurrently with bounded deadlines.",
+        "Implement RRF over canonical candidate IDs and keep contributing ranks.",
+        "Log recall, latency, timeout, and candidate overlap per channel."
+      ],
+      "caseStudy": {
+        "situation": "Maya's question includes the exact code RF-1842 and a paraphrase of a return-policy exception.",
+        "walkthrough": [
+          "Lexical search finds the exact code and policy phrase.",
+          "Dense search finds semantically similar return rules.",
+          "Fusion brings both result sets together.",
+          "Deduplication keeps one evidence identity with both channel explanations."
+        ],
+        "result": "The reranker receives broad coverage without duplicated context.",
+        "danger": "Choosing the top five from one retriever too early can make missing evidence impossible to recover later.",
+        "takeaway": "Generate broadly, fuse transparently, then spend precision work on a traceable pool."
+      },
+      "lab": "Create two ranked lists of six candidates and compute an RRF order. Note duplicates, unique wins, and what metadata must survive fusion.",
+      "checkpoint": "Why should raw BM25 and cosine scores not simply be added?",
+      "answer": "They have different scales and meanings; rank fusion or calibrated combination avoids treating incomparable values as equivalent.",
+      "glossary": [
+        "Candidate generation - high-recall first retrieval stage",
+        "RRF - reciprocal rank fusion",
+        "Canonical ID - stable identity used to deduplicate evidence"
+      ],
+      "related": [
+        107,
+        112,
+        123
+      ],
+      "sources": [
+        "BEIR",
+        "Reciprocal Rank Fusion",
+        "pgvector"
+      ]
+    },
+    {
+      "id": 111,
+      "slug": "authorization-before-search",
+      "moduleId": "module-25",
+      "title": "Authorization filters and metadata constraints",
+      "stability": "Non-negotiable security control",
+      "diagram": "diagrams/111-authorization-before-search.png",
+      "diagramPrompt": "Show AUTHENTICATED USER and SERVER POLICY producing an ALLOWED SCOPE card. The scope enters FILTERED LEXICAL INDEX, FILTERED VECTOR INDEX, and FILTERED SQL. Only permitted candidates reach RERANK. Coral paths WRONG TENANT, RESTRICTED, EXPIRED, and RETENTION HOLD end before content exposure.",
+      "alt": "An authenticated identity and server policy produce an allowed scope that constrains lexical, vector, and structured retrieval before any candidate reaches reranking.",
+      "outcome": "Apply authorization and metadata constraints as part of search, not as a cosmetic filter on the answer.",
+      "explanation": "Relevance never grants permission. Build an allowed scope from authenticated identity, tenant, role, case assignment, source classification, purpose, valid time, and retention state. Push enforceable predicates into each candidate source so forbidden content does not appear in ranks, debug traces, caches, or model context. If a backend cannot guarantee filtering, isolate its data physically or reject it for sensitive use. Repeat the check when expanding parents and opening citations because permissions can change between steps.",
+      "trace": [
+        "Authenticate the user and resolve server-trusted claims.",
+        "Compile one allowed scope for the declared purpose.",
+        "Translate that scope into every retriever's native constraints.",
+        "Return only permitted canonical IDs to fusion and reranking.",
+        "Reauthorize parent expansion, cache reads, and citation previews."
+      ],
+      "analogy": "It is like security checking the guest list before people enter the building, not covering their faces after they are inside.",
+      "nextjs": [
+        "Keep access claims in server components and route handlers.",
+        "Never accept tenant_id, roles, or allowed_sources from editable browser state.",
+        "Display a safe 'restricted evidence may exist' state without leaking titles or counts."
+      ],
+      "python": [
+        "Centralize policy compilation but keep enforcement inside every data adapter.",
+        "Use row security, partitions, and query predicates as layered controls.",
+        "Test forbidden-result absence in candidates, logs, traces, caches, and citations."
+      ],
+      "caseStudy": {
+        "situation": "A fraud note contains a refund warning but is visible only to investigators.",
+        "walkthrough": [
+          "Maya's support role does not include fraud-review access.",
+          "The note is removed inside the source query.",
+          "Permitted policy and payment evidence continue through ranking.",
+          "The answer does not reveal the hidden note's title, wording, or existence."
+        ],
+        "result": "Maya gets the best answer supported by evidence she is allowed to use.",
+        "danger": "Post-filtering after vector search can leak forbidden neighbors through observability data or insufficient result counts.",
+        "takeaway": "Permission is a candidate-generation constraint and must survive every expansion and preview."
+      },
+      "lab": "Write an allowed-scope object for Maya. Translate it into lexical, vector, SQL, parent-expansion, and citation-preview rules.",
+      "checkpoint": "If a document is highly relevant but unauthorized, should the reranker see it?",
+      "answer": "No. Unauthorized content must be excluded before reranking or any other stage that exposes its content or metadata.",
+      "glossary": [
+        "Allowed scope - server-derived retrieval boundary",
+        "Purpose - declared reason for data access",
+        "Post-filtering - removing results after retrieval, often too late for security"
+      ],
+      "related": [
+        104,
+        108,
+        121
+      ],
+      "sources": [
+        "PostgreSQL row security",
+        "OWASP RAG Security",
+        "pgvector"
+      ]
+    },
+    {
+      "id": 112,
+      "slug": "rerank-diversity-evidence-pack",
+      "moduleId": "module-25",
+      "title": "Reranking, deduplication, diversity, and evidence packing",
+      "stability": "Production evidence-assembly pattern",
+      "diagram": "diagrams/112-rerank-diversity-evidence-pack.png",
+      "diagramPrompt": "Show CANDIDATE POOL 60 entering RERANKER, then DEDUPLICATE, DIVERSIFY, AUTHORITY CHECK, TOKEN BUDGET. Output is EVIDENCE PACKET with POLICY, TRANSACTION, EXCEPTION, and CITATION cards. Coral REDUNDANT and LOW AUTHORITY cards are removed with reasons.",
+      "alt": "A broad candidate pool is reranked, deduplicated, diversified, authority-checked, and packed under a token budget into a small evidence packet containing policy, transaction, exception, and citation records.",
+      "outcome": "Turn broad retrieval into a compact evidence packet that covers the question without repetition or hidden authority errors.",
+      "explanation": "Reranking spends more computation to compare the query with a limited candidate pool and improve precision. The top scores still need policy: collapse duplicate chunks, avoid five copies of one rule, preserve necessary source diversity, prefer authoritative versions, and include exceptions or counterevidence. Evidence packing is a constrained selection problem, not 'take top K.' The packet should carry canonical identity, quotation-ready spans, provenance, authority, validity, rank reasons, and a token estimate for each item.",
+      "trace": [
+        "Rerank the authorized high-recall candidate pool.",
+        "Group exact and near duplicates by canonical source meaning.",
+        "Select diverse evidence roles needed to answer the question.",
+        "Prefer current authoritative records while retaining material conflict.",
+        "Pack evidence and citation metadata under explicit item and token budgets."
+      ],
+      "analogy": "It is like packing a small legal brief: include the rule, facts, exception, and source, not twenty copies of the rule.",
+      "nextjs": [
+        "Define an EvidencePacket schema shared with the answer-rendering layer.",
+        "Show why each card was included and which duplicate group it represents.",
+        "Keep raw retrieved text out of client state unless the user is authorized to view it."
+      ],
+      "python": [
+        "Implement reranker, deduper, diversity selector, and packer as independently measured stages.",
+        "Use stable canonical IDs and semantic duplicate thresholds with regression tests.",
+        "Record excluded candidates and reasons in access-controlled traces."
+      ],
+      "caseStudy": {
+        "situation": "Maya's search returns eight copies of the same policy, one exception, and one payment record.",
+        "walkthrough": [
+          "Reranking raises the relevant policy and payment evidence.",
+          "Deduplication collapses repeated policy copies.",
+          "Diversity preserves the exception and transaction record.",
+          "The packer fits all necessary roles with exact citations."
+        ],
+        "result": "The model receives a smaller packet with better coverage and less repetition.",
+        "danger": "Top-K alone can spend the whole context on near-duplicates and omit the one exception that changes the answer.",
+        "takeaway": "Rerank for relevance, then pack for coverage, authority, diversity, and citations."
+      },
+      "lab": "Given twelve candidates, select a six-item packet. Label duplicates, authority, evidence role, conflict, token cost, and exclusion reason.",
+      "checkpoint": "Why is the highest reranker score not automatically the final evidence packet?",
+      "answer": "Because the packet must also satisfy authorization, authority, diversity, conflict coverage, citation, and token-budget requirements.",
+      "glossary": [
+        "Reranker - second-stage relevance scorer",
+        "Diversity - coverage of distinct evidence needs",
+        "Evidence packet - bounded traceable context supplied for answering"
+      ],
+      "related": [
+        106,
+        110,
+        121
+      ],
+      "sources": [
+        "BEIR",
+        "RAGChecker",
+        "Lost in the Middle",
+        "ALCE citation evaluation"
+      ]
+    },
+    {
+      "id": 113,
+      "slug": "bounded-multihop-retrieval",
+      "moduleId": "module-26",
+      "title": "Multi-hop questions and bounded decomposition",
+      "stability": "Advanced retrieval pattern; evaluate on multi-hop slices",
+      "diagram": "diagrams/113-bounded-multihop-retrieval.png",
+      "diagramPrompt": "Show QUESTION at left splitting into HOP 1 FIND POLICY, HOP 2 FIND PRODUCT CLASS, HOP 3 VERIFY PURCHASE. Each hop produces an EVIDENCE card and a NEXT QUERY card. A STOP GATE checks ANSWERABLE, MAX 3 HOPS, BUDGET, and NO NEW EVIDENCE. Coral LOOP path is blocked.",
+      "alt": "A complex question is decomposed into three evidence-producing hops, and a stop gate ends the process when it is answerable, reaches a hop or budget limit, or finds no new evidence.",
+      "outcome": "Break a multi-hop question into evidence-producing steps with explicit dependencies and stop rules.",
+      "explanation": "Some questions require facts that are not searchable in one phrase. A bounded multi-hop plan names each subquestion, its dependency, acceptable evidence, and the variable passed forward. Every hop must add traceable evidence or resolve a necessary entity. The system stops when the answer is supported, when a maximum hop or cost limit is reached, or when a hop adds no new evidence. The plan should expose gaps instead of letting the model invent a bridge between sources.",
+      "trace": [
+        "Identify the final claim and the evidence roles it requires.",
+        "Create the smallest ordered subquestions with explicit dependencies.",
+        "Run each hop against authorized sources and store its evidence.",
+        "Use returned entities only when provenance and confidence are adequate.",
+        "Stop on answerable, budget exhausted, maximum hops, or no new evidence."
+      ],
+      "analogy": "It is like a treasure hunt where every clue must be shown before it can point to the next location.",
+      "nextjs": [
+        "Represent hops as a typed retrieval plan with dependencies and status.",
+        "Stream safe progress labels such as 'checking purchase date' without exposing hidden documents.",
+        "Render unresolved hops as clear missing-evidence cards."
+      ],
+      "python": [
+        "Execute a bounded directed acyclic plan rather than an unconstrained loop.",
+        "Persist hop query, evidence IDs, output variables, cost, and stop reason.",
+        "Evaluate single-hop and multi-hop query slices separately."
+      ],
+      "caseStudy": {
+        "situation": "Maya asks whether a digital subscription bought through a partner last month is refundable.",
+        "walkthrough": [
+          "Hop 1 retrieves the refund rule.",
+          "Hop 2 resolves the product category and partner channel.",
+          "Hop 3 retrieves the transaction date and settlement status.",
+          "The final check applies the rule only after all required facts are present."
+        ],
+        "result": "The answer connects policy, product, channel, and transaction evidence without an invented leap.",
+        "danger": "An open-ended decomposition loop can spend indefinitely, repeat searches, and manufacture links between weak clues.",
+        "takeaway": "Every hop must earn its place by adding necessary, cited evidence under a hard stop rule."
+      },
+      "lab": "Take a question requiring three facts. Draw the dependency graph, expected evidence for each hop, variables passed forward, and four stop conditions.",
+      "checkpoint": "What should happen when one required hop finds no evidence?",
+      "answer": "The system should expose the missing step, clarify if possible, or abstain; it must not fill the gap from model memory.",
+      "glossary": [
+        "Hop - one evidence-producing retrieval step",
+        "Dependency - fact required by a later step",
+        "Stop rule - explicit condition ending the search loop"
+      ],
+      "related": [
+        109,
+        114,
+        116
+      ],
+      "sources": [
+        "MultiHop-RAG",
+        "FLARE",
+        "RAGChecker"
+      ]
+    },
+    {
+      "id": 114,
+      "slug": "graphrag-relationship-retrieval",
+      "moduleId": "module-26",
+      "title": "Graph RAG and relationship-aware retrieval",
+      "stability": "Advanced replaceable pattern; not a universal upgrade",
+      "diagram": "diagrams/114-graphrag-relationship-retrieval.png",
+      "diagramPrompt": "Show SOURCE TEXT feeding ENTITY AND RELATIONSHIP EXTRACTION, then a graph with CUSTOMER, ORDER, PRODUCT, POLICY, and PARTNER nodes. Two query paths are labeled LOCAL SEARCH and GLOBAL THEMES. Every edge has SOURCE SPAN and CONFIDENCE. Coral UNSOURCED EDGE is removed.",
+      "alt": "Source text produces a provenance-bearing entity and relationship graph that supports local relationship search and broader theme search, while unsourced edges are rejected.",
+      "outcome": "Use graph retrieval when relationships are central, while keeping every node and edge grounded in source evidence.",
+      "explanation": "Graph RAG adds a relationship-oriented representation beside the original evidence. It can help questions about connected entities, paths, groups, or themes that flat chunk similarity handles poorly. Graph extraction is itself probabilistic and costly: entity resolution can merge different people, split one entity, or invent a relation. Keep source spans, extraction versions, confidence, and review status on every node and edge. Query the graph to locate evidence, then return original authoritative sources for answering and citation.",
+      "trace": [
+        "Define the entity and relationship types the use case actually needs.",
+        "Extract candidate nodes, edges, claims, and source spans.",
+        "Resolve identities conservatively and preserve unresolved alternatives.",
+        "Choose local relationship, path, or global community retrieval by question type.",
+        "Use graph hits to fetch original evidence, not as unsupported truth."
+      ],
+      "analogy": "It is like a subway map: useful for finding connections, but the map must still correspond to real stations and tracks.",
+      "nextjs": [
+        "Expose graph explanations as source-backed paths, not decorative network diagrams.",
+        "Let users open the evidence span supporting each edge.",
+        "Keep graph building and querying behind a replaceable server adapter."
+      ],
+      "python": [
+        "Store extracted graph records with source_version_id and element spans.",
+        "Separate entity resolution, edge validation, community summaries, and query methods.",
+        "Benchmark graph retrieval against simpler hybrid retrieval before accepting its cost."
+      ],
+      "caseStudy": {
+        "situation": "Maya's case links a customer, partner marketplace, subscription product, payment, and policy exception.",
+        "walkthrough": [
+          "The graph locates the partner-purchase relationship.",
+          "The edge points to the order record that proves the channel.",
+          "A policy node links to the partner exception with an exact source span.",
+          "The answer cites the original order and policy, not the generated graph summary alone."
+        ],
+        "result": "The relationship path helps assemble the right evidence without turning extraction into authority.",
+        "danger": "An unsourced or wrongly merged edge can create a persuasive but fictional chain of reasoning.",
+        "takeaway": "Use graphs to navigate relationships; use source records to prove claims."
+      },
+      "lab": "Design a five-node graph for one case. Attach source spans to every edge and mark two identity-resolution mistakes your tests must catch.",
+      "checkpoint": "When is Graph RAG worth considering?",
+      "answer": "When relationship, path, community, or cross-document questions are important and evaluation shows a clear gain over simpler retrieval for acceptable cost and risk.",
+      "glossary": [
+        "Knowledge graph - entities connected by typed relationships",
+        "Entity resolution - deciding which records refer to the same thing",
+        "Community report - summary of a graph cluster"
+      ],
+      "related": [
+        113,
+        115,
+        121
+      ],
+      "sources": [
+        "Microsoft GraphRAG",
+        "MultiHop-RAG",
+        "W3C PROV-O"
+      ]
+    },
+    {
+      "id": 115,
+      "slug": "structured-federated-retrieval",
+      "moduleId": "module-26",
+      "title": "Structured retrieval across SQL, APIs, and knowledge graphs",
+      "stability": "Federated evidence architecture",
+      "diagram": "diagrams/115-structured-federated-retrieval.png",
+      "diagramPrompt": "Show QUERY PLAN routing to three sources: POLICY SEARCH, SQL LEDGER, CASE API. Each returns a typed EVIDENCE ADAPTER card with VALUE, SOURCE, AS OF, AUTHORITY, and CITATION. A MERGE CONTRACT joins only on VERIFIED IDS. Coral FREE-FORM SQL and RAW API DUMP are blocked.",
+      "alt": "A query plan calls policy search, a SQL ledger, and a case API through typed evidence adapters, then joins results only on verified identities and shared evidence contracts.",
+      "outcome": "Retrieve facts from the system that owns them and normalize the evidence without flattening every source into embeddings.",
+      "explanation": "Many important facts already live in structured systems with reliable query semantics. Payment status belongs in a ledger query; case fields may come from an API; relationship paths may come from a graph; policy text may require document retrieval. A federated plan uses narrow, approved adapters and converts results into a shared evidence record containing value, source, time, authority, permissions, and citation or receipt. Do not embed frequently changing structured rows merely to avoid writing a safe query adapter.",
+      "trace": [
+        "Classify each subquestion by authoritative source and data shape.",
+        "Use allowlisted parameters or operations rather than free-form generated queries.",
+        "Return typed evidence with source, time, identity, and authority.",
+        "Join only through verified canonical identifiers.",
+        "Preserve source-specific errors and freshness instead of hiding them in one score."
+      ],
+      "analogy": "It is like asking the bank for a balance, the library for a rule, and the caseworker for a note instead of searching one mixed scrapbook.",
+      "nextjs": [
+        "Call internal evidence routes from server code with scoped credentials.",
+        "Render a uniform evidence card while preserving source-specific status.",
+        "Do not expose database or partner API credentials to the browser."
+      ],
+      "python": [
+        "Build allowlisted SQL repository methods and typed API clients.",
+        "Map every result into a canonical EvidenceItem without losing source semantics.",
+        "Use contract tests for IDs, time zones, nulls, retries, authorization, and stale-source behavior."
+      ],
+      "caseStudy": {
+        "situation": "Maya needs the policy rule, actual settlement state, purchase channel, and case note.",
+        "walkthrough": [
+          "Document search returns the current policy and exception.",
+          "The ledger adapter returns the settled charge with a receipt ID.",
+          "The case API returns the approved product and partner identifiers.",
+          "The merge contract assembles the packet through verified case and transaction IDs."
+        ],
+        "result": "Each claim comes from the system designed to answer it, with one consistent evidence shape for the agent.",
+        "danger": "Embedding all data can weaken exact semantics, freshness, access control, and numeric correctness.",
+        "takeaway": "Federate evidence at query time and preserve each source's authority and failure semantics."
+      },
+      "lab": "Take four facts needed for a refund decision. Assign each to document search, SQL, API, or graph and define the typed evidence response.",
+      "checkpoint": "Why should a payment amount usually come from a ledger query rather than a vector similarity search?",
+      "answer": "Because the ledger provides exact structured semantics, current state, identity, and transaction authority that similarity search cannot guarantee.",
+      "glossary": [
+        "Federated retrieval - querying several source systems",
+        "Evidence adapter - source-specific client returning a common evidence contract",
+        "Canonical identifier - verified ID used across systems"
+      ],
+      "related": [
+        101,
+        113,
+        121
+      ],
+      "sources": [
+        "W3C PROV-O",
+        "PostgreSQL row security",
+        "OWASP RAG Security"
+      ]
+    },
+    {
+      "id": 116,
+      "slug": "agentic-retrieval-budget-loop",
+      "moduleId": "module-26",
+      "title": "Agentic retrieval loops, budgets, and stop rules",
+      "stability": "Agentic pattern; isolate and evaluate carefully",
+      "diagram": "diagrams/116-agentic-retrieval-budget-loop.png",
+      "diagramPrompt": "Show an AGENTIC RETRIEVER loop: PLAN, SEARCH, INSPECT EVIDENCE, DECIDE. A BUDGET METER tracks HOPS, QUERIES, TOKENS, TIME, and COST. Exit paths are ANSWER, CLARIFY, ABSTAIN, and ERROR. Coral repeated-query loop is stopped by NO NEW EVIDENCE and DUPLICATE QUERY checks.",
+      "alt": "An agentic retriever plans, searches, inspects evidence, and decides under explicit hop, query, token, time, and cost budgets, exiting through answer, clarify, abstain, or error paths.",
+      "outcome": "Give an adaptive retriever freedom only inside observable budgets, allowed tools, and hard stop conditions.",
+      "explanation": "Agentic retrieval chooses the next search based on evidence already found. This can help unfamiliar or multi-hop questions, but it also expands cost, latency, and attack surface. Use a small allowlisted tool set, typed observations, normalized query fingerprints, and budgets for hops, queries, tokens, wall time, and money. The loop should stop when evidence is sufficient, when the next action repeats previous work, when no new evidence appears, or when clarification is safer than another guess.",
+      "trace": [
+        "Start with a structured goal and allowed evidence tools.",
+        "Plan one next action rather than an unbounded research narrative.",
+        "Record the query, result IDs, novelty, cost, and remaining budget.",
+        "Check sufficiency, duplicate action, no-new-evidence, and risk after each step.",
+        "Exit explicitly as answer, clarify, abstain, budget exhausted, or error."
+      ],
+      "analogy": "It is like giving a researcher a library card, a question, and a stopwatch - not the keys to every building forever.",
+      "nextjs": [
+        "Stream bounded progress events and remaining-budget summaries.",
+        "Give the user a cancel control and a clear clarification request.",
+        "Keep tool schemas, credentials, and policy checks on the server."
+      ],
+      "python": [
+        "Implement the loop as a persisted state machine with deterministic guards.",
+        "Hash normalized queries and canonical evidence sets to detect repetition.",
+        "Test malicious documents, tool failures, partial results, cancellation, and budget exhaustion."
+      ],
+      "caseStudy": {
+        "situation": "The first search finds a policy but no transaction, and the second finds a case ID pointing to the ledger.",
+        "walkthrough": [
+          "The loop records the missing transaction evidence role.",
+          "It calls the allowlisted ledger adapter with the verified case ID.",
+          "The ledger result completes the evidence checklist.",
+          "The sufficiency gate exits instead of searching again."
+        ],
+        "result": "Maya gets an evidence-complete answer with a short, explainable retrieval trace.",
+        "danger": "Without hard budgets and novelty checks, an agent can repeat searches, follow poisoned instructions, or consume unlimited resources.",
+        "takeaway": "Adaptive search needs less freedom than it appears to need: typed tools, measured novelty, and explicit exits."
+      },
+      "lab": "Write an agentic retrieval policy with five allowed actions, five budgets, four stop conditions, and three forbidden behaviors.",
+      "checkpoint": "What is a safe reason for an agentic retriever to stop without an answer?",
+      "answer": "It should stop when required evidence is missing, permissions block access, ambiguity requires clarification, no new evidence appears, or a budget is exhausted.",
+      "glossary": [
+        "Agentic retrieval - adaptive multi-step evidence search",
+        "Novelty - whether a step adds new evidence",
+        "Sufficiency gate - test that required evidence roles are covered"
+      ],
+      "related": [
+        109,
+        113,
+        122
+      ],
+      "sources": [
+        "FLARE",
+        "MultiHop-RAG",
+        "OWASP RAG Security"
+      ]
+    },
+    {
+      "id": 117,
+      "slug": "immutable-source-versions",
+      "moduleId": "module-27",
+      "title": "Versioned ingestion and immutable source records",
+      "stability": "Core freshness and audit pattern",
+      "diagram": "diagrams/117-immutable-source-versions.png",
+      "diagramPrompt": "Show SOURCE POLICY V7 entering INGEST RUN 842. It creates immutable SOURCE VERSION V7 with CONTENT HASH, FETCHED AT, VALID FROM, PARSER VERSION. Derivatives PARSE V7, CHUNKS V7, INDEX V7 point back to it. A new POLICY V8 creates a parallel chain; V7 is never overwritten.",
+      "alt": "Policy versions seven and eight each create separate immutable source, parse, chunk, and index chains with hashes, timestamps, validity, and parser versions instead of overwriting history.",
+      "outcome": "Make every answer reproducible by treating each fetched source and derivative as an immutable version.",
+      "explanation": "Overwriting a file destroys the ability to explain what the system knew earlier. A versioned intake stores the exact source bytes or canonical content, content hash, origin, fetch time, declared valid time, parser and configuration versions, and ingestion outcome. Parses, chunks, representations, and indexes reference that source version. A new source or parser creates a new chain beside the old one. Mutable pointers such as 'current policy' select a version; they do not alter historical evidence.",
+      "trace": [
+        "Fetch the source and compute its canonical content hash.",
+        "Create an immutable source-version record before transformation.",
+        "Link parse, chunk, and representation records to that version.",
+        "Create a new derivative version when parser or chunk strategy changes.",
+        "Use a separate current pointer and retain history according to policy."
+      ],
+      "analogy": "It is like keeping every signed edition of a contract and moving a bookmark to the current one.",
+      "nextjs": [
+        "Show source version, effective date, and promotion status in operator views.",
+        "Keep public lesson or answer routes on a stable promoted alias.",
+        "Let authorized reviewers compare version diffs without editing history."
+      ],
+      "python": [
+        "Use append-only source_version and derivative tables with unique hashes.",
+        "Make ingestion idempotent on source identity, hash, and configuration version.",
+        "Generate a reproducible evidence manifest for every answer or evaluation run."
+      ],
+      "caseStudy": {
+        "situation": "Acme changes its refund window from 30 days to 14 days.",
+        "walkthrough": [
+          "The new bytes produce policy version V8.",
+          "V7 and V8 have separate parses, chunks, and representations.",
+          "The current alias moves only after V8 passes validation.",
+          "An older case can still cite V7 if the question asks what applied then."
+        ],
+        "result": "Current answers use V8, while historical decisions remain explainable from V7.",
+        "danger": "Overwriting chunks or embeddings in place makes old citations and evaluation results impossible to reproduce.",
+        "takeaway": "Append versions, promote pointers, and never confuse 'current' with 'only.'"
+      },
+      "lab": "Design a version record for a policy fetched twice with unchanged content and once with changed content. Decide which records and jobs are reused.",
+      "checkpoint": "What should happen when the parser changes but the source bytes do not?",
+      "answer": "Create a new derivative version linked to the same immutable source version so outputs remain attributable to the parser configuration used.",
+      "glossary": [
+        "Immutable - never changed after creation",
+        "Content hash - digest identifying exact content",
+        "Derivative version - parse, chunk, or representation produced from a source version"
+      ],
+      "related": [
+        102,
+        118,
+        120
+      ],
+      "sources": [
+        "W3C PROV-O",
+        "Docling document model"
+      ]
+    },
+    {
+      "id": 118,
+      "slug": "incremental-change-capture",
+      "moduleId": "module-27",
+      "title": "Incremental updates and change-data capture",
+      "stability": "Production synchronization pattern",
+      "diagram": "diagrams/118-incremental-change-capture.png",
+      "diagramPrompt": "Show SOURCE CHANGES as CREATE, UPDATE, DELETE events entering CHANGE CAPTURE. Events go to IDEMPOTENT WORK QUEUE, then REPARSE CHANGED UNITS, RE-EMBED AFFECTED CHUNKS, UPDATE INDEX, TOMBSTONE DELETE. A RECONCILIATION SCAN compares source manifest and index manifest.",
+      "alt": "Create, update, and delete events flow through idempotent incremental work, while a reconciliation scan compares source and index manifests to repair missed or duplicated changes.",
+      "outcome": "Update only affected evidence safely while keeping a reconciliation path for missed events.",
+      "explanation": "Incremental ingestion reduces delay and cost by processing changed records or document regions rather than rebuilding everything. Change events are delivery hints, not perfect truth: they can arrive twice, late, or out of order, and deletes are easy to miss. Give each event a stable identity and source revision, make workers idempotent, recompute only affected derivatives, and propagate tombstones. Periodic reconciliation compares the authoritative source manifest with the knowledge-system manifest and repairs drift.",
+      "trace": [
+        "Capture source revision, operation, identity, and event time.",
+        "Deduplicate or safely replay events using idempotency keys.",
+        "Rebuild only affected parses, chunks, representations, and graph records.",
+        "Propagate deletions to indexes, caches, previews, and citations.",
+        "Run scheduled reconciliation against authoritative source state."
+      ],
+      "analogy": "It is like forwarding mail changes quickly but still checking the official address book every night.",
+      "nextjs": [
+        "Display intake lag, failed items, tombstones, and reconciliation status.",
+        "Keep change events and internal queue controls server-only.",
+        "Let operators replay a failed version without creating duplicate derivatives."
+      ],
+      "python": [
+        "Use an outbox, CDC stream, webhook, or poller behind one change-event contract.",
+        "Make each stage idempotent on source version and transformation version.",
+        "Test duplicates, out-of-order updates, delete-before-create, and missed-event repair."
+      ],
+      "caseStudy": {
+        "situation": "A policy paragraph changes and one attachment is deleted while the event worker is temporarily offline.",
+        "walkthrough": [
+          "The updated paragraph event creates a new source version.",
+          "Only affected chunks and representations are rebuilt.",
+          "The delete event tombstones the attachment and derivatives.",
+          "Reconciliation catches any event missed during the outage."
+        ],
+        "result": "The knowledge layer becomes current without a full rebuild and can prove completeness afterward.",
+        "danger": "A fast event pipeline without reconciliation can remain silently stale forever after one missed delete or failed worker.",
+        "takeaway": "Use events for speed, idempotency for replay, and reconciliation for truth."
+      },
+      "lab": "Draw an incremental update flow and add failure cases for duplicate, late, out-of-order, and missing events plus a repair path.",
+      "checkpoint": "Why is change-data capture not sufficient by itself?",
+      "answer": "Because delivery can be incomplete or reordered; reconciliation against the authoritative source is needed to detect and repair drift.",
+      "glossary": [
+        "CDC - change-data capture",
+        "Idempotent - safe to process more than once",
+        "Reconciliation - comparing derived state with authoritative state"
+      ],
+      "related": [
+        117,
+        119,
+        123
+      ],
+      "sources": [
+        "W3C PROV-O",
+        "OWASP RAG Security"
+      ]
+    },
+    {
+      "id": 119,
+      "slug": "safe-index-promotion",
+      "moduleId": "module-27",
+      "title": "Cache invalidation, index aliases, and safe promotion",
+      "stability": "Blue-green knowledge-release pattern",
+      "diagram": "diagrams/119-safe-index-promotion.png",
+      "diagramPrompt": "Show LIVE ALIAS pointing to INDEX BLUE V7 while INDEX GREEN V8 is built. V8 passes INGEST CHECK, SECURITY CHECK, GOLDEN QUERIES, RECALL, CITATIONS, and FRESHNESS. Then an ATOMIC PROMOTE arrow moves the alias to V8. Coral FAILED CHECK keeps V7 live. CACHE KEYS include INDEX VERSION.",
+      "alt": "A live alias stays on index version seven while version eight is built and validated, then moves atomically only after ingestion, security, retrieval, citation, and freshness checks pass; caches include the version.",
+      "outcome": "Release a new knowledge index like software: build beside production, validate, promote atomically, and roll back visibly.",
+      "explanation": "Index updates should not expose half-built knowledge. A blue-green pattern builds a complete candidate index under a new version, validates record counts, permissions, deletions, golden queries, retrieval metrics, citations, and freshness, then switches a stable alias atomically. Cache keys include tenant, authorization scope, query plan, evidence policy, and index version so promotion naturally misses old entries. Keep the previous version available for rollback and record the promotion event.",
+      "trace": [
+        "Continue serving the current complete index through a stable alias.",
+        "Build the candidate index with a new immutable version.",
+        "Run structural, security, retrieval, citation, and freshness gates.",
+        "Promote the alias atomically only when every required gate passes.",
+        "Version cache keys and retain a tested rollback pointer."
+      ],
+      "analogy": "It is like preparing a new stage behind the curtain and switching the lights only after rehearsal passes.",
+      "nextjs": [
+        "Read the active index version from server configuration or data, not browser state.",
+        "Show operators build status, failed gates, promotion, and rollback controls.",
+        "Include index version in answer metadata and cache diagnostics."
+      ],
+      "python": [
+        "Build versioned index namespaces and transactional alias metadata.",
+        "Create promotion checks that fail closed on missing tenants or permission regressions.",
+        "Run shadow queries against current and candidate indexes before cutover."
+      ],
+      "caseStudy": {
+        "situation": "Acme's V8 policy index finishes embedding before its permission records and deleted attachment tombstones are loaded.",
+        "walkthrough": [
+          "The candidate remains behind the green V8 name.",
+          "Security and deletion completeness checks fail.",
+          "The live alias continues serving complete V7.",
+          "After repair and full validation, the alias moves to V8 and cache keys change."
+        ],
+        "result": "Maya never sees a partially built or permission-incomplete index.",
+        "danger": "Updating one live index in place can mix old and new chunks, stale caches, and incomplete authorization data.",
+        "takeaway": "Build complete versions, validate the whole release, and switch one pointer."
+      },
+      "lab": "Create a promotion checklist with ten gates, a cache-key formula, a rollback trigger, and evidence recorded for the release.",
+      "checkpoint": "Why should cache keys include the active index version?",
+      "answer": "So a promotion cannot reuse an answer or evidence packet built from the previous knowledge snapshot.",
+      "glossary": [
+        "Blue-green - parallel current and candidate releases",
+        "Atomic promotion - one indivisible pointer change",
+        "Shadow query - comparing candidate behavior without serving it"
+      ],
+      "related": [
+        108,
+        117,
+        123
+      ],
+      "sources": [
+        "pgvector",
+        "RAGChecker",
+        "OWASP RAG Security"
+      ]
+    },
+    {
+      "id": 120,
+      "slug": "as-of-time-retrieval",
+      "moduleId": "module-27",
+      "title": "As-of-time and temporal retrieval",
+      "stability": "Temporal data design pattern",
+      "diagram": "diagrams/120-as-of-time-retrieval.png",
+      "diagramPrompt": "Show a TIMELINE with POLICY V6, V7, V8 intervals. A QUERY card says AS OF 2026-05-10 and intersects V7 VALID FROM and VALID TO. A second axis RECORDED AT distinguishes what Acme knew then from when a rule was effective. Output is TEMPORAL EVIDENCE PACKET with TIME BASIS.",
+      "alt": "A query with an explicit as-of date intersects policy validity intervals and recorded-at history, producing a temporal evidence packet that states whether it answers by effective time or knowledge time.",
+      "outcome": "Answer current and historical questions with an explicit time basis and reproducible source versions.",
+      "explanation": "Temporal retrieval asks more than 'what is newest?' Valid time describes when a rule or fact applies in the business world; recorded time describes when the system learned or stored it. A current question selects the promoted evidence valid now. An historical question intersects the requested instant with valid-from and valid-to intervals and states the time basis. When a policy is corrected retroactively, keeping both axes prevents the system from rewriting what operators actually knew during an earlier decision.",
+      "trace": [
+        "Extract or assign valid-from and valid-to intervals for versioned evidence.",
+        "Record ingestion and promotion time independently.",
+        "Require an explicit as-of instant for historical questions.",
+        "Select only versions valid under the declared temporal basis.",
+        "Return source version, interval, recorded time, and time-basis explanation."
+      ],
+      "analogy": "It is like asking both 'what was the law on that date?' and 'what did the office records show on that date?'",
+      "nextjs": [
+        "Add an as-of control only where the user's task supports historical retrieval.",
+        "Display effective date, recorded date, and version beside every temporal citation.",
+        "Prevent the browser from overriding server policy about allowable history windows."
+      ],
+      "python": [
+        "Model valid_from, valid_to, recorded_at, supersedes, and correction relationships.",
+        "Use time-zone-aware instants and well-tested interval semantics.",
+        "Create fixtures for boundaries, retroactive corrections, future policies, and missing effective dates."
+      ],
+      "caseStudy": {
+        "situation": "Maya reviews a refund denied in May after Acme changed its policy in July.",
+        "walkthrough": [
+          "The question declares an as-of date in May.",
+          "The temporal filter selects V7, which was valid then.",
+          "The record also shows whether a later correction was known at decision time.",
+          "The answer cites V7 and labels the time basis rather than applying today's V8."
+        ],
+        "result": "The historical review is reproducible and does not silently judge the case by a later rule.",
+        "danger": "Selecting only the latest document can produce historically impossible answers and hide retroactive corrections.",
+        "takeaway": "Every time-sensitive answer should say which clock and source version it used."
+      },
+      "lab": "Draw valid-time and recorded-time axes for three policy versions, including one retroactive correction. Answer two different as-of questions.",
+      "checkpoint": "What is the difference between valid time and recorded time?",
+      "answer": "Valid time says when a fact applies in the real-world domain; recorded time says when the system stored or knew that version.",
+      "glossary": [
+        "Valid time - when a fact applies",
+        "Recorded time - when the system stored the fact",
+        "As-of query - retrieval evaluated at a declared instant"
+      ],
+      "related": [
+        117,
+        119,
+        121
+      ],
+      "sources": [
+        "W3C PROV-O",
+        "ALCE citation evaluation"
+      ]
+    },
+    {
+      "id": 121,
+      "slug": "claim-citation-lineage",
+      "moduleId": "module-28",
+      "title": "Citation, attribution, and evidence lineage",
+      "stability": "Evidence-policy foundation",
+      "diagram": "diagrams/121-claim-citation-lineage.png",
+      "diagramPrompt": "Show ANSWER with three numbered CLAIMS. Each claim connects to one or more EVIDENCE SPANS, then to CHUNK, SOURCE VERSION, ORIGINAL PAGE, and OWNER through teal lineage arrows. Citation cards contain PAGE, BBOX, AS OF, and ACCESS CHECK. Coral UNSUPPORTED CLAIM has no edge and is removed.",
+      "alt": "Each answer claim links through evidence spans, chunks, immutable source versions, original page regions, and owners, while unsupported claims are removed and citation access is rechecked.",
+      "outcome": "Make every material claim inspectable from answer text back to the exact permitted source evidence.",
+      "explanation": "A citation is useful only when it supports the nearby claim and opens the exact evidence the user may see. Build the answer as claims linked to evidence item IDs, quoted or localized spans, source versions, page regions, authority, and time basis. Citation correctness asks whether the source supports the claim; citation completeness asks whether all material claims are supported. Lineage also records the retrieval plan, ranking, pack, and generation run so a reviewer can reproduce the evidence path without exposing private internal reasoning.",
+      "trace": [
+        "Divide the draft answer into material claims.",
+        "Attach one or more supporting evidence spans to every claim.",
+        "Check that each citation entails the claim, not merely the topic.",
+        "Trace evidence through chunk and derivative records to the immutable source version.",
+        "Reauthorize citation previews and remove unsupported claims before release."
+      ],
+      "analogy": "It is like attaching a labeled thread from every statement in a report to the exact highlighted line in the original file.",
+      "nextjs": [
+        "Render citation markers from stable evidence IDs, not model-written URLs.",
+        "Open a protected page-region preview after a fresh authorization check.",
+        "Show version, effective date, authority, and conflict labels beside the citation."
+      ],
+      "python": [
+        "Use structured answer output with claims and evidence_ids.",
+        "Validate citations against the evidence packet and source span boundaries.",
+        "Persist a lineage manifest linking query plan, candidates, ranks, packet, claims, and source versions."
+      ],
+      "caseStudy": {
+        "situation": "The answer says the purchase is within the refund window and the payment has settled.",
+        "walkthrough": [
+          "The policy claim links to the exact eligibility sentence and exception context.",
+          "The transaction claim links to a typed ledger receipt.",
+          "Each citation carries its source version and as-of basis.",
+          "Opening the preview repeats Maya's access check."
+        ],
+        "result": "Maya can verify each decision fact without seeing unrelated or restricted source material.",
+        "danger": "Topic-relevant citations can look impressive while failing to support the actual claim or exposing a stale version.",
+        "takeaway": "Cite claims, not topics, and preserve the full evidence path back to an authorized source version."
+      },
+      "lab": "Write a three-claim answer and assign evidence spans. Check citation correctness, completeness, authority, time basis, and preview authorization.",
+      "checkpoint": "What is the difference between citation correctness and citation completeness?",
+      "answer": "Correctness asks whether a citation really supports its claim; completeness asks whether every material claim has sufficient support.",
+      "glossary": [
+        "Citation entailment - source evidence actually supports the claim",
+        "Lineage manifest - reproducible chain from answer to sources",
+        "Attribution - naming the responsible source or owner"
+      ],
+      "related": [
+        104,
+        112,
+        120
+      ],
+      "sources": [
+        "ALCE citation evaluation",
+        "W3C PROV-O",
+        "RAGChecker"
+      ]
+    },
+    {
+      "id": 122,
+      "slug": "conflict-uncertainty-abstention",
+      "moduleId": "module-28",
+      "title": "Conflict, uncertainty, clarification, and abstention",
+      "stability": "Safety and truthfulness policy",
+      "diagram": "diagrams/122-conflict-uncertainty-abstention.png",
+      "diagramPrompt": "Show EVIDENCE PACKET entering AGREEMENT CHECK. Four exits: ANSWER WITH SUPPORT, ANSWER WITH CONFLICT, ASK CLARIFICATION, ABSTAIN. Two conflicting cards POLICY V8 and CASE NOTE V7 remain visible. Coral path blocks MAJORITY VOTE. A DECISION box weighs AUTHORITY, TIME, SCOPE, and DIRECTNESS.",
+      "alt": "An evidence packet is checked for agreement and routed to a supported answer, conflict disclosure, clarification request, or abstention based on authority, time, scope, and directness rather than majority vote.",
+      "outcome": "Handle disagreement and missing evidence as first-class outcomes instead of forcing one fluent answer.",
+      "explanation": "Sources can disagree because one is stale, less authoritative, scoped differently, or describing another point in time. Preserve conflicting evidence through packing and compare authority, validity, specificity, directness, and provenance. Some conflicts can be resolved by those declared rules; others must be shown to the user. Clarification is appropriate when one missing fact would choose between interpretations. Abstention is correct when required evidence is absent, unreliable, unauthorized, or materially inconsistent.",
+      "trace": [
+        "Detect incompatible claims, values, dates, and source versions.",
+        "Classify the conflict by authority, time, scope, identity, or extraction quality.",
+        "Apply declared evidence policy rather than counting matching chunks.",
+        "Ask for one decision-changing missing fact when it can resolve ambiguity.",
+        "Disclose unresolved conflict or abstain with the missing evidence role."
+      ],
+      "analogy": "It is like two thermometers disagreeing: check calibration, location, and time before averaging the numbers.",
+      "nextjs": [
+        "Use distinct UI states for supported, conflicted, clarification-required, and insufficient-evidence outcomes.",
+        "Show both permitted conflicting citations with plain explanations.",
+        "Do not hide an abstention behind a generic technical error."
+      ],
+      "python": [
+        "Represent evidence conclusions as a discriminated union with explicit reason codes.",
+        "Keep conflict-resolution rules in versioned policy, not free-form prompts.",
+        "Test stale-current, authority, identity, OCR, unauthorized, and genuine-disagreement cases."
+      ],
+      "caseStudy": {
+        "situation": "A current policy says 14 days, but a case note quotes the older 30-day rule.",
+        "walkthrough": [
+          "The conflict detector compares source versions and valid times.",
+          "The policy source has rule authority and V8 is current.",
+          "The case note remains evidence of what an agent previously told the customer.",
+          "The answer distinguishes current eligibility from the prior communication issue."
+        ],
+        "result": "Maya sees both the governing rule and the material contradiction instead of a blended false certainty.",
+        "danger": "Majority vote among duplicate chunks can let several stale copies overrule one current authoritative source.",
+        "takeaway": "Resolve by declared evidence policy, preserve material disagreement, and abstain when proof is inadequate."
+      },
+      "lab": "Create four conflicting evidence cards. Decide whether authority, time, scope, or clarification resolves each; write an abstention for one unresolved case.",
+      "checkpoint": "When is clarification better than abstention?",
+      "answer": "When a specific answerable question to the user can supply the missing fact that determines which evidence or rule applies.",
+      "glossary": [
+        "Conflict - incompatible evidence claims",
+        "Clarification - request for a decision-changing missing fact",
+        "Abstention - explicit refusal to assert an unsupported conclusion"
+      ],
+      "related": [
+        109,
+        120,
+        123
+      ],
+      "sources": [
+        "RAGChecker",
+        "RAGAS",
+        "ALCE citation evaluation"
+      ]
+    },
+    {
+      "id": 123,
+      "slug": "rag-evaluation-dashboard",
+      "moduleId": "module-28",
+      "title": "Golden queries, retrieval metrics, slices, and drift",
+      "stability": "Measurement foundation",
+      "diagram": "diagrams/123-rag-evaluation-dashboard.png",
+      "diagramPrompt": "Show GOLDEN QUERY SET split into slices IDENTIFIER, POLICY, MULTIHOP, TEMPORAL, MULTIMODAL, PERMISSION. A RETRIEVAL DASHBOARD displays RECALL AT K, NDCG, MRR, PRECISION, LATENCY, and ZERO LEAKAGE. A separate GENERATION DASHBOARD shows FAITHFULNESS, CLAIM SUPPORT, CITATION, and ABSTENTION. DRIFT compares BASELINE and CANDIDATE.",
+      "alt": "A golden query set is sliced by task type, then retrieval and generation dashboards measure different metrics while drift comparisons protect both quality and zero-leakage controls.",
+      "outcome": "Build an evaluation harness that tells you which stage failed, for which kind of question, and whether a change is safe to promote.",
+      "explanation": "End-to-end answer quality alone cannot diagnose RAG. Golden queries should include expected relevant evidence IDs, required evidence roles, answer constraints, permissions, time basis, and abstention cases. Measure retrieval with Recall@K, precision, MRR, nDCG, coverage, diversity, latency, and forbidden-result count. Measure generation with claim support, faithfulness, citation correctness and completeness, conflict handling, and calibrated abstention. Slice by query type, source, tenant, language, modality, freshness, and difficulty, then compare every candidate index or model with a fixed baseline.",
+      "trace": [
+        "Collect representative human-reviewed questions and evidence judgments.",
+        "Create slices for identifiers, paraphrases, multi-hop, temporal, multimodal, permission, and no-answer cases.",
+        "Measure candidate generation, reranking, packing, and generation separately.",
+        "Track quality, security, latency, cost, and freshness together.",
+        "Block promotion on critical regression even when the average improves."
+      ],
+      "analogy": "It is like testing a car's brakes, steering, lights, and fuel use separately instead of giving the whole car one score.",
+      "nextjs": [
+        "Build an operator dashboard with baseline versus candidate and slice filters.",
+        "Link failed queries to protected retrieval traces and source previews.",
+        "Show example-set size and confidence before presenting a change as improvement."
+      ],
+      "python": [
+        "Store immutable dataset, judgment, run, configuration, and result versions.",
+        "Calculate retrieval metrics from canonical evidence judgments before calling the generator.",
+        "Add CI gates for zero leakage, required recall, citation, latency, and drift thresholds."
+      ],
+      "caseStudy": {
+        "situation": "A new embedding model raises average nDCG but misses payment codes and leaks one forbidden test record.",
+        "walkthrough": [
+          "The aggregate chart looks better.",
+          "The identifier slice shows lower Recall@K.",
+          "The permission slice records a critical forbidden-result failure.",
+          "The promotion gate rejects the candidate despite the average gain."
+        ],
+        "result": "Acme avoids trading exact-code reliability and security for a misleading average improvement.",
+        "danger": "Optimizing only an average answer score hides weak slices, data leakage, and the stage that actually regressed.",
+        "takeaway": "Separate stages, publish slices, keep baselines fixed, and let critical controls veto averages."
+      },
+      "lab": "Design twelve golden queries across six slices. Define relevant evidence, no-answer expectations, and one metric gate for each stage.",
+      "checkpoint": "Why should retrieval be evaluated before generation?",
+      "answer": "Because a generator cannot reliably recover missing evidence, and separate retrieval metrics reveal whether the failure occurred before answering.",
+      "glossary": [
+        "Golden query - reviewed evaluation question with evidence expectations",
+        "Recall@K - fraction of needed evidence found in top K",
+        "Drift - measured change from an established baseline"
+      ],
+      "related": [
+        110,
+        112,
+        124
+      ],
+      "sources": [
+        "BEIR",
+        "MTEB",
+        "RAGAS",
+        "RAGChecker",
+        "ViDoRe V3"
+      ]
+    },
+    {
+      "id": 124,
+      "slug": "acme-knowledge-fabric",
+      "moduleId": "module-28",
+      "title": "Capstone: the Acme Knowledge Fabric",
+      "stability": "Capstone architecture checked 2026-08-24",
+      "diagram": "diagrams/124-acme-knowledge-fabric.png",
+      "diagramPrompt": "Create a complete left-to-right architecture. SOURCES: POLICY, CASE API, PAYMENT SQL, ATTACHMENTS. INTAKE: REGISTER, VERSION, PARSE, OCR, PROVENANCE. INDEXES: LEXICAL, VECTOR, VISUAL, GRAPH, STRUCTURED. QUERY: PLAN, AUTHORIZE, HYBRID, RERANK, PACK. POLICY: CITE, CONFLICT, CLARIFY, ABSTAIN. OPERATIONS below: PROMOTE, CACHE, EVAL, TRACE, DELETE. Output ANSWER WITH EVIDENCE to MAYA.",
+      "alt": "The complete Acme Knowledge Fabric connects governed sources, versioned multimodal intake, tenant-safe complementary indexes, authorized retrieval and evidence packing, citation and conflict policy, and operational release and evaluation controls before returning an evidenced answer to Maya.",
+      "outcome": "Assemble the entire knowledge layer into one explainable contract that future Next.js and Python projects can implement with equivalent fixtures.",
+      "explanation": "The Acme Knowledge Fabric is a data product with owners, versions, contracts, and measurable releases. Sources enter only through approved registers and immutable versions. Parsing preserves layout and multimodal provenance. Complementary indexes remain derived and replaceable. Every query produces an auditable plan and allowed scope before hybrid search, reranking, diversity, and evidence packing. The answer layer cites claims, preserves conflict, asks for clarification, or abstains. Promotion, cache versioning, reconciliation, evaluation, tracing, and deletion keep the system trustworthy after launch.",
+      "trace": [
+        "Register authoritative sources and immutable versions.",
+        "Create layout, text, visual, graph, and structured evidence records with lineage.",
+        "Resolve identity and authorization before every candidate source.",
+        "Build a diverse temporal evidence packet through hybrid retrieval and reranking.",
+        "Return cited claims, conflict, clarification, or abstention and record the complete manifest."
+      ],
+      "analogy": "It is like a modern research library, evidence court, and release pipeline working as one system with separate accountable desks.",
+      "nextjs": [
+        "Use App Router pages for sources, versions, search traces, evaluations, and case answers.",
+        "Keep authorization, retrieval, source previews, and promotion controls in server boundaries.",
+        "Render a uniform evidence experience from a stack-neutral JSON contract."
+      ],
+      "python": [
+        "Use FastAPI for typed evidence endpoints and workers for intake and evaluation.",
+        "Keep adapters for parsers, retrievers, rerankers, stores, and graphs behind stable interfaces.",
+        "Run the same golden fixtures and evidence-policy scenarios as the future TypeScript stack."
+      ],
+      "caseStudy": {
+        "situation": "Maya asks for a refund while the current policy, old case note, scanned attachment, and payment ledger disagree.",
+        "walkthrough": [
+          "The source register assigns authority and the temporal plan selects the correct versions.",
+          "Authorization restricts all candidate sources before hybrid retrieval.",
+          "The packet includes the governing rule, payment fact, attachment confidence, and conflicting note.",
+          "The answer explains current eligibility, discloses the earlier contradiction, and cites exact permitted evidence."
+        ],
+        "result": "Maya receives a decision-ready evidence packet rather than a confident paragraph assembled from uncontrolled similarity search.",
+        "danger": "A knowledge system fails when any one of ownership, permissions, versions, retrieval quality, citation, conflict policy, or operations is treated as someone else's problem.",
+        "takeaway": "The capstone is complete only when every claim can be reproduced from an authorized source version and every failure has a visible safe outcome."
+      },
+      "lab": "Produce the Acme Knowledge Fabric design pack: source authority map, intake contract, chunk design, index topology, query plan, evidence schema, temporal policy, evaluation set, promotion runbook, and deletion test.",
+      "checkpoint": "What is the single most important output of the Acme Knowledge Fabric?",
+      "answer": "A bounded, authorized, versioned evidence packet whose claims and citations can be reproduced, challenged, and evaluated.",
+      "glossary": [
+        "Knowledge fabric - governed system connecting sources to evidence",
+        "Evidence policy - rules for authority, time, conflict, and support",
+        "Release manifest - recorded configuration and checks for a promoted knowledge version"
+      ],
+      "related": [
+        101,
+        112,
+        123
+      ],
+      "sources": [
+        "Original RAG paper",
+        "W3C PROV-O",
+        "OWASP RAG Security",
+        "RAGChecker",
+        "ALCE citation evaluation"
+      ]
+    }
+  ]
+}

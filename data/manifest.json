@@ -1,0 +1,1739 @@
+{
+  "siteTitle": "Visual Agent Course Library",
+  "siteSubtitle": "A visual course collection on modern agents, MCP, A2A, RAG, and full-stack agent systems.",
+  "courses": [
+    {
+      "id": "01",
+      "slug": "visual-course-01",
+      "title": "Visual Course Volume 1 — MCP, ACP, A2A and RAG",
+      "subtitle": "A visual course on modern agent architecture, capabilities, collaboration, and retrieval.",
+      "icon": "🎨",
+      "chaptersCount": 30,
+      "modules": [
+        {
+          "number": 1,
+          "title": "See the whole system",
+          "icon": "🧭",
+          "chapters": [
+            {
+              "number": 1,
+              "slug": "diagram-01",
+              "title": "Agent Architecture"
+            },
+            {
+              "number": 2,
+              "slug": "diagram-02",
+              "title": "Safe Side Effect"
+            },
+            {
+              "number": 3,
+              "slug": "diagram-03",
+              "title": "Modern Agent System Map"
+            },
+            {
+              "number": 4,
+              "slug": "diagram-04",
+              "title": "Choose the Boundary"
+            },
+            {
+              "number": 5,
+              "slug": "diagram-05",
+              "title": "Request Journey"
+            },
+            {
+              "number": 6,
+              "slug": "diagram-06",
+              "title": "Protocol Comparison"
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "title": "MCP capabilities",
+          "icon": "🛠️",
+          "chapters": [
+            {
+              "number": 7,
+              "slug": "diagram-07",
+              "title": "MCP Capability Discovery"
+            },
+            {
+              "number": 8,
+              "slug": "diagram-08",
+              "title": "MCP Primitives"
+            },
+            {
+              "number": 9,
+              "slug": "diagram-09",
+              "title": "Stateless MCP"
+            },
+            {
+              "number": 10,
+              "slug": "diagram-10",
+              "title": "Modern MCP Request"
+            },
+            {
+              "number": 11,
+              "slug": "diagram-11",
+              "title": "Durable MCP Task"
+            },
+            {
+              "number": 12,
+              "slug": "diagram-12",
+              "title": "MCP Security Gates"
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "title": "RAG evidence",
+          "icon": "🧠",
+          "chapters": [
+            {
+              "number": 13,
+              "slug": "diagram-13",
+              "title": "RAG Ingestion Pipeline"
+            },
+            {
+              "number": 14,
+              "slug": "diagram-14",
+              "title": "RAG Answer Pipeline"
+            },
+            {
+              "number": 15,
+              "slug": "diagram-15",
+              "title": "RAG Chunk Size"
+            },
+            {
+              "number": 16,
+              "slug": "diagram-16",
+              "title": "Hybrid Search"
+            },
+            {
+              "number": 17,
+              "slug": "diagram-17",
+              "title": "Grounded Citations"
+            },
+            {
+              "number": 18,
+              "slug": "diagram-18",
+              "title": "RAG Evaluation Loop"
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "title": "A2A collaboration",
+          "icon": "🤖",
+          "chapters": [
+            {
+              "number": 19,
+              "slug": "diagram-19",
+              "title": "Agent Card Discovery"
+            },
+            {
+              "number": 20,
+              "slug": "diagram-20",
+              "title": "A2A Task Lifecycle"
+            },
+            {
+              "number": 21,
+              "slug": "diagram-21",
+              "title": "A2A Delegation"
+            },
+            {
+              "number": 22,
+              "slug": "diagram-22",
+              "title": "A2A Interaction Modes"
+            },
+            {
+              "number": 23,
+              "slug": "diagram-23",
+              "title": "A2A Security Gates"
+            },
+            {
+              "number": 24,
+              "slug": "diagram-24",
+              "title": "Incident Response Team"
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "title": "ACP migration",
+          "icon": "🔄",
+          "chapters": [
+            {
+              "number": 25,
+              "slug": "diagram-25",
+              "title": "ACP to A2A Timeline"
+            },
+            {
+              "number": 26,
+              "slug": "diagram-26",
+              "title": "ACP to A2A Concept Map"
+            }
+          ]
+        },
+        {
+          "number": 6,
+          "title": "End-to-end use cases",
+          "icon": "🎯",
+          "chapters": [
+            {
+              "number": 27,
+              "slug": "diagram-27",
+              "title": "Customer Support"
+            },
+            {
+              "number": 28,
+              "slug": "diagram-28",
+              "title": "Research Analyst"
+            },
+            {
+              "number": 29,
+              "slug": "diagram-29",
+              "title": "Software Maintenance"
+            },
+            {
+              "number": 30,
+              "slug": "diagram-30",
+              "title": "Loan Document Review"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "slug": "visual-course-02",
+      "title": "Visual Course Volume 2 — Build Your First Agent System",
+      "subtitle": "The implementation bridge from web basics to MCP, RAG, A2A, reliability, and deployment.",
+      "icon": "🛠️",
+      "chaptersCount": 16,
+      "modules": [
+        {
+          "number": 1,
+          "title": "Web foundations",
+          "icon": "🧭",
+          "chapters": [
+            {
+              "number": 31,
+              "slug": "diagram-31",
+              "title": "Browser Request Journey"
+            },
+            {
+              "number": 32,
+              "slug": "diagram-32",
+              "title": "HTTP Conversation"
+            },
+            {
+              "number": 33,
+              "slug": "diagram-33",
+              "title": "JSON Object Anatomy"
+            },
+            {
+              "number": 34,
+              "slug": "diagram-34",
+              "title": "JSON Schema Validation"
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "title": "Building the system",
+          "icon": "🛠️",
+          "chapters": [
+            {
+              "number": 35,
+              "slug": "diagram-35",
+              "title": "Frontend / Backend Boundary"
+            },
+            {
+              "number": 36,
+              "slug": "diagram-36",
+              "title": "Server Request Pipeline"
+            },
+            {
+              "number": 37,
+              "slug": "diagram-37",
+              "title": "Storage Map"
+            },
+            {
+              "number": 38,
+              "slug": "diagram-38",
+              "title": "Identity Boundary"
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "title": "Agent behaviour",
+          "icon": "🧠",
+          "chapters": [
+            {
+              "number": 39,
+              "slug": "diagram-39",
+              "title": "Agent Decision Loop"
+            },
+            {
+              "number": 40,
+              "slug": "diagram-40",
+              "title": "Tool Call Lifecycle"
+            },
+            {
+              "number": 41,
+              "slug": "diagram-41",
+              "title": "RAG Reliability Loop"
+            },
+            {
+              "number": 42,
+              "slug": "diagram-42",
+              "title": "A2A Task State Machine"
+            },
+            {
+              "number": 43,
+              "slug": "diagram-43",
+              "title": "Error Recovery Map"
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "title": "Running the system",
+          "icon": "🤖",
+          "chapters": [
+            {
+              "number": 44,
+              "slug": "diagram-44",
+              "title": "Observability Trace"
+            },
+            {
+              "number": 45,
+              "slug": "diagram-45",
+              "title": "Local to Vercel"
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "title": "Capstone",
+          "icon": "🔄",
+          "chapters": [
+            {
+              "number": 46,
+              "slug": "diagram-46",
+              "title": "Capstone Build Roadmap"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "slug": "visual-course-03",
+      "title": "Visual Course Volume 3 — Production Agent Systems",
+      "subtitle": "Turn a working agent demo into a durable, secure, measurable system.",
+      "icon": "🚀",
+      "chaptersCount": 30,
+      "modules": [
+        {
+          "number": 1,
+          "title": "Modern MCP",
+          "icon": "🧭",
+          "chapters": [
+            {
+              "number": 47,
+              "slug": "diagram-47",
+              "title": "A Stateless MCP Request"
+            },
+            {
+              "number": 48,
+              "slug": "diagram-48",
+              "title": "Multi Round-Trip Requests"
+            },
+            {
+              "number": 49,
+              "slug": "diagram-49",
+              "title": "The MCP Tasks Extension"
+            },
+            {
+              "number": 50,
+              "slug": "diagram-50",
+              "title": "Routing, Caching, and Gateways"
+            },
+            {
+              "number": 51,
+              "slug": "diagram-51",
+              "title": "The Modern MCP Migration Map"
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "title": "Durable workflows",
+          "icon": "🛠️",
+          "chapters": [
+            {
+              "number": 52,
+              "slug": "diagram-52",
+              "title": "Conversation State vs Workflow State"
+            },
+            {
+              "number": 53,
+              "slug": "diagram-53",
+              "title": "Checkpoint and Resume"
+            },
+            {
+              "number": 54,
+              "slug": "diagram-54",
+              "title": "Retry and Idempotency"
+            },
+            {
+              "number": 55,
+              "slug": "diagram-55",
+              "title": "Queues, Parallel Work, and Joins"
+            },
+            {
+              "number": 56,
+              "slug": "diagram-56",
+              "title": "Timeout, Cancel, and Compensate"
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "title": "Memory and retrieval",
+          "icon": "🧠",
+          "chapters": [
+            {
+              "number": 57,
+              "slug": "diagram-57",
+              "title": "Context Budget"
+            },
+            {
+              "number": 58,
+              "slug": "diagram-58",
+              "title": "Short-Term and Durable Memory"
+            },
+            {
+              "number": 59,
+              "slug": "diagram-59",
+              "title": "Advanced Retrieval Pipeline"
+            },
+            {
+              "number": 60,
+              "slug": "diagram-60",
+              "title": "Freshness and Index Versions"
+            },
+            {
+              "number": 61,
+              "slug": "diagram-61",
+              "title": "Conflict, Citation, and Abstention"
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "title": "Security",
+          "icon": "🤖",
+          "chapters": [
+            {
+              "number": 62,
+              "slug": "diagram-62",
+              "title": "Identity and Token Flow"
+            },
+            {
+              "number": 63,
+              "slug": "diagram-63",
+              "title": "Least-Privilege Tools"
+            },
+            {
+              "number": 64,
+              "slug": "diagram-64",
+              "title": "Prompt Injection and Exfiltration"
+            },
+            {
+              "number": 65,
+              "slug": "diagram-65",
+              "title": "Tenant Isolation and Secrets"
+            },
+            {
+              "number": 66,
+              "slug": "diagram-66",
+              "title": "Audit and Human Approval"
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "title": "Evaluation and operations",
+          "icon": "🔄",
+          "chapters": [
+            {
+              "number": 67,
+              "slug": "diagram-67",
+              "title": "One Request, One Trace"
+            },
+            {
+              "number": 68,
+              "slug": "diagram-68",
+              "title": "Golden Datasets and the Eval Harness"
+            },
+            {
+              "number": 69,
+              "slug": "diagram-69",
+              "title": "Stage-by-Stage Quality Metrics"
+            },
+            {
+              "number": 70,
+              "slug": "diagram-70",
+              "title": "Latency and Cost Budgets"
+            },
+            {
+              "number": 71,
+              "slug": "diagram-71",
+              "title": "Red Team and Incident Learning Loop"
+            }
+          ]
+        },
+        {
+          "number": 6,
+          "title": "The complete system",
+          "icon": "🎯",
+          "chapters": [
+            {
+              "number": 72,
+              "slug": "diagram-72",
+              "title": "MCP, A2A, and AG-UI Together"
+            },
+            {
+              "number": 73,
+              "slug": "diagram-73",
+              "title": "Typed Agent Event Stream"
+            },
+            {
+              "number": 74,
+              "slug": "diagram-74",
+              "title": "Progress, Artifacts, and Recovery UX"
+            },
+            {
+              "number": 75,
+              "slug": "diagram-75",
+              "title": "Interrupts, Approval, and Steering"
+            },
+            {
+              "number": 76,
+              "slug": "diagram-76",
+              "title": "Production Capstone Architecture"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "04",
+      "slug": "visual-course-04",
+      "title": "Visual Course Volume 4 — Protocol Engineering and Interoperability",
+      "subtitle": "Read, test, connect, and safely evolve MCP, A2A, and AG-UI systems.",
+      "icon": "🔗",
+      "chaptersCount": 24,
+      "modules": [
+        {
+          "number": 1,
+          "title": "How to read a protocol specification",
+          "icon": "🧭",
+          "chapters": [
+            {
+              "number": 77,
+              "slug": "diagram-77",
+              "title": "Normative Rules Versus Examples"
+            },
+            {
+              "number": 78,
+              "slug": "diagram-78",
+              "title": "Version, Capability, and Extension Negotiation"
+            },
+            {
+              "number": 79,
+              "slug": "diagram-79",
+              "title": "Requests, Results, Errors, and Correlation"
+            },
+            {
+              "number": 80,
+              "slug": "diagram-80",
+              "title": "Build a Conformance Matrix"
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "title": "Modern MCP core and extension boundaries",
+          "icon": "🛠️",
+          "chapters": [
+            {
+              "number": 81,
+              "slug": "diagram-81",
+              "title": "Stateless HTTP Routing"
+            },
+            {
+              "number": 82,
+              "slug": "diagram-82",
+              "title": "Server Discovery and Negotiation"
+            },
+            {
+              "number": 83,
+              "slug": "diagram-83",
+              "title": "MCP Primitives at Catalogue Scale"
+            },
+            {
+              "number": 84,
+              "slug": "diagram-84",
+              "title": "Cache, Subscription, Extension, and Deprecation Policy"
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "title": "Long-running MCP work and interactive results",
+          "icon": "🧠",
+          "chapters": [
+            {
+              "number": 85,
+              "slug": "diagram-85",
+              "title": "Multi Round-Trip Requests and Input Required"
+            },
+            {
+              "number": 86,
+              "slug": "diagram-86",
+              "title": "The MCP Tasks Extension Lifecycle"
+            },
+            {
+              "number": 87,
+              "slug": "diagram-87",
+              "title": "Delivery Mechanism Map"
+            },
+            {
+              "number": 88,
+              "slug": "diagram-88",
+              "title": "MCP Apps, Sandbox, and Consent"
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "title": "A2A 1.0 in depth",
+          "icon": "🤖",
+          "chapters": [
+            {
+              "number": 89,
+              "slug": "diagram-89",
+              "title": "A2A Agent Card and Trust"
+            },
+            {
+              "number": 90,
+              "slug": "diagram-90",
+              "title": "Message, Task, and Artifact Anatomy"
+            },
+            {
+              "number": 91,
+              "slug": "diagram-91",
+              "title": "Stream, Push, Poll, and Cancel"
+            },
+            {
+              "number": 92,
+              "slug": "diagram-92",
+              "title": "Bindings, Version, and Security Schemes"
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "title": "AG-UI in depth",
+          "icon": "🔄",
+          "chapters": [
+            {
+              "number": 93,
+              "slug": "diagram-93",
+              "title": "Typed Event Lifecycle"
+            },
+            {
+              "number": 94,
+              "slug": "diagram-94",
+              "title": "Snapshot, Delta, and Replay"
+            },
+            {
+              "number": 95,
+              "slug": "diagram-95",
+              "title": "Interrupt, Approval, and Steering"
+            },
+            {
+              "number": 96,
+              "slug": "diagram-96",
+              "title": "Tool, Artifact, and Recovery Surfaces"
+            }
+          ]
+        },
+        {
+          "number": 6,
+          "title": "Composition, adapters, and migration",
+          "icon": "🎯",
+          "chapters": [
+            {
+              "number": 97,
+              "slug": "diagram-97",
+              "title": "Protocol Boundary Decision Tree"
+            },
+            {
+              "number": 98,
+              "slug": "diagram-98",
+              "title": "Adapters, Correlation, and Contract Maps"
+            },
+            {
+              "number": 99,
+              "slug": "diagram-99",
+              "title": "ACP to A2A Migration"
+            },
+            {
+              "number": 100,
+              "slug": "diagram-100",
+              "title": "Protocol Interoperability Lab"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "05",
+      "slug": "visual-course-05",
+      "title": "Visual Course Volume 5 — Knowledge Systems and Advanced RAG",
+      "subtitle": "Build permission-aware, fresh, explainable, and measurable evidence systems.",
+      "icon": "🔍",
+      "chaptersCount": 24,
+      "modules": [
+        {
+          "number": 1,
+          "title": "Source intake and authority",
+          "icon": "🧭",
+          "chapters": [
+            {
+              "number": 101,
+              "slug": "diagram-101",
+              "title": "Source Inventory, Authority, Ownership, and Purpose"
+            },
+            {
+              "number": 102,
+              "slug": "diagram-102",
+              "title": "Layout-Aware Parsing"
+            },
+            {
+              "number": 103,
+              "slug": "diagram-103",
+              "title": "OCR, Images, Attachments, and Multimodal Evidence"
+            },
+            {
+              "number": 104,
+              "slug": "diagram-104",
+              "title": "Provenance, Permission, and Retention"
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "title": "Representation and index design",
+          "icon": "🛠️",
+          "chapters": [
+            {
+              "number": 105,
+              "slug": "diagram-105",
+              "title": "Semantic Chunk Boundaries"
+            },
+            {
+              "number": 106,
+              "slug": "diagram-106",
+              "title": "Parent-Child Retrieval"
+            },
+            {
+              "number": 107,
+              "slug": "diagram-107",
+              "title": "Complementary Representations"
+            },
+            {
+              "number": 108,
+              "slug": "diagram-108",
+              "title": "Tenant-Safe Index Design"
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "title": "Retrieval and evidence assembly",
+          "icon": "🧠",
+          "chapters": [
+            {
+              "number": 109,
+              "slug": "diagram-109",
+              "title": "Query Understanding and Plan"
+            },
+            {
+              "number": 110,
+              "slug": "diagram-110",
+              "title": "Hybrid Candidate Funnel"
+            },
+            {
+              "number": 111,
+              "slug": "diagram-111",
+              "title": "Authorization Before Search"
+            },
+            {
+              "number": 112,
+              "slug": "diagram-112",
+              "title": "Rerank, Diversity, and the Evidence Packet"
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "title": "Advanced reasoning over evidence",
+          "icon": "🤖",
+          "chapters": [
+            {
+              "number": 113,
+              "slug": "diagram-113",
+              "title": "Bounded Multi-Hop Retrieval"
+            },
+            {
+              "number": 114,
+              "slug": "diagram-114",
+              "title": "Graph Relationship Retrieval"
+            },
+            {
+              "number": 115,
+              "slug": "diagram-115",
+              "title": "Structured and Federated Retrieval"
+            },
+            {
+              "number": 116,
+              "slug": "diagram-116",
+              "title": "Agentic Retrieval and the Budget Loop"
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "title": "Freshness and temporal knowledge",
+          "icon": "🔄",
+          "chapters": [
+            {
+              "number": 117,
+              "slug": "diagram-117",
+              "title": "Immutable Source Versions"
+            },
+            {
+              "number": 118,
+              "slug": "diagram-118",
+              "title": "Incremental Ingestion and Reconciliation"
+            },
+            {
+              "number": 119,
+              "slug": "diagram-119",
+              "title": "Safe Index Promotion"
+            },
+            {
+              "number": 120,
+              "slug": "diagram-120",
+              "title": "Temporal Retrieval"
+            }
+          ]
+        },
+        {
+          "number": 6,
+          "title": "Evidence policy and RAG evaluation",
+          "icon": "🎯",
+          "chapters": [
+            {
+              "number": 121,
+              "slug": "diagram-121",
+              "title": "Claim-to-Source Citation Lineage"
+            },
+            {
+              "number": 122,
+              "slug": "diagram-122",
+              "title": "Evidence Conflict and Abstention"
+            },
+            {
+              "number": 123,
+              "slug": "diagram-123",
+              "title": "Layered RAG Evaluation"
+            },
+            {
+              "number": 124,
+              "slug": "diagram-124",
+              "title": "Acme Knowledge Fabric Capstone"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "06",
+      "slug": "visual-course-06",
+      "title": "Visual Course Volume 6 — Durable Orchestration and Multi-Agent Workflows",
+      "subtitle": "Design queues, sagas, A2A delegation, and recovery so agent work survives failure.",
+      "icon": "🎓",
+      "chaptersCount": 24,
+      "modules": [
+        {
+          "number": 1,
+          "title": "Durable state and event history",
+          "icon": "🧭",
+          "chapters": [
+            {
+              "number": 125,
+              "slug": "diagram-125",
+              "title": "State Layer Map"
+            },
+            {
+              "number": 126,
+              "slug": "diagram-126",
+              "title": "Commands, Events, Invariants, and State"
+            },
+            {
+              "number": 127,
+              "slug": "diagram-127",
+              "title": "Snapshot, Replay, and Schema Evolution"
+            },
+            {
+              "number": 128,
+              "slug": "diagram-128",
+              "title": "Durable Artifacts, Receipts, and Business Records"
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "title": "Queues, workers, and backpressure",
+          "icon": "🛠️",
+          "chapters": [
+            {
+              "number": 129,
+              "slug": "diagram-129",
+              "title": "Queues, Workers, Leases, Acknowledgements, and Visibility"
+            },
+            {
+              "number": 130,
+              "slug": "diagram-130",
+              "title": "Backpressure, Rate Limits, Admission Control, and Priorities"
+            },
+            {
+              "number": 131,
+              "slug": "diagram-131",
+              "title": "Retries, Idempotency Keys, Deduplication, and Poison Work"
+            },
+            {
+              "number": 132,
+              "slug": "diagram-132",
+              "title": "Deadlines, Cancellation, Timeout, and Compensation"
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "title": "Distributed workflow patterns",
+          "icon": "🧠",
+          "chapters": [
+            {
+              "number": 133,
+              "slug": "diagram-133",
+              "title": "Orchestration versus Choreography"
+            },
+            {
+              "number": 134,
+              "slug": "diagram-134",
+              "title": "Parallel Work, Fan-Out, Fan-In, and Joins"
+            },
+            {
+              "number": 135,
+              "slug": "diagram-135",
+              "title": "Sagas, Compensations, and Irreversible Effects"
+            },
+            {
+              "number": 136,
+              "slug": "diagram-136",
+              "title": "Scheduled, Event-Triggered, and Externally Resumed Work"
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "title": "Multi-agent delegation",
+          "icon": "🤖",
+          "chapters": [
+            {
+              "number": 137,
+              "slug": "diagram-137",
+              "title": "Agent Roles, Skills, Contracts, and Capability Discovery"
+            },
+            {
+              "number": 138,
+              "slug": "diagram-138",
+              "title": "A2A Discovery, Delegation, and Task Creation"
+            },
+            {
+              "number": 139,
+              "slug": "diagram-139",
+              "title": "Ownership, Handoff, Artifacts, and Status Propagation"
+            },
+            {
+              "number": 140,
+              "slug": "diagram-140",
+              "title": "Aggregation, Disagreement, Escalation, and Final Authority"
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "title": "Planning, budgets, and human control",
+          "icon": "🔄",
+          "chapters": [
+            {
+              "number": 141,
+              "slug": "diagram-141",
+              "title": "Planner, Executor, Reviewer, and Policy Roles"
+            },
+            {
+              "number": 142,
+              "slug": "diagram-142",
+              "title": "Time, Cost, Token, Tool, and Retry Budgets"
+            },
+            {
+              "number": 143,
+              "slug": "diagram-143",
+              "title": "Human Interrupts, Approvals, and Missing Input"
+            },
+            {
+              "number": 144,
+              "slug": "diagram-144",
+              "title": "Steering, Replanning, Invalidation, and Resume"
+            }
+          ]
+        },
+        {
+          "number": 6,
+          "title": "Distributed correctness and recovery",
+          "icon": "🎯",
+          "chapters": [
+            {
+              "number": 145,
+              "slug": "diagram-145",
+              "title": "Races, Duplicates, Out-of-Order Events, and Stale State"
+            },
+            {
+              "number": 146,
+              "slug": "diagram-146",
+              "title": "Fault Injection and Agent Workflow Chaos Tests"
+            },
+            {
+              "number": 147,
+              "slug": "diagram-147",
+              "title": "Recovery Drills, Runbooks, Ownership, and Receipts"
+            },
+            {
+              "number": 148,
+              "slug": "diagram-148",
+              "title": "Capstone: The Acme Case Resolution Network"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "07",
+      "slug": "visual-course-07",
+      "title": "Visual Course Volume 7 — Agent Identity, Security, and Governance",
+      "subtitle": "Protect every identity, capability, data path, tenant, and consequential action.",
+      "icon": "🔒",
+      "chaptersCount": 24,
+      "modules": [
+        {
+          "number": 1,
+          "title": "Threat models and trust boundaries",
+          "icon": "🧭",
+          "chapters": [
+            {
+              "number": 149,
+              "slug": "diagram-149",
+              "title": "Assets, Identities, Trust Boundaries, Data Flows, and Owners"
+            },
+            {
+              "number": 150,
+              "slug": "diagram-150",
+              "title": "Attack paths, misuse cases, and unacceptable outcomes"
+            },
+            {
+              "number": 151,
+              "slug": "diagram-151",
+              "title": "Prompt Injection and Instruction-Authority Hierarchy"
+            },
+            {
+              "number": 152,
+              "slug": "diagram-152",
+              "title": "Data Exfiltration and Unsafe Side Effects"
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "title": "Identity, OAuth, and delegated authority",
+          "icon": "🛠️",
+          "chapters": [
+            {
+              "number": 153,
+              "slug": "diagram-153",
+              "title": "Authentication, Authorization, Delegation, and Impersonation"
+            },
+            {
+              "number": 154,
+              "slug": "diagram-154",
+              "title": "OAuth, OpenID Connect, Resource Metadata, and Audiences"
+            },
+            {
+              "number": 155,
+              "slug": "diagram-155",
+              "title": "DPoP, Sender-Constrained Tokens, and Replay Resistance"
+            },
+            {
+              "number": 156,
+              "slug": "diagram-156",
+              "title": "Workload Identity, Token Exchange, and Agent Delegation"
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "title": "Capabilities, tools, policy, and secrets",
+          "icon": "🧠",
+          "chapters": [
+            {
+              "number": 157,
+              "slug": "diagram-157",
+              "title": "Least-privilege tool and capability design"
+            },
+            {
+              "number": 158,
+              "slug": "diagram-158",
+              "title": "Policy as Code, Claims, Context, and Decision Receipts"
+            },
+            {
+              "number": 159,
+              "slug": "diagram-159",
+              "title": "Step-up Authorization, Approval, and Transaction Binding"
+            },
+            {
+              "number": 160,
+              "slug": "diagram-160",
+              "title": "Secret Managers, Short-Lived Credentials, and Rotation"
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "title": "Isolation, sandboxing, and egress",
+          "icon": "🤖",
+          "chapters": [
+            {
+              "number": 161,
+              "slug": "diagram-161",
+              "title": "Tenant Isolation Through Every Data and Workflow Layer"
+            },
+            {
+              "number": 162,
+              "slug": "diagram-162",
+              "title": "Cache, Index, Queue, Artifact, and Telemetry Isolation"
+            },
+            {
+              "number": 163,
+              "slug": "diagram-163",
+              "title": "Sandboxed Code, Browser, File, and MCP App Execution"
+            },
+            {
+              "number": 164,
+              "slug": "diagram-164",
+              "title": "Network Egress, Destination Allowlists, and DLP"
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "title": "Supply chain, privacy, and audit evidence",
+          "icon": "🔄",
+          "chapters": [
+            {
+              "number": 165,
+              "slug": "diagram-165",
+              "title": "MCP server discovery, A2A Agent Cards, signatures, and trust decisions"
+            },
+            {
+              "number": 166,
+              "slug": "diagram-166",
+              "title": "Dependency, Model, Prompt, Tool, and Configuration Provenance"
+            },
+            {
+              "number": 167,
+              "slug": "diagram-167",
+              "title": "Data Minimization, Retention, Consent, and Deletion"
+            },
+            {
+              "number": 168,
+              "slug": "diagram-168",
+              "title": "Tamper-Evident Audit, Redaction, and Chain of Evidence"
+            }
+          ]
+        },
+        {
+          "number": 6,
+          "title": "Governance and organizational control",
+          "icon": "🎯",
+          "chapters": [
+            {
+              "number": 169,
+              "slug": "diagram-169",
+              "title": "The NIST AI Risk Loop in Plain English"
+            },
+            {
+              "number": 170,
+              "slug": "diagram-170",
+              "title": "OWASP Agentic Top 10 Mapping and Red-Team Coverage"
+            },
+            {
+              "number": 171,
+              "slug": "diagram-171",
+              "title": "Roles, Exceptions, Escalation, Accountability, and Review"
+            },
+            {
+              "number": 172,
+              "slug": "diagram-172",
+              "title": "Capstone: Acme Secure Agent Gateway and Policy Center"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "08",
+      "slug": "visual-course-08",
+      "title": "Visual Course Volume 8 — Evaluation, Observability, and AgentOps",
+      "subtitle": "Prove quality, safety, latency, cost, and recovery before and after release.",
+      "icon": "📊",
+      "chaptersCount": 24,
+      "modules": [
+        {
+          "number": 1,
+          "title": "Telemetry and correlation",
+          "icon": "🧭",
+          "chapters": [
+            {
+              "number": 173,
+              "slug": "diagram-173",
+              "title": "Traces, spans, logs, metrics, events, and resources"
+            },
+            {
+              "number": 174,
+              "slug": "diagram-174",
+              "title": "Context propagation across MCP, A2A, AG-UI, HTTP, and queues"
+            },
+            {
+              "number": 175,
+              "slug": "diagram-175",
+              "title": "Privacy-safe telemetry and content capture policy"
+            },
+            {
+              "number": 176,
+              "slug": "diagram-176",
+              "title": "Business outcomes, artifacts, receipts, and trace references"
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "title": "Evaluation design",
+          "icon": "🛠️",
+          "chapters": [
+            {
+              "number": 177,
+              "slug": "diagram-177",
+              "title": "The anatomy of a useful evaluation case"
+            },
+            {
+              "number": 178,
+              "slug": "diagram-178",
+              "title": "Deterministic contracts, schemas, and behavioral assertions"
+            },
+            {
+              "number": 179,
+              "slug": "diagram-179",
+              "title": "Model graders, human rubrics, calibration, and disagreement"
+            },
+            {
+              "number": 180,
+              "slug": "diagram-180",
+              "title": "Slices, denominators, confidence, variance, and significance"
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "title": "Quality at every stage",
+          "icon": "🧠",
+          "chapters": [
+            {
+              "number": 181,
+              "slug": "diagram-181",
+              "title": "Intent, routing, and retrieval quality"
+            },
+            {
+              "number": 182,
+              "slug": "diagram-182",
+              "title": "Tool contracts, policy decisions, and business effects"
+            },
+            {
+              "number": 183,
+              "slug": "diagram-183",
+              "title": "Planning, delegation, synthesis, and groundedness"
+            },
+            {
+              "number": 184,
+              "slug": "diagram-184",
+              "title": "User outcome, clarity, control, and recovery quality"
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "title": "Performance, capacity, and economics",
+          "icon": "🤖",
+          "chapters": [
+            {
+              "number": 185,
+              "slug": "diagram-185",
+              "title": "Latency budgets, percentiles, deadlines, and the slow tail"
+            },
+            {
+              "number": 186,
+              "slug": "diagram-186",
+              "title": "Token, retrieval, tool, specialist, storage, and cache costs"
+            },
+            {
+              "number": 187,
+              "slug": "diagram-187",
+              "title": "Load, concurrency, queues, capacity, and saturation"
+            },
+            {
+              "number": 188,
+              "slug": "diagram-188",
+              "title": "Graceful degradation, fallback, and admission control"
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "title": "Release engineering",
+          "icon": "🔄",
+          "chapters": [
+            {
+              "number": 189,
+              "slug": "diagram-189",
+              "title": "Offline gates and reproducible evaluation runs"
+            },
+            {
+              "number": 190,
+              "slug": "diagram-190",
+              "title": "Shadow traffic, canaries, and side-by-side comparison"
+            },
+            {
+              "number": 191,
+              "slug": "diagram-191",
+              "title": "Feature flags, version pinning, rollback, and kill switches"
+            },
+            {
+              "number": 192,
+              "slug": "diagram-192",
+              "title": "Protocol conformance, compatibility, and migration gates"
+            }
+          ]
+        },
+        {
+          "number": 6,
+          "title": "Incidents and continuous learning",
+          "icon": "🎯",
+          "chapters": [
+            {
+              "number": 193,
+              "slug": "diagram-193",
+              "title": "Alerts, ownership, triage, and runbooks"
+            },
+            {
+              "number": 194,
+              "slug": "diagram-194",
+              "title": "Red-team, chaos, abuse, and recovery exercises"
+            },
+            {
+              "number": 195,
+              "slug": "diagram-195",
+              "title": "Postmortems, corrective actions, and regression cases"
+            },
+            {
+              "number": 196,
+              "slug": "diagram-196",
+              "title": "Capstone: the Acme Agent Quality Lab"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "09",
+      "slug": "visual-course-09",
+      "title": "Visual Course Volume 9 — Agentic Product Design and Human Control",
+      "subtitle": "Turn complex agent work into an understandable, accessible, and recoverable human experience.",
+      "icon": "🧑‍💻",
+      "chaptersCount": 24,
+      "modules": [
+        {
+          "number": 1,
+          "title": "Event-driven agent interfaces",
+          "icon": "🧭",
+          "chapters": [
+            {
+              "number": 197,
+              "slug": "diagram-197",
+              "title": "The event-driven interface mental model"
+            },
+            {
+              "number": 198,
+              "slug": "diagram-198",
+              "title": "State snapshots, deltas, reducers, and conflict handling"
+            },
+            {
+              "number": 199,
+              "slug": "diagram-199",
+              "title": "Reconnect, replay, deduplication, and offline recovery"
+            },
+            {
+              "number": 200,
+              "slug": "diagram-200",
+              "title": "Optimistic interface state versus authoritative business state"
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "title": "Progress, tools, artifacts, and recovery",
+          "icon": "🛠️",
+          "chapters": [
+            {
+              "number": 201,
+              "slug": "diagram-201",
+              "title": "Progressive disclosure and observable stage labels"
+            },
+            {
+              "number": 202,
+              "slug": "diagram-202",
+              "title": "Tool cards, evidence cards, artifacts, and receipts"
+            },
+            {
+              "number": 203,
+              "slug": "diagram-203",
+              "title": "Partial success, preserved work, and unfinished work"
+            },
+            {
+              "number": 204,
+              "slug": "diagram-204",
+              "title": "Errors, recovery choices, support references, and next actions"
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "title": "Human control and accessible trust",
+          "icon": "🧠",
+          "chapters": [
+            {
+              "number": 205,
+              "slug": "diagram-205",
+              "title": "Interrupt, input request, approval, rejection, and expiry"
+            },
+            {
+              "number": 206,
+              "slug": "diagram-206",
+              "title": "Edit, steer, reprioritize, replan, and invalidate"
+            },
+            {
+              "number": 207,
+              "slug": "diagram-207",
+              "title": "Cancel, undo, compensate, and preserve audit history"
+            },
+            {
+              "number": 208,
+              "slug": "diagram-208",
+              "title": "Accessibility, plain language, uncertainty, and trust cues"
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "title": "Generative and embedded interfaces",
+          "icon": "🤖",
+          "chapters": [
+            {
+              "number": 209,
+              "slug": "diagram-209",
+              "title": "Typed components, schemas, allowlists, and validation"
+            },
+            {
+              "number": 210,
+              "slug": "diagram-210",
+              "title": "MCP Apps, sandboxed frames, consent, and communication"
+            },
+            {
+              "number": 211,
+              "slug": "diagram-211",
+              "title": "Frontend tool calls and user-device actions"
+            },
+            {
+              "number": 212,
+              "slug": "diagram-212",
+              "title": "Interface security, data exposure, and safe rendering"
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "title": "The future visual-learning website",
+          "icon": "🔄",
+          "chapters": [
+            {
+              "number": 213,
+              "slug": "diagram-213",
+              "title": "A reusable visual lesson content model"
+            },
+            {
+              "number": 214,
+              "slug": "diagram-214",
+              "title": "Responsive diagrams, zoom, annotations, and reading order"
+            },
+            {
+              "number": 215,
+              "slug": "diagram-215",
+              "title": "Glossary, citations, search, prerequisites, and cross-links"
+            },
+            {
+              "number": 216,
+              "slug": "diagram-216",
+              "title": "Progress, checkpoints, quizzes, accessibility, and offline use"
+            }
+          ]
+        },
+        {
+          "number": 6,
+          "title": "Agentic product operations",
+          "icon": "🎯",
+          "chapters": [
+            {
+              "number": 217,
+              "slug": "diagram-217",
+              "title": "Asynchronous return, notifications, and attention management"
+            },
+            {
+              "number": 218,
+              "slug": "diagram-218",
+              "title": "Privacy controls, consent, memory settings, and deletion"
+            },
+            {
+              "number": 219,
+              "slug": "diagram-219",
+              "title": "Product analytics, feedback, evaluation, and experiment ethics"
+            },
+            {
+              "number": 220,
+              "slug": "diagram-220",
+              "title": "Capstone: Acme Agent Workspace and Learning Platform"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "10",
+      "slug": "visual-course-10",
+      "title": "Visual Course Volume 10 — Enterprise Architecture and Dual-Stack Project Blueprint",
+      "subtitle": "Assemble the architecture, contracts, delivery, and operational handoff for a real agent platform.",
+      "icon": "🏛️",
+      "chaptersCount": 24,
+      "modules": [
+        {
+          "number": 1,
+          "title": "Choose the right problem",
+          "icon": "🧭",
+          "chapters": [
+            {
+              "number": 221,
+              "slug": "diagram-221",
+              "title": "Problem, workflow, assistant, agent, and automation boundaries"
+            },
+            {
+              "number": 222,
+              "slug": "diagram-222",
+              "title": "Use-case selection, value, frequency, uncertainty, and reversibility"
+            },
+            {
+              "number": 223,
+              "slug": "diagram-223",
+              "title": "Risk classification, human authority, and unacceptable outcomes"
+            },
+            {
+              "number": 224,
+              "slug": "diagram-224",
+              "title": "Success criteria, exit criteria, and evidence requirements"
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "title": "Reference architecture and contracts",
+          "icon": "🛠️",
+          "chapters": [
+            {
+              "number": 225,
+              "slug": "diagram-225",
+              "title": "Capability, context, model, tool, and authority boundaries"
+            },
+            {
+              "number": 226,
+              "slug": "diagram-226",
+              "title": "State, data, memory, evidence, artifact, and audit architecture"
+            },
+            {
+              "number": 227,
+              "slug": "diagram-227",
+              "title": "MCP, A2A, AG-UI, HTTP, queue, and internal boundaries"
+            },
+            {
+              "number": 228,
+              "slug": "diagram-228",
+              "title": "Deployment topology, failure domains, and ownership"
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "title": "Dual-stack implementation blueprint",
+          "icon": "🧠",
+          "chapters": [
+            {
+              "number": 229,
+              "slug": "diagram-229",
+              "title": "Shared schemas, contracts, fixtures, and conformance cases"
+            },
+            {
+              "number": 230,
+              "slug": "diagram-230",
+              "title": "Next.js and React responsibility map"
+            },
+            {
+              "number": 231,
+              "slug": "diagram-231",
+              "title": "Python and FastAPI responsibility map"
+            },
+            {
+              "number": 232,
+              "slug": "diagram-232",
+              "title": "Cross-stack integration, adapters, and end-to-end tests"
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "title": "Platform, data, and deployment",
+          "icon": "🤖",
+          "chapters": [
+            {
+              "number": 233,
+              "slug": "diagram-233",
+              "title": "Authentication, secrets, tenants, policy, and audit services"
+            },
+            {
+              "number": 234,
+              "slug": "diagram-234",
+              "title": "Database, vector index, queue, cache, and artifact storage"
+            },
+            {
+              "number": 235,
+              "slug": "diagram-235",
+              "title": "Telemetry, evaluation, analytics, and cost control"
+            },
+            {
+              "number": 236,
+              "slug": "diagram-236",
+              "title": "CI/CD, environments, migrations, flags, rollback, and recovery"
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "title": "Delivery and production readiness",
+          "icon": "🔄",
+          "chapters": [
+            {
+              "number": 237,
+              "slug": "diagram-237",
+              "title": "Milestones, vertical slices, backlog, dependencies, and owners"
+            },
+            {
+              "number": 238,
+              "slug": "diagram-238",
+              "title": "Contract, integration, workflow, security, and acceptance tests"
+            },
+            {
+              "number": 239,
+              "slug": "diagram-239",
+              "title": "Threat, evaluation, accessibility, privacy, and readiness gates"
+            },
+            {
+              "number": 240,
+              "slug": "diagram-240",
+              "title": "Runbooks, support, incident response, and operational ownership"
+            }
+          ]
+        },
+        {
+          "number": 6,
+          "title": "Final capstone and project handoff",
+          "icon": "🎯",
+          "chapters": [
+            {
+              "number": 241,
+              "slug": "diagram-241",
+              "title": "Architecture review and trade-off defense"
+            },
+            {
+              "number": 242,
+              "slug": "diagram-242",
+              "title": "Failure game day and recovery demonstration"
+            },
+            {
+              "number": 243,
+              "slug": "diagram-243",
+              "title": "Portfolio evidence, README, case study, and demonstration plan"
+            },
+            {
+              "number": 244,
+              "slug": "diagram-244",
+              "title": "Graduation map and handoff to the two separate coding projects"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

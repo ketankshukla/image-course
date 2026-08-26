@@ -1,0 +1,1583 @@
+{
+  "course": {
+    "title": "Visual Course Volume 4 - Protocol Engineering and Interoperability",
+    "coverTitle": "PROTOCOL ENGINEERING\nAND INTEROPERABILITY",
+    "coverTagline": "VISUAL-FIRST · CURRENT-SPEC · BEGINNER-FRIENDLY",
+    "subtitle": "Read, test, connect, and safely evolve MCP, A2A, and AG-UI systems",
+    "audience": "A visual beginner who understands the main agent-system building blocks and now wants to read protocol specifications, test contracts, and connect systems without mixing up their responsibilities",
+    "checkedOn": "2026-08-24",
+    "protocolBaseline": {
+      "mcp": "2026-07-28",
+      "a2a": "1.0",
+      "agui": "Current official documentation checked 2026-08-24; interrupt-aware lifecycle is draft",
+      "acp": "Historical migration context only; use A2A for new interoperable agent-to-agent work"
+    },
+    "officialSources": [
+      {
+        "label": "MCP 2026-07-28 specification",
+        "url": "https://modelcontextprotocol.io/specification/2026-07-28"
+      },
+      {
+        "label": "MCP 2026-07-28 release notes",
+        "url": "https://blog.modelcontextprotocol.io/posts/2026-07-28/"
+      },
+      {
+        "label": "MCP roadmap",
+        "url": "https://blog.modelcontextprotocol.io/posts/mcp-roadmap/"
+      },
+      {
+        "label": "A2A 1.0 specification",
+        "url": "https://a2a-protocol.org/latest/specification/"
+      },
+      {
+        "label": "AG-UI introduction",
+        "url": "https://docs.ag-ui.com/introduction"
+      },
+      {
+        "label": "AG-UI event reference",
+        "url": "https://docs.ag-ui.com/concepts/events"
+      },
+      {
+        "label": "JSON-RPC 2.0 specification",
+        "url": "https://www.jsonrpc.org/specification"
+      },
+      {
+        "label": "BCP 14 requirement words",
+        "url": "https://www.rfc-editor.org/info/bcp14"
+      },
+      {
+        "label": "JSON Patch RFC 6902",
+        "url": "https://www.rfc-editor.org/rfc/rfc6902"
+      }
+    ],
+    "visualGrammar": {
+      "cobaltPlatform": "A component, protocol endpoint, or ownership boundary",
+      "cyanArrow": "A request, command, event, or forward path",
+      "tealArrow": "A result, artifact, acknowledgement, or recovery path returning",
+      "coralPath": "A denial, error, cancellation, warning, or human-control path",
+      "whiteCard": "A message, contract, capability, version, state, or evidence item"
+    },
+    "websiteLessonTemplate": [
+      "outcome",
+      "stability label",
+      "diagram and alt text",
+      "plain-English explanation",
+      "trace the visual",
+      "analogy",
+      "Next.js map",
+      "Python map",
+      "case study",
+      "mini lab",
+      "checkpoint and answer",
+      "glossary and related lessons"
+    ]
+  },
+  "modules": [
+    {
+      "id": "module-17",
+      "title": "How to read a protocol specification",
+      "lessonIds": [
+        77,
+        78,
+        79,
+        80
+      ],
+      "purpose": "Turn specification language into testable rules, negotiate compatible features, read message envelopes, and build a conformance matrix."
+    },
+    {
+      "id": "module-18",
+      "title": "Modern MCP core and extension boundaries",
+      "lessonIds": [
+        81,
+        82,
+        83,
+        84
+      ],
+      "purpose": "Understand stateless MCP routing, discovery, primitive catalogs, caching, subscriptions, extensions, and safe deprecation."
+    },
+    {
+      "id": "module-19",
+      "title": "Long-running MCP work and interactive results",
+      "lessonIds": [
+        85,
+        86,
+        87,
+        88
+      ],
+      "purpose": "Choose Multi Round-Trip Requests, Tasks, delivery mechanisms, and MCP Apps without hiding state or user consent."
+    },
+    {
+      "id": "module-20",
+      "title": "A2A 1.0 in depth",
+      "lessonIds": [
+        89,
+        90,
+        91,
+        92
+      ],
+      "purpose": "Discover agents, exchange messages and tasks, stream or push updates, and preserve equivalent behavior across bindings."
+    },
+    {
+      "id": "module-21",
+      "title": "AG-UI in depth",
+      "lessonIds": [
+        93,
+        94,
+        95,
+        96
+      ],
+      "purpose": "Build a typed event reducer, synchronize state, explain the draft interrupt lifecycle, and render tool outcomes with honest recovery choices."
+    },
+    {
+      "id": "module-22",
+      "title": "Composition, adapters, and migration",
+      "lessonIds": [
+        97,
+        98,
+        99,
+        100
+      ],
+      "purpose": "Choose the right boundary, translate contracts safely, migrate historical ACP systems to A2A, and assemble the Acme interoperability lab."
+    }
+  ],
+  "lessons": [
+    {
+      "id": 77,
+      "slug": "normative-rules-map",
+      "moduleId": "module-17",
+      "title": "Normative rules versus examples",
+      "stability": "Stable foundation",
+      "diagram": "diagrams/77-normative-rules-map.png",
+      "diagramPrompt": "Show a three-lane specification map. Left white cards say MUST, SHOULD, MAY. The center lane says CONFORMANCE TESTS. The right lane says EXAMPLES and IMPLEMENTATION CHOICES. A coral divider labeled NOT A REQUIREMENT separates examples from tests.",
+      "alt": "A protocol specification separates binding requirement words from examples and local implementation choices, with conformance tests derived only from actual requirements.",
+      "outcome": "Separate what every conforming implementation must do from helpful examples and design choices.",
+      "explanation": "A specification is a contract, not a tutorial. Words such as MUST, MUST NOT, SHOULD, and MAY have precise meanings when the document invokes BCP 14. A code sample can illustrate one path without making that path mandatory. Turn each normative sentence into a subject, condition, required behavior, and observable result; then write a test that could prove compliance.",
+      "trace": [
+        "Find the normative sentence and underline the actor.",
+        "Record the condition under which the rule applies.",
+        "Translate MUST or MUST NOT into a pass-or-fail assertion.",
+        "Keep SHOULD rules visible with documented exceptions.",
+        "Treat examples as clues, not as hidden requirements."
+      ],
+      "analogy": "It is like a driving test: the law says you must stop at red; a picture of a blue car is only an example.",
+      "nextjs": [
+        "Store requirements in src/protocol/conformance.ts with source anchors.",
+        "Use Vitest table cases to assert required and forbidden behaviors.",
+        "Keep example payloads in fixtures/ and never infer rules from them alone."
+      ],
+      "python": [
+        "Store requirements in protocol/conformance.py with stable identifiers.",
+        "Use pytest parameterization for conditions and expected outcomes.",
+        "Keep examples in tests/fixtures and link every test to a normative rule."
+      ],
+      "caseStudy": {
+        "situation": "Maya's team sees an MCP example that uses one server instance and assumes sticky routing is required.",
+        "walkthrough": [
+          "They find the actual stateless-request requirement.",
+          "They label sticky routing an implementation choice.",
+          "They write a test that sends equivalent requests to two interchangeable instances.",
+          "Both instances produce compatible results without a hidden session."
+        ],
+        "result": "The team removes an unnecessary load-balancer dependency and gains a testable rule.",
+        "danger": "Copying an example architecture can accidentally make optional behavior look mandatory.",
+        "takeaway": "Quote the rule, name the actor, and test the observable behavior."
+      },
+      "lab": "Choose one MUST, one SHOULD, and one MAY from an official specification. Rewrite each as a test sentence with a condition and expected result.",
+      "checkpoint": "Why is a code sample not enough to prove a protocol requirement?",
+      "answer": "Because samples show one possible implementation; only the normative specification defines the conformance contract.",
+      "glossary": [
+        "Normative — binding contract language",
+        "BCP 14 — standard meaning of requirement words",
+        "Conformance — evidence that an implementation follows the contract"
+      ],
+      "related": [
+        78,
+        80,
+        81
+      ],
+      "sources": [
+        "MCP specification",
+        "BCP 14"
+      ]
+    },
+    {
+      "id": 78,
+      "slug": "version-capability-extension-negotiation",
+      "moduleId": "module-17",
+      "title": "Version, capability, and extension negotiation",
+      "stability": "Stable pattern",
+      "diagram": "diagrams/78-version-capability-extension-negotiation.png",
+      "diagramPrompt": "Show CLIENT and SERVER platforms exchanging three white cards in order: VERSION, CAPABILITIES, EXTENSIONS. Put a green COMPATIBLE PATH leading to USE SHARED FEATURES and a coral NO COMMON VERSION path leading to CLEAR ERROR. Include no session box.",
+      "alt": "A client and server compare version, core capabilities, and optional extensions before using only the features they share.",
+      "outcome": "Explain compatibility as an explicit intersection instead of hopeful feature guessing.",
+      "explanation": "Version tells each side which core contract is being spoken. Capabilities say which optional behavior an implementation supports. Extensions add separately named and versioned contracts. Safe negotiation computes the intersection, rejects incompatible core versions clearly, and never sends an extension merely because one side knows its name.",
+      "trace": [
+        "The client declares its protocol version.",
+        "Both sides expose the capabilities relevant to this request or interface.",
+        "Extension identifiers and versions are compared separately.",
+        "Only the shared set is activated.",
+        "A missing required feature produces a specific compatibility error."
+      ],
+      "analogy": "It is like choosing a language, then agreeing which board-game expansions both players own.",
+      "nextjs": [
+        "Validate headers and metadata at the route boundary.",
+        "Create a negotiatedFeatures object for downstream handlers.",
+        "Return typed 4xx or protocol errors before any business side effect."
+      ],
+      "python": [
+        "Use Pydantic models for the negotiation envelope.",
+        "Pass a frozen negotiated feature set through request dependencies.",
+        "Reject unsupported versions and required extensions before enqueueing work."
+      ],
+      "caseStudy": {
+        "situation": "Maya's UI wants interactive approval, but the connected MCP server does not advertise the required extension.",
+        "walkthrough": [
+          "The client checks the base version.",
+          "It compares the extension map.",
+          "The shared set does not contain the interactive extension.",
+          "The UI falls back to a normal text approval path rather than sending unknown fields."
+        ],
+        "result": "Maya still gets a safe workflow, and the unsupported enhancement does not break the request.",
+        "danger": "Silent downgrade can remove a safety feature while making the call appear successful.",
+        "takeaway": "Negotiate first, activate the intersection, and make unsafe fallbacks impossible."
+      },
+      "lab": "Draw two capability sets and circle their intersection. Mark one required feature and decide whether the call may continue.",
+      "checkpoint": "What is the difference between a version and a capability?",
+      "answer": "A version identifies the core contract; a capability says whether an implementation supports a particular optional behavior within that contract.",
+      "glossary": [
+        "Negotiation — agreeing on a compatible contract",
+        "Capability — advertised supported behavior",
+        "Extension — opt-in contract outside the base protocol"
+      ],
+      "related": [
+        77,
+        82,
+        92
+      ],
+      "sources": [
+        "MCP versioning and compatibility",
+        "A2A versioning"
+      ]
+    },
+    {
+      "id": 79,
+      "slug": "request-result-error-correlation",
+      "moduleId": "module-17",
+      "title": "Requests, results, errors, metadata, and correlation",
+      "stability": "Stable JSON-RPC foundation",
+      "diagram": "diagrams/79-request-result-error-correlation.png",
+      "diagramPrompt": "Create an exploded JSON-RPC envelope. White cards labeled JSONRPC 2.0, ID 2048, METHOD, PARAMS travel from CLIENT to SERVER. Return paths split into RESULT or ERROR, both carrying ID 2048. A separate dotted TRACE ID crosses gateway, worker, and database.",
+      "alt": "A JSON-RPC request and its result or error share one protocol ID, while separate correlation metadata follows the wider distributed operation.",
+      "outcome": "Read an envelope without confusing protocol matching, business identity, and observability identity.",
+      "explanation": "A request names a method and supplies parameters. A response returns either a result or an error and echoes the request ID so concurrent calls can be matched. Notifications have no response ID. A case ID identifies business work, while a trace or correlation ID links logs and spans across systems; these identities solve different problems and should not be merged.",
+      "trace": [
+        "The client assigns a JSON-RPC ID for this call.",
+        "The method and parameters cross the protocol boundary.",
+        "The server returns exactly one result or error for the request.",
+        "The echoed ID matches the response to the caller's pending call.",
+        "Trace and business IDs continue through internal services."
+      ],
+      "analogy": "A coat-check ticket matches one visit; the suitcase tag and travel itinerary identify different, longer-lived things.",
+      "nextjs": [
+        "Parse the envelope in app/api/mcp/route.ts.",
+        "Generate or forward traceparent separately from the JSON-RPC id.",
+        "Log request_id, case_id, and trace_id as distinct structured fields."
+      ],
+      "python": [
+        "Use a discriminated Pydantic union for result versus error.",
+        "Propagate OpenTelemetry context separately from the protocol envelope.",
+        "Reject responses that contain both result and error."
+      ],
+      "caseStudy": {
+        "situation": "Maya opens two refund checks at once and the responses arrive in reverse order.",
+        "walkthrough": [
+          "Each request has a different JSON-RPC ID.",
+          "Both calls share Maya's case ID only if they belong to the same case.",
+          "The result IDs pair each response correctly.",
+          "A trace ID explains the full path of each call."
+        ],
+        "result": "The interface updates the correct panel even when the network reorders completion.",
+        "danger": "Using one ID for protocol calls, business objects, retries, and traces creates accidental coupling and confusing logs.",
+        "takeaway": "Give every identity one job and preserve it across the boundaries that need it."
+      },
+      "lab": "Label five values in a sample request as protocol ID, method, parameter, business ID, or trace metadata.",
+      "checkpoint": "Can a JSON-RPC ID safely replace a durable task ID?",
+      "answer": "No. The JSON-RPC ID matches one request and response; a task ID identifies durable work across later calls.",
+      "glossary": [
+        "JSON-RPC — request and response message contract",
+        "Correlation — linking related activity",
+        "Notification — a message that does not expect a response"
+      ],
+      "related": [
+        80,
+        86,
+        98
+      ],
+      "sources": [
+        "JSON-RPC 2.0",
+        "MCP base protocol"
+      ]
+    },
+    {
+      "id": 80,
+      "slug": "conformance-matrix",
+      "moduleId": "module-17",
+      "title": "Build a conformance matrix",
+      "stability": "Engineering practice",
+      "diagram": "diagrams/80-conformance-matrix.png",
+      "diagramPrompt": "Show a large grid with columns REQUIREMENT, HAPPY PATH, NEGATIVE TEST, EVIDENCE, STATUS. Rows R-01 through R-04 have green PASS, coral FAIL, and amber NOT TESTED chips. Arrows connect SPEC to TEST SUITE to REPORT.",
+      "alt": "A conformance matrix links every important protocol requirement to positive and negative tests, evidence, and an honest status.",
+      "outcome": "Turn a specification review into an auditable engineering artifact.",
+      "explanation": "A conformance matrix prevents teams from saying 'we support the protocol' when they tested only a demo. Give each normative rule a stable ID and source anchor. Add a happy path, at least one realistic failure path, expected observable behavior, evidence location, and status. Record gaps as not tested rather than converting absence into a pass.",
+      "trace": [
+        "Extract a requirement and assign R-01.",
+        "Add a valid example that must succeed.",
+        "Add malformed, unsupported, reordered, duplicated, or unauthorized variants.",
+        "Capture logs, responses, and test reports as evidence.",
+        "Publish pass, fail, or not tested with no hidden denominator."
+      ],
+      "analogy": "It is an aircraft pre-flight checklist: a smooth takeoff once does not prove every safety system works.",
+      "nextjs": [
+        "Keep matrix rows as typed data checked into the repository.",
+        "Run Vitest contract suites in CI and attach machine-readable reports.",
+        "Fail release only for rules marked required for the supported profile."
+      ],
+      "python": [
+        "Store matrix rows in YAML or JSON and generate pytest cases.",
+        "Emit JUnit and evidence artifacts from CI.",
+        "Separate unsupported optional features from failed required behavior."
+      ],
+      "caseStudy": {
+        "situation": "Maya's demo works, but no one has tried a duplicated message, unknown extension, invalid schema, or cancellation race.",
+        "walkthrough": [
+          "The team maps the supported profile.",
+          "They create positive and negative cases for every required row.",
+          "Two rows fail and one remains not tested.",
+          "The release report states the exact supported surface."
+        ],
+        "result": "A precise partial-support claim replaces a vague and risky compatibility promise.",
+        "danger": "A matrix with only happy paths is a feature checklist, not conformance evidence.",
+        "takeaway": "Test what must fail as carefully as what must work."
+      },
+      "lab": "Create four rows for a fictional send_message method: valid, missing field, unsupported version, and duplicate retry.",
+      "checkpoint": "Why keep NOT TESTED separate from FAIL?",
+      "answer": "Fail means evidence contradicts the requirement; not tested means there is no evidence yet. Combining them hides what is known.",
+      "glossary": [
+        "Conformance profile — exact supported protocol surface",
+        "Negative test — evidence that invalid behavior is rejected",
+        "Evidence — reproducible proof behind a status"
+      ],
+      "related": [
+        77,
+        79,
+        100
+      ],
+      "sources": [
+        "MCP specification",
+        "A2A specification"
+      ]
+    },
+    {
+      "id": 81,
+      "slug": "stateless-http-routing",
+      "moduleId": "module-18",
+      "title": "Stateless MCP routing and per-request identity",
+      "stability": "Stable MCP 2026-07-28 core",
+      "diagram": "diagrams/81-stateless-http-routing.png",
+      "diagramPrompt": "Show HTTP CLIENT sending one self-contained MCP REQUEST through ROUTER to three interchangeable MCP SERVER instances. The request card lists VERSION, CLIENT INFO, CAPABILITIES; headers above say MCP-METHOD and MCP-NAME. Cross out SESSION STORE and STICKY ROUTING.",
+      "alt": "A self-contained MCP request carries the context needed for routing and capability decisions and can reach any healthy server instance.",
+      "outcome": "Replace the retired session-era MCP picture with the current stateless model.",
+      "explanation": "MCP 2026-07-28 uses stateless, self-contained requests and per-request capability negotiation. The old initialize handshake, initialized notification, Mcp-Session-Id protocol session, and required sticky routing are retired. Streamable HTTP routing can inspect Mcp-Method and Mcp-Name. Business continuity still exists, but it travels as an explicit application or task handle rather than hidden transport memory.",
+      "trace": [
+        "The client assembles one complete request.",
+        "The router reads routable method and name metadata.",
+        "Any compatible instance validates version, identity, and capabilities.",
+        "Domain code executes with request-scoped dependencies.",
+        "A result or explicit durable handle returns."
+      ],
+      "analogy": "It is a complete parcel that any clerk can process, not a restaurant tab kept in one waiter's head.",
+      "nextjs": [
+        "Implement one POST route with request-scoped dependencies.",
+        "Use Mcp-Method and Mcp-Name for safe dispatch or policy routing.",
+        "Pass case_id or task_id as normal tool input when continuity is needed."
+      ],
+      "python": [
+        "Use FastAPI dependencies for per-request identity and authorization.",
+        "Keep server workers interchangeable behind the load balancer.",
+        "Persist business state in a database, not process memory."
+      ],
+      "caseStudy": {
+        "situation": "Maya submits a policy lookup while one MCP instance is being replaced.",
+        "walkthrough": [
+          "The gateway routes the request to another healthy instance.",
+          "That instance receives version, identity, and capabilities with the call.",
+          "It reads the named policy resource.",
+          "The result returns without recovering a protocol session."
+        ],
+        "result": "Deployment and autoscaling do not interrupt Maya's stateless lookup.",
+        "danger": "Removing protocol sessions does not authorize forgetting durable business state or authentication context.",
+        "takeaway": "Stateless transport and durable application work belong in different boxes."
+      },
+      "lab": "Take a session-based design and redraw it with two interchangeable servers plus one explicit database record.",
+      "checkpoint": "What replaced the old MCP protocol session?",
+      "answer": "Self-contained per-request metadata replaced protocol session state; explicit business or task handles preserve longer-lived work when needed.",
+      "glossary": [
+        "Stateless — no required protocol memory between calls",
+        "Request-scoped — valid for one request",
+        "Sticky routing — forcing one client to one instance"
+      ],
+      "related": [
+        47,
+        82,
+        85
+      ],
+      "sources": [
+        "MCP 2026-07-28 release notes",
+        "MCP specification"
+      ]
+    },
+    {
+      "id": 82,
+      "slug": "server-discovery-negotiation",
+      "moduleId": "module-18",
+      "title": "Server discovery, versions, and capabilities",
+      "stability": "Stable MCP 2026-07-28 core",
+      "diagram": "diagrams/82-server-discovery-negotiation.png",
+      "diagramPrompt": "Show CLIENT calling SERVER DISCOVER and receiving a white SERVER CARD with VERSION, CAPABILITIES, EXTENSIONS, ENDPOINT INFO. A separate DIRECT REQUEST bypasses discovery but still carries per-request metadata. Both paths meet at VALIDATION.",
+      "alt": "MCP server discovery can describe a server before use, while every actual request still validates its own version and supported features.",
+      "outcome": "Use discovery for planning without turning it into a hidden session handshake.",
+      "explanation": "The server/discover method lets a client learn server identity and advertised features. Discovery is useful for catalogs, planning, policy, and user interfaces, but it is not a required stateful gate before every call. Actual requests remain self-contained and must be validated on their own because discovery information can be cached, stale, or obtained by a different process.",
+      "trace": [
+        "The client may request server discovery metadata.",
+        "It stores the response with a timestamp and source.",
+        "The planner selects only advertised features.",
+        "The real request repeats its own required protocol context.",
+        "The server validates the call instead of trusting prior discovery."
+      ],
+      "analogy": "A shop window tells you what is usually sold; the cashier still checks the exact item and payment at purchase time.",
+      "nextjs": [
+        "Cache discovery metadata with a short policy-defined lifetime.",
+        "Use it to build tool and resource browsing views.",
+        "Revalidate the selected capability at the request boundary."
+      ],
+      "python": [
+        "Expose discovery through a typed client service.",
+        "Store cached metadata with fetched_at and source URL.",
+        "Treat request-time validation as authoritative."
+      ],
+      "caseStudy": {
+        "situation": "Maya's host discovered an approval feature yesterday, but the server deployment changed this morning.",
+        "walkthrough": [
+          "The host uses discovery to show the likely experience.",
+          "The request advertises its required extension again.",
+          "The server rejects the no-longer-supported extension clearly.",
+          "The host refreshes discovery and offers the safe fallback."
+        ],
+        "result": "Stale discovery does not become authorization to send an invalid request.",
+        "danger": "Treating discovery as permanent truth creates time-of-check versus time-of-use failures.",
+        "takeaway": "Discovery improves planning; the current request remains the contract."
+      },
+      "lab": "Design a cache record for discovery data containing value, source, fetched time, and expiry decision.",
+      "checkpoint": "Must every MCP request be preceded by server/discover?",
+      "answer": "No. Discovery is useful but the protocol request is self-contained and validated independently.",
+      "glossary": [
+        "Discovery — learning an endpoint's advertised surface",
+        "Advertisement — a claim about supported behavior",
+        "Time of use — the moment the actual request is validated"
+      ],
+      "related": [
+        78,
+        81,
+        83
+      ],
+      "sources": [
+        "MCP server discovery",
+        "MCP versioning and compatibility"
+      ]
+    },
+    {
+      "id": 83,
+      "slug": "mcp-primitives-catalog-scale",
+      "moduleId": "module-18",
+      "title": "Tools, resources, prompts, and catalog scale",
+      "stability": "Stable MCP core; progressive discovery is a roadmap direction",
+      "diagram": "diagrams/83-mcp-primitives-catalog-scale.png",
+      "diagramPrompt": "Show MCP SERVER at center feeding three distinct platforms labeled TOOLS, RESOURCES, PROMPTS. Each has a white contract card: EXECUTE, READ CONTEXT, REUSABLE TEMPLATE. A large CATALOG passes through SEARCH, FILTER, PAGE before reaching CLIENT.",
+      "alt": "MCP tools, resources, and prompts have different jobs, and large catalogs need bounded discovery instead of dumping everything into model context.",
+      "outcome": "Choose the correct primitive and keep discovery useful as the catalog grows.",
+      "explanation": "A tool performs an action, a resource supplies addressable context, and a prompt supplies a reusable message or workflow template. Their list and get or call contracts should remain distinct. Large installations should page, filter, search, or expose domain-specific discovery so the client can reveal only what is relevant. Improved progressive discovery is on the MCP roadmap, so label design-specific search behavior as an implementation choice until standardized.",
+      "trace": [
+        "The server publishes separate primitive catalogs.",
+        "The client asks for a bounded catalog slice.",
+        "Metadata helps the planner select a primitive.",
+        "The client reads, gets, or calls using the proper contract.",
+        "The result preserves type and provenance."
+      ],
+      "analogy": "A library has books, reference shelves, and lesson plans; the catalog helps you find one without carrying the whole building.",
+      "nextjs": [
+        "Represent primitive descriptors as separate TypeScript types.",
+        "Page and filter catalogs in server-side routes.",
+        "Keep raw catalog size out of the React client and model prompt."
+      ],
+      "python": [
+        "Use separate Pydantic models and handlers for each primitive.",
+        "Add cursor pagination and policy filters.",
+        "Record which descriptor caused a tool selection."
+      ],
+      "caseStudy": {
+        "situation": "Maya needs refund policy context, a refund calculator action, and a standard escalation template.",
+        "walkthrough": [
+          "The policy is exposed as a resource.",
+          "The calculator is exposed as a narrow tool.",
+          "The escalation wording is a prompt template.",
+          "Catalog filters return only support-domain entries."
+        ],
+        "result": "Each object has one understandable responsibility and the model sees a small relevant catalog.",
+        "danger": "Turning every data read into a tool hides provenance; turning every action into a resource hides side effects.",
+        "takeaway": "Name the responsibility first, then choose the primitive."
+      },
+      "lab": "Classify six examples as tool, resource, or prompt and explain the side-effect expectation of each.",
+      "checkpoint": "Why not send a 20,000-item tool catalog to the model?",
+      "answer": "It wastes context, increases selection errors, and may expose capabilities irrelevant to the user's task.",
+      "glossary": [
+        "Tool — executable capability",
+        "Resource — addressable context",
+        "Prompt — reusable message template",
+        "Catalog — discoverable collection of descriptors"
+      ],
+      "related": [
+        82,
+        84,
+        97
+      ],
+      "sources": [
+        "MCP server features",
+        "MCP roadmap"
+      ]
+    },
+    {
+      "id": 84,
+      "slug": "cache-subscription-extension-policy",
+      "moduleId": "module-18",
+      "title": "Cache hints, subscriptions, extensions, and deprecation",
+      "stability": "Stable core plus negotiated extensions",
+      "diagram": "diagrams/84-cache-subscription-extension-policy.png",
+      "diagramPrompt": "Create four lanes from MCP SERVER: CACHE RESULT with TTL and SCOPE card, SUBSCRIPTIONS LISTEN with event types, EXTENSION MAP with reverse-domain IDs, DEPRECATION RAMP with OLD to NEW and a coral removal date. All lanes pass through POLICY GATE.",
+      "alt": "Caching, notifications, extensions, and deprecation each need explicit scope, negotiation, and lifecycle rules.",
+      "outcome": "Avoid accidental contracts around performance features and evolving protocol surfaces.",
+      "explanation": "A cache hint is not permission to share data across users; it needs a lifetime and scope. subscriptions/listen opts into defined notification types rather than opening an unbounded event pipe. Extensions use unique identifiers, explicit negotiation, and independent versions. Deprecation should publish a replacement, compatibility window, telemetry, and removal criteria so old behavior does not disappear by surprise.",
+      "trace": [
+        "A result declares whether and how long it may be cached.",
+        "The cache key includes tenant, identity, version, and relevant input.",
+        "The client subscribes only to named notification types.",
+        "Extensions activate only after both sides agree.",
+        "Deprecation telemetry shows when removal is safe."
+      ],
+      "analogy": "It is a building with labeled storage lockers, a chosen mailing list, optional rooms, and a posted renovation schedule.",
+      "nextjs": [
+        "Centralize cache-key and expiry policy on the server.",
+        "Reduce notification types into typed client events.",
+        "Feature-flag extension and deprecation stages with telemetry."
+      ],
+      "python": [
+        "Use explicit cache_scope and ttl fields in result models.",
+        "Authorize subscription types per caller.",
+        "Run old and new contract tests during the compatibility window."
+      ],
+      "caseStudy": {
+        "situation": "Maya's policy result is cached, the task emits progress, and the UI uses an optional app extension.",
+        "walkthrough": [
+          "The cache entry is tenant-scoped and expires with the policy version.",
+          "The client listens only for task progress.",
+          "The app extension is negotiated separately.",
+          "The old response field remains readable during the migration window."
+        ],
+        "result": "Performance improves without leaking tenant data or silently breaking older clients.",
+        "danger": "Caching an authorized result globally can turn one valid read into a cross-user data leak.",
+        "takeaway": "Every optimization and extension needs a security scope and an exit plan."
+      },
+      "lab": "Write a cache key for a tenant policy lookup and list every field that prevents unsafe reuse.",
+      "checkpoint": "What makes an extension safe to use?",
+      "answer": "A unique documented contract, explicit support on both sides, compatible versioning, authorization, tests, and a defined lifecycle.",
+      "glossary": [
+        "TTL — time before cached data expires",
+        "Cache scope — who may reuse a result",
+        "Subscription — opt-in event delivery",
+        "Deprecation — managed retirement of a contract"
+      ],
+      "related": [
+        78,
+        83,
+        87
+      ],
+      "sources": [
+        "MCP subscriptions",
+        "MCP extensions",
+        "MCP deprecated features"
+      ]
+    },
+    {
+      "id": 85,
+      "slug": "mrtr-input-required-loop",
+      "moduleId": "module-19",
+      "title": "Multi Round-Trip Requests and input-required results",
+      "stability": "Stable MCP 2026-07-28 core",
+      "diagram": "diagrams/85-mrtr-input-required-loop.png",
+      "diagramPrompt": "Show CLIENT calling TOOL REQUEST. SERVER returns RESULT TYPE INPUT REQUIRED with two white REQUEST cards and REQUEST STATE. A HUMAN INPUT platform supplies INPUT RESPONSES. CLIENT retries ORIGINAL CALL and receives FINAL RESULT. Use a coral timeout branch.",
+      "alt": "An MCP call can pause with an input-required result and continue when the caller retries the original call with requested answers and request state.",
+      "outcome": "Use MRTR for bounded interactive input without inventing a hidden session.",
+      "explanation": "Multi Round-Trip Requests let a method return resultType input_required plus one or more structured requests and opaque request state. The caller gathers responses and retries the original method with inputResponses and the preserved state. Use this for a short, bounded continuation whose work can remain inside the request exchange. Use Tasks when work must survive for a long time or be managed independently.",
+      "trace": [
+        "The client sends the original method call.",
+        "The server cannot finish without specific input.",
+        "It returns structured requests and request state.",
+        "The client gathers and validates the answers.",
+        "The original method is retried and returns a final result or another bounded input request."
+      ],
+      "analogy": "It is a form returned with two highlighted blanks; you fill them and resubmit the same form.",
+      "nextjs": [
+        "Model input_required as a discriminated result union.",
+        "Render requested fields from schema, not arbitrary HTML.",
+        "Resubmit with an idempotency key if the method can cause effects."
+      ],
+      "python": [
+        "Use Pydantic unions for final and input-required results.",
+        "Sign or store opaque request state so the client cannot tamper with it.",
+        "Expire abandoned continuations and return a clear error."
+      ],
+      "caseStudy": {
+        "situation": "Maya asks for a refund, but the tool needs a reason code and acknowledgement of the policy exception.",
+        "walkthrough": [
+          "The tool returns two structured requests.",
+          "The UI explains each field to Maya.",
+          "Her answers return with the original request state.",
+          "The tool validates them and produces the eligibility result."
+        ],
+        "result": "The exchange stays explicit, typed, and resumable without a protocol session.",
+        "danger": "Treating request state as trusted client input can allow tampering or replay after expiry.",
+        "takeaway": "MRTR pauses one call; it does not magically make long-running work durable."
+      },
+      "lab": "Design an input_required result for a missing delivery date and a confirmation checkbox.",
+      "checkpoint": "When should MRTR become a Task?",
+      "answer": "When the work must outlive the request, be polled or canceled independently, or continue across long delays and failures.",
+      "glossary": [
+        "MRTR — multi round-trip request",
+        "input_required — result asking for more information",
+        "Request state — continuation data returned for the retry"
+      ],
+      "related": [
+        48,
+        86,
+        95
+      ],
+      "sources": [
+        "MCP 2026-07-28 release notes",
+        "MCP message patterns"
+      ]
+    },
+    {
+      "id": 86,
+      "slug": "mcp-tasks-extension-lifecycle",
+      "moduleId": "module-19",
+      "title": "The MCP Tasks extension lifecycle",
+      "stability": "Official opt-in MCP extension",
+      "diagram": "diagrams/86-mcp-tasks-extension-lifecycle.png",
+      "diagramPrompt": "Show a state machine with TASK HANDLE at center. States are WORKING, INPUT REQUIRED, COMPLETED, FAILED, CANCELED. Around it place CREATE FROM CALL, TASKS GET, TASKS UPDATE, TASKS CANCEL. Use teal artifact return and coral terminal failure paths.",
+      "alt": "The MCP Tasks extension turns selected calls into durable, addressable work that can be inspected, updated, or canceled.",
+      "outcome": "Keep long-running work explicit and manageable without pretending every tool call is a task.",
+      "explanation": "Tasks are an opt-in MCP extension identified as io.modelcontextprotocol/tasks. A compatible call may return a task handle instead of a final result. The client can inspect it with tasks/get, provide mid-flight input with tasks/update, and request cancellation with tasks/cancel. The server owns durable state and defines terminal behavior; clients must tolerate retries, expiry, and races between cancellation and completion.",
+      "trace": [
+        "The request opts into the Tasks extension.",
+        "The server accepts work and returns a durable handle.",
+        "The client polls or subscribes to status.",
+        "Input or cancellation targets the handle.",
+        "A terminal task exposes its final result, failure, or cancellation evidence."
+      ],
+      "analogy": "It is a repair ticket: you can check it later, add information, or cancel before the work is finished.",
+      "nextjs": [
+        "Keep task records in durable storage outside the route process.",
+        "Return stable task and operation IDs to React.",
+        "Make update and cancel actions idempotent and display race outcomes."
+      ],
+      "python": [
+        "Persist task state transitions transactionally.",
+        "Run workers from a durable queue and store result references.",
+        "Authorize every get, update, and cancel against tenant and owner."
+      ],
+      "caseStudy": {
+        "situation": "Maya's payment-specialist check may take several minutes and can need another document.",
+        "walkthrough": [
+          "The MCP call opts into Tasks.",
+          "The server returns task t-2048.",
+          "Maya's UI observes WORKING, then INPUT REQUIRED.",
+          "She supplies the document and later receives the terminal result."
+        ],
+        "result": "The work survives browser refresh and server replacement with one visible identity.",
+        "danger": "A task handle without authorization becomes a direct-object-reference vulnerability.",
+        "takeaway": "Durability, identity, authorization, and terminal evidence travel together."
+      },
+      "lab": "Draw allowed transitions for a five-state task and mark which methods may cause each transition.",
+      "checkpoint": "Does every MCP tool call automatically create a Task?",
+      "answer": "No. Tasks are an explicitly negotiated extension used only where the method and both implementations support it.",
+      "glossary": [
+        "Task handle — durable reference to work",
+        "Terminal state — no further normal progress",
+        "Cancellation race — completion and cancel arrive nearly together"
+      ],
+      "related": [
+        49,
+        85,
+        87
+      ],
+      "sources": [
+        "MCP Tasks extension",
+        "MCP extensions"
+      ]
+    },
+    {
+      "id": 87,
+      "slug": "delivery-mechanism-map",
+      "moduleId": "module-19",
+      "title": "Progress, subscriptions, polling, webhooks, and channels",
+      "stability": "Mixed core and implementation choices",
+      "diagram": "diagrams/87-delivery-mechanism-map.png",
+      "diagramPrompt": "Create a decision map from UPDATE NEEDED to four delivery boxes: SAME RESPONSE PROGRESS, SUBSCRIPTIONS LISTEN, POLLING, WEBHOOK OR CHANNEL. Decision diamonds say CONNECTION OPEN, CLIENT CAN POLL, SERVER CAN CALL BACK. All paths write DURABLE TASK STATE first.",
+      "alt": "Progress delivery is a view of durable state, and the right mechanism depends on connection lifetime, callback reachability, reliability, and user experience.",
+      "outcome": "Choose update delivery without confusing transport convenience with the source of truth.",
+      "explanation": "An open response can carry immediate progress, subscriptions/listen can opt into supported notification types, polling can recover from missed messages, and a webhook or implementation-specific channel can wake another system. The task record remains authoritative. Delivery can be duplicated, delayed, or lost, so consumers use event IDs, cursors, idempotent reducers, and a final reconciliation read.",
+      "trace": [
+        "The worker commits the new task state.",
+        "It emits an update after the commit.",
+        "The chosen channel delivers zero, one, or several copies.",
+        "The consumer deduplicates and advances its cursor.",
+        "A later get reconciles the current truth."
+      ],
+      "analogy": "The parcel tracker is the record; text messages, app notifications, and refreshing the tracking page are only delivery methods.",
+      "nextjs": [
+        "Use server streaming for an active page and polling after reconnect.",
+        "Reduce events by stable event_id and sequence.",
+        "Never let a toast notification be the only copy of an important result."
+      ],
+      "python": [
+        "Use an outbox after committing task state.",
+        "Sign webhook deliveries and retry with backoff.",
+        "Expose a get endpoint that reconciles missed progress."
+      ],
+      "caseStudy": {
+        "situation": "Maya closes her laptop while a refund task is working.",
+        "walkthrough": [
+          "The worker commits progress to durable state.",
+          "The live channel disappears.",
+          "A webhook may wake the host, but it is not required for correctness.",
+          "On return, Maya's client polls and resumes from the last sequence."
+        ],
+        "result": "The interface recovers the current state without replaying business work.",
+        "danger": "Publishing an event before committing state can tell the UI about progress that vanishes after a crash.",
+        "takeaway": "Commit truth first; deliver a recoverable view second."
+      },
+      "lab": "For a 20-second job and a 2-hour job, choose delivery mechanisms and explain the recovery read for each.",
+      "checkpoint": "Why poll if streaming already exists?",
+      "answer": "Polling provides reconciliation after disconnects or missed events; streaming improves responsiveness but does not replace durable truth.",
+      "glossary": [
+        "Polling — repeated reads of current state",
+        "Webhook — server callback to a registered endpoint",
+        "Cursor — consumer position in an event stream",
+        "Outbox — durable record of events to publish"
+      ],
+      "related": [
+        55,
+        86,
+        94
+      ],
+      "sources": [
+        "MCP subscriptions",
+        "MCP progress tracking"
+      ]
+    },
+    {
+      "id": 88,
+      "slug": "mcp-apps-sandbox-consent",
+      "moduleId": "module-19",
+      "title": "MCP Apps, sandboxed interfaces, consent, and audit",
+      "stability": "Official MCP extension",
+      "diagram": "diagrams/88-mcp-apps-sandbox-consent.png",
+      "diagramPrompt": "Show MCP TOOL returning DATA and UI TEMPLATE to HOST. HOST PREFETCH AND REVIEW leads to SANDBOXED IFRAME. A USER CONSENT GATE sits before TOOL ACTION. All UI messages return through HOST AUDIT, never directly to secrets or network.",
+      "alt": "An MCP App renders a declared interactive interface inside a host-controlled sandbox while tool calls, consent, and audit remain under host authority.",
+      "outcome": "Add rich interfaces without handing untrusted content the keys to the host.",
+      "explanation": "MCP Apps let tools associate interactive HTML UI templates that a host can discover, prefetch, cache, and review. The host renders the interface in a sandboxed iframe and mediates communication through the extension contract. The app must not bypass host consent, authorization, network policy, or audit. Treat server-supplied HTML and metadata as untrusted even when the underlying server is familiar.",
+      "trace": [
+        "The server declares a UI template ahead of use.",
+        "The host retrieves and applies security policy.",
+        "A tool result binds data to the approved template.",
+        "The sandbox renders the interface with limited powers.",
+        "User actions return through host consent and audited tool calls."
+      ],
+      "analogy": "It is a museum exhibit behind glass: visitors can interact through approved controls, but the exhibit cannot enter staff-only rooms.",
+      "nextjs": [
+        "Render the iframe with strict sandbox and content security policy.",
+        "Validate every postMessage origin, type, and correlation ID.",
+        "Route effectful actions back through server-side authorization."
+      ],
+      "python": [
+        "Serve versioned UI templates with hashes and restrictive headers.",
+        "Keep tool execution on the trusted backend.",
+        "Log template version, user decision, tool input summary, and result."
+      ],
+      "caseStudy": {
+        "situation": "Maya receives a refund comparison chart with an Approve button.",
+        "walkthrough": [
+          "The host already knows the declared template.",
+          "It renders the chart in a sandbox.",
+          "Clicking Approve sends a typed intent to the host.",
+          "The host shows the exact action and invokes the tool only after consent."
+        ],
+        "result": "Maya gets a rich experience without the embedded UI escaping the policy boundary.",
+        "danger": "Allowing the iframe to call privileged APIs directly removes the host's consent and audit control.",
+        "takeaway": "The host owns trust; the app owns presentation within the sandbox."
+      },
+      "lab": "List five iframe powers you would deny by default and the one typed message needed for an approval request.",
+      "checkpoint": "Where should an MCP App's effectful action be authorized?",
+      "answer": "At the trusted host or server boundary that invokes the tool, not inside the untrusted iframe alone.",
+      "glossary": [
+        "Sandbox — restricted execution environment",
+        "UI template — declared interactive presentation",
+        "Consent gate — explicit user review before an effect"
+      ],
+      "related": [
+        50,
+        65,
+        96
+      ],
+      "sources": [
+        "MCP Apps extension",
+        "MCP security principles"
+      ]
+    },
+    {
+      "id": 89,
+      "slug": "a2a-agent-card-trust",
+      "moduleId": "module-20",
+      "title": "Agent Cards, skills, interfaces, and signatures",
+      "stability": "Stable A2A 1.0",
+      "diagram": "diagrams/89-a2a-agent-card-trust.png",
+      "diagramPrompt": "Show CLIENT discovering an AGENT CARD. Explode the card into PROVIDER, CAPABILITIES, SKILLS, INTERFACES, EXTENSIONS, SECURITY, SIGNATURES. A TRUST POLICY gate selects one INTERFACE before MESSAGE SEND. A coral path rejects unknown issuer or algorithm.",
+      "alt": "An A2A Agent Card advertises who an agent is, what it can do, how to reach it, and how a client can evaluate the claim before sending work.",
+      "outcome": "Treat discovery metadata as a signed claim to evaluate, not automatic trust.",
+      "explanation": "A2A discovery centers on the Agent Card. It can describe the provider, capabilities, extensions, skills, interfaces, security schemes, and signatures. A client selects a compatible interface and required extensions, validates trust according to local policy, and then authenticates using the advertised scheme. Discovery, transport security, authorization, and business trust are related but separate decisions.",
+      "trace": [
+        "The client obtains an Agent Card from a trusted location or directory.",
+        "It checks identity, freshness, signatures, and allowed algorithms.",
+        "It filters skills and required capabilities.",
+        "It selects a compatible interface and binding.",
+        "Authentication and authorization occur when the real request is sent."
+      ],
+      "analogy": "It is a contractor's verified profile: services, contact methods, licenses, and references help you decide whether and how to hire them.",
+      "nextjs": [
+        "Fetch cards server-side and cache with provenance and expiry.",
+        "Render skill and trust information to the user.",
+        "Keep credentials out of the browser and bind them to the selected origin."
+      ],
+      "python": [
+        "Validate Agent Cards with strict Pydantic models.",
+        "Verify signatures against an allowed trust store.",
+        "Create an interface-selection policy with deterministic test fixtures."
+      ],
+      "caseStudy": {
+        "situation": "Maya's orchestrator needs a payment specialist.",
+        "walkthrough": [
+          "It finds two Agent Cards advertising refund review.",
+          "One uses an untrusted issuer and is rejected.",
+          "The trusted card offers a compatible HTTP+JSON interface.",
+          "The orchestrator authenticates and sends the task."
+        ],
+        "result": "The specialist is selected by explicit capability and trust evidence, not a model's guess.",
+        "danger": "A valid signature proves control of a key, not that every advertised skill is safe or suitable.",
+        "takeaway": "Discovery narrows candidates; policy decides trust and use."
+      },
+      "lab": "Design an Agent Card review checklist covering origin, signature, version, skills, interfaces, extensions, and security schemes.",
+      "checkpoint": "Does an Agent Card signature replace request authorization?",
+      "answer": "No. It can help authenticate the card; the actual request still needs transport authentication, authorization, and policy checks.",
+      "glossary": [
+        "Agent Card — A2A discovery document",
+        "Skill — advertised agent capability",
+        "Interface — endpoint and binding option",
+        "Signature — cryptographic evidence over card content"
+      ],
+      "related": [
+        78,
+        90,
+        92
+      ],
+      "sources": [
+        "A2A Agent Discovery Objects",
+        "A2A security"
+      ]
+    },
+    {
+      "id": 90,
+      "slug": "a2a-message-task-artifact-anatomy",
+      "moduleId": "module-20",
+      "title": "Messages, tasks, status, parts, and artifacts",
+      "stability": "Stable A2A 1.0",
+      "diagram": "diagrams/90-a2a-message-task-artifact-anatomy.png",
+      "diagramPrompt": "Create an anatomy diagram. USER MESSAGE contains PARTS: TEXT, FILE, DATA. It creates TASK with TASK ID, CONTEXT ID, STATUS, HISTORY. AGENT MESSAGE and ARTIFACTS return. Show status path SUBMITTED to WORKING to COMPLETED, with INPUT REQUIRED, AUTH REQUIRED, FAILED, CANCELED, REJECTED branches.",
+      "alt": "A2A separates conversational messages from durable task state and the artifacts produced by that task.",
+      "outcome": "Read the canonical A2A data model and keep its identities and outputs distinct.",
+      "explanation": "A Message is one communication unit with a role and one or more Parts. A Task is the addressable unit of work with an ID, optional context ID, current TaskStatus, history, and artifacts. Parts hold exactly one of text, raw bytes, URL, or structured data. Artifacts are durable task outputs. A2A 1.0 task states include submitted, working, completed, failed, canceled, input required, rejected, and auth required, plus unspecified.",
+      "trace": [
+        "The client creates a message with a unique message ID.",
+        "The agent may answer directly or create a task.",
+        "The task enters submitted and working states.",
+        "Messages can request input or authorization while the task is interrupted.",
+        "Terminal completion exposes artifacts; failure, cancellation, or rejection remains explicit."
+      ],
+      "analogy": "The conversation is the phone call, the job ticket is the task, and the finished report is the artifact.",
+      "nextjs": [
+        "Model messages, tasks, parts, and artifacts as separate TypeScript types.",
+        "Keep contextId for related interactions and taskId for one unit of work.",
+        "Render task status separately from chat bubbles."
+      ],
+      "python": [
+        "Use Pydantic OneOf validation so a Part has exactly one content field.",
+        "Persist task transitions and artifact references transactionally.",
+        "Reject client taskId and contextId combinations that do not match."
+      ],
+      "caseStudy": {
+        "situation": "Maya sends a text request and a receipt image to the payment specialist.",
+        "walkthrough": [
+          "The message contains a text Part and URL or raw file Part.",
+          "The specialist creates a Task under the existing case context.",
+          "Status moves from submitted to working.",
+          "A completed task returns a refund recommendation artifact."
+        ],
+        "result": "The UI can show conversation, progress, and final evidence without flattening them into one blob.",
+        "danger": "Treating transient messages as guaranteed history can lose critical instructions after reconnect.",
+        "takeaway": "Important truth belongs in task state or artifacts, not only in passing messages."
+      },
+      "lab": "Build a sample A2A object graph with one context, one task, two messages, three parts, and one artifact.",
+      "checkpoint": "What is the difference between a Message and an Artifact?",
+      "answer": "A Message communicates during an interaction; an Artifact is a task output intended to be retained and used.",
+      "glossary": [
+        "Part — one typed piece of message or artifact content",
+        "TaskStatus — state plus optional message and timestamp",
+        "Context ID — identity linking related interactions"
+      ],
+      "related": [
+        54,
+        89,
+        91
+      ],
+      "sources": [
+        "A2A Core Objects",
+        "A2A TaskState"
+      ]
+    },
+    {
+      "id": 91,
+      "slug": "a2a-stream-push-cancel",
+      "moduleId": "module-20",
+      "title": "Streaming, push notifications, multi-turn work, and cancellation",
+      "stability": "Stable A2A 1.0",
+      "diagram": "diagrams/91-a2a-stream-push-cancel.png",
+      "diagramPrompt": "Show one A2A TASK feeding three update paths: OPEN STREAM with STATUS and ARTIFACT UPDATE events, PUSH WEBHOOK with signed callback, and GET TASK polling. A MULTI TURN MESSAGE returns to the same task. A coral CANCEL path races with COMPLETED and ends in one recorded terminal truth.",
+      "alt": "A2A offers streaming, push, polling, follow-up messages, and cancellation around the same durable task contract.",
+      "outcome": "Choose delivery and continuation mechanisms while preserving one authoritative task state.",
+      "explanation": "Send streaming message can deliver TaskStatusUpdateEvent and TaskArtifactUpdateEvent records while the connection is open. Push notification configuration supports callbacks for disconnected clients. Get and subscribe let clients reconcile current or future state. Follow-up messages can address a task and context for multi-turn work. Cancellation is a request whose result may race with completion; the server must report the final recorded state honestly.",
+      "trace": [
+        "The client sends a message and receives or learns a task ID.",
+        "An open stream emits status and artifact updates.",
+        "A disconnected client may rely on signed push or later polling.",
+        "Follow-up input targets the matching task and context.",
+        "Cancellation and completion resolve to one durable terminal state."
+      ],
+      "analogy": "You can watch a kitchen order at the counter, receive a text, check the app, add a note, or cancel—yet there is still one order ticket.",
+      "nextjs": [
+        "Consume streams in a server route and forward sanitized typed events.",
+        "Store the last event sequence for reconnect.",
+        "Make cancel buttons show pending, accepted, or already completed outcomes."
+      ],
+      "python": [
+        "Verify webhook signatures and prevent server-side request forgery.",
+        "Use an outbox and idempotent event delivery.",
+        "Lock or compare versions when applying cancel versus complete transitions."
+      ],
+      "caseStudy": {
+        "situation": "Maya leaves the page while the payment specialist is working, then returns and presses Cancel just as a result arrives.",
+        "walkthrough": [
+          "The live stream ends when the page closes.",
+          "A signed push wakes the host, or polling recovers later.",
+          "The cancel request is authorized and recorded.",
+          "The final task read reports either canceled or completed with the winning version."
+        ],
+        "result": "The UI tells Maya what actually happened instead of claiming both success and cancellation.",
+        "danger": "A webhook URL supplied by an untrusted caller can become a network pivot unless destinations are constrained.",
+        "takeaway": "Every update path converges on the same authorized task record."
+      },
+      "lab": "Write a race test where cancel and complete run concurrently; define the two acceptable outcomes and forbidden mixed state.",
+      "checkpoint": "Why perform a final Get Task after a stream ends?",
+      "answer": "Because streams can disconnect or omit updates; the task read reconciles the authoritative current state.",
+      "glossary": [
+        "Push notification — server callback for updates",
+        "Streaming event — update delivered on an open connection",
+        "Cancellation race — cancel and finish compete"
+      ],
+      "related": [
+        87,
+        90,
+        92
+      ],
+      "sources": [
+        "A2A Operations",
+        "A2A Streaming Events",
+        "A2A Push Notifications"
+      ]
+    },
+    {
+      "id": 92,
+      "slug": "a2a-bindings-version-security",
+      "moduleId": "module-20",
+      "title": "Bindings, versioning, security schemes, and interoperability",
+      "stability": "Stable A2A 1.0",
+      "diagram": "diagrams/92-a2a-bindings-version-security.png",
+      "diagramPrompt": "Show one CANONICAL A2A MODEL at center connected to JSON-RPC, GRPC, and HTTP PLUS JSON bindings. Each passes through FUNCTIONAL EQUIVALENCE tests. Above, headers A2A-VERSION and A2A-EXTENSIONS meet SECURITY SCHEMES: API KEY, HTTP AUTH, OAUTH2, OIDC, MTLS.",
+      "alt": "A2A keeps one canonical meaning across multiple bindings while version, extensions, authentication, and error mappings remain explicit.",
+      "outcome": "Preserve semantics when wire formats and security schemes differ.",
+      "explanation": "A2A defines a canonical data model and supports JSON-RPC, gRPC, and HTTP+JSON bindings, with guidance for custom bindings. A binding may serialize names differently, but operations, states, errors, pagination, streaming behavior, and security meaning must remain functionally equivalent. A2A-Version and A2A-Extensions communicate contract choices. Agent Cards advertise security schemes such as API key, HTTP authentication, OAuth 2.0, OpenID Connect, and mutual TLS.",
+      "trace": [
+        "The client selects an advertised interface and binding.",
+        "Version and requested extensions accompany the call.",
+        "The binding maps the canonical operation and data model.",
+        "Authentication follows the advertised scheme.",
+        "Cross-binding tests compare behavior, errors, and task state—not byte-for-byte payloads."
+      ],
+      "analogy": "English, braille, and audio can express the same instruction; the representation changes but the meaning must survive.",
+      "nextjs": [
+        "Create one internal canonical model behind route adapters.",
+        "Normalize binding-specific errors before React consumes them.",
+        "Keep OAuth and mTLS credentials server-side."
+      ],
+      "python": [
+        "Use generated or strict models for the canonical contract.",
+        "Implement thin adapters for JSON-RPC, REST, or gRPC.",
+        "Run the same contract suite against every enabled binding."
+      ],
+      "caseStudy": {
+        "situation": "Maya's host speaks HTTP+JSON while the payment specialist also offers gRPC.",
+        "walkthrough": [
+          "The Agent Card lists both interfaces.",
+          "The host selects HTTP+JSON and the current A2A version.",
+          "The specialist maps the request to its canonical handler.",
+          "The same task states and artifacts would appear through gRPC."
+        ],
+        "result": "The integration remains interoperable without duplicating business logic per binding.",
+        "danger": "Implementing separate domain behavior in each adapter creates silent semantic drift.",
+        "takeaway": "One model, thin bindings, shared conformance tests."
+      },
+      "lab": "Create a table mapping one send-message operation, validation error, task update, and cancel result across two bindings.",
+      "checkpoint": "Does functional equivalence require identical JSON payloads?",
+      "answer": "No. It requires equivalent operations, meaning, states, errors, and observable behavior in each binding.",
+      "glossary": [
+        "Binding — wire-level mapping of a protocol",
+        "Functional equivalence — same observable meaning",
+        "Security scheme — method used to authenticate requests"
+      ],
+      "related": [
+        78,
+        89,
+        98
+      ],
+      "sources": [
+        "A2A Bindings",
+        "A2A Versioning",
+        "A2A Security Schemes"
+      ]
+    },
+    {
+      "id": 93,
+      "slug": "agui-typed-event-lifecycle",
+      "moduleId": "module-21",
+      "title": "The typed AG-UI run and event lifecycle",
+      "stability": "Stable AG-UI event core",
+      "diagram": "diagrams/93-agui-typed-event-lifecycle.png",
+      "diagramPrompt": "Show RUN STARTED opening a horizontal event stream. Inside are STEP STARTED and STEP FINISHED, TEXT MESSAGE START CONTENT END, TOOL CALL START ARGS END RESULT. The stream terminates at RUN FINISHED or coral RUN ERROR. IDs connect related event groups.",
+      "alt": "AG-UI gives the frontend typed lifecycle, message, and tool-call events that can be reduced into an understandable interface.",
+      "outcome": "Build the UI from validated events instead of parsing model prose.",
+      "explanation": "A normal AG-UI run starts with RunStarted and ends with RunFinished or RunError. Optional StepStarted and StepFinished events expose progress. TextMessageStart, TextMessageContent, and TextMessageEnd stream text. ToolCallStart, ToolCallArgs, ToolCallEnd, and ToolCallResult expose tool activity. threadId, runId, messageId, and toolCallId correlate events with the correct interface object.",
+      "trace": [
+        "RunStarted creates the run boundary.",
+        "Step events update progress without pretending to be chat messages.",
+        "Message deltas append only to their message ID.",
+        "Tool argument deltas append only to their tool-call ID.",
+        "RunFinished commits success; RunError closes the failed run."
+      ],
+      "analogy": "It is stage management: cue cards say when the show, scene, speech, and prop action begin and end.",
+      "nextjs": [
+        "Validate incoming events before the React reducer.",
+        "Use discriminated unions with exhaustive switch handling.",
+        "Store stable IDs and never identify a stream by screen position."
+      ],
+      "python": [
+        "Emit typed events from the agent adapter.",
+        "Test ordering, duplicated events, and missing terminal events.",
+        "Separate domain work from transport serialization."
+      ],
+      "caseStudy": {
+        "situation": "Maya asks the agent to check policy and contact the payment specialist.",
+        "walkthrough": [
+          "RunStarted activates the progress region.",
+          "Step events name policy lookup and specialist review.",
+          "Tool events show bounded inputs and safe result summaries.",
+          "Text events stream the explanation and RunFinished closes the run."
+        ],
+        "result": "Maya can see what is happening without reading hidden reasoning or raw logs.",
+        "danger": "Rendering unvalidated custom payloads can crash the UI or expose unsafe markup.",
+        "takeaway": "Typed events are interface contracts, not decoration."
+      },
+      "lab": "Write reducer pseudocode for RunStarted, TextMessageContent, ToolCallResult, and RunError using stable IDs.",
+      "checkpoint": "Which events are the required boundaries of a normal AG-UI run?",
+      "answer": "RunStarted first, followed eventually by exactly one terminal RunFinished or RunError for that run.",
+      "glossary": [
+        "Reducer — function that applies an event to interface state",
+        "Delta — incremental content chunk",
+        "Exhaustive handling — every known event type is addressed"
+      ],
+      "related": [
+        74,
+        94,
+        96
+      ],
+      "sources": [
+        "A",
+        "G",
+        "-",
+        "U",
+        "I",
+        " ",
+        "E",
+        "v",
+        "e",
+        "n",
+        "t",
+        "s"
+      ]
+    },
+    {
+      "id": 94,
+      "slug": "agui-snapshot-delta-replay",
+      "moduleId": "module-21",
+      "title": "Snapshots, deltas, reconnects, replay, and idempotency",
+      "stability": "Stable AG-UI snapshot-delta pattern; replay policy is implementation-specific",
+      "diagram": "diagrams/94-agui-snapshot-delta-replay.png",
+      "diagramPrompt": "Show STATE SNAPSHOT as a full white board, followed by ordered STATE DELTA cards labeled RFC 6902. A NETWORK BREAK leads to RECONNECT, MESSAGES SNAPSHOT, REPLAY FROM SEQUENCE, DEDUPLICATE, CONSISTENT UI. A coral DIVERGENCE path requests FRESH SNAPSHOT.",
+      "alt": "A frontend restores known state from snapshots, applies ordered deltas once, and requests a fresh snapshot when replay cannot prove consistency.",
+      "outcome": "Make reconnect a normal tested path rather than a hopeful refresh.",
+      "explanation": "StateSnapshot replaces the current agent state with a complete value. StateDelta applies ordered JSON Patch operations. MessagesSnapshot refreshes conversation history. The protocol describes the event types; retention, cursor, replay, and deduplication policies belong to the implementation. Give events stable identities or sequence positions, persist enough history for the promised reconnect window, and request a fresh snapshot when a gap or invalid patch appears.",
+      "trace": [
+        "A snapshot establishes the baseline.",
+        "Deltas apply in order to that baseline.",
+        "The client records its last accepted position.",
+        "Reconnect requests missing events or a fresh snapshot.",
+        "Duplicate events are ignored and divergence triggers resynchronization."
+      ],
+      "analogy": "It is restoring a saved game, then applying each move after the save exactly once.",
+      "nextjs": [
+        "Keep reducer state and last sequence in one atomic client store update.",
+        "Use an event replay route with bounded retention.",
+        "Replace state on snapshot; do not merge it as a delta."
+      ],
+      "python": [
+        "Persist events in an append-only table or stream.",
+        "Validate RFC 6902 patches before emission.",
+        "Return snapshot_required when the requested cursor is too old."
+      ],
+      "caseStudy": {
+        "situation": "Maya's Wi-Fi fails after three tool updates and reconnects after two more.",
+        "walkthrough": [
+          "The client sends its last accepted sequence.",
+          "The server replays the two missing events if retained.",
+          "A duplicate delivery is ignored.",
+          "If retention expired, a fresh state and messages snapshot rebuilds the UI."
+        ],
+        "result": "Maya sees one coherent interface with no duplicated tool card or missing result.",
+        "danger": "Applying the same JSON Patch twice can corrupt state even when the transport retry seems harmless.",
+        "takeaway": "Idempotency belongs in the reducer and the replay contract."
+      },
+      "lab": "Given snapshot version 10 and events 11, 12, 12, 14, decide what to apply and when to request resynchronization.",
+      "checkpoint": "What should the client do when a StateDelta cannot be applied safely?",
+      "answer": "Stop applying uncertain deltas and request or accept a fresh StateSnapshot.",
+      "glossary": [
+        "Snapshot — complete replacement state",
+        "JSON Patch — standard list of state operations",
+        "Replay window — retained event range available after reconnect"
+      ],
+      "related": [
+        55,
+        87,
+        93
+      ],
+      "sources": [
+        "AG-UI State Management Events",
+        "JSON Patch RFC 6902"
+      ]
+    },
+    {
+      "id": 95,
+      "slug": "agui-interrupt-approval-steering",
+      "moduleId": "module-21",
+      "title": "Interrupts, resume payloads, expiry, steering, and approval",
+      "stability": "Draft AG-UI interrupt-aware lifecycle; isolate behind an adapter",
+      "diagram": "diagrams/95-agui-interrupt-approval-steering.png",
+      "diagramPrompt": "Show RUN FINISHED with OUTCOME INTERRUPT and two INTERRUPT cards. HUMAN REVIEW supplies RESUME PAYLOAD to NEW RUN STARTED with PARENT RUN ID. Side paths show EXPIRED, REJECTED, and STEERING MESSAGE. A bold amber DRAFT CONTRACT banner spans the visual.",
+      "alt": "The draft AG-UI interrupt model pauses one run, gathers responses to every open interrupt, and resumes through a new related run with explicit lineage.",
+      "outcome": "Learn the latest interaction model without mistaking draft fields for a frozen contract.",
+      "explanation": "The current AG-UI documentation marks interrupt-aware lifecycle extensions as draft. RunFinished may carry an interrupt outcome with a non-empty interrupt list. A client resumes by starting a new run whose input addresses all open interrupts; parentRunId can preserve lineage. Production code should isolate these fields behind an adapter, define expiry and replay behavior, show the exact proposed action, and keep ordinary steering messages separate from effectful approval.",
+      "trace": [
+        "The active run reaches a decision that requires a person.",
+        "RunFinished closes it with an interrupt outcome.",
+        "The UI renders every requested decision and expiry.",
+        "The person approves, rejects, edits, or supplies input.",
+        "A new related run carries the complete resume payload and revalidates authority."
+      ],
+      "analogy": "It is a permit application paused for signatures, then reopened as a new tracked review linked to the original submission.",
+      "nextjs": [
+        "Wrap draft event fields in src/protocol/agui-interrupt-adapter.ts.",
+        "Store open interrupts server-side with expiry and immutable action summaries.",
+        "Create a new run ID for resume and pass parentRunId only through the adapter."
+      ],
+      "python": [
+        "Persist interrupt records and consumed_at atomically.",
+        "Verify resume payloads address every open interrupt exactly once.",
+        "Recheck authorization and current business state after a long pause."
+      ],
+      "caseStudy": {
+        "situation": "Maya must approve a $120 refund after seeing the destination account and policy exception.",
+        "walkthrough": [
+          "The run finishes with a draft interrupt outcome.",
+          "The UI shows amount, destination, reason, and expiry.",
+          "Maya approves before expiry.",
+          "A new linked run revalidates the case and performs the action once."
+        ],
+        "result": "The approval is exact, auditable, and insulated from later draft-shape changes.",
+        "danger": "A generic 'continue' button can authorize a changed or hidden action.",
+        "takeaway": "Approval binds to an exact action; draft protocol fields stay behind a replaceable boundary."
+      },
+      "lab": "Design an interrupt record with action hash, display summary, requested_at, expires_at, status, and one-time resume token.",
+      "checkpoint": "Why start a new run when resuming a draft AG-UI interrupt?",
+      "answer": "The documented draft model closes the interrupted run and uses a new run with resume input and optional parent lineage.",
+      "glossary": [
+        "Interrupt — deliberate pause for external input",
+        "Resume payload — answers addressing open interrupts",
+        "Lineage — relation between an earlier and later run",
+        "Steering — user guidance that does not itself grant an effect"
+      ],
+      "related": [
+        65,
+        85,
+        93
+      ],
+      "sources": [
+        "AG-UI Events",
+        "AG-UI Interrupts draft"
+      ]
+    },
+    {
+      "id": 96,
+      "slug": "agui-tool-artifact-recovery",
+      "moduleId": "module-21",
+      "title": "Tool rendering, artifacts, errors, and recovery choices",
+      "stability": "Stable events plus application UI policy",
+      "diagram": "diagrams/96-agui-tool-artifact-recovery.png",
+      "diagramPrompt": "Show AG-UI EVENT REDUCER producing four UI cards: TOOL IN PROGRESS, TOOL RESULT, ARTIFACT READY, RUN ERROR. Each card has permitted actions: VIEW DETAILS, RETRY SAFE STEP, DOWNLOAD, EDIT INPUT, CONTACT SUPPORT. A coral branch blocks BLIND RETRY for effectful calls.",
+      "alt": "A good agent interface turns typed events into honest status, durable artifacts, and recovery actions matched to the failure and side-effect risk.",
+      "outcome": "Design recovery as part of the contract, not as a generic retry button.",
+      "explanation": "Tool events can expose a name, streamed arguments, completion, and result. The UI decides how much to reveal based on sensitivity and user role. Artifacts should have stable names, provenance, media types, and download or preview controls. RunError should map a safe error code to meaningful choices: retry an idempotent read, edit input, resume from checkpoint, reconcile task state, or contact support. Never ask the user to repeat an effectful action until the system checks whether it already happened.",
+      "trace": [
+        "The reducer creates a card for a stable toolCallId.",
+        "Argument deltas build a redacted preview.",
+        "The result links any durable artifact.",
+        "An error code selects allowed recovery actions.",
+        "An effectful retry first reconciles operation status or reuses an idempotency key."
+      ],
+      "analogy": "A bank machine does not simply say 'error, press again'; it tells you whether cash was dispensed and what to do next.",
+      "nextjs": [
+        "Map error codes to typed recoveryAction objects.",
+        "Use accessible live regions for important status, not every token.",
+        "Download artifacts through authorized server routes with safe filenames."
+      ],
+      "python": [
+        "Return stable error codes and support references from the backend.",
+        "Store artifact metadata separately from raw event history.",
+        "Expose operation receipts so retries can reconcile prior effects."
+      ],
+      "caseStudy": {
+        "situation": "Maya sees a timeout after the refund tool submitted its request to the payment system.",
+        "walkthrough": [
+          "The UI does not show a blind Retry button.",
+          "It checks the operation receipt by idempotency key.",
+          "The backend reports that the refund completed.",
+          "The UI renders the receipt artifact and closes the error state."
+        ],
+        "result": "Maya avoids a duplicate refund and receives proof of the real outcome.",
+        "danger": "Raw stack traces can leak secrets while vague errors leave users unable to recover.",
+        "takeaway": "Show safe truth, a support reference, and only the recovery choices the system can honor."
+      },
+      "lab": "Create a recovery table for validation error, authorization error, stale state, read timeout, and uncertain write outcome.",
+      "checkpoint": "When is a retry button unsafe?",
+      "answer": "When the prior attempt may have caused an effect and the system has not reconciled its outcome or guaranteed idempotency.",
+      "glossary": [
+        "Recovery action — safe next step offered by the UI",
+        "Operation receipt — durable proof of a side effect",
+        "Redaction — hiding sensitive values while preserving useful context"
+      ],
+      "related": [
+        56,
+        73,
+        93
+      ],
+      "sources": [
+        "AG-UI Tool Call Events",
+        "AG-UI RunError"
+      ]
+    },
+    {
+      "id": 97,
+      "slug": "protocol-boundary-decision-tree",
+      "moduleId": "module-22",
+      "title": "Choose MCP, A2A, AG-UI, or an internal function",
+      "stability": "Architecture decision",
+      "diagram": "diagrams/97-protocol-boundary-decision-tree.png",
+      "diagramPrompt": "Create a decision tree starting WHO OWNS THE OTHER SIDE. Branch SAME PROCESS to INTERNAL FUNCTION, APP TO CAPABILITY SERVER to MCP, AGENT TO INDEPENDENT AGENT to A2A, AGENT TO USER INTERFACE to AG-UI. A coral warning says DO NOT STACK PROTOCOLS WITHOUT A REAL BOUNDARY.",
+      "alt": "Choose a protocol from the ownership boundary and interaction contract, not because more protocols sound more advanced.",
+      "outcome": "Give MCP, A2A, AG-UI, and ordinary code one clear job each.",
+      "explanation": "Use an internal function when one codebase owns both sides and no interoperability boundary is needed. Use MCP when an AI host needs standardized tools, resources, prompts, or extensions from a capability server. Use A2A when independent agents need discovery, tasks, messages, artifacts, and multi-turn coordination. Use AG-UI between an agent runtime and a responsive frontend. A product can use all three, but only at distinct boundaries.",
+      "trace": [
+        "Ask whether the two components have separate owners or deployments.",
+        "Name the thing crossing the boundary: capability call, agent task, or UI event.",
+        "Choose the smallest contract that preserves required interoperability.",
+        "Keep domain logic behind the adapter.",
+        "Add another protocol only when another real boundary appears."
+      ],
+      "analogy": "Use an elevator inside one building, a delivery service between businesses, and a display panel for the passenger—each solves a different boundary.",
+      "nextjs": [
+        "Call internal services directly inside one Next.js deployment.",
+        "Use an MCP client only at capability-server boundaries.",
+        "Consume AG-UI events in React and call A2A from trusted server-side orchestration."
+      ],
+      "python": [
+        "Keep domain functions independent of protocol libraries.",
+        "Expose MCP or A2A adapters around shared services.",
+        "Emit AG-UI from the orchestration layer, not from database code."
+      ],
+      "caseStudy": {
+        "situation": "Maya's flow needs policy lookup, an external payment specialist, and a live browser experience.",
+        "walkthrough": [
+          "Policy capability crosses MCP.",
+          "Independent specialist work crosses A2A.",
+          "Run and tool updates cross AG-UI.",
+          "Refund calculations inside the policy service remain ordinary functions."
+        ],
+        "result": "Every protocol appears once for a reason that a beginner can point to.",
+        "danger": "Wrapping an internal helper in A2A adds discovery, networking, failure, and security cost with no interoperability benefit.",
+        "takeaway": "Start with ownership and responsibility; acronyms come last."
+      },
+      "lab": "Classify eight arrows in your architecture as internal function, MCP, A2A, AG-UI, or ordinary HTTP, and justify each.",
+      "checkpoint": "Can one user request legitimately cross all three protocols?",
+      "answer": "Yes, when it crosses three distinct boundaries: UI to agent runtime, host to capability server, and agent to independent agent.",
+      "glossary": [
+        "Boundary — point where ownership or contract changes",
+        "Adapter — code translating one contract to another",
+        "Internal function — direct call within one implementation"
+      ],
+      "related": [
+        72,
+        83,
+        89
+      ],
+      "sources": [
+        "MCP specification",
+        "A2A specification",
+        "AG-UI introduction"
+      ]
+    },
+    {
+      "id": 98,
+      "slug": "adapter-correlation-contract",
+      "moduleId": "module-22",
+      "title": "Gateways, adapters, correlation IDs, and contract translation",
+      "stability": "Architecture and testing pattern",
+      "diagram": "diagrams/98-adapter-correlation-contract.png",
+      "diagramPrompt": "Show AG-UI EVENT entering ORCHESTRATOR, then MCP ADAPTER to POLICY SERVER and A2A ADAPTER to PAYMENT AGENT. A vertical CORRELATION SPINE carries TRACE ID, CASE ID, TASK ID, TOOL CALL ID, IDEMPOTENCY KEY. White CONTRACT MAP cards sit at each adapter; coral arrows reject lossy mappings.",
+      "alt": "Adapters translate shapes while preserving meaning, identity, authorization, errors, and evidence across protocol boundaries.",
+      "outcome": "Build composition glue that can be tested and replaced without contaminating domain logic.",
+      "explanation": "A gateway controls entry policy and routing; an adapter maps one contract to another. Translation must preserve units, required fields, state meaning, cancellation, errors, provenance, and security context. Keep identifiers distinct but correlated: trace ID for observability, case ID for business context, A2A task ID for specialist work, AG-UI toolCallId for rendering, and idempotency key for effects. Store mapping records so a result can be traced back without guessing.",
+      "trace": [
+        "An AG-UI event identifies the user-visible run and tool card.",
+        "The orchestrator authorizes the business request.",
+        "The MCP adapter maps a bounded capability call.",
+        "The A2A adapter creates or continues a specialist task.",
+        "Mapping records connect returned artifacts and errors to the original run."
+      ],
+      "analogy": "It is an airport transfer desk translating tickets between airlines while preserving passenger, baggage, security, and destination identities.",
+      "nextjs": [
+        "Define adapter input and output types independent of SDK response objects.",
+        "Create a correlation record before the external call.",
+        "Map external errors to stable UI-safe codes without discarding the original support reference."
+      ],
+      "python": [
+        "Implement pure mapping functions plus effectful clients.",
+        "Persist identifier mappings and operation state transactionally.",
+        "Test round trips, unknown enums, missing fields, units, and cancellation."
+      ],
+      "caseStudy": {
+        "situation": "Maya's browser tool card starts a policy lookup and payment-agent task.",
+        "walkthrough": [
+          "The toolCallId is recorded against the case.",
+          "The MCP result adds policy version and citations.",
+          "The A2A task ID is stored beside the orchestration step.",
+          "The final artifact maps back to the same AG-UI run and trace."
+        ],
+        "result": "Support can follow one request across every protocol without treating one ID as universal.",
+        "danger": "A lossy adapter that maps INPUT REQUIRED to generic failure removes the user's only path to continue.",
+        "takeaway": "Translate semantics, not just field names."
+      },
+      "lab": "Create a mapping table for success, input required, auth required, canceled, failed, and uncertain transport outcome across two protocols.",
+      "checkpoint": "Why keep several correlated IDs instead of one global ID?",
+      "answer": "Each protocol and business layer gives identity a different lifecycle; correlation preserves relationships without forcing incompatible meanings together.",
+      "glossary": [
+        "Gateway — policy and routing entry point",
+        "Contract translation — preserving meaning across shapes",
+        "Idempotency key — stable identity of an intended effect"
+      ],
+      "related": [
+        79,
+        92,
+        100
+      ],
+      "sources": [
+        "MCP base protocol",
+        "A2A Data Model",
+        "AG-UI Events"
+      ]
+    },
+    {
+      "id": 99,
+      "slug": "acp-to-a2a-migration",
+      "moduleId": "module-22",
+      "title": "ACP-to-A2A historical migration",
+      "stability": "Historical migration; A2A is the current target",
+      "diagram": "diagrams/99-acp-to-a2a-migration.png",
+      "diagramPrompt": "Create a two-column migration map. Left HISTORY ACP has AGENT MANIFEST, RUN, MESSAGE, OUTPUT, CUSTOM STREAM. Right CURRENT TARGET A2A 1.0 has AGENT CARD, TASK, MESSAGE PARTS, ARTIFACT, STATUS AND ARTIFACT EVENTS. An ADAPTER STRANGLER bridge supports DUAL READ, SHADOW TEST, CUTOVER, RETIRE. Do not portray ACP as current.",
+      "alt": "A safe ACP migration inventories old semantics, maps them to current A2A contracts, tests gaps, and retires the old boundary gradually.",
+      "outcome": "Preserve history without teaching a retired or superseded interface as the new default.",
+      "explanation": "ACP appears here only because existing systems may still speak it. Do not perform a word-for-word rename. Inventory the actual deployed manifest, run, message, streaming, output, authentication, and error behavior. Map discovery to an A2A Agent Card, durable work to Task, communication to Message and Parts, outputs to Artifacts, and updates to status or artifact events. Record unmapped behavior as an extension, adapter policy, or deliberate removal.",
+      "trace": [
+        "Capture real ACP traffic and supported behavior.",
+        "Define the target A2A 1.0 profile.",
+        "Build a strangler adapter with explicit mapping tests.",
+        "Shadow or dual-read results and compare semantics.",
+        "Cut clients over, monitor, then remove ACP on published criteria."
+      ],
+      "analogy": "It is moving from an old address: forward mail, check every sender, update records, then end forwarding after proof—not on the first day.",
+      "nextjs": [
+        "Put the ACP adapter behind a server-only interface.",
+        "Expose only canonical internal objects to the app.",
+        "Track remaining ACP traffic and block new ACP-only features."
+      ],
+      "python": [
+        "Replay captured fixtures through old and new adapters.",
+        "Compare task state, errors, artifacts, and security context.",
+        "Remove credentials and endpoints only after traffic reaches the exit threshold."
+      ],
+      "caseStudy": {
+        "situation": "Acme has one legacy payment agent using ACP and a new specialist using A2A 1.0.",
+        "walkthrough": [
+          "The team records the legacy contract instead of relying on memory.",
+          "An adapter maps supported flows to the canonical model.",
+          "Shadow comparisons reveal that ACP's custom waiting state needs an explicit A2A input-required mapping.",
+          "Clients move to the A2A interface and the ACP endpoint is retired."
+        ],
+        "result": "Users keep their workflow while the organization stops expanding retired protocol debt.",
+        "danger": "Calling ACP and A2A 'basically the same' hides state, security, streaming, and error differences.",
+        "takeaway": "Migrate behaviors with evidence; do not migrate acronyms by search-and-replace."
+      },
+      "lab": "Create a migration matrix with old field, actual meaning, A2A target, transformation, test, gap, owner, and retirement condition.",
+      "checkpoint": "Should a new interoperability project start with ACP today?",
+      "answer": "No. Teach and build new agent-to-agent interoperability against A2A 1.0; keep ACP knowledge only for understanding and migrating legacy systems.",
+      "glossary": [
+        "Strangler adapter — gradual replacement boundary",
+        "Shadow test — compare old and new behavior without switching users",
+        "Cutover — move production traffic to the new contract"
+      ],
+      "related": [
+        72,
+        80,
+        92
+      ],
+      "sources": [
+        "A2A 1.0 specification"
+      ]
+    },
+    {
+      "id": 100,
+      "slug": "protocol-interoperability-lab",
+      "moduleId": "module-22",
+      "title": "Capstone: the Acme Protocol Interoperability Lab",
+      "stability": "Capstone profile checked 2026-08-24",
+      "diagram": "diagrams/100-protocol-interoperability-lab.png",
+      "diagramPrompt": "Create a large integrated architecture. MAYA in REACT UI connects by AG-UI to ORCHESTRATOR. It calls POLICY MCP SERVER and PAYMENT A2A AGENT. Show MCP DISCOVERY, TOOL AND RESOURCE, MRTR OR TASK; A2A AGENT CARD, TASK, STATUS, ARTIFACT; AG-UI RUN, TOOL, STATE, ERROR. Add TRUST GATEWAY, CORRELATION SPINE, DURABLE STORE, CONFORMANCE SUITE, TRACE AND AUDIT. Mark draft interrupt adapter separately.",
+      "alt": "The Acme lab composes MCP, A2A, and AG-UI at distinct boundaries and proves the result with conformance, correlation, recovery, and security evidence.",
+      "outcome": "Assemble Volume 4 into one buildable protocol-engineering project without writing the full application yet.",
+      "explanation": "The lab begins with one user story: Maya requests a policy-bound refund review. React receives AG-UI events from an orchestrator. The orchestrator reads policy context and invokes narrow capabilities through current MCP. It delegates independent payment review through A2A 1.0. Durable stores preserve case, task, mapping, event, approval, artifact, and audit records. Adapters isolate protocol SDKs and draft AG-UI interrupt fields. A conformance suite tests supported profiles and failure paths.",
+      "trace": [
+        "Maya starts an AG-UI run for case RF-2048.",
+        "The orchestrator authorizes and correlates the request.",
+        "MCP returns current policy evidence and may use MRTR or a durable Task when appropriate.",
+        "A2A coordinates the payment specialist while AG-UI renders progress, exact approval, artifacts, errors, and recovery; traces and tests preserve evidence."
+      ],
+      "analogy": "It is an international rail station: each line has its own contract, the interchange maps identities and tickets, and the control room can explain every journey.",
+      "nextjs": [
+        "Plan App Router pages for lessons and the future lab console.",
+        "Define canonical TypeScript contracts before selecting SDKs.",
+        "Keep MCP and A2A calls server-side and feed React only sanitized AG-UI events."
+      ],
+      "python": [
+        "Plan FastAPI protocol adapters, orchestration service, worker, and durable records.",
+        "Define the same canonical fixtures and conformance profile as the TypeScript version.",
+        "Keep protocol libraries at the boundary so domain tests run without the network."
+      ],
+      "caseStudy": {
+        "situation": "Maya's refund requires current policy evidence, an independent specialist, and an exact human approval.",
+        "walkthrough": [
+          "The policy MCP server provides versioned evidence.",
+          "The A2A specialist returns a task artifact.",
+          "The draft AG-UI interrupt adapter presents amount and destination.",
+          "Maya approves once; the idempotent action returns a receipt.",
+          "The trace, mapping record, and conformance report explain the entire result."
+        ],
+        "result": "The course ends with a coherent specification for two later implementations: Next.js and React, and Python and FastAPI.",
+        "danger": "A beautiful happy-path demo is not proof of interoperability, safety, or recoverability.",
+        "takeaway": "A protocol system is finished only when its supported profile and failure evidence are visible."
+      },
+      "lab": "Write the lab's supported-profile statement and ten acceptance tests: version mismatch, unknown extension, malformed part, lost stream, replay gap, input required, cancellation race, untrusted Agent Card, expired approval, and uncertain write outcome.",
+      "checkpoint": "What is the single most important capstone rule?",
+      "answer": "Every protocol must have one clear boundary and every important outcome must have reproducible evidence.",
+      "glossary": [
+        "Interoperability profile — exact versions, features, bindings, and extensions supported",
+        "Canonical model — internal meaning shared by adapters",
+        "Acceptance test — end-to-end evidence of required behavior"
+      ],
+      "related": [
+        76,
+        80,
+        97,
+        98,
+        99
+      ],
+      "sources": [
+        "MCP 2026-07-28 specification",
+        "A2A 1.0 specification",
+        "AG-UI documentation"
+      ]
+    }
+  ]
+}

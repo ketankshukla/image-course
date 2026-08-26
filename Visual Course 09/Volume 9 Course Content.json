@@ -1,0 +1,1745 @@
+{
+  "course": {
+    "title": "Visual Course Volume 9 - Agentic Product Design and Human Control",
+    "coverTitle": "AGENTIC PRODUCT DESIGN\nAND HUMAN CONTROL",
+    "coverTagline": "VISUAL-FIRST | HUMAN-CONTROLLED | ACCESSIBLE",
+    "subtitle": "Turn complex agent work into an understandable, accessible, and recoverable human experience",
+    "audience": "A visual learner who understands reliable agent systems and now wants to design interfaces that show honest progress, preserve control, and recover safely",
+    "checkedOn": "2026-08-25",
+    "knowledgeBaseline": {
+      "agui": "AG-UI repository release 2026-07-28 is the checked event-protocol baseline; implementations remain versioned behind adapters",
+      "mcpApps": "MCP Apps extension 2026-01-26 is stable and uses declared UI resources, sandboxed iframes, host capabilities, and audited communication",
+      "a2ui": "A2UI v0.9.1 is current for production while v1.0 remains candidate; declarative UI payloads require catalog validation and a version adapter",
+      "accessibility": "WCAG 2.2 is the W3C conformance baseline, supported by WAI-ARIA 1.2 and APG interaction patterns",
+      "state": "Snapshots establish authoritative state; RFC 6902 deltas are ordered changes and require replay, deduplication, conflict, and recovery rules",
+      "trust": "Useful product trust comes from visible state, bounded proposals, versioned evidence, expiry, consent, recovery, and receipts rather than hidden reasoning or persuasive prose"
+    },
+    "officialSources": [
+      {
+        "label": "AG-UI overview",
+        "url": "https://docs.ag-ui.com/"
+      },
+      {
+        "label": "AG-UI architecture",
+        "url": "https://docs.ag-ui.com/concepts/architecture"
+      },
+      {
+        "label": "AG-UI events",
+        "url": "https://docs.ag-ui.com/concepts/events"
+      },
+      {
+        "label": "AG-UI messages",
+        "url": "https://docs.ag-ui.com/concepts/messages"
+      },
+      {
+        "label": "AG-UI capabilities",
+        "url": "https://docs.ag-ui.com/concepts/capabilities"
+      },
+      {
+        "label": "AG-UI JavaScript event types",
+        "url": "https://docs.ag-ui.com/sdk/js/core/events"
+      },
+      {
+        "label": "AG-UI JavaScript subscriber",
+        "url": "https://docs.ag-ui.com/sdk/js/client/subscriber"
+      },
+      {
+        "label": "AG-UI releases",
+        "url": "https://github.com/ag-ui-protocol/ag-ui/releases"
+      },
+      {
+        "label": "MCP 2026-07-28 specification",
+        "url": "https://modelcontextprotocol.io/specification/2026-07-28"
+      },
+      {
+        "label": "MCP Apps overview",
+        "url": "https://modelcontextprotocol.io/extensions/apps/overview"
+      },
+      {
+        "label": "MCP Apps stable specification",
+        "url": "https://apps.extensions.modelcontextprotocol.io/"
+      },
+      {
+        "label": "MCP Apps release announcement",
+        "url": "https://blog.modelcontextprotocol.io/posts/2026-01-26-mcp-apps/"
+      },
+      {
+        "label": "A2UI specification versions",
+        "url": "https://a2ui.org/"
+      },
+      {
+        "label": "A2UI v0.9 protocol",
+        "url": "https://a2ui.org/specification/v0.9-a2ui/"
+      },
+      {
+        "label": "A2UI GitHub project",
+        "url": "https://github.com/google/A2UI"
+      },
+      {
+        "label": "RFC 6902 JSON Patch",
+        "url": "https://www.rfc-editor.org/info/rfc6902/"
+      },
+      {
+        "label": "RFC 9457 Problem Details",
+        "url": "https://www.rfc-editor.org/rfc/rfc9457"
+      },
+      {
+        "label": "JSON Schema 2020-12",
+        "url": "https://json-schema.org/draft/2020-12"
+      },
+      {
+        "label": "HTML Living Standard web messaging",
+        "url": "https://html.spec.whatwg.org/multipage/web-messaging.html"
+      },
+      {
+        "label": "HTML Living Standard iframe sandbox",
+        "url": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-iframe-sandbox"
+      },
+      {
+        "label": "Content Security Policy Level 3",
+        "url": "https://www.w3.org/TR/CSP3/"
+      },
+      {
+        "label": "Permissions Policy",
+        "url": "https://www.w3.org/TR/permissions-policy-1/"
+      },
+      {
+        "label": "WCAG 2.2",
+        "url": "https://www.w3.org/TR/WCAG22/"
+      },
+      {
+        "label": "WAI-ARIA 1.2",
+        "url": "https://www.w3.org/TR/wai-aria-1.2/"
+      },
+      {
+        "label": "ARIA Authoring Practices Guide",
+        "url": "https://www.w3.org/WAI/ARIA/apg/"
+      },
+      {
+        "label": "ARIA alert dialog pattern",
+        "url": "https://www.w3.org/WAI/ARIA/apg/patterns/alertdialog/"
+      },
+      {
+        "label": "ARIA dialog pattern",
+        "url": "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/"
+      },
+      {
+        "label": "ARIA progressbar role",
+        "url": "https://www.w3.org/TR/wai-aria-1.2/#progressbar"
+      },
+      {
+        "label": "ARIA status role",
+        "url": "https://www.w3.org/TR/wai-aria-1.2/#status"
+      },
+      {
+        "label": "Next.js App Router",
+        "url": "https://nextjs.org/docs/app"
+      },
+      {
+        "label": "Next.js loading UI and streaming",
+        "url": "https://nextjs.org/docs/app/getting-started/linking-and-navigating#streaming"
+      },
+      {
+        "label": "Next.js accessibility",
+        "url": "https://nextjs.org/docs/architecture/accessibility"
+      },
+      {
+        "label": "React useOptimistic",
+        "url": "https://react.dev/reference/react/useOptimistic"
+      },
+      {
+        "label": "React useActionState",
+        "url": "https://react.dev/reference/react/useActionState"
+      },
+      {
+        "label": "FastAPI WebSockets",
+        "url": "https://fastapi.tiangolo.com/advanced/websockets/"
+      },
+      {
+        "label": "FastAPI background tasks",
+        "url": "https://fastapi.tiangolo.com/tutorial/background-tasks/"
+      },
+      {
+        "label": "Service Workers",
+        "url": "https://www.w3.org/TR/service-workers/"
+      },
+      {
+        "label": "Indexed Database API 3.0",
+        "url": "https://www.w3.org/TR/IndexedDB-3/"
+      },
+      {
+        "label": "Notifications API",
+        "url": "https://notifications.spec.whatwg.org/"
+      },
+      {
+        "label": "Web App Manifest",
+        "url": "https://www.w3.org/TR/appmanifest/"
+      },
+      {
+        "label": "OWASP DOM XSS Prevention",
+        "url": "https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html"
+      },
+      {
+        "label": "OWASP Content Security Policy",
+        "url": "https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html"
+      },
+      {
+        "label": "OWASP HTML5 Security",
+        "url": "https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html"
+      },
+      {
+        "label": "NIST Privacy Framework",
+        "url": "https://www.nist.gov/privacy-framework"
+      },
+      {
+        "label": "NIST AI Risk Management Framework",
+        "url": "https://www.nist.gov/itl/ai-risk-management-framework"
+      }
+    ],
+    "visualGrammar": {
+      "cobaltPlatform": "A browser surface, state store, component catalog, product boundary, workspace, or learning-platform region",
+      "cyanArrow": "A typed event, validated state update, user action, artifact reference, notification, or navigation path",
+      "tealArrow": "Authoritative state, accessible completion, informed consent, safe approval, preserved work, or verified recovery",
+      "coralPath": "Conflict, stale UI, unsafe rendering, deceptive state, expired approval, privacy failure, lost work, or blocked action",
+      "whiteCard": "An event, component, stage, proposal, artifact, receipt, consent record, lesson, checkpoint, or recovery option"
+    },
+    "websiteLessonTemplate": [
+      "outcome",
+      "standards status",
+      "diagram and alt text",
+      "plain-English explanation",
+      "trace the visual",
+      "analogy",
+      "Next.js map",
+      "Python map",
+      "case study",
+      "mini lab",
+      "checkpoint and answer",
+      "glossary and related lessons"
+    ]
+  },
+  "modules": [
+    {
+      "id": "module-47",
+      "title": "Event-driven agent interfaces",
+      "lessonIds": [
+        197,
+        198,
+        199,
+        200
+      ],
+      "purpose": "Render explicit typed state instead of parsing hidden meaning from prose, timers, or spinners."
+    },
+    {
+      "id": "module-48",
+      "title": "Progress, tools, artifacts, and recovery",
+      "lessonIds": [
+        201,
+        202,
+        203,
+        204
+      ],
+      "purpose": "Show useful intermediate value, preserved work, durable evidence, honest failure, and safe next actions."
+    },
+    {
+      "id": "module-49",
+      "title": "Human control and accessible trust",
+      "lessonIds": [
+        205,
+        206,
+        207,
+        208
+      ],
+      "purpose": "Give people meaningful, understandable, accessible control at the exact moment a decision changes the outcome."
+    },
+    {
+      "id": "module-50",
+      "title": "Generative and embedded interfaces",
+      "lessonIds": [
+        209,
+        210,
+        211,
+        212
+      ],
+      "purpose": "Allow dynamic interfaces without giving a model unrestricted UI code, device authority, or access to host data."
+    },
+    {
+      "id": "module-51",
+      "title": "The future visual-learning website",
+      "lessonIds": [
+        213,
+        214,
+        215,
+        216
+      ],
+      "purpose": "Turn the course artifacts into an accessible, searchable, responsive, offline-capable content system."
+    },
+    {
+      "id": "module-52",
+      "title": "Agentic product operations",
+      "lessonIds": [
+        217,
+        218,
+        219,
+        220
+      ],
+      "purpose": "Connect the interface to attention, privacy, consent, feedback, evaluation, ethical experimentation, and continuous improvement."
+    }
+  ],
+  "lessons": [
+    {
+      "id": 197,
+      "slug": "event-driven-interface-mental-model",
+      "moduleId": "module-47",
+      "title": "The event-driven interface mental model",
+      "stability": "AG-UI event families are current; product event vocabulary remains application-specific",
+      "diagram": "diagrams/197-event-driven-interface-mental-model.png",
+      "diagramPrompt": "Show AGENT RUN emitting typed cards RUN, TEXT, TOOL, ACTIVITY, STATE, ARTIFACT, APPROVAL, ERROR into an EVENT STREAM. A validated REDUCER updates separate CHAT, PROGRESS, TOOL, ARTIFACT, APPROVAL panels. Add a coral PARSE PROSE path to WRONG UI and a teal TYPED EVENT path to EXPLAINABLE UI.",
+      "alt": "An agent run emits typed lifecycle, text, tool, activity, state, artifact, approval, and error events that a reducer maps into dedicated interface regions instead of parsing prose.",
+      "outcome": "Explain why an agent interface should render typed events and explicit state rather than guess meaning from chat text.",
+      "explanation": "An agent interface is not merely a chat box with animated text. It is a projection of a running product state into controls and evidence a person can understand. AG-UI models communication as typed events such as run lifecycle, message streams, tool calls, activities, snapshots, deltas, and errors. The event type says what happened; stable identifiers say which run, message, tool, or activity it belongs to. A frontend reducer accepts validated events and updates separate interface regions. Text belongs in the conversation, progress belongs in a stage view, proposals belong in approval cards, and durable outputs belong in artifact views. The interface must not inspect a sentence for phrases such as 'I am searching' or 'approval needed' and then invent business state. Wording changes across models, languages, and prompts, while typed state can be tested and replayed. Do not display private chain-of-thought as progress. Show concise stage names, evidence references, decisions, elapsed state, and user-relevant explanations that were deliberately designed for disclosure. The event contract needs schemas, ordering rules, unknown-event behavior, version fields, privacy rules, and a clear owner. The UI remains useful even when a particular agent framework changes because the product vocabulary stays behind an adapter.",
+      "trace": [
+        "Name the user-visible outcome and the interface regions that help the person understand or control it.",
+        "Map each supported AG-UI or product event to one validated internal event type with stable identifiers.",
+        "Reduce events into explicit chat, progress, tool, artifact, approval, and recovery state.",
+        "Render unknown, late, duplicate, or invalid events as bounded diagnostics rather than corrupting visible state.",
+        "Test the same event recording by replaying it into an empty interface and comparing the reconstructed outcome."
+      ],
+      "analogy": "A railway station has separate boards for arrivals, platform changes, cancellations, and safety messages. Staff do not hide every condition inside one long announcement and ask passengers to infer the timetable.",
+      "nextjs": [
+        "Define a discriminated TypeScript event union at the server boundary, validate every payload, and convert protocol events into product events before React sees them.",
+        "Use a reducer or external store keyed by run, message, activity, tool, and artifact IDs; render dedicated components rather than one component with dozens of string checks.",
+        "Stream only deliberate user-facing state to client components; keep credentials, private prompts, hidden reasoning, and privileged policy evidence on the server."
+      ],
+      "python": [
+        "Represent incoming AG-UI and internal events as Pydantic models with a discriminator, version, identifiers, timestamp, and bounded payload.",
+        "Create one adapter per agent runtime so FastAPI emits the same product event vocabulary regardless of framework-specific callback names.",
+        "Persist an append-only synthetic event fixture for replay tests while storing authoritative business records separately from transient UI events."
+      ],
+      "caseStudy": {
+        "situation": "Maya asks for a refund-policy review. The old interface shows a typing bubble for twenty seconds and then suddenly presents a final paragraph.",
+        "walkthrough": [
+          "The new interface receives RUN_STARTED and creates a named review workspace instead of a generic spinner.",
+          "ACTIVITY and TOOL events update research and policy stages with user-safe labels and evidence counts.",
+          "An approval proposal becomes a separate card bound to the refund action, not a sentence buried in chat.",
+          "RUN_FINISHED closes progress, links the final artifact, and leaves the event receipt available for support."
+        ],
+        "result": "Maya can see what is happening, what evidence exists, and where control is required without seeing private reasoning or reading a machine diary.",
+        "danger": "Parsing model prose into state can show an approval as complete, hide a failed tool, or expose invented progress simply because the wording looked familiar.",
+        "takeaway": "Events describe what happened; reducers decide product state; components explain that state to a person."
+      },
+      "lab": "Design a twelve-event recording for Maya's policy review. Include lifecycle, text, activity, tool, artifact, approval, and error events. For each event, name its stable ID, schema owner, visible component, privacy classification, and invalid-event behavior.",
+      "checkpoint": "Should a frontend infer that a tool succeeded because the assistant says 'Done'?",
+      "answer": "No. A typed tool result and authoritative business receipt must establish success. The sentence may explain the result, but it is not the state transition.",
+      "glossary": [
+        "Typed event - schema-validated record with a named meaning",
+        "Reducer - function that turns an event and prior state into new state",
+        "Projection - user-facing view derived from underlying records"
+      ],
+      "related": [
+        198,
+        201,
+        205
+      ],
+      "sources": [
+        "AG-UI overview",
+        "AG-UI events",
+        "AG-UI architecture"
+      ]
+    },
+    {
+      "id": 198,
+      "slug": "snapshots-deltas-reducers-conflicts",
+      "moduleId": "module-47",
+      "title": "State snapshots, deltas, reducers, and conflict handling",
+      "stability": "AG-UI snapshots and RFC 6902 deltas are current; conflict policy is an application responsibility",
+      "diagram": "diagrams/198-snapshots-deltas-reducers-conflicts.png",
+      "diagramPrompt": "Show AUTHORITATIVE SNAPSHOT with VERSION 12 entering a REDUCER, followed by ordered DELTA 13, 14, 15 cards using ADD REPLACE REMOVE. Render a UI STATE tree. Add coral OUT OF ORDER, STALE BASE, INVALID PATH into CONFLICT, then teal REQUEST FRESH SNAPSHOT into RECOVERED STATE.",
+      "alt": "A versioned authoritative snapshot is reduced with ordered JSON Patch deltas; out-of-order, stale-base, and invalid-path updates cause conflict and trigger a fresh snapshot.",
+      "outcome": "Use snapshots and deltas without allowing missing or conflicting updates to silently corrupt the interface.",
+      "explanation": "A snapshot says, 'replace your current view of this state with this complete version.' A delta says, 'apply these named changes to the version you already have.' They solve different synchronization problems. AG-UI state deltas use JSON Patch operations. A reducer must apply operations in order, validate paths and values, and know which snapshot or revision the delta assumes. Small deltas make live interfaces efficient, but they are not automatically safe. If delta 14 arrives before 13, a remove targets a missing path, or the browser resumed from an old snapshot, the visible state may become impossible. Conflict handling must be explicit: reject the patch, mark the projection uncertain, stop sensitive controls, and request a fresh snapshot. Guessing or partially applying a failed patch creates a convincing but false screen. Optimistic local changes should live in a separate pending layer. They must never overwrite the authoritative server revision before acknowledgement, and a rejection must restore the prior view without losing the user's input. Reducers are ideal test surfaces because the same initial snapshot and event sequence should produce the same visible state. Fixtures should cover missing paths, duplicate operations, stale revisions, schema changes, and unknown fields.",
+      "trace": [
+        "Receive a validated snapshot with schema version, state revision, and product ownership metadata.",
+        "Apply only deltas whose expected base revision matches the reducer's current authoritative revision.",
+        "Validate every JSON Patch operation, path, value type, and protected field before mutation.",
+        "On any uncertainty, freeze sensitive actions, preserve local input, and request a fresh authoritative snapshot.",
+        "Replay snapshot-plus-delta fixtures and assert both final state and visible recovery behavior."
+      ],
+      "analogy": "Editing a shared map works when everyone starts from the same edition and applies numbered corrections in order. If correction 14 assumes street changes from correction 13, skipping 13 can put a bridge in the wrong place.",
+      "nextjs": [
+        "Validate snapshots and patches on the server, then expose a narrow typed client store with authoritativeRevision, pendingChanges, and synchronizationStatus.",
+        "Apply JSON Patch through a tested reducer; do not let arbitrary paths modify security, ownership, approval, or tenant fields in client state.",
+        "Render a visible resynchronizing state that preserves draft input and disables decisions whose evidence revision is uncertain."
+      ],
+      "python": [
+        "Model state and patch envelopes with Pydantic, including schemaVersion, baseRevision, nextRevision, actor, and permitted path classes.",
+        "Apply patches to a copy, validate the complete candidate state, and commit atomically only when every operation succeeds.",
+        "Return a typed conflict requiring a fresh snapshot instead of catching patch errors and continuing with partially modified state."
+      ],
+      "caseStudy": {
+        "situation": "Maya approves a proposed exception while her browser has missed a policy-state delta during a brief network interruption.",
+        "walkthrough": [
+          "The approval card records that it was rendered from state revision 12 and evidence version P44.",
+          "The server rejects the action because the current state is revision 15 and the proposal no longer matches.",
+          "The interface preserves Maya's comment, disables the old approval buttons, and requests a fresh snapshot.",
+          "The refreshed card explains that the proposal changed and asks Maya to review the new evidence before deciding."
+        ],
+        "result": "A stale browser cannot approve a changed proposal, and Maya does not lose the comment she already wrote.",
+        "danger": "Blindly applying deltas or silently ignoring patch errors can leave a polished screen whose approval, artifact, or progress state never existed on the server.",
+        "takeaway": "Deltas are efficient only when revision checks, validation, conflict handling, and snapshot recovery make them trustworthy."
+      },
+      "lab": "Create one snapshot and eight RFC 6902 deltas for an approval workspace. Then inject a duplicate, an out-of-order update, an invalid path, and a stale base. Define the exact reducer response and what Maya sees for each case.",
+      "checkpoint": "If a JSON Patch operation fails, should the reducer apply the remaining operations?",
+      "answer": "Usually no. Treat the delta as an atomic state transition, keep the prior authoritative state, mark synchronization uncertain, and obtain a fresh snapshot.",
+      "glossary": [
+        "Snapshot - complete replacement view of state",
+        "Delta - ordered set of changes from a known base",
+        "Conflict - evidence that local and authoritative state cannot be reconciled safely"
+      ],
+      "related": [
+        197,
+        199,
+        200
+      ],
+      "sources": [
+        "AG-UI events",
+        "RFC 6902 JSON Patch",
+        "JSON Schema 2020-12"
+      ]
+    },
+    {
+      "id": 199,
+      "slug": "reconnect-replay-dedup-offline-recovery",
+      "moduleId": "module-47",
+      "title": "Reconnect, replay, deduplication, and offline recovery",
+      "stability": "Reliable-stream design pattern built on stable identifiers and current browser capabilities",
+      "diagram": "diagrams/199-reconnect-replay-dedup-offline-recovery.png",
+      "diagramPrompt": "Show LIVE STREAM with CURSOR 48 entering BROWSER. A NETWORK BREAK creates OFFLINE BUFFER and RECONNECT REQUEST LAST SEEN 48. SERVER REPLAYS events 49-55 through DEDUP SET and ORDER GATE into RESTORED UI. Coral paths show DUPLICATE EFFECT, GAP, EXPIRED CURSOR; teal FRESH SNAPSHOT recovers.",
+      "alt": "After a network break, a browser reconnects with its last seen cursor, replays ordered events through deduplication, and requests a fresh snapshot when the cursor expired or a gap remains.",
+      "outcome": "Design reconnect behavior that restores visible state without duplicating messages, actions, or business effects.",
+      "explanation": "Streaming interfaces must assume disconnection. Laptops sleep, mobile networks switch, proxies time out, browser tabs pause, and workers restart while long-running agent work continues. A reconnect contract needs a stable stream or run identifier, an event cursor, retention window, ordering rule, and a statement about whether the server can replay missed events. 'Reconnect and hope' is not a protocol. The client records the last fully applied event, reconnects with that cursor, and deduplicates replayed event IDs. Deduplication protects the projection, but it must never be used to repeat a business effect such as sending a refund or submitting an approval. If the replay window expired, an event gap is detected, or the local reducer version changed, the safe answer is a fresh snapshot plus durable artifact and receipt references. A snapshot rebuilds view state; business records prove what actually happened. Offline input should be classified. Draft notes may be saved locally, but approvals and privileged tool actions normally require a live authoritative precondition check before submission. Recovery tests should interrupt every stage: before start acknowledgement, during streamed text, mid-tool call, after artifact creation, around approval, and after final completion. The screen should explain whether work continued, paused, or needs review.",
+      "trace": [
+        "Assign each stream event a stable ID and monotonic cursor within a clearly owned replay scope.",
+        "Persist only the minimum local recovery metadata and drafts, never secrets or uncontrolled private payloads.",
+        "Reconnect with last-applied cursor, validate the stream identity, and replay through ordering and deduplication gates.",
+        "Request a fresh snapshot when replay is incomplete, expired, incompatible, or conflicts with authoritative records.",
+        "Separate UI replay from business idempotency so reconnect can never repeat a consequential effect."
+      ],
+      "analogy": "A television recorder resumes after a power cut by checking the last saved timestamp. If the recording is missing a segment, it does not invent the frames; it marks the gap or reloads the complete program copy.",
+      "nextjs": [
+        "Store run ID, last cursor, reducer version, and safe drafts in a scoped client store; do not persist tokens, private evidence, or approval authority in browser storage.",
+        "Reconnect through a server route that validates user, tenant, run ownership, and replay window before streaming missed events.",
+        "Make duplicate event handling pure and idempotent, while consequential actions use separate server-side idempotency keys and current preconditions."
+      ],
+      "python": [
+        "Maintain an append-only event sequence with retention and cursor indexes, plus durable business records outside the transient stream.",
+        "Expose replay or snapshot recovery through FastAPI with authenticated ownership checks and typed expired-cursor or gap responses.",
+        "Write fault-injection tests that disconnect clients at every event boundary and assert no duplicate artifact, approval, message, or tool effect."
+      ],
+      "caseStudy": {
+        "situation": "Maya closes her laptop while Acme is comparing policy evidence and returns after the workflow has produced an artifact and requested approval.",
+        "walkthrough": [
+          "The browser reconnects with the run ID and last applied cursor rather than starting a second review.",
+          "Missed progress and artifact events replay once; duplicate text chunks are ignored by stable IDs.",
+          "Because the approval proposal is still current, the server returns a fresh proposal snapshot with its evidence version and expiry.",
+          "Maya sees that work continued while she was away and can review the completed evidence before deciding."
+        ],
+        "result": "Reconnect restores the workspace without duplicate work, invented continuity, or a stale approval action.",
+        "danger": "Treating every reconnect as a new run can send duplicate emails, repeat tool calls, create competing artifacts, and make the interface disagree with business history.",
+        "takeaway": "Resume a view with cursor and snapshot logic; resume a business effect only through authoritative idempotent commands."
+      },
+      "lab": "Draw a reconnect state machine with connected, offline, replaying, resynchronizing, ready, and review-required states. Define cursors, retention, duplicate handling, expired replay, offline drafts, and the exact actions disabled in each state.",
+      "checkpoint": "Can a replayed tool-result event safely call the tool again?",
+      "answer": "No. Replay reconstructs the interface. The original effect is proven by its receipt and idempotency record; replay must not execute it again.",
+      "glossary": [
+        "Cursor - position of the last applied stream event",
+        "Replay - resend of recorded events for reconstruction",
+        "Idempotency - repeated command produces one intended effect"
+      ],
+      "related": [
+        198,
+        203,
+        217
+      ],
+      "sources": [
+        "AG-UI events",
+        "AG-UI messages",
+        "Indexed Database API 3.0"
+      ]
+    },
+    {
+      "id": 200,
+      "slug": "optimistic-versus-authoritative-state",
+      "moduleId": "module-47",
+      "title": "Optimistic interface state versus authoritative business state",
+      "stability": "Stable product-state pattern; framework helpers do not change the authority boundary",
+      "diagram": "diagrams/200-optimistic-versus-authoritative-state.png",
+      "diagramPrompt": "Show USER ACTION entering two lanes. OPTIMISTIC UI immediately shows PENDING with LOCAL DRAFT and REVERSIBLE PREVIEW. AUTHORITATIVE SERVER checks IDENTITY POLICY VERSION EFFECT, then returns COMMITTED RECEIPT or coral REJECTED CONFLICT. A RECONCILE gate updates UI; forbid OPTIMISTIC APPROVED and OPTIMISTIC PAID.",
+      "alt": "A user action creates reversible optimistic pending state while the authoritative server checks identity, policy, version, and effect before returning a committed receipt or rejection for reconciliation.",
+      "outcome": "Use optimistic UI for responsiveness without pretending that a consequential business action already succeeded.",
+      "explanation": "Optimistic state is a temporary interface prediction: the screen responds immediately while the server decides. Authoritative state is the durable result owned by the business system. Optimism is useful for reversible, low-risk changes such as expanding a panel, reordering a private draft, or showing a pending comment. It is dangerous for approvals, payments, deletions, permission changes, and external communications. The interface should label the prediction as pending and keep a reference to the prior state. The server rechecks identity, tenant, policy, version, proposal scope, expiry, and idempotency before committing anything. A successful response returns a receipt or new authoritative snapshot. A rejection explains the conflict in plain language, preserves the user's input when safe, and offers retry, edit, or review rather than silently snapping back. React helpers such as useOptimistic or useActionState improve local interaction, but they do not decide which system owns the truth. The authority boundary must be expressed in the server command contract and visible UI labels. Tests should include slow response, duplicate submit, stale proposal, policy change, lost acknowledgement, server rejection, and late success after the user navigates away. Every outcome must converge on one authoritative record.",
+      "trace": [
+        "Classify the proposed interaction by reversibility, consequence, external effect, and ownership before allowing optimism.",
+        "Create a local pending record tied to one command ID while retaining the prior visible state and user input.",
+        "Validate all authoritative preconditions on the server and commit through an idempotent business command.",
+        "Reconcile with a receipt or fresh snapshot; on rejection, explain the changed condition and safe choices.",
+        "Test duplicate, delayed, lost, rejected, and conflicting responses until every path converges on business truth."
+      ],
+      "analogy": "A restaurant app may instantly show 'order submitted,' but the kitchen must accept the order before the screen says 'confirmed.' A pleasant animation cannot reserve ingredients or charge a card.",
+      "nextjs": [
+        "Use useOptimistic only for explicitly reversible presentation state and render a visible pending label tied to a server action command ID.",
+        "Keep approval, payment, deletion, and permission decisions as server actions that revalidate session, tenant, proposal version, expiry, policy, and idempotency.",
+        "Return typed committed, rejected, conflict, and uncertain results so React reconciles intentionally instead of assuming every thrown error means nothing happened."
+      ],
+      "python": [
+        "Define FastAPI command endpoints with expectedVersion, commandId, actor, tenant, proposalId, and typed precondition failure responses.",
+        "Commit changes transactionally and return a durable receipt containing effect reference, authoritative revision, and safe display fields.",
+        "Record uncertain outcomes separately when a downstream effect may have occurred but acknowledgement failed, then reconcile before permitting retry."
+      ],
+      "caseStudy": {
+        "situation": "Maya clicks Approve on a refund exception at the same moment the policy owner withdraws that exception proposal.",
+        "walkthrough": [
+          "The button changes to Pending review rather than Approved, and the old proposal remains visible but inactive.",
+          "The server detects the proposal-version conflict before any refund effect and returns the current policy state.",
+          "Maya's optional comment is preserved while the interface explains that the proposal changed.",
+          "A new review card presents current evidence and never records the rejected click as business approval."
+        ],
+        "result": "The interface feels responsive while the authoritative record remains accurate and reviewable.",
+        "danger": "Showing 'Approved' before the server commits can cause users to leave, communicate a false outcome, or click again and create duplicate effects.",
+        "takeaway": "Optimistic means pending prediction, not permission, commitment, or proof."
+      },
+      "lab": "Classify fifteen interface actions as local-only, optimistic-reversible, server-confirmed, or prohibited offline. For five consequential commands, specify preconditions, pending text, rejection text, preserved input, idempotency, and receipt fields.",
+      "checkpoint": "Does React useOptimistic make an optimistic value authoritative?",
+      "answer": "No. It manages temporary client presentation. Only the owned business system can commit the result and return authoritative evidence.",
+      "glossary": [
+        "Optimistic state - temporary prediction shown before confirmation",
+        "Authoritative state - durable state owned by the responsible system",
+        "Reconciliation - process of aligning local view with confirmed truth"
+      ],
+      "related": [
+        198,
+        205,
+        207
+      ],
+      "sources": [
+        "React useOptimistic",
+        "React useActionState",
+        "RFC 9457 Problem Details"
+      ]
+    },
+    {
+      "id": 201,
+      "slug": "progressive-disclosure-stage-labels",
+      "moduleId": "module-48",
+      "title": "Progressive disclosure and observable stage labels",
+      "stability": "Human-centered progress pattern using current AG-UI activity and lifecycle events",
+      "diagram": "diagrams/201-progressive-disclosure-stage-labels.png",
+      "diagramPrompt": "Show one WORKFLOW progressing through UNDERSTAND, RESEARCH, CHECK POLICY, PREPARE, WAITING FOR YOU, COMPLETE. A SIMPLE VIEW shows current stage and next action; an EXPANDED VIEW reveals elapsed time, evidence count, tool status, and receipts. Coral INDEFINITE SPINNER and FAKE PERCENTAGE lead to LOST TRUST.",
+      "alt": "A workflow exposes honest named stages with a simple current-state view and an expanded evidence view, contrasted with an indefinite spinner and invented percentage.",
+      "outcome": "Design progress that answers what is happening, what is complete, what is waiting, and what the person can do next.",
+      "explanation": "Progress is a promise about state, not decoration. A spinner communicates only that the interface has not stopped animating; it does not say whether the server started, a tool is waiting, work is queued, or the request already failed. Use a small vocabulary of observable stages tied to real events and records. Each stage should have a start condition, completion condition, possible blocked state, owner, and user-safe label. Do not invent percentages for work whose size is unknown. Prefer named stages, completed item counts, elapsed time, last meaningful event, and a statement about what may take longer. Progressive disclosure keeps the default view calm while allowing a curious or worried user to expand details. The expanded view can show evidence counts, tool and specialist status, preserved artifacts, and support references without revealing private reasoning. Waiting is a first-class state. Distinguish waiting for a dependency, waiting for scheduled capacity, waiting for the person, paused by policy, and retrying after a bounded failure because each supports a different action. Measure progress UX by abandonment, repeated clicks, premature cancellation, support contacts, time to first useful evidence, accessibility announcements, and whether users correctly understand the current state.",
+      "trace": [
+        "Define a small stage vocabulary from observable product events and durable transitions, not model narration.",
+        "Give every stage start, complete, blocked, waiting, cancel, and recovery semantics before designing labels.",
+        "Show the current stage, completed stages, preserved output, and next safe action in the default view.",
+        "Reveal timestamps, evidence, tool status, and receipts through an optional details view with accessible reading order.",
+        "Test interrupted, slow, queued, waiting-for-user, partial-success, and failed runs with real users and assistive technology."
+      ],
+      "analogy": "A parcel tracker says collected, at depot, out for delivery, or delivery attempted. It does not show a spinning wheel for two days or claim 83 percent when it does not know the route.",
+      "nextjs": [
+        "Render progress from a typed stage model in a server-owned stream, with each client component receiving only label, status, timestamps, evidence count, and permitted actions.",
+        "Use accessible status announcements for important transitions while avoiding a live-region announcement for every token or animation frame.",
+        "Keep the stage summary stable across responsive layouts and provide an explicit details disclosure rather than hiding evidence in hover-only tooltips."
+      ],
+      "python": [
+        "Emit activity snapshot and delta events from workflow transitions, not arbitrary log statements or model text callbacks.",
+        "Model stage status as a closed enum with timestamps, reason category, visible description, artifact references, and allowed recovery actions.",
+        "Record time to first evidence, stage durations, waiting reasons, cancellations, and recovery outcomes with privacy-safe dimensions."
+      ],
+      "caseStudy": {
+        "situation": "Maya starts a policy review that pauses because the finance specialist is unavailable, but the old screen continues spinning.",
+        "walkthrough": [
+          "The redesigned workspace shows Research complete, Finance evidence waiting, and the policy summary already preserved.",
+          "The default card explains that Acme can continue with a partial answer, notify Maya later, or request human help.",
+          "The expanded view shows the unavailable dependency and last evidence timestamp without exposing internal prompts.",
+          "When Maya chooses partial answer, progress closes honestly as Partially complete rather than green success."
+        ],
+        "result": "Maya receives useful work immediately and understands why the remaining part is unfinished.",
+        "danger": "An indefinite spinner or fabricated percentage can hide a blocked workflow, encourage duplicate submissions, and make users assume the browser is broken.",
+        "takeaway": "Show observable stages, preserved value, and next actions; never manufacture certainty about unknown work."
+      },
+      "lab": "Design a six-stage progress model for policy review. For every stage, define event trigger, visible label, waiting variants, evidence, cancellation effect, screen-reader announcement, support reference, and the metric that would reveal confusion.",
+      "checkpoint": "Is a continuously increasing percentage always better than named stages?",
+      "answer": "No. A percentage is useful only when total work and measurement are real. Named observable stages are more honest for variable agent workflows.",
+      "glossary": [
+        "Progressive disclosure - showing essentials first and details on request",
+        "Stage - named observable unit of product work",
+        "Waiting state - explicit reason work cannot currently advance"
+      ],
+      "related": [
+        197,
+        203,
+        208
+      ],
+      "sources": [
+        "AG-UI messages",
+        "AG-UI events",
+        "ARIA status role"
+      ]
+    },
+    {
+      "id": 202,
+      "slug": "tool-evidence-artifact-receipt-cards",
+      "moduleId": "module-48",
+      "title": "Tool cards, evidence cards, artifacts, and receipts",
+      "stability": "Durable-evidence product pattern; protocol identifiers remain distinct",
+      "diagram": "diagrams/202-tool-evidence-artifact-receipt-cards.png",
+      "diagramPrompt": "Show a TOOL CALL card with PROPOSED, RUNNING, RESULT; an EVIDENCE card with SOURCE VERSION FRESHNESS AUTHORITY; an ARTIFACT card with FILE VERSION STATUS; and a RECEIPT card with ACTOR DECISION EFFECT TIME. Link all four by references. Coral CHAT CLAIM has NO RECEIPT; teal VERIFIED OUTCOME has full chain.",
+      "alt": "Separate tool, evidence, artifact, and receipt cards link a proposed action through source versions and durable output to a verified business outcome, unlike an unsupported chat claim.",
+      "outcome": "Choose the right card for transient execution, supporting evidence, durable output, and proof of a decision or effect.",
+      "explanation": "Tool calls, evidence, artifacts, and receipts are related but not interchangeable. A tool call describes attempted execution; evidence supports a conclusion; an artifact is a durable output; a receipt proves a decision, effect, or user-visible transition. A tool card should expose the user-relevant purpose, status, safe arguments, result category, retries, and whether an external effect occurred. Raw arguments, tokens, hidden prompts, and unrestricted provider responses do not belong in the browser. An evidence card needs source name, version, authority, freshness, scope, and why it matters. A citation without version or selection reason can make stale evidence look current. An artifact card survives the run. It has an identifier, type, version, owner, lifecycle state, download or preview rules, and links to the evidence and decisions that produced it. A receipt should be concise and durable: actor, proposal or command, decision, effect reference, time, policy or evidence version, and reversal or support information. It is not a dump of telemetry. Cards should share correlation references but retain their own identities. Conflating a trace ID, tool-call ID, artifact ID, A2A task ID, and business receipt ID makes support and recovery fragile.",
+      "trace": [
+        "Render a tool card from typed lifecycle and result events while keeping privileged arguments server-side.",
+        "Attach versioned evidence cards with freshness, authority, scope, and selection reason.",
+        "Create durable artifact cards whose state and permissions outlive the transient run stream.",
+        "Issue a receipt only from the authoritative decision or effect boundary and include recovery references.",
+        "Link cards by explicit references without merging their different IDs, retention, access, or ownership rules."
+      ],
+      "analogy": "In a workshop, the drill is the tool, the measurement sheet is evidence, the finished cabinet is the artifact, and the signed delivery note is the receipt. A photo of the drill proves none of the others.",
+      "nextjs": [
+        "Build a typed card registry that receives safe view models from server components and prevents raw tool payloads from leaking into client props.",
+        "Give evidence and artifact cards stable URLs, accessible names, version labels, and explicit open, download, compare, or request-access actions.",
+        "Render receipts from authoritative records and keep trace lookup as a support link rather than the only proof shown to users."
+      ],
+      "python": [
+        "Separate Pydantic models and stores for tool execution, evidence references, artifact lifecycle, and business receipts.",
+        "Create view-model adapters that redact or summarize provider-specific payloads before streaming any card data to the frontend.",
+        "Resolve every receipt against authoritative effect state and expose support-safe references without coupling retention to telemetry."
+      ],
+      "caseStudy": {
+        "situation": "Acme tells Maya that a refund exception was approved, but support can find only a successful policy lookup and no refund record.",
+        "walkthrough": [
+          "The tool card shows that policy evaluation succeeded but the refund tool was never called.",
+          "Evidence cards show the current policy and required supervisor decision.",
+          "The draft recommendation remains an artifact marked Needs approval rather than Completed.",
+          "No receipt is issued until approval and effect records exist, so the interface cannot present a false business outcome."
+        ],
+        "result": "Maya and support can distinguish useful research from an authorized completed refund.",
+        "danger": "One generic green 'tool complete' card can make data retrieval, proposal creation, approval, and external effect look like the same kind of success.",
+        "takeaway": "Tools attempt, evidence supports, artifacts persist, and receipts prove decisions or effects."
+      },
+      "lab": "Create schemas for four cards in Maya's refund flow. Give each its own ID, owner, required fields, privacy rules, lifecycle, allowed actions, retention, and cross-references. Write one false-success test for each card type.",
+      "checkpoint": "Does a successful tool response prove that a business effect occurred?",
+      "answer": "Not necessarily. Verify authoritative state and issue a durable receipt from the effect boundary; transport success alone is insufficient.",
+      "glossary": [
+        "Evidence card - versioned support for a decision",
+        "Artifact - durable output with lifecycle and ownership",
+        "Receipt - durable proof of a decision, effect, or user-visible transition"
+      ],
+      "related": [
+        176,
+        182,
+        203
+      ],
+      "sources": [
+        "AG-UI events",
+        "MCP 2026-07-28 specification",
+        "RFC 9457 Problem Details"
+      ]
+    },
+    {
+      "id": 203,
+      "slug": "partial-success-preserved-unfinished-work",
+      "moduleId": "module-48",
+      "title": "Partial success, preserved work, and unfinished work",
+      "stability": "Resilient product and workflow pattern",
+      "diagram": "diagrams/203-partial-success-preserved-unfinished-work.png",
+      "diagramPrompt": "Show a workflow split into COMPLETED RESEARCH, PRESERVED ARTIFACT, FAILED FINANCE CHECK, UNFINISHED APPROVAL, and SAFE PARTIAL RESULT. Offer CONTINUE LATER, RETRY FAILED STAGE, HUMAN HELP, CANCEL REMAINDER. Coral ALL OR NOTHING discards work; teal PRESERVE CHECKPOINT keeps value and provenance.",
+      "alt": "A partially successful workflow preserves completed research and an artifact, names the failed and unfinished stages, and offers retry, continue-later, human-help, or cancel-remainder choices.",
+      "outcome": "Represent partial success without discarding useful work or pretending the whole task completed.",
+      "explanation": "Long agent workflows rarely fail as one indivisible block. Research may complete while one specialist times out; an artifact may exist while approval remains unfinished; a tool may fail after useful evidence was collected. A product should classify every stage as complete, failed, blocked, cancelled, or not started, then compute an honest user outcome. HTTP success and final prose do not describe that shape. Preserved work needs checkpoints with artifact versions, evidence references, dependency state, and the conditions under which work may resume. Saving only chat text loses structured context and provenance. Partial results must state their limits. The interface should separate what is supported, what is missing, what cannot be concluded, and whether a later continuation may change the current recommendation. Recovery choices should target the failed or unfinished portion instead of rerunning everything. Retry one dependency, replace an unavailable specialist, continue asynchronously, request human help, or cancel only the remainder. Measure recovery by preserved-value rate, duplicate work avoided, successful resume, correction rate, user understanding, and whether partial artifacts were accidentally treated as final elsewhere.",
+      "trace": [
+        "Record completion, evidence, artifact, and dependency state at explicit workflow checkpoints.",
+        "Classify failed, blocked, cancelled, and unstarted stages separately from completed stages.",
+        "Create a bounded partial artifact that names missing evidence, limitations, and permitted uses.",
+        "Offer recovery actions scoped to unfinished work and validate current versions before resuming.",
+        "Close only when the person accepts the partial outcome, resumes successfully, cancels the remainder, or receives human resolution."
+      ],
+      "analogy": "If one suitcase is delayed, an airline does not pretend the whole journey failed or throw away the bags that arrived. It records what arrived, what is missing, and how the missing item will be delivered.",
+      "nextjs": [
+        "Render a stage summary with completed, failed, blocked, and pending groups plus preserved artifacts and the exact scope of each recovery button.",
+        "Keep partial artifacts visibly labeled and prevent final-only actions such as publish or send until required completion evidence exists.",
+        "Use server-side resume actions that reload authoritative checkpoint versions instead of reconstructing work from browser state or chat history."
+      ],
+      "python": [
+        "Persist workflow checkpoints and artifact states transactionally with dependency versions, continuation tokens, and permitted resume transitions.",
+        "Compute a typed outcome such as complete, partial, blocked, failed, or cancelled from stage and business records rather than response status.",
+        "Implement targeted retry and resume commands that revalidate policy, evidence freshness, authority, and idempotency before continuing."
+      ],
+      "caseStudy": {
+        "situation": "Acme finishes policy research and writes a draft explanation, but the finance specialist times out before validating the refund amount.",
+        "walkthrough": [
+          "The research artifact is preserved with current policy version and marked Incomplete for financial recommendation.",
+          "Maya receives the supported policy explanation immediately and sees that no amount has been approved.",
+          "She can retry finance, continue later with notification, or send the preserved artifact to human support.",
+          "A later resume reuses the current artifact only after confirming its policy evidence is still fresh."
+        ],
+        "result": "Useful work survives, unsupported conclusions remain blocked, and recovery does not repeat the entire workflow.",
+        "danger": "An all-or-nothing screen may discard valuable work after one dependency fails, while an overconfident partial screen may present an unfinished recommendation as final.",
+        "takeaway": "Preserve proven value, label missing work, and recover only the unfinished portion."
+      },
+      "lab": "Draw a ten-stage workflow with two checkpoints and three failure points. For each failure, specify preserved artifacts, limitations, invalidated work, recovery choices, resume validation, and the final user-facing outcome label.",
+      "checkpoint": "Can a partial artifact be useful and still be prohibited from publication?",
+      "answer": "Yes. It may preserve verified evidence or draft work while missing approval, freshness, or required specialist input. Its lifecycle and permitted uses must state that clearly.",
+      "glossary": [
+        "Checkpoint - durable resume point with versioned state",
+        "Partial success - useful verified outcome with named unfinished limits",
+        "Resume transition - validated continuation from preserved state"
+      ],
+      "related": [
+        199,
+        202,
+        204
+      ],
+      "sources": [
+        "AG-UI messages",
+        "AG-UI events",
+        "FastAPI background tasks"
+      ]
+    },
+    {
+      "id": 204,
+      "slug": "errors-recovery-support-next-actions",
+      "moduleId": "module-48",
+      "title": "Errors, recovery choices, support references, and next actions",
+      "stability": "Stable error-design principles using RFC 9457 and accessible interaction patterns",
+      "diagram": "diagrams/204-errors-recovery-support-next-actions.png",
+      "diagramPrompt": "Show ERROR EVENT entering a CLASSIFIER with USER ACTIONABLE, RETRYABLE, CONFLICT, PERMISSION, UNSAFE, UNKNOWN. Each produces a plain card with WHAT HAPPENED, WHAT WAS SAVED, NEXT ACTION, SUPPORT ID. Coral RAW STACK TRACE and TRY AGAIN LOOP; teal RETRY, EDIT, RESUME, HUMAN HELP, SAFE STOP.",
+      "alt": "An error classifier turns technical failures into plain-language cards that explain what happened, preserved work, next actions, and a support reference, while blocking raw stack traces and blind retry loops.",
+      "outcome": "Design error messages that preserve dignity, evidence, and control instead of blaming the user or offering a useless retry button.",
+      "explanation": "An error is part of the product state. The person needs to know what failed, what did not fail, what work was preserved, whether anything changed externally, and which actions are safe now. Classify errors by action and consequence rather than provider message. Useful categories include validation, permission, conflict, expired proposal, dependency unavailable, partial effect, policy block, unsafe request, and unknown outcome. RFC 9457 Problem Details offers a typed HTTP error shape, but a product still needs user-safe titles, detail, instance or support references, structured extensions, and redaction. Never expose stack traces, internal URLs, tokens, or provider payloads. Retry is appropriate only when the operation is retryable, idempotent, within a deadline, and unlikely to repeat harm. Otherwise offer edit, refresh evidence, resume, undo, contact support, or safe stop. Accessible error handling moves focus intentionally, connects fields to errors, announces important changes without repeated noise, preserves entered data, and never relies on color or icon alone. Unknown outcome is different from failure. If a consequential downstream call may have succeeded before acknowledgement was lost, the interface must reconcile authoritative state before enabling another attempt.",
+      "trace": [
+        "Normalize technical failures into bounded product categories with consequence, retryability, and state certainty.",
+        "State what happened, what was preserved, what may have changed, and what the person can safely do next.",
+        "Attach a non-sensitive support reference that connects authorized staff to deeper evidence.",
+        "Offer only actions whose preconditions and effect safety are known; reconcile uncertain outcomes before retry.",
+        "Test focus, announcements, keyboard operation, data preservation, localization, and repeated-failure behavior."
+      ],
+      "analogy": "A good road closure sign says which road is closed, what remains open, the safe detour, and where to get help. A sign that shows an engine code and says 'try driving again' is not useful.",
+      "nextjs": [
+        "Map typed server problems to an allowlisted error catalog with accessible heading, field association, preserved-input behavior, and recovery actions.",
+        "Use error boundaries for rendering failures, but keep business error state in normal typed data so users can review evidence and recover without losing the whole page.",
+        "Generate opaque support IDs server-side and never include stack traces, tenant data, secrets, or raw downstream bodies in client errors."
+      ],
+      "python": [
+        "Return RFC 9457-style problem documents with stable type URI, safe title, status, instance reference, category, retryability, and permitted action codes.",
+        "Separate internal exception evidence from the user response and enforce redaction through one error adapter rather than scattered string handling.",
+        "For uncertain effects, query authoritative records and return reconciled committed, not-committed, or human-review-required state before accepting retry."
+      ],
+      "caseStudy": {
+        "situation": "The refund provider times out after Acme sends a request, and the old interface displays 'Something went wrong - Try again.'",
+        "walkthrough": [
+          "The new interface marks the outcome Unknown rather than Failed because acknowledgement was lost.",
+          "It preserves Maya's review and disables repeat submission while the server checks the provider receipt ledger.",
+          "The ledger confirms one refund, so the card changes to Completed with the authoritative receipt.",
+          "A support reference remains available without exposing the provider response or customer details."
+        ],
+        "result": "Maya avoids a duplicate refund and understands that the system recovered by checking the real outcome.",
+        "danger": "A generic retry button after an uncertain consequential effect can repeat payments, emails, deletions, or approvals while hiding why the first attempt was unsafe to repeat.",
+        "takeaway": "Explain consequence and preserved state first; offer only recovery actions the system can prove are safe."
+      },
+      "lab": "Create an error catalog with twelve categories. For each, write internal trigger, user title, preserved state, possible effect, retry rule, primary action, secondary action, accessibility behavior, support reference, and telemetry event.",
+      "checkpoint": "Is every timeout a failed operation?",
+      "answer": "No. A timeout means an acknowledgement deadline passed. The downstream effect may have succeeded, failed, or remain unknown; reconcile authoritative state before retry.",
+      "glossary": [
+        "Problem Details - standard typed HTTP error document",
+        "Unknown outcome - effect may have occurred but is not yet confirmed",
+        "Support reference - safe identifier connecting a user report to authorized evidence"
+      ],
+      "related": [
+        200,
+        203,
+        207
+      ],
+      "sources": [
+        "RFC 9457 Problem Details",
+        "WCAG 2.2",
+        "ARIA alert dialog pattern"
+      ]
+    },
+    {
+      "id": 205,
+      "slug": "interrupt-input-approval-rejection-expiry",
+      "moduleId": "module-49",
+      "title": "Interrupt, input request, approval, rejection, and expiry",
+      "stability": "Human-control pattern; AG-UI interrupt capability is evolving and must remain versioned",
+      "diagram": "diagrams/205-interrupt-input-approval-rejection-expiry.png",
+      "diagramPrompt": "Show WORKFLOW reaching DECISION GATE and pausing. An APPROVAL CARD names PROPOSAL, EFFECT, EVIDENCE VERSION, POLICY, ACTOR, EXPIRY, CHOICES APPROVE REJECT EDIT ASK. After EXPIRY or VERSION CHANGE, coral buttons disable and REFRESH REVIEW appears. Teal RECEIPT resumes the exact paused task.",
+      "alt": "A workflow pauses at a decision gate and presents an approval card bound to one proposal, effect, evidence version, actor, policy, and expiry; stale cards disable and require fresh review.",
+      "outcome": "Create human decision points that bind a person's choice to one understandable proposal and current evidence.",
+      "explanation": "An interrupt is a deliberate pause because the workflow needs human input, approval, clarification, or a decision that the system is not authorized to make alone. A good approval card names the exact proposal, intended effect, target, amount or scope, evidence version, policy basis, requesting actor, expiry, and what happens after each choice. 'Allow?' is not informed consent. The choice must bind to immutable proposal identity and expected version. If evidence, policy, amount, target, or authority changes, the old card becomes stale and its action buttons must stop working. Approve, reject, request changes, ask a question, and defer are different outcomes. Rejection should not be treated as system failure, and requesting input should not silently grant authority. Expiry protects users from acting on abandoned or changed work. The interface should explain why a proposal expired, preserve review notes, and offer a fresh proposal rather than simply showing an error. Decision receipts should record proposal ID, actor, choice, time, evidence and policy versions, and resumed transition. They should never claim the later business effect occurred until that effect is separately verified.",
+      "trace": [
+        "Pause at a named decision gate before any consequential effect, with the workflow state durably checkpointed.",
+        "Render one versioned proposal with purpose, scope, evidence, policy, consequences, alternatives, and expiry.",
+        "Authenticate the actor and verify authority, proposal version, expiry, and current preconditions on submission.",
+        "Record a decision receipt, resume only the bound transition, and later verify the resulting business effect separately.",
+        "Disable stale or expired cards, preserve safe notes, and require review of a refreshed proposal after material change."
+      ],
+      "analogy": "Signing a house contract means approving one dated document with named terms. A signature cannot safely apply to an edited contract simply because the button stayed on screen.",
+      "nextjs": [
+        "Render approvals as accessible forms with visible proposal version, expiry, consequence summary, alternatives, and keyboard-operable actions.",
+        "Submit through a server action that reauthenticates the user and revalidates proposal hash, expected state, authority, and expiry before recording the decision.",
+        "Use distinct pending, accepted, rejected, expired, stale, and effect-confirmed states; never collapse them into one green success message."
+      ],
+      "python": [
+        "Persist immutable proposal records and decision receipts with expected workflow revision, policy version, evidence references, scope, and expiry.",
+        "Validate actor authority and current business preconditions in the same transaction that consumes the proposal decision.",
+        "Emit a typed resume event for the exact paused transition and create a separate effect receipt after downstream confirmation."
+      ],
+      "caseStudy": {
+        "situation": "Maya leaves an approval card open overnight while a policy update changes the maximum refund exception.",
+        "walkthrough": [
+          "The original card expires and its buttons become inactive before Maya returns.",
+          "Her review note is preserved, but the interface explains that the amount and policy basis changed.",
+          "A refreshed proposal highlights the changed fields and provides current evidence.",
+          "Only Maya's decision on the refreshed proposal can resume the refund transition."
+        ],
+        "result": "Maya's authority applies to what she actually reviewed, not to a later changed proposal.",
+        "danger": "A reusable approval button can turn an old human decision into authority for a new amount, target, policy, or action.",
+        "takeaway": "Pause before effect, bind the decision to one versioned proposal, expire stale authority, and receipt the choice."
+      },
+      "lab": "Design an approval schema with twenty fields and draw accepted, rejected, changes-requested, deferred, expired, stale, unauthorized, and effect-failed paths. Write the exact visible explanation and durable receipt for each.",
+      "checkpoint": "Does an approval receipt prove the approved business effect succeeded?",
+      "answer": "No. It proves the human decision. A separate authoritative effect receipt must prove execution and outcome.",
+      "glossary": [
+        "Interrupt - deliberate workflow pause for human participation",
+        "Proposal - immutable versioned description of a requested decision",
+        "Expiry - time or condition after which a decision card cannot grant authority"
+      ],
+      "related": [
+        200,
+        206,
+        207
+      ],
+      "sources": [
+        "AG-UI capabilities",
+        "AG-UI events",
+        "ARIA dialog pattern"
+      ]
+    },
+    {
+      "id": 206,
+      "slug": "edit-steer-reprioritize-replan-invalidate",
+      "moduleId": "module-49",
+      "title": "Edit, steer, reprioritize, replan, and invalidate",
+      "stability": "Human-steering product pattern; implementation and protocol events remain application-specific",
+      "diagram": "diagrams/206-edit-steer-reprioritize-replan-invalidate.png",
+      "diagramPrompt": "Show CURRENT PLAN with GOAL, CONSTRAINTS, PRIORITIES, STEPS, ARTIFACTS. USER STEERING chooses EDIT GOAL, ADD CONSTRAINT, REPRIORITIZE, REPLAN. An IMPACT ANALYZER marks KEEP, RECHECK, INVALIDATE. Coral SILENT PLAN MUTATION; teal NEW PLAN VERSION with DIFF, CONSENT, preserved valid work.",
+      "alt": "User steering changes goals, constraints, or priorities; an impact analyzer keeps valid work, rechecks dependencies, invalidates affected claims, and produces a new visible plan version with a diff.",
+      "outcome": "Let a person change direction without silently discarding valid work or pretending old evidence still supports a new plan.",
+      "explanation": "Steering means changing the goal, constraints, priority, or plan while work is in progress. It is not the same as sending another chat message and hoping the agent interprets it correctly. The interface should expose the current goal, important constraints, next steps, committed effects, and preserved artifacts before accepting a change. The person needs to understand what the change will affect. An impact analysis classifies prior work as still valid, needs recheck, or invalid. A new budget may keep research but invalidate a recommendation; a changed customer may invalidate every tenant-bound artifact. Replanning creates a new plan version with a visible diff and reason. It does not edit history in place. Completed effects and receipts remain visible even when the remaining plan changes. Some changes require fresh approval or cannot be accepted after a point of no return. The UI must say whether an email was already sent, a payment committed, or a reservation became non-refundable. Steering quality can be tested through preserved valid work, invalidation correctness, time to useful revised plan, accidental repeated effects, and whether users correctly predict what will change.",
+      "trace": [
+        "Show the current goal, constraints, priorities, plan version, preserved artifacts, and committed effects.",
+        "Capture the requested change as structured intent and preview likely impact before applying it.",
+        "Classify existing evidence, artifacts, steps, approvals, and effects as keep, recheck, invalidate, or irreversible.",
+        "Create a new plan version with a human-readable diff, refreshed budgets, and any required reapproval.",
+        "Resume from the earliest affected dependency while preserving history and preventing duplicate effects."
+      ],
+      "analogy": "Changing a travel itinerary after one flight is completed does not erase the flown segment. The planner keeps valid bookings, cancels or changes affected legs, explains fees, and produces a new itinerary version.",
+      "nextjs": [
+        "Build a steering panel with structured goal, constraint, and priority controls plus a server-generated impact preview and accessible diff.",
+        "Keep plan history and committed effects visible; do not replace the current screen with a new chat answer that hides what changed.",
+        "Require confirmation when steering invalidates an approval, discards costly work, or crosses an irreversible boundary."
+      ],
+      "python": [
+        "Represent plans as immutable versioned graphs with dependencies, constraints, budgets, artifact references, and committed-effect markers.",
+        "Compute an impact set from changed fields and dependency edges, then invalidate or recheck only affected nodes through explicit transitions.",
+        "Emit a new plan artifact and resume command with idempotency and prior-version linkage rather than mutating the active plan record in place."
+      ],
+      "caseStudy": {
+        "situation": "Maya changes the priority from fastest answer to strongest documented evidence after research has already begun.",
+        "walkthrough": [
+          "The interface previews that the current policy evidence remains valid but the short-answer draft and deadline budget must change.",
+          "Maya confirms the change after seeing the new estimated stages and missing finance evidence.",
+          "Acme creates plan version 3, preserves research, invalidates the old draft, and adds a specialist verification step.",
+          "The final artifact links both plan versions and explains why the output changed."
+        ],
+        "result": "Maya can steer the work deliberately while the system preserves valid effort and honest history.",
+        "danger": "A hidden replan can discard expensive work, reuse invalid evidence, repeat effects, or make support unable to explain why the final answer differs from the original goal.",
+        "takeaway": "Steering creates a visible versioned change, impact analysis, and bounded resume point."
+      },
+      "lab": "Take one eight-step plan and apply four changes: new goal, new constraint, new priority, and changed user. Mark every step and artifact keep, recheck, invalidate, or irreversible. Produce the visible diff and confirmation copy.",
+      "checkpoint": "Should changing one preference always restart the whole workflow?",
+      "answer": "No. Use dependency-aware impact analysis to preserve valid work, but invalidate anything whose assumptions, authority, or evidence no longer hold.",
+      "glossary": [
+        "Steering - structured change to active goal, constraints, or priorities",
+        "Invalidation - marking prior work no longer usable under new assumptions",
+        "Plan diff - visible comparison between plan versions"
+      ],
+      "related": [
+        183,
+        205,
+        207
+      ],
+      "sources": [
+        "AG-UI messages",
+        "AG-UI events",
+        "NIST AI Risk Management Framework"
+      ]
+    },
+    {
+      "id": 207,
+      "slug": "cancel-undo-compensate-audit-history",
+      "moduleId": "module-49",
+      "title": "Cancel, undo, compensate, and preserve audit history",
+      "stability": "Established distributed-workflow and human-control pattern",
+      "diagram": "diagrams/207-cancel-undo-compensate-audit-history.png",
+      "diagramPrompt": "Show ACTION TIMELINE with QUEUED, RUNNING, COMMITTED. CANCEL stops queued or running work. UNDO reverses a reversible local change. COMPENSATE creates a new corrective effect after COMMITTED. Every path writes AUDIT HISTORY and USER RECEIPT. Coral ERASE HISTORY and FAKE UNDO; teal RECOVERED STATE.",
+      "alt": "A timeline distinguishes cancellation before commitment, true undo of a reversible change, and compensating action after commitment, while preserving audit history and user receipts.",
+      "outcome": "Explain and design the different promises made by cancel, undo, and compensation.",
+      "explanation": "Cancel, undo, and compensate are not synonyms. Cancel asks unfinished work to stop; undo restores a reversible prior state; compensation creates a new corrective effect after the original effect cannot simply disappear. Cancellation is cooperative. A request may already be inside an external tool, so the system must report requested, stopping, stopped, too late, or partially stopped rather than instantly claiming success. True undo requires a known inverse and preserved prior state. It works for a draft edit or local ordering change, but not for an email already read, a payment settled, or information already disclosed. Compensation preserves history and applies a new action: refund a charge, send a correction, revoke a grant, or reopen a case. It can fail and may require separate authority, policy, and evidence. The interface should show point of no return, affected artifacts, external effects, expected recovery time, and what remains visible in history. Deleting the original record destroys accountability and can make recovery impossible. Tests must inject cancel at every stage, duplicate cancel, late cancel, failed inverse, failed compensation, and uncertain acknowledgement. Receipts should state what stopped, what remained, and which corrective effect completed.",
+      "trace": [
+        "Mark each stage and effect as cancellable, reversible, compensatable, irreversible, or unknown before exposing controls.",
+        "On cancel, propagate a bounded stop request and report actual stage outcomes rather than immediate success.",
+        "Use undo only when the inverse and prior state are proven; otherwise present a clearly named compensation proposal.",
+        "Authorize, execute, and receipt compensation as a new effect linked to the original record.",
+        "Preserve the complete audit history, current state, user explanation, and unresolved recovery obligations."
+      ],
+      "analogy": "Stopping a letter before pickup is cancellation. Removing a draft sentence is undo. Sending a correction after the letter was delivered is compensation; the first letter still existed.",
+      "nextjs": [
+        "Label controls precisely as Stop remaining work, Undo draft change, Refund payment, or Send correction rather than using one generic Undo button.",
+        "Render requested, in-progress, too-late, partially-stopped, compensated, and compensation-failed states with receipts and accessible announcements.",
+        "Require explicit confirmation and fresh authority for compensation that creates a financial, communication, permission, or deletion effect."
+      ],
+      "python": [
+        "Model cancel signals separately from business transitions and let workers checkpoint cancellation between bounded operations.",
+        "Store inverse operations only for truly reversible state and model compensations as idempotent commands with their own policy and receipt.",
+        "Link original effect, cancel attempt, compensation proposal, decision, corrective effect, and final status in an immutable audit chain."
+      ],
+      "caseStudy": {
+        "situation": "Maya cancels a refund workflow after Acme has already sent the refund request but before the provider acknowledgement arrives.",
+        "walkthrough": [
+          "The interface reports Cancellation requested and stops remaining notification work without claiming the refund vanished.",
+          "Reconciliation finds that the refund committed despite the late cancellation.",
+          "Acme offers a separate policy-controlled compensation path rather than a fake undo.",
+          "The final receipt shows the original refund, cancellation timing, compensation decision, and resulting account state."
+        ],
+        "result": "Maya understands what could be stopped, what already happened, and what corrective action remains.",
+        "danger": "A green 'Cancelled' message can be dangerously false when an external effect already committed or a worker has not acknowledged the stop request.",
+        "takeaway": "Cancel unfinished work, undo only proven reversible state, compensate committed effects, and never erase history."
+      },
+      "lab": "Create a table of twelve actions and classify cancellation window, point of no return, inverse, compensation, authority, time limit, uncertain-outcome handling, and receipt. Draw one failed-compensation recovery path.",
+      "checkpoint": "Can every completed action be undone?",
+      "answer": "No. Many effects are irreversible or only compensatable. A corrective action creates new history; it does not make the original effect disappear.",
+      "glossary": [
+        "Cancellation - request to stop unfinished work",
+        "Undo - proven inverse restoring prior reversible state",
+        "Compensation - new corrective effect linked to an earlier committed effect"
+      ],
+      "related": [
+        200,
+        204,
+        205
+      ],
+      "sources": [
+        "AG-UI events",
+        "RFC 9457 Problem Details",
+        "NIST AI Risk Management Framework"
+      ]
+    },
+    {
+      "id": 208,
+      "slug": "accessibility-plain-language-uncertainty-trust",
+      "moduleId": "module-49",
+      "title": "Accessibility, plain language, uncertainty, and trust cues",
+      "stability": "WCAG 2.2 is the current W3C baseline; ARIA patterns support implementation but require testing",
+      "diagram": "diagrams/208-accessibility-plain-language-uncertainty-trust.png",
+      "diagramPrompt": "Show one interface used by KEYBOARD, SCREEN READER, ZOOM, VOICE, TOUCH, REDUCED MOTION. Cards demonstrate FOCUS ORDER, LIVE STATUS, TEXT LABELS, CONTRAST, TARGET SIZE, ERROR HELP, UNCERTAINTY. Coral COLOR ONLY, AUTO FOCUS JUMP, HIDDEN CONTROL, OVERCONFIDENT COPY; teal UNDERSTANDABLE CONTROL.",
+      "alt": "An agent interface supports keyboard, screen reader, zoom, voice, touch, and reduced motion through focus order, status announcements, text labels, contrast, target size, error help, and honest uncertainty.",
+      "outcome": "Treat accessibility and understandable trust as core product behavior rather than a final visual checklist.",
+      "explanation": "Accessibility means people can perceive, operate, understand, and reliably use the full workflow, including streaming progress, approvals, errors, recovery, diagrams, and dynamic components. A static homepage audit is not enough. WCAG 2.2 provides testable success criteria, while WAI-ARIA supplies semantics and APG offers interaction patterns. ARIA cannot repair a broken keyboard model, hidden focus, misleading state, or inaccessible custom control. Dynamic agent interfaces need deliberate focus and announcement rules. Announce meaningful stage, error, approval, and completion changes; do not flood a live region with token streams or move focus on every update. Plain language states the action, subject, consequence, uncertainty, and next step. Trust cues should name evidence version, freshness, limits, approval scope, and recovery rather than using vague badges such as AI verified. Uncertainty must be actionable. Explain whether evidence is missing, conflicting, stale, or insufficient and what can reduce uncertainty. Do not expose hidden reasoning or invent a confidence percentage without a calibrated meaning. Accessibility evidence combines automated checks, keyboard walkthroughs, screen-reader testing, zoom and reflow, contrast, motion, touch targets, cognitive review, and user testing across successful and failed workflows.",
+      "trace": [
+        "Map every workflow state and control to semantic HTML, accessible name, description, role, value, focus, and keyboard behavior.",
+        "Define status and alert announcements for meaningful transitions while suppressing noisy token-level updates.",
+        "Write plain action, consequence, evidence, uncertainty, and recovery language without relying on color, icon, or technical jargon.",
+        "Test reflow, zoom, contrast, target size, reduced motion, error recovery, and modal behavior across complete workflows.",
+        "Combine automated evidence with assistive-technology and human testing, then keep failures as permanent regression cases."
+      ],
+      "analogy": "A well-designed public building has visible signs, tactile guidance, ramps, audible announcements, readable maps, and staff help. Painting one wheelchair symbol on a locked door does not make it accessible.",
+      "nextjs": [
+        "Prefer semantic server-rendered HTML and native controls, then add ARIA only when the required semantics or relationships are not available natively.",
+        "Manage focus after route, dialog, error, approval, and recovery transitions; announce concise status changes through controlled live regions.",
+        "Provide diagram alt text, zoom, text explanation, reading order, reduced motion, keyboard operation, and persistent visible labels at every responsive size."
+      ],
+      "python": [
+        "Include accessible labels, descriptions, status priority, uncertainty category, and action semantics in typed view models instead of leaving meaning to frontend string invention.",
+        "Generate deterministic fixtures for every workflow state so automated browser and assistive-technology tests can reproduce progress, approval, conflict, and recovery.",
+        "Record accessibility failures by component, state, input method, assistive technology, and user impact without collecting unnecessary disability or identity data."
+      ],
+      "caseStudy": {
+        "situation": "Maya uses keyboard navigation and 200 percent zoom. A streaming approval page keeps moving focus and the Accept button disappears below an unscrollable panel.",
+        "walkthrough": [
+          "The layout reflows into one column with the decision summary before the action controls.",
+          "Progress updates announce only stage changes, so focus remains on Maya's review.",
+          "The approval dialog follows the APG keyboard model and keeps visible focus within a genuinely modal boundary.",
+          "Evidence, uncertainty, expiry, reject, ask, and approve choices remain readable and operable without color or pointer input."
+        ],
+        "result": "Maya can independently understand and complete the same decision workflow as other users.",
+        "danger": "An interface can pass a color checker yet remain unusable because streaming steals focus, controls lack names, diagrams have no equivalent explanation, or recovery works only with a mouse.",
+        "takeaway": "Accessible trust is understandable state plus operable control across every success and failure path."
+      },
+      "lab": "Audit one complete lesson and one approval workflow against WCAG 2.2 AA. Include keyboard, screen reader, 200 and 400 percent zoom, reflow, contrast, target size, reduced motion, live regions, errors, dialogs, and diagram alternatives.",
+      "checkpoint": "Does adding ARIA roles automatically make a custom component accessible?",
+      "answer": "No. Semantics, keyboard behavior, focus, visible state, announcements, layout, and human testing must all work together. Prefer native elements when possible.",
+      "glossary": [
+        "Accessible name - programmatic label identifying a control",
+        "Live region - area whose important updates assistive technology can announce",
+        "Actionable uncertainty - named limit plus a way to reduce or respond to it"
+      ],
+      "related": [
+        201,
+        205,
+        214
+      ],
+      "sources": [
+        "WCAG 2.2",
+        "WAI-ARIA 1.2",
+        "ARIA Authoring Practices Guide",
+        "Next.js accessibility"
+      ]
+    },
+    {
+      "id": 209,
+      "slug": "typed-components-schemas-allowlists-validation",
+      "moduleId": "module-50",
+      "title": "Typed components, schemas, allowlists, and validation",
+      "stability": "A2UI v0.9.1 is the checked current release while v1.0 remains a candidate; isolate versions behind an adapter",
+      "diagram": "diagrams/209-typed-components-schemas-allowlists-validation.png",
+      "diagramPrompt": "Show MODEL proposing a declarative UI TREE into JSON SCHEMA, COMPONENT ALLOWLIST, PROP VALIDATOR, ACTION POLICY. Valid cards TABLE FORM CHART NOTICE render in a SAFE COMPONENT CATALOG. Coral ARBITRARY HTML SCRIPT UNKNOWN ACTION OVERSIZED PAYLOAD go to REJECT. Teal VERSION ADAPTER leads to ACCESSIBLE UI.",
+      "alt": "A model's declarative interface tree passes schema, component allowlist, property validation, action policy, and a version adapter before safe accessible components render; arbitrary code is rejected.",
+      "outcome": "Let an agent choose from safe interface building blocks without allowing it to execute arbitrary frontend code.",
+      "explanation": "Generative interface design should mean assembling approved components from typed data, not asking a model to ship JavaScript into a person's browser. The model proposes structure; the product owns rendering, behavior, security, and accessibility. A declarative payload names components such as Stack, Text, Table, Form, Chart, Notice, and Button. Each component has a strict schema for children, properties, data bindings, limits, and actions. Anything outside the catalog is rejected or rendered as a safe unsupported-component notice. A2UI follows this server-driven idea. Its protocol version must travel with every payload because component names and message shapes can change. A version adapter converts the supported wire version into the application's smaller internal view model. Validation has several layers: valid JSON, known schema version, bounded depth and size, allowlisted component, allowed properties, typed values, safe text, valid data references, and an action that policy permits in this context. A component catalog is a product contract. Every component needs semantic HTML, keyboard behavior, focus rules, responsive layout, loading and error states, localization, data minimization, telemetry rules, and tests for untrusted content. Dynamic composition does not remove human control. Sensitive actions still become proposals with consequence, scope, evidence, expiry, and approval. A generated button is never authority by itself.",
+      "trace": [
+        "Receive a bounded declarative payload with protocol version, surface ID, component tree, data model, and proposed actions.",
+        "Validate the envelope and convert the supported A2UI version through a dedicated adapter.",
+        "Walk the tree against component, property, nesting, binding, size, and action allowlists.",
+        "Resolve approved data into product-owned accessible components while treating all text and links as untrusted input.",
+        "Reject unsafe nodes with a support reference and log the rule that blocked them without exposing private payload data."
+      ],
+      "analogy": "A model can arrange approved pieces in a museum display case, but it cannot cut new doors into the building, rewire the alarms, or hand visitors an unknown machine.",
+      "nextjs": [
+        "Define a discriminated TypeScript union for the internal component catalog and validate wire payloads in a server-only boundary before passing them to React.",
+        "Render through an exhaustive component map with no eval, Function constructor, injected event handlers, or dangerouslySetInnerHTML; unknown nodes use one safe fallback.",
+        "Keep action execution separate from rendering: components emit named intents that Server Actions or route handlers revalidate against session, policy, revision, and approval state."
+      ],
+      "python": [
+        "Use Pydantic discriminated unions for supported components and actions, with maximum depth, node count, string length, collection size, and URL rules.",
+        "Translate A2UI payloads into a stable internal model so protocol upgrades require one adapter change rather than rewriting every interface.",
+        "Return structured validation errors with a correlation ID; never echo secrets, raw HTML, stack traces, or an entire rejected payload to the browser."
+      ],
+      "caseStudy": {
+        "situation": "Maya asks Acme to compare three refund options. The agent proposes a table, an evidence notice, and an Approve exception button.",
+        "walkthrough": [
+          "The table and notice match approved schemas and render through accessible product components.",
+          "One cell contains model-produced markup, so the renderer treats it as text instead of executable HTML.",
+          "The Approve intent is recognized, but policy converts it into a versioned proposal rather than executing it.",
+          "Maya reviews consequence, evidence, amount, customer, expiry, and recovery before the server accepts the separate decision request."
+        ],
+        "result": "The interface can adapt to Maya's task while Acme retains control over code, data, actions, accessibility, and authority.",
+        "danger": "Rendering model-authored HTML or accepting arbitrary component actions turns a presentation feature into a code-execution and confused-deputy boundary.",
+        "takeaway": "Let the model compose a small typed catalog; let the product validate, render, and authorize everything."
+      },
+      "lab": "Design a twelve-component catalog for the visual course website. For each component define props, children, data bindings, accessible behavior, responsive rule, allowed actions, size limit, unsafe examples, and test fixtures. Reject at least six malicious payloads.",
+      "checkpoint": "Is schema-valid generative UI automatically safe to render?",
+      "answer": "No. Schema validity is one gate. The product must also enforce component and action allowlists, data exposure rules, safe text and links, size limits, accessibility, policy, and contextual authorization.",
+      "glossary": [
+        "Declarative UI - data describing approved interface structure",
+        "Component allowlist - finite catalog permitted to render",
+        "Version adapter - boundary translating a wire version into a stable internal model"
+      ],
+      "related": [
+        205,
+        210,
+        212
+      ],
+      "sources": [
+        "A2UI specification versions",
+        "A2UI v0.9 protocol",
+        "JSON Schema 2020-12",
+        "OWASP DOM XSS Prevention"
+      ]
+    },
+    {
+      "id": 210,
+      "slug": "mcp-apps-sandbox-consent-communication",
+      "moduleId": "module-50",
+      "title": "MCP Apps, sandboxed frames, consent, and communication",
+      "stability": "MCP Apps extension 2026-01-26 is stable; hosts and apps still negotiate optional capabilities",
+      "diagram": "diagrams/210-mcp-apps-sandbox-consent-communication.png",
+      "diagramPrompt": "Show MCP SERVER exposing TOOL plus UI RESOURCE with UI URI. HOST fetches resource into SANDBOXED IFRAME. APP BRIDGE exchanges JSON-RPC messages across a narrow boundary. Gates CAPABILITY NEGOTIATION, CONSENT, ORIGIN CHECK, DATA MINIMIZATION, AUDIT RECEIPT. Coral DIRECT HOST ACCESS and UNDECLARED CAPABILITY blocked.",
+      "alt": "An MCP server declares a tool and UI resource; the host loads the app in a sandboxed iframe and permits only capability-negotiated, consented, origin-checked, minimized, audited communication through the app bridge.",
+      "outcome": "Explain how an MCP App can provide a rich embedded experience while the host keeps a visible security and consent boundary.",
+      "explanation": "An MCP App pairs an MCP tool with a declared UI resource. The server can advertise a resource URI using the ui scheme, and a supporting host decides whether and how to fetch and display it. The host renders the app inside a sandboxed iframe rather than merging unknown code directly into its privileged interface. Sandboxing reduces authority, but it is only one control; the host must still validate origins, messages, capabilities, and data flows. The app and host communicate through a defined JSON-RPC bridge over web messaging. Each side should verify message shape, source window, origin or established channel, request ID, method, capability, and lifecycle state before acting. Capabilities are negotiated. An app must not assume the host supports every optional feature, and a host must not grant access simply because the app asks. Unsupported behavior needs a safe fallback. Consent belongs at the moment a meaningful action or data disclosure is proposed. The explanation should say what data, which recipient, why it is needed, how long it lasts, and how the person can refuse or revoke it. Receipts connect the embedded experience to product trust: resource version, server identity, capabilities granted, data categories shared, tool calls made, decisions, results, and revocation become inspectable without logging secrets.",
+      "trace": [
+        "Discover the MCP tool and its declared UI resource metadata through the normal server connection.",
+        "Fetch and validate the resource under host policy, then load it inside a restrictive sandbox with a controlled content policy.",
+        "Establish the bridge and negotiate supported capabilities before enabling optional controls.",
+        "Validate every message and require contextual consent or approval before data disclosure or side effect.",
+        "Record a minimized receipt and destroy app state, grants, and message channels when the frame closes or authority expires."
+      ],
+      "analogy": "A visiting specialist can work inside a secure room with an intercom. The host controls the room, decides which files enter, and records approved requests; the visitor does not receive keys to the entire building.",
+      "nextjs": [
+        "Keep iframe creation and bridge ownership in a host component that sets sandbox and policy attributes explicitly and validates the expected frame window for every message.",
+        "Route bridge methods through a typed allowlist; check capability, session, tenant, approval, and resource version server-side before any tool or data operation.",
+        "Show the app's server identity, requested data, active grants, and a close or revoke control outside the embedded frame so the app cannot hide host controls."
+      ],
+      "python": [
+        "Expose MCP tool and UI resource metadata deliberately, keeping the resource immutable or content-addressed so audits can identify the exact embedded build.",
+        "Validate bridge-originated tool arguments exactly like any other untrusted client request; the iframe is presentation, not an authentication factor.",
+        "Store short-lived grant records scoped to user, host, server, app resource, capability, data categories, purpose, and expiry, plus revocation events."
+      ],
+      "caseStudy": {
+        "situation": "Maya opens an embedded Acme policy comparison app offered by a third-party MCP server.",
+        "walkthrough": [
+          "The host identifies the server and loads its declared resource in a sandboxed frame with no blanket access to Acme state.",
+          "The app negotiates support for tool invocation and a theme capability but receives no customer data by default.",
+          "When Maya selects a case, the host explains the exact fields the app requests and asks whether to share them for this comparison.",
+          "The approved result returns through the bridge, and the host stores a receipt while Maya can revoke the grant or close the frame at any time."
+        ],
+        "result": "Maya gets a specialized interactive tool without silently turning the third-party app into part of Acme's trusted core.",
+        "danger": "A sandboxed iframe can still mislead users, request excessive data, send forged messages, exploit weak origin checks, or trigger privileged host methods if the bridge is overpowered.",
+        "takeaway": "MCP Apps are embedded guests: declare them, sandbox them, negotiate capabilities, minimize data, obtain consent, and audit the bridge."
+      },
+      "lab": "Write a host-app threat model with assets, actors, trust boundaries, twelve bridge methods, capability checks, consent text, origin/source validation, CSP and sandbox settings, revocation, expiry, fallback, and receipt fields. Include clickjacking and confused-deputy tests.",
+      "checkpoint": "Does iframe sandboxing remove the need to validate messages and tool arguments?",
+      "answer": "No. Sandboxing limits browser authority, but the bridge can still expose powerful host behavior. Every message, capability, user decision, argument, and server-side authorization must be validated.",
+      "glossary": [
+        "UI resource - MCP-declared content a supporting host may render",
+        "Sandboxed iframe - isolated browsing context with restricted capabilities",
+        "App bridge - typed message channel between embedded app and host"
+      ],
+      "related": [
+        205,
+        209,
+        212
+      ],
+      "sources": [
+        "MCP Apps overview",
+        "MCP Apps stable specification",
+        "HTML Living Standard web messaging",
+        "HTML Living Standard iframe sandbox"
+      ]
+    },
+    {
+      "id": 211,
+      "slug": "frontend-tools-user-device-actions",
+      "moduleId": "module-50",
+      "title": "Frontend tool calls and user-device actions",
+      "stability": "Browser permission and user-activation behavior is platform-dependent; design capability detection and refusal paths",
+      "diagram": "diagrams/211-frontend-tools-user-device-actions.png",
+      "diagramPrompt": "Show AGENT PROPOSAL entering USER GESTURE and HOST POLICY. Device tools CLIPBOARD, FILE PICKER, CAMERA, LOCATION, DOWNLOAD, OPEN LINK sit behind PURPOSE, PERMISSION, PREVIEW, CONFIRM. Teal EXECUTE ON DEVICE to RECEIPT. Coral SILENT ACCESS, BACKGROUND PROMPT, HIDDEN DOWNLOAD, UNSAFE URL blocked.",
+      "alt": "An agent proposal reaches clipboard, file, camera, location, download, and link actions only after host policy, purpose, browser permission, preview, user gesture, confirmation, and a receipt.",
+      "outcome": "Design browser and device actions as visible, scoped user choices instead of invisible agent powers.",
+      "explanation": "Some useful actions belong on the user's device: choosing a file, copying a result, opening a location, downloading an artifact, or invoking a camera. A remote agent should propose these actions, not pretend it directly owns the device. Browsers protect many capabilities with secure-context rules, permissions, and transient user activation. Product design must preserve the real human gesture instead of manufacturing clicks, repeatedly prompting, or hiding permission requests behind misleading labels. A frontend tool contract names the action, purpose, input shape, visible preview, data leaving the device, destination, expected effect, cancellation behavior, result, and receipt. The contract must be narrower than a generic execute command. Local-first processing can reduce exposure. A selected file can be previewed, redacted, chunked, or summarized locally before the person chooses what crosses the network. The interface must distinguish local preparation from upload. Links and downloads are side effects too. Validate schemes and destinations, prevent opener abuse, label file type and size, scan generated content when appropriate, and never disguise an executable as a document. Refusal is a normal state. If Maya declines location, camera, or upload access, the workflow should offer manual entry, paste, existing artifacts, or a reduced-capability path without punishment or endless prompts.",
+      "trace": [
+        "Convert the agent suggestion into a typed frontend proposal with purpose, scope, destination, and required browser capability.",
+        "Check host policy and feature availability before presenting a control that cannot work.",
+        "Let the user initiate the real browser action and preview the selected data or destination before disclosure or execution.",
+        "Execute only the approved bounded action, then reconcile its result with authoritative product state.",
+        "Show a receipt or clear local-only result and provide a refusal, retry, revoke, or alternative path."
+      ],
+      "analogy": "A travel assistant may prepare the address and explain the route, but you still decide whether to open the map, share your location, or hand over a document from your bag.",
+      "nextjs": [
+        "Keep device APIs inside client components reached through explicit visible controls; perform capability detection and render a meaningful alternative before requesting permission.",
+        "Validate files by size, declared and detected type, count, and purpose; show upload progress separately from local selection and use signed, narrow destinations.",
+        "Represent agent suggestions as inert typed intents. Only a genuine user event can invoke clipboard, picker, download, navigation, camera, or location behavior."
+      ],
+      "python": [
+        "Issue short-lived upload or action tokens scoped to session, tenant, object type, maximum size, content purpose, and expiry; revalidate at ingestion.",
+        "Quarantine and scan uploaded artifacts where the risk requires it, strip unnecessary metadata, and do not trust browser MIME declarations.",
+        "Return durable artifact IDs and processing receipts rather than exposing storage paths, infrastructure credentials, or raw internal exceptions."
+      ],
+      "caseStudy": {
+        "situation": "The Acme agent asks Maya to upload a customer letter and use her location to choose a regional policy.",
+        "walkthrough": [
+          "The interface explains that location is optional and offers manual region selection, so Maya chooses the manual path.",
+          "A real file picker opens only when Maya presses Choose letter; no file is read beforehand.",
+          "Maya previews the filename, type, size, fields to redact, upload destination, retention, and purpose.",
+          "After confirmation, the server scans and stores the file, returns an artifact receipt, and the UI links that exact version to the review."
+        ],
+        "result": "Maya completes the task while refusing one permission and knowingly approving the minimum necessary file disclosure.",
+        "danger": "A friendly agent message can become coercive if the browser prompts unexpectedly, refusal breaks the workflow, or a generic device tool can reach arbitrary files and destinations.",
+        "takeaway": "The agent proposes; the host explains; the user gestures; the browser mediates; the server revalidates; the receipt proves the result."
+      },
+      "lab": "Specify clipboard, file upload, download, open-link, camera, and location tools. For each, document user activation, browser permission, purpose, preview, data flow, refusal alternative, server revalidation, cancellation, error, privacy, and receipt.",
+      "checkpoint": "May an agent call a browser file picker automatically after writing 'Please upload a file'?",
+      "answer": "No. The product should present a clear control and let a genuine user gesture invoke the picker. The message is a proposal, not permission or activation.",
+      "glossary": [
+        "User activation - browser-recognized human interaction required for some capabilities",
+        "Frontend tool - typed device or browser action mediated by the host",
+        "Local-first - processing data on the device before optional disclosure"
+      ],
+      "related": [
+        205,
+        210,
+        218
+      ],
+      "sources": [
+        "HTML Living Standard web messaging",
+        "Permissions Policy",
+        "OWASP HTML5 Security",
+        "Next.js App Router"
+      ]
+    },
+    {
+      "id": 212,
+      "slug": "interface-security-data-exposure-safe-rendering",
+      "moduleId": "module-50",
+      "title": "Interface security, data exposure, and safe rendering",
+      "stability": "Web security standards evolve; maintain threat models, dependency updates, browser tests, and defense in depth",
+      "diagram": "diagrams/212-interface-security-data-exposure-safe-rendering.png",
+      "diagramPrompt": "Show UNTRUSTED INPUTS MODEL TEXT RETRIEVAL TOOL RESULT APP MESSAGE URL FILE entering ENCODE, SANITIZE WHERE NEEDED, SCHEMA, ORIGIN, CSP, PERMISSIONS POLICY, SANDBOX, AUTHZ, REDACTION. Safe outputs TEXT COMPONENT LINK DOWNLOAD. Coral XSS DATA LEAK PROMPT SPOOF CLICKJACK CONFUSED DEPUTY blocked and logged.",
+      "alt": "Untrusted model text, retrieval, tool results, app messages, URLs, and files pass encoding, schema, origin, policy, sandbox, authorization, and redaction controls before safe components render; common web attacks are blocked.",
+      "outcome": "Apply ordinary web security and agent-specific trust boundaries to every dynamic interface input and action.",
+      "explanation": "Model output, retrieved documents, tool results, MCP App messages, filenames, URLs, and generated component payloads are untrusted input. Fluency, an internal source, or a signed-in user does not make content safe to execute. Contextual output encoding is the default defense for text. Sanitization is needed only when the product intentionally supports a limited markup language, and the sanitizer configuration becomes security-critical. Avoid raw HTML whenever structured components can express the same meaning. CSP limits where scripts, frames, styles, images, and connections may come from. Permissions Policy limits powerful browser features. Iframe sandboxing restricts embedded code. These controls overlap but do not replace validation, authorization, or safe component design. Data minimization happens before rendering. A component should receive only fields it needs, at the correct tenant and purpose, with secrets, hidden prompts, chain-of-thought, credentials, raw policy internals, and unrelated customer data removed. Every action must be authorized on the server using current identity, tenant, resource, policy, revision, and approval—not trusted because a hidden field, React state, iframe, or model message says it is allowed. Security failure needs a safe interface state. Block the node or action, preserve unaffected work, show a plain support reference, and log a redacted diagnostic. Never dump the malicious payload or stack trace into the page.",
+      "trace": [
+        "Inventory every interface input, renderer, frame, bridge, browser capability, action endpoint, data field, and external destination.",
+        "Classify trust boundaries and apply schema, size, encoding, URL, origin, content, and tenant rules before the component layer.",
+        "Use strict CSP, restrictive frame and permissions policies, secure cookies, anti-CSRF controls, and server-side authorization appropriate to the architecture.",
+        "Test stored and reflected XSS, malicious Markdown, unsafe links, oversized trees, spoofed approvals, cross-tenant IDs, forged app messages, and clickjacking.",
+        "Render bounded recovery, rotate or revoke exposed authority, preserve evidence, and convert every incident into a regression case."
+      ],
+      "analogy": "A mailroom treats every package as unopened and potentially unsafe. A familiar return address may guide routing, but it does not bypass scanning, recipient checks, or access-controlled delivery.",
+      "nextjs": [
+        "Keep secrets and privileged data in Server Components or server modules; pass client components minimal serialized view models rather than database records or provider responses.",
+        "Render text as text, allow links only after scheme and destination policy, avoid dangerous HTML sinks, and configure CSP with nonces or hashes rather than broad unsafe directives.",
+        "Reauthorize every Server Action and route handler, bind actions to current resource revisions, and treat client-supplied role, tenant, price, approval, and artifact fields as assertions to verify."
+      ],
+      "python": [
+        "Centralize tenant-scoped authorization and redaction before response serialization; use explicit response models so accidental fields do not leak.",
+        "Validate URLs, content types, bridge methods, component schemas, identifiers, and size limits at ingress, and use safe libraries rather than custom parsers.",
+        "Create security fixtures for hostile retrieved text, tool outputs, app messages, and uploads, then run them through API, renderer, and browser tests as one end-to-end story."
+      ],
+      "caseStudy": {
+        "situation": "A retrieved policy contains hidden markup designed to create a fake Acme approval button and send customer data to an external URL.",
+        "walkthrough": [
+          "Retrieval returns the content as untrusted evidence text, not as UI code.",
+          "The component renderer encodes the markup, and link policy blocks the unapproved destination.",
+          "CSP prevents unexpected script and connection sources even if a future renderer mistake occurs.",
+          "The security event receives a redacted correlation reference, the legitimate evidence remains available, and the payload becomes a permanent regression fixture."
+        ],
+        "result": "The malicious document cannot impersonate product controls or exfiltrate customer data, and Maya can continue with the safe evidence.",
+        "danger": "Agent systems widen the input surface: one unsafe renderer can turn model, RAG, tool, or embedded-app content into code or a believable fake control.",
+        "takeaway": "Treat every dynamic source as data, expose the minimum, authorize effects on the server, and layer browser defenses around mistakes."
+      },
+      "lab": "Threat-model a generated comparison screen from source to browser. Add at least twenty abuse cases covering XSS, unsafe URLs, data overexposure, forged actions, cross-tenant access, iframe messages, CSP bypass, clickjacking, downloads, denial of service, and misleading consent. Define prevention, detection, recovery, and regression evidence.",
+      "checkpoint": "If CSP blocks inline scripts, may the application safely render arbitrary model HTML?",
+      "answer": "No. CSP is defense in depth and has limits and configuration risks. Arbitrary HTML can still spoof controls, leak data through allowed channels, abuse links, or exploit a future mistake. Prefer typed components and contextual encoding.",
+      "glossary": [
+        "Contextual encoding - escaping data for its exact HTML, attribute, URL, or script context",
+        "CSP - browser policy restricting content sources and execution",
+        "Confused deputy - privileged component tricked into using its authority for an untrusted requester"
+      ],
+      "related": [
+        209,
+        210,
+        218
+      ],
+      "sources": [
+        "Content Security Policy Level 3",
+        "Permissions Policy",
+        "OWASP DOM XSS Prevention",
+        "OWASP Content Security Policy",
+        "OWASP HTML5 Security"
+      ]
+    },
+    {
+      "id": 213,
+      "slug": "reusable-visual-lesson-content-model",
+      "moduleId": "module-51",
+      "title": "A reusable visual lesson content model",
+      "stability": "The content model is a product contract; version it independently from the website framework",
+      "diagram": "diagrams/213-reusable-visual-lesson-content-model.png",
+      "diagramPrompt": "Show AUTHORING SOURCE feeding VALIDATED LESSON MODEL with OUTCOME, STATUS, DIAGRAM, ALT, EXPLANATION, TRACE, ANALOGY, NEXTJS, PYTHON, CASE STUDY, LAB, CHECKPOINT, GLOSSARY, SOURCES, LINKS. Outputs DOCX WEBSITE SEARCH OFFLINE QUIZ. Add SCHEMA VERSION MIGRATION and coral COPY PASTE DRIFT.",
+      "alt": "One validated, versioned lesson model containing the complete visual teaching structure produces the document, website, search, offline package, and quizzes while preventing copy-and-paste drift.",
+      "outcome": "Design one durable lesson source that can power documents, a website, search, accessibility, and future learning experiences.",
+      "explanation": "The website should not begin by copying paragraphs out of Word files. A structured content model becomes the source of truth, while DOCX, web pages, search records, offline packs, quizzes, and future formats become projections. Each lesson needs a stable ID and slug, module, title, learning outcome, standards status, diagram asset, alt text, detailed explanation, visual trace, analogy, technology mappings, case study, lab, checkpoint, glossary, relations, and cited sources. Stable identifiers matter more than filenames. A title or URL can change without breaking progress, bookmarks, annotations, prerequisites, citations, analytics, and links if the lesson ID remains stable. The schema needs a version and migration policy. Additive optional fields are easier than silent meaning changes. A migration should preserve author intent, report information loss, and leave a reversible record of what changed. Content and presentation are separate but connected. The model stores semantic roles and relationships; templates decide typography, layout, breakpoints, and interaction. Do not store visual spacing as a pile of HTML fragments inside lesson text. Validation belongs in authoring and CI. Missing alt text, unknown source labels, broken relations, duplicate IDs, unbounded prose, absent case-study fields, or unsupported diagram formats should block publication before learners see them.",
+      "trace": [
+        "Define stable course, module, lesson, source, term, checkpoint, and asset identities plus explicit relationships.",
+        "Create a versioned JSON Schema or equivalent typed model with required semantic fields and bounded content rules.",
+        "Validate authoring input, cross-references, accessibility equivalents, URLs, assets, and source freshness before building.",
+        "Generate DOCX, web routes, search documents, offline manifests, feeds, and quiz payloads from the same validated snapshot.",
+        "Store the content version and build receipt with every published artifact so a learner or editor can reproduce it."
+      ],
+      "analogy": "A well-organized kitchen keeps ingredients in labeled containers and uses recipes for different meals. Copying a finished casserole to make soup is fragile; starting from the same ingredients and recipe data is repeatable.",
+      "nextjs": [
+        "Validate course JSON during the build, generate static lesson routes from stable slugs, and derive navigation, metadata, structured data, source panels, and related lessons from the same object.",
+        "Keep rich prose in a controlled Markdown or portable-document AST field if needed, with a strict renderer and semantic components rather than arbitrary MDX execution.",
+        "Emit contentVersion and schemaVersion into page metadata and cache tags so corrections can invalidate exactly the lessons and indexes that changed."
+      ],
+      "python": [
+        "Model the schema with Pydantic, including validators for unique IDs, module membership, source references, related-lesson existence, alt text, and complete case studies.",
+        "Build deterministic exporters for JSON, DOCX input, search records, glossary indexes, and offline manifests from one immutable course snapshot.",
+        "Write explicit migrations from each supported schema version, test round trips, and retain an audit report of changed, defaulted, or dropped fields."
+      ],
+      "caseStudy": {
+        "situation": "Maya corrects one explanation and adds a new source. In the old workflow she must update the DOCX, website, search index, and quiz notes separately.",
+        "walkthrough": [
+          "Maya edits the lesson source once and increments the content revision, not the stable lesson ID.",
+          "Validation confirms the source label exists, the relation graph is valid, and every accessibility field remains complete.",
+          "The build regenerates the lesson page, document section, source register, search record, and offline manifest from the same snapshot.",
+          "A receipt lists changed outputs and content hashes, while unchanged lessons remain cached."
+        ],
+        "result": "Every format presents the same corrected lesson, and the team can prove which source produced it.",
+        "danger": "Copying content between formats creates silent differences, stale citations, missing alt text, broken checkpoints, and corrections that reach only some learners.",
+        "takeaway": "One semantic lesson model, many verified projections, stable IDs, explicit versions, and no copy-and-paste publishing."
+      },
+      "lab": "Create a JSON Schema for one Volume 9 lesson and three valid fixtures. Add twenty invalid fixtures covering IDs, relations, sources, alt text, empty arrays, oversized fields, unsafe rich text, wrong module, missing case-study fields, and future schema versions. Define a v1-to-v2 migration.",
+      "checkpoint": "Should the DOCX file itself be the database for the future website?",
+      "answer": "No. Keep a structured, versioned semantic source and generate both DOCX and website from it. A document can remain a polished deliverable without becoming the canonical data model.",
+      "glossary": [
+        "Content model - typed structure and relationships describing learning material",
+        "Stable ID - identity that survives title and URL changes",
+        "Projection - output generated from the same authoritative content snapshot"
+      ],
+      "related": [
+        209,
+        214,
+        215
+      ],
+      "sources": [
+        "JSON Schema 2020-12",
+        "Next.js App Router",
+        "Web App Manifest"
+      ]
+    },
+    {
+      "id": 214,
+      "slug": "responsive-diagrams-zoom-annotations-reading-order",
+      "moduleId": "module-51",
+      "title": "Responsive diagrams, zoom, annotations, and reading order",
+      "stability": "WCAG 2.2 and semantic web patterns are stable baselines; test actual assistive technologies and device layouts",
+      "diagram": "diagrams/214-responsive-diagrams-zoom-annotations-reading-order.png",
+      "diagramPrompt": "Show one VISUAL LESSON adapting to DESKTOP TABLET MOBILE ZOOM 400%. Layers OVERVIEW, NUMBERLESS FUNCTIONAL LABELS, HOTSPOTS, ANNOTATIONS, PAN ZOOM RESET, KEYBOARD, READING ORDER, ALT TEXT, DETAILED EXPLANATION. Coral TINY TEXT, HORIZONTAL TRAP, COLOR ONLY, IMAGE OF TEXT. Teal EQUIVALENT PATH.",
+      "alt": "One visual lesson adapts across desktop, tablet, mobile, and 400 percent zoom with keyboard zoom and pan, annotations, clear reading order, alt text, and a detailed equivalent explanation; tiny text and color-only meaning are rejected.",
+      "outcome": "Make complex diagrams usable at every screen size and through visual, keyboard, zoom, and screen-reader paths.",
+      "explanation": "A large diagram and a small phone screen cannot share one fixed viewing assumption. Responsive design may scale the overview, change the surrounding layout, and offer deliberate zoom and pan while keeping controls and explanations outside the image usable. The diagram is one representation of the lesson, not the only representation. Concise alt text states the purpose and overall relationship; the detailed explanation and trace provide an equivalent learning path without trying to squeeze an essay into alt text. Annotations should connect a hotspot to a stable concept, not pixel coordinates alone. Store normalized positions or semantic node IDs, keep annotation order explicit, and recalculate visible placement as the asset resizes. Keyboard users need focusable controls for zoom in, zoom out, reset, next annotation, previous annotation, and perhaps directional pan. Focus must remain visible and the viewport must not trap normal page scrolling. Reading order is authored. A screen reader should encounter the outcome, overview, diagram alternative, detailed trace, and controls in a coherent order. CSS positioning must not create a different semantic sequence. Visual quality includes contrast, non-color cues, readable functional labels, adequate target sizes, reduced-motion behavior, high-resolution assets, and a reliable full-screen or new-window view without losing learner position.",
+      "trace": [
+        "Start with the learning outcome and define the smallest set of visual relationships the diagram must communicate.",
+        "Author concise alt text, a complete textual trace, node or region metadata, annotation order, and any long description.",
+        "Render a responsive overview plus explicit zoom, reset, annotation navigation, and full-screen controls with native semantics.",
+        "Test 320 CSS pixels, landscape and portrait, 200 and 400 percent zoom, reflow, keyboard, touch, screen readers, reduced motion, and high contrast.",
+        "Preserve the learner's selected annotation and scroll position when the layout, route, or offline state changes."
+      ],
+      "analogy": "A museum map has a wall overview, a handheld version, clear symbols, a numbered audio tour, and staff explanations. Shrinking the wall map until the words disappear is not a mobile strategy.",
+      "nextjs": [
+        "Use a semantic figure with external caption and explanation, responsive intrinsic dimensions, and a client viewer only for zoom, pan, and annotation state.",
+        "Keep diagram files free of lesson numbers and long titles; render those as HTML headings and captions so they reflow, localize, and remain accessible.",
+        "Store annotation coordinates and semantic order in lesson data, announce selected annotations concisely, and respect prefers-reduced-motion during viewport transitions."
+      ],
+      "python": [
+        "Validate every diagram's dimensions, opaque background, filename, byte size, alt text, explanation, and annotation references during the content build.",
+        "Generate a contact sheet and automated image inventory for editorial review while preserving the original source PNG bytes in the published asset set.",
+        "Run link and relation checks that ensure every hotspot target exists and every diagram has a nonvisual equivalent before publication."
+      ],
+      "caseStudy": {
+        "situation": "Maya opens the event-driven interface diagram on a phone at 400 percent zoom and cannot read its functional labels in the first prototype.",
+        "walkthrough": [
+          "The lesson switches to a single-column layout with a large overview and controls below the caption.",
+          "Maya opens the zoom viewer, uses keyboard controls, and moves through annotations in the authored logical order.",
+          "Each annotation has a short explanation linked to the matching node, while normal page scrolling remains available.",
+          "Maya can also skip the image and learn from the outcome, alt summary, visual trace, analogy, and case study in the same order."
+        ],
+        "result": "The visual remains valuable without making the visual channel mandatory or forcing Maya to fight the viewport.",
+        "danger": "A technically responsive image can still be inaccessible if labels become unreadable, pan traps scrolling, focus disappears, hotspots lack names, or important meaning exists only in color.",
+        "takeaway": "Preserve the visual overview, add purposeful navigation, and provide an equally complete semantic learning path."
+      },
+      "lab": "Prototype one diagram viewer and test it at five viewport sizes, 200 and 400 percent zoom, keyboard only, touch, two screen readers, reduced motion, and forced colors. Record focus order, annotation order, scroll behavior, label readability, and the nonvisual equivalent.",
+      "checkpoint": "Should the detailed diagram explanation be placed entirely inside the image alt attribute?",
+      "answer": "No. Alt text should concisely identify the purpose and core relationship. Put the full trace and explanation in visible structured content so everyone can use it and navigate it.",
+      "glossary": [
+        "Reading order - semantic sequence in which content is understood",
+        "Annotation - explanation tied to a visual node or region",
+        "Reflow - content adapting without two-dimensional scrolling for ordinary reading"
+      ],
+      "related": [
+        208,
+        213,
+        216
+      ],
+      "sources": [
+        "WCAG 2.2",
+        "WAI-ARIA 1.2",
+        "ARIA Authoring Practices Guide",
+        "Next.js accessibility"
+      ]
+    },
+    {
+      "id": 215,
+      "slug": "glossary-citations-search-prerequisites-crosslinks",
+      "moduleId": "module-51",
+      "title": "Glossary, citations, search, prerequisites, and cross-links",
+      "stability": "Search implementation is product-specific; source currency and prerequisite truth require ongoing editorial ownership",
+      "diagram": "diagrams/215-glossary-citations-search-prerequisites-crosslinks.png",
+      "diagramPrompt": "Show COURSE KNOWLEDGE GRAPH with LESSON nodes linked by PREREQUISITE, RELATED, BUILDS ON, CASE STUDY, TERM, SOURCE. SEARCH box applies QUERY, FILTER VOLUME MODULE TOPIC STACK STATUS, returns SNIPPETS with WHY MATCHED. SOURCE cards show OFFICIAL, CHECKED DATE, VERSION, SUPPORTS CLAIM. Coral BROKEN LINK STALE SOURCE CIRCULAR PREREQUISITE.",
+      "alt": "A course knowledge graph connects lessons, terms, sources, prerequisites, related concepts, and case studies; transparent search filters results and source cards expose version and freshness while stale or broken relationships are flagged.",
+      "outcome": "Turn many visual lessons into a navigable body of knowledge rather than a long folder of isolated pages.",
+      "explanation": "A course becomes easier to learn when relationships are explicit. Prerequisite means knowledge required first; related means useful nearby material; builds on means a stronger conceptual dependency. These labels should not be collapsed into one vague More like this list. The glossary gives each term one stable identity, plain definition, aliases, first-use link, lessons that use it, and version notes where protocols disagree. Inline definitions help beginners without forcing constant page changes. Citations should connect a lesson claim to an authoritative source label, direct URL, checked date, relevant specification version, and status such as stable, candidate, or project-specific. A source register is not enough if readers cannot tell which lesson used it. Search needs lexical matching for exact terms and may add semantic retrieval for plain-language questions. Results should show why they matched, the lesson outcome, volume and module, standards status, and prerequisite warnings. Filters support different journeys: topic, protocol, technology stack, difficulty, artifact type, volume, module, status, lab, and case study. Search analytics must not become an excuse to collect raw private queries forever. A validation job should detect broken source links, unknown terms, orphan lessons, circular prerequisites, links to future unavailable material, duplicated definitions, and sources past their review date.",
+      "trace": [
+        "Create stable records for lessons, terms, sources, topics, technologies, and relation types.",
+        "Validate the prerequisite graph as a directed acyclic learning path while allowing ordinary related links in both directions.",
+        "Build lexical and optional semantic indexes from approved public lesson fields, never from hidden author notes or private learner data.",
+        "Rank and explain results with outcome, matching passage, filters, status, freshness, and prerequisite context.",
+        "Schedule link, version, freshness, orphan, duplicate, and graph-integrity checks and route failures to an editorial queue."
+      ],
+      "analogy": "A library needs more than shelves. The catalog, subject headings, cross-references, edition records, and a librarian's explanation help a beginner find the right book in the right order.",
+      "nextjs": [
+        "Generate term, source, and topic indexes at build time; provide URL-addressable filters and server-rendered result summaries that work without client JavaScript.",
+        "Use a search endpoint that returns result ID, outcome, safe snippet, match reason, status, prerequisites, and source freshness rather than raw internal vectors or scores alone.",
+        "Render source links with direct destinations, checked dates, versions, and external-link cues; keep cross-links typed and accessible instead of relying on color or hover."
+      ],
+      "python": [
+        "Build normalized search documents from the validated course model, with separate fields and weights for title, outcome, glossary, explanation, technologies, and sources.",
+        "Validate graph cycles, orphan nodes, duplicate slugs, missing reverse relations where required, URL health, source review dates, and unsupported source labels in CI.",
+        "If embeddings are used, version the model and index, retain lexical fallback, test known beginner queries, and expose an understandable match explanation."
+      ],
+      "caseStudy": {
+        "situation": "Maya searches 'how do I stop an agent after it already sent money' without knowing the words compensation or point of no return.",
+        "walkthrough": [
+          "Semantic and lexical retrieval find the cancellation and compensation lesson using the plain-language explanation and glossary aliases.",
+          "The result says why it matched and distinguishes cancel, undo, and compensate before Maya opens it.",
+          "The page recommends the approval and authoritative-state prerequisites and links directly to the RFC and risk sources used.",
+          "Maya follows a typed Builds on path to the product-operations capstone without losing her original search filters."
+        ],
+        "result": "Maya learns the right vocabulary and sequence even though she did not know the protocol or product-design term beforehand.",
+        "danger": "Opaque semantic search can return an advanced or stale lesson with no explanation, while a flat keyword search can miss the learner's everyday language entirely.",
+        "takeaway": "Model the knowledge relationships, explain search matches, expose source status, and guide beginners through prerequisites deliberately."
+      },
+      "lab": "Create a graph for Volumes 8 and 9 with all lessons, terms, sources, and at least four relation types. Write twenty beginner queries and expected results, including synonyms and misconceptions. Add tests for cycles, orphans, broken sources, stale versions, unsafe snippets, empty results, and privacy-safe query logging.",
+      "checkpoint": "Are Related and Prerequisite interchangeable relationships?",
+      "answer": "No. A prerequisite says the learner should understand something first; related material is useful but not required. The interface and graph validation should preserve that difference.",
+      "glossary": [
+        "Knowledge graph - typed entities and relationships supporting navigation",
+        "Lexical search - matching words and phrases",
+        "Semantic search - matching meaning using a representation such as embeddings"
+      ],
+      "related": [
+        213,
+        216,
+        219
+      ],
+      "sources": [
+        "Next.js App Router",
+        "JSON Schema 2020-12",
+        "NIST AI Risk Management Framework"
+      ]
+    },
+    {
+      "id": 216,
+      "slug": "progress-checkpoints-quizzes-accessibility-offline",
+      "moduleId": "module-51",
+      "title": "Progress, checkpoints, quizzes, accessibility, and offline use",
+      "stability": "Service Worker, IndexedDB, and Web App Manifest standards are current; offline behavior still varies by browser and storage policy",
+      "diagram": "diagrams/216-progress-checkpoints-quizzes-accessibility-offline.png",
+      "diagramPrompt": "Show LEARNER choosing START LESSON, CHECKPOINT, QUIZ, LAB, BOOKMARK, NOTE. LOCAL PROGRESS and OPTIONAL SYNC merge through CONSENT and CONFLICT RULES. SERVICE WORKER caches APP SHELL CONTENT VERSION DIAGRAMS. OFFLINE badge leads to QUEUED ACTIONS then RECONNECT. Accessibility gates KEYBOARD SCREEN READER REFLOW REDUCED MOTION. Coral LOST PROGRESS STALE ANSWER SILENT SYNC.",
+      "alt": "Learner progress, checkpoints, quizzes, bookmarks, notes, optional consented sync, and accessible controls work through an offline cache and reconnect queue with conflict rules, avoiding lost progress, stale answers, or silent synchronization.",
+      "outcome": "Design a learning experience that preserves progress, supports practice, remains accessible, and behaves honestly offline.",
+      "explanation": "Progress should represent meaningful learner actions, not time on page. Distinguish opened, viewed, checkpoint attempted, checkpoint understood, lab attempted, quiz completed, and learner-marked complete rather than manufacturing one percentage. Checkpoints give immediate retrieval practice; quizzes measure a broader set of outcomes; labs produce evidence of application. Explanations should teach after an answer and allow retry without shame, tricks, or dark-pattern streak pressure. Progress can begin locally with no account. If cloud sync is offered, explain the benefit, data fields, retention, devices, conflict policy, and deletion. Let the learner export and continue without consenting to analytics or personalization. Offline support needs a versioned shell, lesson content, diagrams, glossary, and source metadata. The product must label what is available offline and which links, dynamic searches, or source checks require a connection. Queued writes need idempotency and conflict rules. A bookmark is easy to merge; two edited notes may require both versions; a quiz answer must remain tied to the content and question version it answered. Accessibility covers the entire practice loop: answer controls, validation messages, explanations, score summaries, progress visuals, timers, drag alternatives, offline banners, synchronization conflicts, and saved-state announcements.",
+      "trace": [
+        "Define a learner-owned progress model using stable lesson, activity, question, and content-version IDs.",
+        "Store essential local progress in IndexedDB or an appropriate local store and make account sync optional and consented.",
+        "Precache a bounded versioned offline pack, report storage and freshness, and remove obsolete caches safely after activation.",
+        "Queue idempotent offline changes with timestamps and base versions, then reconcile explicitly after reconnect.",
+        "Test learning, assessment, conflicts, deletion, export, and recovery across keyboard, screen readers, zoom, reduced motion, offline, and constrained storage."
+      ],
+      "analogy": "A paper workbook works anywhere, shows your pencil marks, and does not erase answers when the library closes. A digital course should preserve that confidence while adding optional synchronization and feedback.",
+      "nextjs": [
+        "Render lesson and checkpoint fundamentals on the server, then progressively enhance local progress, notes, offline installation, and synchronization in isolated client components.",
+        "Use a versioned service worker strategy that precaches the shell and selected course packs, verifies content hashes, and shows explicit offline and update-ready states.",
+        "Key local records by stable content and activity versions; merge only safe fields automatically and surface note or answer conflicts with understandable choices."
+      ],
+      "python": [
+        "Expose sync endpoints accepting idempotency keys, device record versions, content versions, and bounded mutations; return per-record accepted, conflict, or invalid results.",
+        "Keep progress, quiz attempts, notes, consent, and analytics in separable data domains with export and deletion workflows that can be verified.",
+        "Generate signed course manifests listing offline assets and hashes, and test installation, partial download, quota failure, stale packs, upgrade, rollback, and cache cleanup."
+      ],
+      "caseStudy": {
+        "situation": "Maya downloads Volume 9 before a flight, completes two lessons offline, changes a note on two devices, and reconnects later.",
+        "walkthrough": [
+          "The offline banner names the installed content version and explains that external standards links cannot be checked until reconnect.",
+          "Checkpoints, diagrams, glossary, and saved progress work without a network, while actions awaiting sync are visibly queued.",
+          "The server accepts idempotent lesson progress and presents both note versions instead of silently choosing the latest timestamp.",
+          "Maya merges the note, sees a sync receipt, and can export or delete all learner data from one privacy control."
+        ],
+        "result": "Maya learns continuously without losing work or unknowingly sending data, even when connectivity and devices change.",
+        "danger": "A decorative offline icon can hide stale content, broken source links, lost answers, duplicate submissions, silent account sync, and inaccessible conflict dialogs.",
+        "takeaway": "Offline is a complete state model: version what is cached, preserve learner work, reconcile explicitly, and keep consent and accessibility intact."
+      },
+      "lab": "Design an offline pack and synchronization protocol for four lessons. Include asset manifest, content versions, quota failure, cache update, local progress, notes, quiz attempts, idempotency, two-device conflicts, optional account sync, export, deletion, accessibility, and twenty reconnect tests.",
+      "checkpoint": "May the course silently upload locally stored notes when a learner later creates an account?",
+      "answer": "No. Explain what will sync, obtain an informed choice, minimize the data, provide a local-only option, and make export, revocation, and deletion available.",
+      "glossary": [
+        "Offline pack - versioned set of application and course assets available without a network",
+        "Idempotency key - identifier making a repeated mutation safe to recognize",
+        "Progress evidence - specific learning action rather than an invented engagement percentage"
+      ],
+      "related": [
+        208,
+        213,
+        218
+      ],
+      "sources": [
+        "Service Workers",
+        "Indexed Database API 3.0",
+        "Web App Manifest",
+        "WCAG 2.2"
+      ]
+    },
+    {
+      "id": 217,
+      "slug": "async-return-notifications-attention-management",
+      "moduleId": "module-52",
+      "title": "Asynchronous return, notifications, and attention management",
+      "stability": "Notifications require permission and platform support; product attention policy remains application-specific",
+      "diagram": "diagrams/217-async-return-notifications-attention-management.png",
+      "diagramPrompt": "Show USER STARTS LONG TASK then LEAVES. DURABLE RUN continues through STAGES. RETURN OPTIONS IN APP BADGE, EMAIL DIGEST, PUSH NOTIFICATION behind USER CHOICE, URGENCY, QUIET HOURS, RATE LIMIT, PRIVACY, DEEP LINK. States READY NEEDS INPUT FAILED EXPIRED. Coral NOTIFICATION STORM, SECRET IN PREVIEW, FALSE URGENCY. Teal RESUME CONTEXT.",
+      "alt": "A durable task continues after the user leaves and returns through consented in-app, digest, or push notifications filtered by urgency, quiet hours, rate limits, and privacy, with a deep link restoring context.",
+      "outcome": "Let long-running agent work release the user's attention and call it back only when the timing and reason are genuinely useful.",
+      "explanation": "A long task should not hold Maya hostage to an open tab. The product stores a durable run, explains what can continue, and lets her leave while preserving a clear way to return. Notifications are an attention budget, not proof that the system is alive. Useful reasons include a decision that blocks progress, completion of a requested deliverable, a recoverable failure, or an expiry that truly matters. Token updates and every tool call do not deserve interruption. Channel choice belongs to the user. In-app inbox, badge, email digest, browser push, or no external notification should have separate consent, urgency, quiet hours, frequency, preview-privacy, and revocation settings. A notification contains the minimum safe preview. Customer names, policy details, secrets, health or financial facts, and sensitive outcomes may appear on a lock screen or shared device, so the deep link should reveal protected detail after authentication. Deep links restore context: task identity, current authoritative stage, preserved artifacts, decisions needed, expiry, last seen position, and recovery choices. They must not encode authority or sensitive data in the URL. Deduplication and escalation rules prevent storms. Group related updates, suppress obsolete messages, acknowledge when the user returns, and never label ordinary product engagement as urgent.",
+      "trace": [
+        "Classify task transitions as silent, inbox, digest, interruptive, or prohibited using user value and risk.",
+        "Apply channel consent, capability, quiet hours, rate limits, deduplication, locale, and privacy before delivery.",
+        "Create a minimal notification that names the task and required next step without exposing sensitive content.",
+        "Open an authenticated deep link that loads current authoritative state rather than replaying the stale notification body.",
+        "Record delivery, replacement, acknowledgement, expiry, revocation, and user preference changes as privacy-minimized receipts."
+      ],
+      "analogy": "A good hotel concierge does not knock every minute to say work is continuing. They contact you at the agreed time when the room is ready or when a real decision cannot wait.",
+      "nextjs": [
+        "Build an authenticated task inbox as the reliable return surface; treat push or email as optional pointers whose links resolve current state on the server.",
+        "Store notification preferences by channel, category, quiet hours, locale, and privacy level, and check them again at send time rather than at task creation only.",
+        "Use the Notifications API only after an understandable user request, and render permission-denied and unsupported states without blocking the underlying task."
+      ],
+      "python": [
+        "Emit domain notification candidates from durable task transitions, then let a policy worker group, deduplicate, schedule, suppress, or deliver them idempotently.",
+        "Keep channel adapters separate from business events, use opaque deep-link identifiers, short expiries where appropriate, and server-side authorization on return.",
+        "Track delivery outcome and user acknowledgement without storing sensitive message bodies longer than necessary; honor revocation before queued delivery."
+      ],
+      "caseStudy": {
+        "situation": "Maya starts a forty-minute policy comparison, closes her laptop, and asks to be notified only if a decision is needed or the report is ready.",
+        "walkthrough": [
+          "Acme persists the run and confirms that research can continue while Maya is away.",
+          "Intermediate tool and stage events remain in the task record but do not generate notifications.",
+          "A decision request arrives during quiet hours, so it waits in the inbox because its expiry is safely after quiet hours.",
+          "Maya returns through a minimal notification and sees current evidence, proposal version, remaining time, preserved artifacts, and all response choices."
+        ],
+        "result": "The task progresses without occupying Maya's attention, and Acme interrupts only within the boundaries she selected.",
+        "danger": "Notification storms, false urgency, sensitive lock-screen previews, and stale deep links can turn a helpful asynchronous agent into a distracting or privacy-invasive product.",
+        "takeaway": "Durable work earns the right to wait; explicit attention policy earns the right to interrupt."
+      },
+      "lab": "Create an attention matrix for twenty task events across inbox, badge, digest, email, and push. Define consent, urgency, quiet hours, grouping, deduplication, expiry, preview privacy, deep-link state, unsupported behavior, revocation, and accessibility. Simulate a storm and prove suppression works.",
+      "checkpoint": "Should every successful tool call send a notification so the user knows the agent is active?",
+      "answer": "No. Tool events belong in the task record. Notify only for user-valuable transitions under the person's channel, urgency, quiet-hour, privacy, and frequency choices.",
+      "glossary": [
+        "Attention policy - rules deciding whether and how a product may interrupt",
+        "Deep link - URL restoring a specific authenticated product context",
+        "Notification candidate - domain event proposed for delivery but not yet approved by channel policy"
+      ],
+      "related": [
+        201,
+        205,
+        218
+      ],
+      "sources": [
+        "Notifications API",
+        "Service Workers",
+        "Web App Manifest",
+        "NIST Privacy Framework"
+      ]
+    },
+    {
+      "id": 218,
+      "slug": "privacy-consent-memory-settings-deletion",
+      "moduleId": "module-52",
+      "title": "Privacy controls, consent, memory settings, and deletion",
+      "stability": "Privacy obligations vary by jurisdiction and context; this course teaches product architecture, not legal advice",
+      "diagram": "diagrams/218-privacy-consent-memory-settings-deletion.png",
+      "diagramPrompt": "Show DATA LIFECYCLE COLLECT USE STORE SHARE REMEMBER EXPORT DELETE. USER CONTROL CENTER has PURPOSE, DATA CATEGORIES, MEMORY OFF SESSION PROJECT LONG TERM, RETENTION, CONNECTED APPS, DOWNLOAD, DELETE. CONSENT RECEIPT versions policy. DELETION FAN OUT to PRIMARY, VECTOR, CACHE, LOG, BACKUP SCHEDULE with VERIFICATION. Coral DARK PATTERN, BUNDLED CONSENT, GHOST MEMORY.",
+      "alt": "A privacy control center explains data purposes, categories, memory scopes, retention, connected apps, export, and deletion; consent is versioned and deletion propagates through primary stores, vectors, caches, logs, and backup schedules with verification.",
+      "outcome": "Give people understandable control over what an agent collects, remembers, shares, exports, and deletes across the complete data lifecycle.",
+      "explanation": "Agent memory is a product data feature, not a magical property of the model. Session context, project facts, personal preferences, retrieved documents, summaries, embeddings, logs, and provider records are different stores with different purposes and risks. Consent must be specific enough to choose. Separate what is necessary to complete the current request from optional long-term memory, product analytics, model improvement, third-party sharing, notifications, and device synchronization. Memory controls should show the remembered item, source, purpose, scope, creation and last-use dates, expiry, who can use it, and a way to edit, forget, or pause future use. An off switch must affect retrieval and new writes, not merely hide the settings page. Deletion is a workflow. Primary records may feed object storage, vector indexes, caches, search, analytics, audit logs, downstream processors, and backups. The product needs a propagation map, exceptions, time bounds, retry, failure handling, and a verifiable status. Some audit or security records may need limited retention, but the interface should distinguish deletion, de-identification, legal hold, backup expiry, and inaccessible archival state rather than claiming everything vanished instantly. Data controls must resist dark patterns. Decline and delete should be as understandable as accept and save; choices must not be bundled, repeatedly nagged, hidden behind jargon, or punished with unnecessary loss of core function.",
+      "trace": [
+        "Inventory every collected field, derived value, memory item, embedding, artifact, log, provider, purpose, retention, and recipient.",
+        "Separate necessary processing from optional purposes and capture versioned, revocable consent receipts for each optional category.",
+        "Expose memory and connected-app controls using the same identities and scopes enforced by write and retrieval paths.",
+        "Orchestrate export and deletion across all derived stores with idempotent steps, retry, exception reasons, and visible progress.",
+        "Verify that deleted or disabled data no longer appears in retrieval, personalization, search, sync, notifications, analytics, or future agent context."
+      ],
+      "analogy": "A labeled filing cabinet tells you which drawer holds what, why it is kept, and who has a key. Shredding the index card while photocopies remain in five rooms is not deletion.",
+      "nextjs": [
+        "Build one privacy center with server-rendered current settings, granular forms, clear consequences, accessible confirmations, export progress, and a durable deletion status page.",
+        "Do not put raw memory or consent decisions in unsigned client storage as authority; revalidate scope, policy version, and user identity on the server.",
+        "Render provenance and last-use information for memory items, and provide edit, forget, pause, export, and revoke controls without relying on prechecked boxes or asymmetric button styling."
+      ],
+      "python": [
+        "Model consent as immutable versioned grants and revocations scoped to purpose, data categories, recipient, subject, product, policy version, and expiry.",
+        "Centralize memory retrieval behind a policy check and write a deletion saga covering source rows, documents, embeddings, caches, indexes, providers, and scheduled backup expiry.",
+        "Produce a user-facing completion receipt and internal exception evidence, then run retrieval probes that prove deleted items no longer influence answers."
+      ],
+      "caseStudy": {
+        "situation": "Maya turns off long-term personalization and asks Acme to forget a customer note that has already been embedded and included in a cached summary.",
+        "walkthrough": [
+          "The control center identifies the source note, memory scope, embedding index, cached summary, retention, and downstream provider status.",
+          "Acme immediately blocks the item from new retrieval and starts an idempotent deletion workflow across primary and derived stores.",
+          "A failed cache purge retries without reopening access, while the interface reports partial completion and the affected system.",
+          "Verification probes confirm that future searches and agent context exclude the note; the receipt explains the backup-expiry schedule and any narrowly retained audit record."
+        ],
+        "result": "Maya's choice changes actual memory behavior across the system instead of merely changing a toggle label.",
+        "danger": "Ghost memory appears when a source record is deleted but embeddings, caches, summaries, provider data, or copied artifacts continue influencing the agent.",
+        "takeaway": "Privacy control is enforceable data lineage: specific purpose, visible scope, revocation, propagated deletion, and verification."
+      },
+      "lab": "Draw a data inventory and lineage map for one agent conversation through prompts, messages, artifacts, memory, vectors, logs, analytics, providers, exports, and backups. Specify consent, retention, access, revocation, deletion steps, failure recovery, exceptions, completion receipt, and five proof probes.",
+      "checkpoint": "Is deleting the primary database row enough to say an agent has forgotten the information?",
+      "answer": "No. Derived embeddings, caches, summaries, indexes, copied artifacts, provider records, analytics, and backups must follow a documented deletion or expiry policy, and retrieval behavior should be verified.",
+      "glossary": [
+        "Purpose limitation - using data only for the stated allowed reason",
+        "Consent receipt - versioned record of a specific informed choice",
+        "Ghost memory - deleted source data that survives in a derived or downstream store"
+      ],
+      "related": [
+        211,
+        212,
+        219
+      ],
+      "sources": [
+        "NIST Privacy Framework",
+        "NIST AI Risk Management Framework",
+        "MCP Apps stable specification"
+      ]
+    },
+    {
+      "id": 219,
+      "slug": "analytics-feedback-evaluation-experiment-ethics",
+      "moduleId": "module-52",
+      "title": "Product analytics, feedback, evaluation, and experiment ethics",
+      "stability": "Measurement design and experiment policy are context-specific; all course numbers are illustrative unless explicitly measured later",
+      "diagram": "diagrams/219-analytics-feedback-evaluation-experiment-ethics.png",
+      "diagramPrompt": "Show USER OUTCOME feeding PRODUCT EVENT, FEEDBACK, QUALITY EVAL, SAFETY REVIEW, ACCESSIBILITY EVIDENCE. METRIC CARD includes DEFINITION, NUMERATOR, DENOMINATOR, EXCLUSIONS, SLICE, WINDOW, VERSION. EXPERIMENT gate CONSENT, RISK REVIEW, FAIR ALLOCATION, STOP RULE, GUARDRAIL, DEBRIEF. Coral DARK PATTERN, VANITY METRIC, HIDDEN HARM, EXAMPLE AS FACT.",
+      "alt": "User outcomes connect to minimized product events, feedback, quality evaluation, safety review, and accessibility evidence; every metric exposes its definition and denominator, while experiments require consent, risk review, fair allocation, stop rules, guardrails, and debriefing.",
+      "outcome": "Improve an agentic product with honest evidence while protecting learners and users from manipulative measurement and unsafe experiments.",
+      "explanation": "Product analytics asks what people did in the interface; evaluation asks how well the system performed on defined cases; feedback asks what people report; research explores why. They can inform one another but should not be merged into one satisfaction score. Every metric needs an operational definition, numerator, denominator, exclusions, eligibility, time window, content and software versions, and meaningful slices. Completion rate can be harmful if completion includes accidental approvals or excludes people who could not operate the interface. Collect the minimum events needed for a stated decision. Prefer semantic events such as approval reviewed or recovery completed over raw clickstreams, keystrokes, prompt contents, disability inference, or full session replay. Feedback controls should accept praise, confusion, incorrect content, accessibility barriers, privacy concerns, and safety incidents. Preserve the lesson, evidence, model, policy, and interface versions needed to reproduce the issue without demanding sensitive data. Experiments require risk classification. Cosmetic ordering may be low risk; approval language, disclosure, accessibility, privacy, pricing, notification urgency, or safety controls can materially affect people and deserve review, consent or exclusion, guardrails, and early stop rules. Ethical learning means publishing negative evidence, checking disparate impact and accessibility slices, avoiding coercive streaks or false urgency, documenting decisions, and never presenting hypothetical course metrics as measured product results.",
+      "trace": [
+        "Start with a product decision and user outcome, then define the smallest evidence that could responsibly support it.",
+        "Write metric semantics, denominator, exclusions, slices, retention, access, and known failure modes before instrumentation.",
+        "Connect privacy-minimized product events with controlled evaluations, qualitative feedback, accessibility evidence, and incident records.",
+        "Review experiment risk, consent, allocation, guardrails, sample sufficiency, stop rules, rollback, and affected groups before exposure.",
+        "Publish results with uncertainty, negative findings, version manifest, practical effect, ethics review, and follow-up actions."
+      ],
+      "analogy": "A teacher should not judge a lesson only by how many students reached the last page. They also examine understanding, barriers, skipped questions, different student needs, and whether the test itself was fair.",
+      "nextjs": [
+        "Create a small typed analytics vocabulary from meaningful product transitions; redact payloads at the server boundary and disable optional analytics until the proper choice is recorded.",
+        "Build feedback forms that attach stable lesson, content, diagram, experiment, and interface versions while making free-text details optional and warning against sensitive information.",
+        "Resolve experiment assignment on a trusted server, expose a debug receipt to authorized staff, preserve accessibility, and include an immediate kill switch and deterministic fallback."
+      ],
+      "python": [
+        "Define metric specifications in code or versioned configuration with event eligibility, numerator, denominator, exclusions, dimensions, minimum sample rules, privacy class, and owner.",
+        "Join product events to evaluation and feedback through opaque IDs and controlled access rather than copying raw conversations into an analytics warehouse.",
+        "Run slice, missingness, duplicate, allocation, guardrail, and rollback checks; label synthetic and illustrative datasets so they cannot be mistaken for observed performance."
+      ],
+      "caseStudy": {
+        "situation": "Acme considers changing an approval button from Review and approve to Continue because a prototype shows more task completions.",
+        "walkthrough": [
+          "The team sees that completion alone rewards speed and may hide accidental approval, so it defines informed decision quality and cancellation as guardrails.",
+          "Risk review flags the vague Continue label as a material consent change and excludes it from an ordinary growth experiment.",
+          "Accessible moderated research and controlled evaluation show that the explicit label improves consequence understanding despite one extra second of review.",
+          "Acme keeps the understandable control, publishes the negative conversion result, and tests safer improvements to the decision summary instead."
+        ],
+        "result": "Evidence improves comprehension without manipulating Maya into a faster but less informed decision.",
+        "danger": "Optimizing clicks or completion can reward deceptive labels, inaccessible flows, notification pressure, privacy overcollection, and hidden harm to smaller groups.",
+        "takeaway": "Measure decisions, not motion; combine analytics with evaluation and human evidence; experiment only within an explicit ethical boundary."
+      },
+      "lab": "Write a measurement plan for the visual course website with six outcomes, twelve minimized events, metric definitions and denominators, consent and retention, accessibility slices, feedback taxonomy, evaluation joins, three experiment risk classes, guardrails, stop rules, rollback, and a statement marking every sample number as illustrative.",
+      "checkpoint": "If an experiment increases task completion, is it automatically a product improvement?",
+      "answer": "No. Completion may rise through confusion, coercion, accidental approval, inaccessible exclusion, or privacy pressure. Examine understanding, safety, accessibility, recovery, user control, and practical effect with clear denominators.",
+      "glossary": [
+        "Operational definition - exact rule turning observations into a metric",
+        "Guardrail - measure that must remain acceptable during change",
+        "Dark pattern - interface designed to manipulate a choice against the person's interests"
+      ],
+      "related": [
+        208,
+        215,
+        218
+      ],
+      "sources": [
+        "NIST AI Risk Management Framework",
+        "NIST Privacy Framework",
+        "WCAG 2.2"
+      ]
+    },
+    {
+      "id": 220,
+      "slug": "acme-agent-workspace-learning-platform",
+      "moduleId": "module-52",
+      "title": "Capstone: Acme Agent Workspace and Learning Platform",
+      "stability": "Design capstone using the checked 2026-08-25 baseline; pin protocol versions and revalidate before implementation",
+      "diagram": "diagrams/220-acme-agent-workspace-learning-platform.png",
+      "diagramPrompt": "Show two connected product zones AGENT WORKSPACE and VISUAL LEARNING PLATFORM. Inputs NEXTJS REACT FASTAPI MCP A2A AG-UI MCP APPS A2UI RAG TOOLS. Center HUMAN CONTROL LOOP REQUEST, PLAN, PROGRESS, EVIDENCE, PROPOSAL, APPROVAL, ACTION, RECEIPT, RECOVERY. Learning loop VISUAL, EXPLANATION, CASE, LAB, CHECKPOINT, PROGRESS. Cross-cutting ACCESSIBILITY SECURITY PRIVACY OBSERVABILITY EVALUATION OFFLINE. Coral STALE POLICY UNSAFE UI EXPIRED APPROVAL DATA LEAK blocked.",
+      "alt": "The Acme capstone connects an agent workspace and visual learning platform through human-control and learning loops, using Next.js, React, FastAPI, MCP, A2A, AG-UI, MCP Apps, A2UI, RAG, and tools under shared accessibility, security, privacy, observability, evaluation, and offline controls.",
+      "outcome": "Combine the full visual course into an implementation-ready product specification without prematurely writing the Next.js or Python project.",
+      "explanation": "The capstone is one coherent product with two experiences. The Agent Workspace helps Maya complete governed customer work; the Visual Learning Platform teaches her how the protocols, evidence, decisions, and controls operate through the same visual course structure. Next.js and React own the web shell, accessible views, event reducer, diagrams, embedded app host, local learning state, and user controls. FastAPI owns typed APIs, durable work coordination, authorization, policy, consent, notifications, content validation, and export or deletion workflows. MCP connects agents to declared tools, resources, prompts, and optional Apps. A2A coordinates task-oriented peer agents. AG-UI carries typed interface events. A2UI can describe catalog-bound interface structure. RAG grounds answers in versioned evidence. None of these protocols replaces product identity, authorization, policy, or receipts. The human-control loop is request, visible plan, honest progress, evidence, bounded proposal, accessible decision, authoritative action, receipt, and recovery. Every transition has an owner, state, version, expiry, allowed actor, failure behavior, and user-facing explanation. The learning loop is outcome, diagram, alt text, explanation, trace, analogy, dual-stack mapping, case study, lab, checkpoint, glossary, sources, and progress. The same structured content model produces the document, website, search, and offline pack. Cross-cutting controls include tenant isolation, least privilege, schema validation, safe rendering, CSP and sandboxing, data minimization, consent and memory scope, accessibility, event and business audit, evaluation, incident recovery, attention policy, source freshness, and deletion verification.",
+      "trace": [
+        "Maya opens a customer case and requests a refund-policy review with a named outcome, constraints, and privacy scope.",
+        "A coordinator delegates bounded research through A2A, reaches approved evidence and tools through MCP, and streams typed AG-UI state into the workspace.",
+        "RAG returns versioned evidence; an A2UI or MCP App surface may present an approved component view without receiving unrestricted code or host access.",
+        "Acme creates a proposal bound to current evidence, policy, amount, customer, actor, expiry, and recovery; Maya reviews and decides accessibly.",
+        "The authoritative action returns a receipt, partial or failed work remains visible, evaluation and privacy-minimized analytics record the outcome, and related visual lessons explain every layer."
+      ],
+      "analogy": "An airport combines flight operations and a passenger information system. The engines, control tower, gates, signs, staff, security, accessibility services, and training must share truth without giving every part the same authority.",
+      "nextjs": [
+        "Create route groups for workspace, tasks, artifacts, approvals, learning, search, privacy, and settings; keep privileged data server-side and isolate live or device behavior in narrow client components.",
+        "Implement one typed product-event adapter and reducer, one approved generated-component catalog, one sandboxed MCP App host, and one semantic visual-lesson renderer.",
+        "Build accessible state fixtures for every stage, partial success, conflict, approval, expiry, recovery, offline mode, privacy choice, and security block before connecting live services."
+      ],
+      "python": [
+        "Define Pydantic contracts for tasks, events, evidence, proposals, decisions, tool intents, artifacts, receipts, lessons, consent, memory, notifications, feedback, and deletions.",
+        "Separate authoritative business records from event projections; coordinate durable work and compensation while adapting MCP, A2A, AG-UI, and A2UI versions at explicit boundaries.",
+        "Ship deterministic simulators and end-to-end fixtures first, then add providers behind interfaces with contract, policy, security, replay, accessibility-state, and evaluation tests."
+      ],
+      "caseStudy": {
+        "situation": "Maya reviews an urgent refund exception while the current policy conflicts with a stale retrieved copy and a third-party app proposes an unsafe custom approval surface.",
+        "walkthrough": [
+          "The evidence freshness rule marks the stale copy as superseded and blocks the proposal from becoming actionable.",
+          "The generated UI validator rejects the unapproved component and the sandboxed app cannot call a host approval method without capability, consent, and server policy.",
+          "Acme preserves completed research, retrieves the current policy, replans the comparison, and presents a native accessible approval card bound to the new evidence version.",
+          "Maya approves the bounded exception; the server commits once, returns a receipt, updates the task, and links the relevant security, RAG, approval, and recovery lessons."
+        ],
+        "result": "The system completes useful work while stale evidence and unsafe interface code fail closed without erasing progress or confusing Maya.",
+        "danger": "A demo can appear full-stack while hiding the exact boundaries that matter: authoritative state, protocol versions, identity, policy, consent, accessibility, data deletion, and recovery after uncertain effects.",
+        "takeaway": "Build one observable human-control system and two understandable experiences; protocols connect parts, but product contracts make them safe and teachable."
+      },
+      "lab": "Write the capstone design package: context and trust diagrams, domain and event models, task states and sequences, component and approval contracts, APIs, storage and deletion, accessibility, threats, evaluation, notifications, offline behavior, deployment, thirty acceptance tests, and a phased Next.js plus FastAPI backlog. Do not write production code yet.",
+      "checkpoint": "Which protocol is the source of truth for whether the refund actually committed?",
+      "answer": "None by itself. The authoritative Acme business system and its idempotent receipt establish the committed effect. MCP, A2A, AG-UI, and A2UI carry tools, tasks, interface events, or views around that truth.",
+      "glossary": [
+        "Human-control loop - visible sequence from request through decision, effect, receipt, and recovery",
+        "Product contract - owned rule for state, authority, data, and behavior",
+        "Capstone - integrated design demonstrating the complete course"
+      ],
+      "related": [
+        197,
+        205,
+        213,
+        218,
+        219
+      ],
+      "sources": [
+        "MCP 2026-07-28 specification",
+        "MCP Apps stable specification",
+        "A2UI specification versions",
+        "AG-UI overview",
+        "WCAG 2.2",
+        "NIST AI Risk Management Framework"
+      ]
+    }
+  ]
+}

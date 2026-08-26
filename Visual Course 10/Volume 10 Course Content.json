@@ -1,0 +1,1754 @@
+{
+  "course": {
+    "title": "Visual Course Volume 10 - Enterprise Architecture and Dual-Stack Project Blueprint",
+    "coverTitle": "ENTERPRISE ARCHITECTURE\nAND DUAL-STACK BLUEPRINT",
+    "coverTagline": "VISUAL-FIRST | IMPLEMENTATION-READY | DEFENSIBLE",
+    "subtitle": "Turn the complete visual course into one architecture, delivery plan, and evidence pack for future Next.js and Python projects",
+    "audience": "A visual learner who understands agent protocols and operations and now wants a complete, explainable blueprint before building the two full-stack projects",
+    "checkedOn": "2026-08-25",
+    "knowledgeBaseline": {
+      "mcp": "MCP 2026-07-28 is the checked core baseline; optional extensions and SDKs stay behind versioned adapters",
+      "a2a": "A2A 1.0 is the checked agent-to-agent baseline with tasks, messages, artifacts, streaming, push, discovery, bindings, and security",
+      "agui": "AG-UI is the checked typed event bridge between agent backends and frontends; product authority remains application-owned",
+      "risk": "NIST AI RMF 1.0 is current but under revision; its Govern, Map, Measure, and Manage functions remain useful organizing guidance",
+      "telemetry": "OpenTelemetry semantic conventions 1.44.0 are the checked baseline; GenAI conventions require explicit schema-version handling",
+      "delivery": "Next.js App Router and FastAPI deployment guidance inform the two future implementations; architecture contracts remain framework-neutral"
+    },
+    "officialSources": [
+      {
+        "label": "MCP 2026-07-28 specification",
+        "url": "https://modelcontextprotocol.io/specification/2026-07-28"
+      },
+      {
+        "label": "MCP architecture",
+        "url": "https://modelcontextprotocol.io/specification/2026-07-28/architecture"
+      },
+      {
+        "label": "MCP authorization",
+        "url": "https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization"
+      },
+      {
+        "label": "MCP versioning and compatibility",
+        "url": "https://modelcontextprotocol.io/specification/2026-07-28/basic/versioning-and-compatibility"
+      },
+      {
+        "label": "MCP key changes",
+        "url": "https://modelcontextprotocol.io/specification/2026-07-28/changelog"
+      },
+      {
+        "label": "MCP Tasks extension",
+        "url": "https://modelcontextprotocol.io/extensions/tasks"
+      },
+      {
+        "label": "MCP Apps overview",
+        "url": "https://modelcontextprotocol.io/extensions/apps/overview"
+      },
+      {
+        "label": "A2A 1.0 specification",
+        "url": "https://a2a-protocol.org/latest/specification/"
+      },
+      {
+        "label": "A2A and MCP",
+        "url": "https://a2a-protocol.org/latest/topics/a2a-and-mcp/"
+      },
+      {
+        "label": "A2A enterprise features",
+        "url": "https://a2a-protocol.org/latest/topics/enterprise-ready/"
+      },
+      {
+        "label": "AG-UI overview",
+        "url": "https://docs.ag-ui.com/"
+      },
+      {
+        "label": "AG-UI architecture",
+        "url": "https://docs.ag-ui.com/concepts/architecture"
+      },
+      {
+        "label": "AG-UI events",
+        "url": "https://docs.ag-ui.com/concepts/events"
+      },
+      {
+        "label": "OpenTelemetry semantic conventions 1.44.0",
+        "url": "https://opentelemetry.io/docs/specs/semconv/"
+      },
+      {
+        "label": "OpenTelemetry GenAI conventions",
+        "url": "https://opentelemetry.io/docs/specs/semconv/gen-ai/"
+      },
+      {
+        "label": "OpenTelemetry traces",
+        "url": "https://opentelemetry.io/docs/concepts/signals/traces/"
+      },
+      {
+        "label": "NIST AI Risk Management Framework",
+        "url": "https://www.nist.gov/itl/ai-risk-management-framework"
+      },
+      {
+        "label": "NIST AI RMF Playbook",
+        "url": "https://airc.nist.gov/airmf-resources/playbook/"
+      },
+      {
+        "label": "NIST Generative AI Profile",
+        "url": "https://doi.org/10.6028/NIST.AI.600-1"
+      },
+      {
+        "label": "OWASP Agentic Applications 2026",
+        "url": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/"
+      },
+      {
+        "label": "OAuth Security BCP RFC 9700",
+        "url": "https://www.rfc-editor.org/info/rfc9700/"
+      },
+      {
+        "label": "OAuth DPoP RFC 9449",
+        "url": "https://www.rfc-editor.org/info/rfc9449/"
+      },
+      {
+        "label": "OAuth Protected Resource Metadata RFC 9728",
+        "url": "https://www.rfc-editor.org/info/rfc9728/"
+      },
+      {
+        "label": "JSON Schema 2020-12",
+        "url": "https://json-schema.org/draft/2020-12"
+      },
+      {
+        "label": "OpenAPI 3.1.1 specification",
+        "url": "https://spec.openapis.org/oas/v3.1.1.html"
+      },
+      {
+        "label": "AsyncAPI 3.0.0 specification",
+        "url": "https://www.asyncapi.com/docs/reference/specification/v3.0.0"
+      },
+      {
+        "label": "WCAG 2.2",
+        "url": "https://www.w3.org/TR/WCAG22/"
+      },
+      {
+        "label": "Next.js App Router",
+        "url": "https://nextjs.org/docs/app"
+      },
+      {
+        "label": "Next.js deploying",
+        "url": "https://nextjs.org/docs/app/getting-started/deploying"
+      },
+      {
+        "label": "Next.js testing",
+        "url": "https://nextjs.org/docs/app/guides/testing"
+      },
+      {
+        "label": "Vercel deployments",
+        "url": "https://vercel.com/docs/deployments"
+      },
+      {
+        "label": "Vercel Functions",
+        "url": "https://vercel.com/docs/functions"
+      },
+      {
+        "label": "Vercel environment variables",
+        "url": "https://vercel.com/docs/environment-variables"
+      },
+      {
+        "label": "Vercel rolling releases",
+        "url": "https://vercel.com/docs/rolling-releases"
+      },
+      {
+        "label": "FastAPI bigger applications",
+        "url": "https://fastapi.tiangolo.com/tutorial/bigger-applications/"
+      },
+      {
+        "label": "FastAPI deployment concepts",
+        "url": "https://fastapi.tiangolo.com/deployment/concepts/"
+      },
+      {
+        "label": "FastAPI testing",
+        "url": "https://fastapi.tiangolo.com/tutorial/testing/"
+      },
+      {
+        "label": "FastAPI containers",
+        "url": "https://fastapi.tiangolo.com/deployment/docker/"
+      },
+      {
+        "label": "Pydantic models",
+        "url": "https://docs.pydantic.dev/latest/concepts/models/"
+      },
+      {
+        "label": "PostgreSQL documentation",
+        "url": "https://www.postgresql.org/docs/current/"
+      },
+      {
+        "label": "pgvector documentation",
+        "url": "https://github.com/pgvector/pgvector"
+      },
+      {
+        "label": "Redis documentation",
+        "url": "https://redis.io/docs/latest/"
+      },
+      {
+        "label": "GitHub Actions documentation",
+        "url": "https://docs.github.com/actions"
+      },
+      {
+        "label": "SLSA specification",
+        "url": "https://slsa.dev/spec/v1.2/"
+      },
+      {
+        "label": "OpenSSF Scorecard",
+        "url": "https://scorecard.dev/"
+      }
+    ],
+    "visualGrammar": {
+      "cobaltPlatform": "A product, service, environment, data plane, team boundary, or delivery stage",
+      "cyanArrow": "A typed request, event, artifact, deployment, test, or evidence handoff",
+      "tealArrow": "An authoritative decision, verified contract, passing gate, safe release, or recovered service",
+      "coralPath": "An unacceptable outcome, failed boundary, broken contract, unsafe release, or unrecovered effect",
+      "whiteCard": "A requirement, schema, service, test, gate, owner, artifact, receipt, or portfolio proof"
+    },
+    "websiteLessonTemplate": [
+      "outcome",
+      "standards status",
+      "diagram and alt text",
+      "plain-English explanation",
+      "trace",
+      "analogy",
+      "Next.js map",
+      "Python map",
+      "case study",
+      "mini lab",
+      "checkpoint and answer",
+      "glossary",
+      "related lessons",
+      "primary sources"
+    ]
+  },
+  "modules": [
+    {
+      "id": "module-53",
+      "title": "Choose the right problem",
+      "lessonIds": [
+        221,
+        222,
+        223,
+        224
+      ],
+      "purpose": "Begin with human value, boundaries, risk, success, and evidence instead of beginning with the word agent."
+    },
+    {
+      "id": "module-54",
+      "title": "Reference architecture and contracts",
+      "lessonIds": [
+        225,
+        226,
+        227,
+        228
+      ],
+      "purpose": "Give every component one owned job, every boundary one explicit contract, and every failure one accountable owner."
+    },
+    {
+      "id": "module-55",
+      "title": "Dual-stack implementation blueprint",
+      "lessonIds": [
+        229,
+        230,
+        231,
+        232
+      ],
+      "purpose": "Tell the same product story in Next.js and Python while keeping schemas, behavior, fixtures, and evidence aligned."
+    },
+    {
+      "id": "module-56",
+      "title": "Platform, data, and deployment",
+      "lessonIds": [
+        233,
+        234,
+        235,
+        236
+      ],
+      "purpose": "Choose identity, storage, telemetry, and release infrastructure from workload, risk, recovery, and ownership needs."
+    },
+    {
+      "id": "module-57",
+      "title": "Delivery and production readiness",
+      "lessonIds": [
+        237,
+        238,
+        239,
+        240
+      ],
+      "purpose": "Turn the architecture into demonstrable slices that cross testing, security, evaluation, accessibility, privacy, and operations gates."
+    },
+    {
+      "id": "module-58",
+      "title": "Final capstone and project handoff",
+      "lessonIds": [
+        241,
+        242,
+        243,
+        244
+      ],
+      "purpose": "Create the review, game-day, portfolio, and backlog evidence that makes both later coding projects straightforward and defensible."
+    }
+  ],
+  "lessons": [
+    {
+      "id": 221,
+      "slug": "automation-boundary-map",
+      "moduleId": "module-53",
+      "title": "Problem, workflow, assistant, agent, and automation boundaries",
+      "stability": "Product-discovery pattern; agent labels do not create a technical or business requirement",
+      "diagram": "diagrams/221-automation-boundary-map.png",
+      "diagramPrompt": "Show USER PROBLEM entering a decision path with five bounded choices: DOCUMENT, WORKFLOW, ASSISTANT, AGENT, AUTOMATION. Add HUMAN JUDGMENT and AUTHORITATIVE SYSTEM rails. Teal FIT path selects the smallest sufficient choice; coral AGENT EVERYWHERE path creates COST, RISK, and CONFUSION.",
+      "alt": "A user problem is matched to the smallest sufficient solution among documentation, workflow, assistant, agent, and automation while human judgment and the authoritative system remain visible.",
+      "outcome": "Choose whether a problem needs information, a fixed workflow, an assistant, an agent, or deterministic automation before selecting protocols or frameworks.",
+      "explanation": "A business problem is a gap between the outcome a person needs and what the current system reliably provides. The first architecture decision is not which model to use; it is which kind of behavior closes that gap with the least unnecessary uncertainty. Documentation explains. A workflow follows known steps. An assistant helps a person decide. An agent selects or sequences actions under constraints. Automation executes a stable decision rule. One product may use several, but each part needs a named boundary. Agency is useful when the path cannot be completely listed in advance and the system must adapt using evidence. It is wasteful when a form, query, rule, or ordinary service already solves the problem more predictably. The authoritative system still owns customer, policy, payment, and receipt truth. A model may propose, summarize, retrieve, compare, or coordinate, but it does not become the business database because its prose sounds confident. A good boundary statement names the trigger, inputs, allowed choices, tools, stop conditions, human decisions, committed effects, evidence, and recovery. It also names what the component is forbidden to do. This map prevents architecture theatre. Reviewers can see exactly where uncertainty is valuable, where determinism is required, and where a human retains authority rather than accepting one vague box marked AI agent.",
+      "trace": [
+        "Write the user outcome and current pain without naming a technology.",
+        "Separate known repeatable steps from uncertain judgment or research.",
+        "Match each step to documentation, workflow, assistant, agent, or automation.",
+        "Place human decisions and authoritative business commits outside model authority.",
+        "Record forbidden actions, recovery, owner, and the evidence required before implementation."
+      ],
+      "analogy": "A kitchen uses a recipe for repeatable steps, a cook for judgment, a timer for automation, and a head chef for consequential decisions. Calling every appliance a chef would make responsibilities less clear, not more advanced.",
+      "nextjs": [
+        "Model the future web flow as explicit routes and user states before adding chat; ordinary forms and Server Actions should handle deterministic work.",
+        "Use client components only where live interaction is needed, and label proposals, human decisions, and committed receipts as different states.",
+        "Create a boundary fixture page showing which steps are documents, fixed workflow, assistant help, agent work, and authoritative server actions."
+      ],
+      "python": [
+        "Represent the workflow as services and typed state transitions; call a model only inside the steps that require uncertainty or language understanding.",
+        "Keep domain commands and idempotent commits separate from agent planning, retrieval, and summaries.",
+        "Write policy tests proving that the agent cannot bypass the human decision or directly mutate the authoritative refund record."
+      ],
+      "caseStudy": {
+        "situation": "Acme asks for an agent that handles refunds from start to finish because agents sound modern.",
+        "walkthrough": [
+          "Maya maps the real need: gather case facts, find policy, compare evidence, explain an exception, and submit an approved refund.",
+          "Facts and policy retrieval become tools; comparison and draft explanation become assistant or agent work.",
+          "Maya keeps the exception decision, while the payment service keeps the final idempotent commit.",
+          "The blueprint records the boundaries and refuses the original unrestricted end-to-end agent description."
+        ],
+        "result": "Acme gets useful adaptive help without turning human authority or payment truth into model-owned behavior.",
+        "danger": "Beginning with an agent label can hide that a simple workflow would be cheaper, safer, easier to test, and easier for Maya to explain.",
+        "takeaway": "Use the smallest amount of agency that solves the real problem, and keep authority visible."
+      },
+      "lab": "Map a familiar support process into documentation, workflow, assistant, agent, and automation. For every step, name its trigger, owner, inputs, uncertainty, tools, human decision, committed effect, forbidden actions, and recovery path.",
+      "checkpoint": "Does a multi-step process automatically require an agent?",
+      "answer": "No. A fixed workflow can contain many steps. An agent is useful only where the path or choice must adapt under evidence and constraints.",
+      "glossary": [
+        "Agency - bounded freedom to choose or sequence actions",
+        "Authoritative system - record trusted to establish what really happened",
+        "Boundary - explicit limit on responsibility, data, or action"
+      ],
+      "related": [
+        222,
+        225,
+        227
+      ],
+      "sources": [
+        "NIST AI Risk Management Framework",
+        "MCP 2026-07-28 specification",
+        "A2A and MCP"
+      ]
+    },
+    {
+      "id": 222,
+      "slug": "use-case-selection-scorecard",
+      "moduleId": "module-53",
+      "title": "Use-case selection, value, frequency, uncertainty, and reversibility",
+      "stability": "Decision scorecard; weights and thresholds are product-specific and course values are illustrative",
+      "diagram": "diagrams/222-use-case-selection-scorecard.png",
+      "diagramPrompt": "Show candidate cards FAQ, POLICY REVIEW, REFUND COMMIT, ACCOUNT DELETE entering a SCORECARD with VALUE, FREQUENCY, UNCERTAINTY, REVERSIBILITY, DATA, EVIDENCE. Teal POLICY REVIEW moves to PILOT. Coral HIGH HARM LOW REVERSIBILITY moves to HUMAN ONLY. Mark all sample scores ILLUSTRATIVE.",
+      "alt": "Candidate use cases pass through a scorecard for value, frequency, uncertainty, reversibility, data, and evidence; policy review becomes a pilot while high-harm irreversible work stays human-controlled.",
+      "outcome": "Rank candidate agent use cases using user value and risk-shaped evidence instead of novelty or an impressive demo.",
+      "explanation": "A useful candidate occurs often enough to matter, creates a clear user outcome, and contains uncertainty that language, retrieval, or adaptive planning can genuinely reduce. Value must be stated for a person and a business process, not as a vague claim that AI saves time. Frequency affects learning and operating cost. A rare scenario may still matter, but it needs a stronger reason and enough safe examples to evaluate. A frequent low-value nuisance may not deserve an elaborate platform. Uncertainty asks whether inputs, evidence, or paths vary. Reversibility asks whether a mistaken action can be undone. High uncertainty plus low reversibility usually demands stronger human authority, staged rollout, or a narrower use case. Data sensitivity, tool power, evidence availability, latency tolerance, and failure visibility change the ranking. A use case with no trustworthy ground truth may be impossible to evaluate even if the demo looks fluent. The scorecard is a conversation aid, not a magic formula. Write definitions before scores, mark every sample number illustrative, document who supplied the evidence, and let an unacceptable outcome override a high total. Selection ends with a pilot hypothesis: named users, one bounded workflow, expected behavior, excluded behavior, evaluation set, stop rule, owner, and an inexpensive way to return to the old process.",
+      "trace": [
+        "List candidate outcomes in user language and remove duplicate technology ideas.",
+        "Define value, frequency, uncertainty, reversibility, data, and evidence scales.",
+        "Score with stakeholders and attach the reason and source behind every score.",
+        "Apply hard exclusions for unacceptable harm, missing authority, or untestable behavior.",
+        "Turn the strongest candidate into a bounded pilot with stop and rollback rules."
+      ],
+      "analogy": "A hospital does not buy equipment because its screen looks advanced. It asks which patient problem it solves, how often it occurs, what happens when it is wrong, and whether staff can verify and reverse the result.",
+      "nextjs": [
+        "Build the future scorecard as a transparent review form whose scale definitions, evidence notes, exclusions, and owner are stored with each assessment.",
+        "Render illustrative values with a visible scenario badge so no portfolio viewer mistakes them for measured product results.",
+        "Generate a pilot brief page from approved scorecard data, including excluded actions, evaluation cases, stop rules, and rollback path."
+      ],
+      "python": [
+        "Define typed score dimensions and validation rules; keep hard exclusions separate from weighted totals.",
+        "Store assessment versions and evidence references so a later change in policy or workload can trigger reassessment.",
+        "Test deterministic ranking and make the API return reasons, not only a number, so reviewers can challenge the decision."
+      ],
+      "caseStudy": {
+        "situation": "Acme has four ideas: answer FAQs, review policies, issue refunds, and delete accounts. Leadership wants the most dramatic demonstration first.",
+        "walkthrough": [
+          "Maya defines each outcome and scores evidence availability, uncertainty, reversibility, sensitivity, and tool power.",
+          "FAQ answers are easy but lower value; account deletion is valuable but highly consequential and poorly reversible.",
+          "Policy review has useful uncertainty, versioned evidence, visible human review, and no direct irreversible effect.",
+          "Acme selects policy review as the pilot and keeps refund commits and deletion behind separate human-controlled services."
+        ],
+        "result": "The first project demonstrates real agent value while keeping risk and evaluation manageable.",
+        "danger": "A weighted total can disguise one unacceptable outcome, borrowed data, or a score invented to justify a preferred technology.",
+        "takeaway": "Choose the use case you can value, bound, evaluate, and safely reverse—not the one with the flashiest demo."
+      },
+      "lab": "Create a six-dimension scorecard for five candidate use cases. Define each scale, attach evidence notes, mark sample values illustrative, add three hard exclusions, and write a pilot hypothesis plus rollback path for the selected case.",
+      "checkpoint": "Should the candidate with the highest weighted score always win?",
+      "answer": "No. A hard risk exclusion, missing ground truth, unclear ownership, or unacceptable outcome can disqualify it regardless of the total.",
+      "glossary": [
+        "Reversibility - ability to restore a safe prior state",
+        "Ground truth - trusted evidence used to judge correctness",
+        "Pilot - limited real-world trial with explicit safeguards"
+      ],
+      "related": [
+        221,
+        223,
+        224
+      ],
+      "sources": [
+        "NIST AI Risk Management Framework",
+        "NIST AI RMF Playbook",
+        "NIST Generative AI Profile"
+      ]
+    },
+    {
+      "id": 223,
+      "slug": "risk-authority-unacceptable-outcomes",
+      "moduleId": "module-53",
+      "title": "Risk classification, human authority, and unacceptable outcomes",
+      "stability": "Risk-management design using NIST guidance and product-specific policy; not legal advice",
+      "diagram": "diagrams/223-risk-authority-unacceptable-outcomes.png",
+      "diagramPrompt": "Show USE CASE entering RISK CLASS LOW, MODERATE, HIGH, PROHIBITED. Connect IMPACT, LIKELIHOOD, EXPOSURE, REVERSIBILITY, DETECTABILITY. Add HUMAN AUTHORITY gates ADVISE, REVIEW, APPROVE, EXECUTE. Coral UNACCEPTABLE OUTCOME triggers BLOCK, SAFE STATE, INCIDENT.",
+      "alt": "A use case is classified by impact, likelihood, exposure, reversibility, and detectability, then mapped to human authority levels; an unacceptable outcome triggers a block, safe state, and incident process.",
+      "outcome": "Turn broad safety concerns into a usable classification, an explicit human-authority model, and hard unacceptable-outcome rules.",
+      "explanation": "Risk is the possibility that an outcome harms people, the business, data, rights, or service reliability. Classification combines the severity of impact with likelihood, exposure, reversibility, and how quickly the problem can be detected. Human in the loop is too vague. The blueprint must say whether the system may advise, draft, recommend, request approval, execute after approval, or execute automatically within a tiny reversible envelope. An unacceptable outcome is a condition the system must never knowingly permit, such as cross-tenant disclosure, duplicate payment, approval on stale evidence, or silent deletion. It becomes a testable invariant and a release blocker. Controls should match the risk path. Prevention blocks the event, detection reveals it quickly, containment limits reach, recovery restores safe service, and learning turns the scenario into a permanent test fixture. Risk ownership stays with named people and teams. A protocol, model provider, or policy engine can supply signals, but none can accept organizational accountability on Acme's behalf. Review the classification when tools, data, users, geography, autonomy, model, or failure evidence changes. A safe pilot does not automatically justify a broader production authority level.",
+      "trace": [
+        "Describe credible harms and the people, data, and services exposed.",
+        "Classify impact, likelihood, exposure, reversibility, and detectability with evidence.",
+        "Assign the exact human authority level for each consequential transition.",
+        "Write unacceptable outcomes as invariants with block, alert, safe-state, and recovery behavior.",
+        "Name the risk owner, review trigger, evidence pack, and release gate."
+      ],
+      "analogy": "A building uses different rules for a light switch, a fire alarm, an elevator, and a gas valve. Saying a person is somewhere in the loop would not define who may open the valve or what must happen when a leak is detected.",
+      "nextjs": [
+        "Render authority as explicit proposal, review, approval, committed, blocked, and expired states; never hide consequential scope behind a generic Continue button.",
+        "Disable sensitive controls when evidence revision, identity, tenant, or policy checks are uncertain, while preserving the user's notes.",
+        "Create a risk-fixture gallery that demonstrates every unacceptable outcome and its accessible blocked or recovery state."
+      ],
+      "python": [
+        "Encode policy invariants outside prompts and enforce them again at authoritative command handlers.",
+        "Model actor, subject, action, resource, tenant, evidence version, approval, expiry, and risk class in each decision envelope.",
+        "Emit durable security or risk events and test fail-closed behavior when identity, policy, or evidence services are unavailable."
+      ],
+      "caseStudy": {
+        "situation": "A refund proposal is correct, but it was approved in a browser tab before the policy and refund amount changed.",
+        "walkthrough": [
+          "Acme classifies stale approval as a high-risk path because it can commit money under superseded evidence.",
+          "The approval is bound to subject, amount, policy revision, actor, tenant, and expiry.",
+          "The service rejects the stale commit, preserves Maya's note, and returns the new comparison for review.",
+          "The rejected path becomes a security and acceptance fixture required for every release."
+        ],
+        "result": "Human approval remains meaningful because it authorizes one bounded current proposal rather than an open-ended future action.",
+        "danger": "A visible approval button provides no safety if the backend accepts a changed subject, amount, evidence set, tenant, or expired decision.",
+        "takeaway": "Classify the harm, bind the authority, and make unacceptable outcomes executable release rules."
+      },
+      "lab": "Create a risk register for the Acme policy-review use case. Include ten harm scenarios, five classification dimensions, authority levels, four unacceptable outcomes, preventive and detective controls, safe states, recovery, owners, review triggers, and acceptance tests.",
+      "checkpoint": "Is a human approval sufficient if the underlying proposal can change afterward?",
+      "answer": "No. Approval must be bound to the exact subject, scope, evidence, revision, actor, tenant, and expiry that the person reviewed.",
+      "glossary": [
+        "Invariant - rule that must remain true",
+        "Risk owner - accountable person or role for a risk decision",
+        "Fail closed - refuse a sensitive action when required proof is missing"
+      ],
+      "related": [
+        222,
+        233,
+        239
+      ],
+      "sources": [
+        "NIST AI Risk Management Framework",
+        "NIST Generative AI Profile",
+        "OWASP Agentic Applications 2026"
+      ]
+    },
+    {
+      "id": 224,
+      "slug": "success-exit-evidence-contract",
+      "moduleId": "module-53",
+      "title": "Success criteria, exit criteria, and evidence requirements",
+      "stability": "Measurement and delivery pattern; every threshold must be validated in the real project before being presented as measured",
+      "diagram": "diagrams/224-success-exit-evidence-contract.png",
+      "diagramPrompt": "Show PILOT CONTRACT with USER OUTCOME, QUALITY, SAFETY, LATENCY, COST, ACCESSIBILITY, RECOVERY. Connect to EVIDENCE cards EVAL, TEST, TRACE, FEEDBACK, INCIDENT. Teal CONTINUE requires all gates. Coral EXIT CRITERIA triggers PAUSE, ROLLBACK, REDESIGN. Mark SAMPLE TARGETS ILLUSTRATIVE.",
+      "alt": "A pilot contract defines user, quality, safety, latency, cost, accessibility, and recovery criteria backed by evaluations, tests, traces, feedback, and incidents; failed exit criteria pause or roll back the pilot.",
+      "outcome": "Define success and stopping rules with named evidence before the team starts building or collecting convenient metrics.",
+      "explanation": "Success criteria describe what good looks like for users, quality, safety, operations, accessibility, cost, and recovery. They must include a measurement method, population, denominator, owner, time window, and known limitations. Exit criteria say when to pause, narrow, roll back, or abandon the approach. They protect the team from continuing because of sunk cost, an attractive demo, or a single improving metric. Evidence comes from several layers: deterministic tests, contract fixtures, controlled evaluations, traces, incident scenarios, accessibility testing, user research, and real product outcomes. No single benchmark proves production fitness. Leading evidence appears before harm, such as rising tool denial or stale-evidence rates. Lagging evidence appears after an outcome, such as a duplicate payment or support escalation. The blueprint needs both. Every target written before implementation is a proposed or illustrative target. It becomes a measured result only after the later project defines instrumentation, collects valid data, and records the actual run. The evidence manifest ties requirement, version, dataset, code, environment, run, result, reviewer, and decision together. That chain lets Maya and a portfolio reviewer see why the team continued, paused, or changed course.",
+      "trace": [
+        "Write one user outcome and the unacceptable outcomes that constrain it.",
+        "Define quality, safety, latency, cost, accessibility, and recovery measures with denominators.",
+        "Assign each criterion a source of evidence, owner, review frequency, and limitation.",
+        "Add explicit pause, rollback, redesign, and abandon conditions before the pilot begins.",
+        "Version the evidence manifest and record the decision reached at every gate."
+      ],
+      "analogy": "Before a long hike, a group defines the destination, daylight, weather limits, water reserve, turnaround time, and emergency route. Reaching a scenic viewpoint does not cancel the agreed turnaround rule.",
+      "nextjs": [
+        "Build an evidence dashboard that distinguishes proposed targets, illustrative scenarios, and measured results with separate visual states.",
+        "Link every result card to its requirement, dataset or fixture version, environment, run time, owner, and decision receipt.",
+        "Make accessibility and recovery gates first-class release cards rather than notes under a performance chart."
+      ],
+      "python": [
+        "Define versioned criterion models with numerator, denominator, eligibility, slices, target status, and evidence references.",
+        "Produce machine-readable test and evaluation manifests in CI while preventing synthetic fixtures from entering production analytics.",
+        "Implement a gate evaluator that explains which evidence is missing or failed without treating the generated decision as executive authorization."
+      ],
+      "caseStudy": {
+        "situation": "Acme's prototype gives convincing policy summaries, and the team wants to call the pilot successful after several friendly demonstrations.",
+        "walkthrough": [
+          "Maya returns to the prewritten pilot contract and sees that adversarial evidence, keyboard testing, stale-policy recovery, and rollback rehearsal are incomplete.",
+          "The team runs the missing evaluation and discovers that superseded documents are sometimes presented without a warning.",
+          "The exit rule pauses expansion while retrieval freshness and the interface are corrected.",
+          "A new version passes the complete gate, and the decision receipt records what changed and which evidence supported continuation."
+        ],
+        "result": "Acme avoids mistaking a polished happy path for a production-ready system.",
+        "danger": "A metric without denominator, version, population, and decision rule can be selected after the fact to support almost any story.",
+        "takeaway": "Decide how you will prove success—and when you will stop—before the demo starts persuading you."
+      },
+      "lab": "Write a pilot evidence contract with twelve criteria, definitions and denominators, leading and lagging signals, evidence sources, owners, illustrative targets, four exit conditions, rollback and redesign actions, and an evidence-manifest schema.",
+      "checkpoint": "Can an illustrative target appear in a portfolio as an achieved result?",
+      "answer": "No. It must remain clearly labeled as a proposed scenario until the implemented project measures it with valid instrumentation and evidence.",
+      "glossary": [
+        "Exit criterion - pre-agreed condition for pausing or stopping",
+        "Denominator - eligible total against which a rate is calculated",
+        "Evidence manifest - versioned record linking proof to a decision"
+      ],
+      "related": [
+        222,
+        235,
+        239
+      ],
+      "sources": [
+        "NIST AI RMF Playbook",
+        "OpenTelemetry semantic conventions 1.44.0",
+        "WCAG 2.2"
+      ]
+    },
+    {
+      "id": 225,
+      "slug": "enterprise-boundary-stack",
+      "moduleId": "module-54",
+      "title": "Capability, context, model, tool, and authority boundaries",
+      "stability": "Reference-architecture pattern using current MCP, A2A, and AG-UI roles behind adapters",
+      "diagram": "diagrams/225-enterprise-boundary-stack.png",
+      "diagramPrompt": "Show stacked TRUST ZONES USER, WEB APP, AGENT SERVICE, MODEL, MCP CLIENT, MCP SERVER, TOOL, BUSINESS SYSTEM. Place CONTEXT, CAPABILITY, IDENTITY, POLICY, AUTHORITY gates between zones. Teal BOUNDED REQUEST reaches RECEIPT. Coral DIRECT MODEL TO BUSINESS WRITE is blocked.",
+      "alt": "An enterprise stack separates user, web app, agent service, model, MCP client, MCP server, tool, and business system with context, capability, identity, policy, and authority gates.",
+      "outcome": "Draw a complete trust-boundary view that separates what a component knows, can request, may execute, and is authoritative to commit.",
+      "explanation": "A component boundary is useful only when it describes responsibility and trust. The model generates candidates, the agent service coordinates, MCP exposes declared capabilities, tools perform bounded operations, and the business system establishes committed truth. Context is information supplied for one purpose. Capability is an operation a component can request. Authority is permission to make a consequential decision. Combining them into one broad token or prompt makes review and containment difficult. MCP standardizes communication between a host, its clients, and servers that expose resources, prompts, or tools. It does not remove the application's need to validate identity, tenant, arguments, policy, consent, and result receipts. A2A describes peer-agent discovery and task communication. AG-UI streams typed interaction state to a frontend. These protocols meet at adapters; neither grants a model direct database authority. Every crossing needs an input schema, output schema, authentication, authorization, tenant rule, time limit, size limit, retry rule, privacy class, audit event, and failure behavior. The diagram should show these gates where they happen. The architecture fails safely when a powerful component is compromised. A malicious document, model output, or remote agent still cannot invent scopes, cross tenants, alter an approved amount, or bypass the authoritative command handler.",
+      "trace": [
+        "List components and assign one owned job to each.",
+        "Draw every network, process, tenant, provider, and privilege boundary.",
+        "Separate context, capability, identity, policy, consent, and authority at each crossing.",
+        "Place validation and business invariants again beside the authoritative effect.",
+        "Test one compromised or unavailable component per boundary and record containment evidence."
+      ],
+      "analogy": "An office badge may open the lobby, a filing cabinet, or a laboratory, but entering the building does not authorize signing a bank transfer. Location, information access, and decision authority are different controls.",
+      "nextjs": [
+        "Keep secrets, provider calls, and privileged policy checks in server-only modules; send the browser only the state and controls it is allowed to render.",
+        "Represent every proposal with resource, action, subject, evidence revision, tenant, actor, expiry, and recovery before enabling a decision control.",
+        "Use route and component boundaries to make public, authenticated, tenant, administrator, and embedded-app zones visible and testable."
+      ],
+      "python": [
+        "Create ports for model, MCP, A2A, policy, identity, audit, and business systems; adapters translate protocols without leaking their data types into the domain core.",
+        "Validate tool intent before dispatch and validate returned evidence before it can influence a proposal.",
+        "Require the authoritative command handler to recheck actor, tenant, policy, subject, revision, approval, and idempotency immediately before commit."
+      ],
+      "caseStudy": {
+        "situation": "A remote research agent returns a recommendation containing a tool-like instruction to refund a customer immediately.",
+        "walkthrough": [
+          "The A2A adapter treats the content as an artifact, not executable authority.",
+          "The coordinator extracts evidence through a validated schema and creates a bounded proposal.",
+          "Maya reviews the proposal in the web app; her decision is bound to the current subject and evidence.",
+          "The payment command handler rechecks policy and commits once, returning the receipt through the normal event path."
+        ],
+        "result": "Untrusted agent content can inform a decision without becoming a hidden command.",
+        "danger": "When context, capability, and authority share one path, prompt injection can become a privileged business action instead of merely bad text.",
+        "takeaway": "Let protocols carry bounded information and requests; let product policy and authoritative systems decide what can commit."
+      },
+      "lab": "Draw the full Acme context diagram. For ten boundaries, record caller, receiver, data, capability, identity, tenant, policy, consent, authority, validation, timeout, retry, audit, and fail-safe behavior.",
+      "checkpoint": "Does access to an MCP tool mean the model is authorized to use it for any customer?",
+      "answer": "No. Discovery or capability access is not business authorization. The application must enforce actor, tenant, purpose, arguments, policy, and consent for each operation.",
+      "glossary": [
+        "Trust boundary - place where assumptions and controls change",
+        "Capability - bounded operation a component can request",
+        "Authority - permission to decide or commit an effect"
+      ],
+      "related": [
+        221,
+        227,
+        233
+      ],
+      "sources": [
+        "MCP 2026-07-28 specification",
+        "MCP architecture",
+        "A2A and MCP",
+        "AG-UI architecture"
+      ]
+    },
+    {
+      "id": 226,
+      "slug": "state-data-evidence-audit-architecture",
+      "moduleId": "module-54",
+      "title": "State, data, memory, evidence, artifact, and audit architecture",
+      "stability": "Enterprise data-architecture pattern; retention, privacy, and record obligations vary by context and jurisdiction",
+      "diagram": "diagrams/226-state-data-evidence-audit-architecture.png",
+      "diagramPrompt": "Show six separate stores OPERATIONAL STATE, SOURCE DATA, MEMORY, EVIDENCE, ARTIFACTS, AUDIT. Add IDs, VERSION, TENANT, OWNER, RETENTION, LINEAGE. Teal REFERENCES link stores without copying secrets. Coral ONE GIANT VECTOR STORE creates LEAK, STALE, NO DELETE.",
+      "alt": "Operational state, source data, memory, evidence, artifacts, and audit are stored separately with identity, version, tenant, owner, retention, and lineage controls rather than copied into one giant vector store.",
+      "outcome": "Give each kind of data a clear purpose, owner, lifetime, authority, and deletion path instead of treating every record as agent memory.",
+      "explanation": "Operational state tracks what the workflow is doing. Source data is the original business record. Memory carries deliberately retained preferences or context. Evidence supports a claim. Artifacts are durable outputs. Audit records who or what performed a governed transition. These categories may reference one another, but they should not silently collapse into one database or vector index. Different authority, retention, privacy, indexing, access, and deletion rules apply. Evidence needs provenance: source identifier, version, retrieval time, content hash, applicable scope, transformation, and the claim it supports. An embedding is a search aid, not the authoritative evidence record. Memory requires an explicit purpose, subject, scope, consent or other valid basis, owner, expiry, correction path, and deletion verification. A convenient transcript dump is not a responsible memory architecture. Audit should record governed facts and receipts without copying unnecessary secrets, private prompts, raw customer content, or model reasoning. Access to audit records is itself privileged and monitored. Lineage connects a proposal and outcome back to versions of policy, tools, models, prompts, adapters, evidence, and human decisions. This makes incident reconstruction and portfolio proof possible without claiming that logs are the business source of truth.",
+      "trace": [
+        "Classify every data object as state, source, memory, evidence, artifact, audit, or an explicit combination.",
+        "Assign owner, authority, tenant, privacy class, retention, indexing, and deletion behavior.",
+        "Use stable references and hashes between stores instead of uncontrolled copies.",
+        "Define lineage from input and evidence through proposal, decision, effect, and receipt.",
+        "Test export, correction, expiry, legal hold where applicable, and verified deletion end to end."
+      ],
+      "analogy": "A library separates the original book, the catalogue, a reader's bookmark, a research note, a printed report, and the borrowing record. Putting every item into one unlabeled box would make search, ownership, and deletion impossible.",
+      "nextjs": [
+        "Render provenance and retention in evidence and memory views so Maya can distinguish current source, saved preference, generated artifact, and audit receipt.",
+        "Keep downloaded artifacts addressable and authorized; do not embed private source data in client URLs, analytics, or component props.",
+        "Provide export, correction, memory controls, and deletion status with accessible progress and final verification receipts."
+      ],
+      "python": [
+        "Use separate domain models and repositories for workflow state, evidence, artifacts, memory, audit, and authoritative business records.",
+        "Centralize lineage identifiers and tenant checks while giving each store its own retention, encryption, indexing, and deletion adapter.",
+        "Test cascades as explicit workflows; deletion must reach vector entries, caches, artifacts, derived records, and provider copies or document justified exceptions."
+      ],
+      "caseStudy": {
+        "situation": "Maya deletes a remembered customer preference, but Acme discovers the text still exists in embeddings, a cache, and a generated report.",
+        "walkthrough": [
+          "The architecture inventory identifies each copy, derivative, owner, and retention rule.",
+          "A deletion workflow follows lineage to memory, vector index, cache, and eligible artifacts.",
+          "The source business record remains because it has a different authority and retention rule, which the interface explains.",
+          "The deletion receipt lists completed locations, justified holds, failures, retries, and the verification time."
+        ],
+        "result": "Maya receives an honest, scoped deletion outcome instead of a false promise based on one database row.",
+        "danger": "Calling all retained context memory can conceal authority, overcollection, stale evidence, cross-tenant search, and incomplete deletion.",
+        "takeaway": "Name the data kind, owner, lifetime, and lineage before choosing a store or index."
+      },
+      "lab": "Create a data inventory for twenty Acme objects. Classify each, then add authority, tenant, privacy, owner, retention, encryption, index, cache, lineage, export, correction, deletion, audit, and incident requirements.",
+      "checkpoint": "Is a vector index the source of truth for policy evidence?",
+      "answer": "No. It helps retrieve candidates. The authoritative source record and its version establish the evidence; the index must preserve a reference back to it.",
+      "glossary": [
+        "Lineage - trace of where data came from and how it changed",
+        "Artifact - durable output of a task",
+        "Retention - rule for how long data is kept"
+      ],
+      "related": [
+        225,
+        234,
+        235
+      ],
+      "sources": [
+        "NIST Generative AI Profile",
+        "PostgreSQL documentation",
+        "pgvector documentation"
+      ]
+    },
+    {
+      "id": 227,
+      "slug": "protocol-boundary-routing-map",
+      "moduleId": "module-54",
+      "title": "MCP, A2A, AG-UI, HTTP, queue, and internal boundaries",
+      "stability": "Current MCP 2026-07-28 and A2A 1.0 baselines; AG-UI and all transport adapters are versioned explicitly",
+      "diagram": "diagrams/227-protocol-boundary-routing-map.png",
+      "diagramPrompt": "Show CLIENT EXPERIENCE connected by AG-UI to AGENT SERVICE. AGENT SERVICE uses MCP to TOOLS AND CONTEXT, A2A to PEER AGENTS, HTTP to BUSINESS APIS, QUEUE to DURABLE WORK, INTERNAL CALLS inside DOMAIN. Add CONTRACT and VERSION at each boundary. Coral ONE PROTOCOL FOR EVERYTHING is blocked.",
+      "alt": "A client experience uses AG-UI with an agent service, which uses MCP for tools and context, A2A for peer agents, HTTP for business APIs, queues for durable work, and internal calls within the domain.",
+      "outcome": "Select a protocol or transport from the relationship and failure needs at each boundary instead of forcing one protocol across the whole system.",
+      "explanation": "MCP connects an application host to servers that expose declared context and capabilities. A2A connects independently capable agents through tasks, messages, artifacts, discovery, and update mechanisms. AG-UI connects agent execution to an interactive frontend through typed events. Ordinary HTTP remains appropriate for stable business APIs. A queue is appropriate when work must survive request loss, absorb bursts, retry, or continue beyond one connection. Internal function calls are simplest inside one owned process boundary. The choice depends on discovery, direction, duration, streaming, delivery guarantee, ordering, identity, version negotiation, payload size, fan-out, cancellation, retry, and ownership—not on which acronym is newest. Adapters translate external protocol objects into product-owned contracts. Domain services should not depend directly on a vendor callback, SDK event, or remote Agent Card shape. Every boundary needs correlation and idempotency. A retry after an uncertain response must not create a second refund, and a replayed event must not become a second user notification or audit fact. The architecture may use several protocols in one user journey. The design stays understandable because each arrow has one purpose, one contract owner, one version policy, and one failure story.",
+      "trace": [
+        "Name the relationship: frontend interaction, tool access, peer delegation, business command, durable work, or internal logic.",
+        "List duration, streaming, retry, ordering, discovery, identity, and failure requirements.",
+        "Choose the smallest suitable protocol or transport and write the reason beside the arrow.",
+        "Translate at an adapter into a versioned product contract with correlation and idempotency.",
+        "Test timeout, duplicate, out-of-order, unavailable peer, incompatible version, and uncertain-effect cases."
+      ],
+      "analogy": "A city uses sidewalks, roads, railways, cargo ports, and radio channels because people, parcels, trains, and emergencies have different movement needs. One giant road would not make every journey simpler.",
+      "nextjs": [
+        "Use HTTP or Server Actions for bounded user commands and an AG-UI adapter for live agent state; keep protocol decoding outside React components.",
+        "Represent correlation, run, task, artifact, proposal, and receipt identifiers in a typed client projection without exposing secrets.",
+        "Design reconnect and duplicate fixtures so a refreshed route cannot replay a consequential command or lose a durable task handle."
+      ],
+      "python": [
+        "Create separate MCP, A2A, AG-UI, HTTP, and queue adapter packages that emit product commands and events.",
+        "Keep domain handlers transport-independent and require idempotency keys at effectful business boundaries.",
+        "Run conformance fixtures per adapter plus end-to-end failure tests that cross multiple boundaries and preserve one trace identity."
+      ],
+      "caseStudy": {
+        "situation": "Acme initially tries to use MCP for the browser stream, peer-agent delegation, refund API, and background export job.",
+        "walkthrough": [
+          "Maya classifies the browser relationship as typed interactive state and selects AG-UI through a product adapter.",
+          "Peer research remains A2A; declared tools and evidence stay MCP; refund commit remains an ordinary governed business API.",
+          "A durable export uses a queue and returns a task handle rather than holding the web request open.",
+          "One end-to-end trace links the journey while each boundary keeps its own contract and retry policy."
+        ],
+        "result": "Each connection is easier to explain, test, operate, and replace because it solves one relationship well.",
+        "danger": "Forcing one protocol everywhere can erase delivery semantics, make retries unsafe, and couple product logic to a changing SDK.",
+        "takeaway": "Choose the boundary first, then the protocol; keep product contracts on your side of every adapter."
+      },
+      "lab": "For twelve Acme connections, choose MCP, A2A, AG-UI, HTTP, queue, or internal call. Document direction, duration, streaming, delivery, ordering, discovery, version, identity, idempotency, timeout, retry, ownership, and failure tests.",
+      "checkpoint": "Should a durable background job remain attached to one browser request until it finishes?",
+      "answer": "Usually no. Return a durable handle, process through a suitable work system, and let the client reconnect or receive governed updates.",
+      "glossary": [
+        "Adapter - boundary code translating external and internal contracts",
+        "Idempotency - repeated request produces no extra effect",
+        "Delivery semantics - rules for whether and how messages may repeat or disappear"
+      ],
+      "related": [
+        225,
+        228,
+        232
+      ],
+      "sources": [
+        "MCP 2026-07-28 specification",
+        "A2A 1.0 specification",
+        "AG-UI architecture",
+        "AsyncAPI 3.0.0 specification"
+      ]
+    },
+    {
+      "id": 228,
+      "slug": "deployment-topology-failure-domains",
+      "moduleId": "module-54",
+      "title": "Deployment topology, failure domains, and ownership",
+      "stability": "Platform-neutral topology pattern; Vercel and Python-hosting details must be checked again when implementation begins",
+      "diagram": "diagrams/228-deployment-topology-failure-domains.png",
+      "diagramPrompt": "Show INTERNET to VERCEL EDGE and NEXTJS WEB, then PYTHON API, WORKER POOL, POLICY, DATABASE, VECTOR, QUEUE, ARTIFACT STORE, PROVIDERS. Draw labeled FAILURE DOMAINS REGION, SERVICE, TENANT, PROVIDER. Add OWNER and SLO cards. Teal DEGRADED MODE; coral CASCADE blocked by bulkheads.",
+      "alt": "A deployment topology spans Vercel, Next.js, a Python API, workers, policy, database, vector index, queue, artifact storage, and providers with visible failure domains, owners, service objectives, degraded modes, and bulkheads.",
+      "outcome": "Place services and data on a deployable topology that makes network paths, failure containment, scaling, recovery, and ownership visible.",
+      "explanation": "A logical architecture says what components do. A deployment topology says where they run, which networks they cross, how they scale, and what can fail together. Both views are needed before a full-stack build. The Next.js application can run on Vercel while a Python API and workers run on a suitable service platform. The blueprint must not pretend they share memory, filesystem, deployment lifecycle, region, or transaction boundary. A failure domain is a set of components likely to become unavailable together, such as one process, service, region, account, provider, or tenant partition. Bulkheads, queues, limits, and fallbacks keep one failure from consuming the whole system. Stateful dependencies need backup, restore, migration, replication, and regional decisions. Stateless web or API instances can scale horizontally only if durable state and idempotency live elsewhere. Ownership appears on the topology: team, service objective, alert route, deployment pipeline, data classification, capacity assumption, cost center, and recovery responsibility. An unlabeled box becomes nobody's problem during an incident. Degraded modes are product features. Acme may preserve case notes, show cached public documentation with a freshness warning, queue a retry, or disable commits while identity or policy is unavailable.",
+      "trace": [
+        "Place public edge, web, API, workers, protocols, data stores, and external providers on real network boundaries.",
+        "Draw authentication, encryption, egress, region, tenant, and data-residency paths.",
+        "Mark process, service, provider, account, region, and tenant failure domains.",
+        "Assign owner, scaling signal, service objective, alert, degraded mode, backup, and recovery target.",
+        "Walk through dependency loss and verify that sensitive actions fail safely without losing preserved work."
+      ],
+      "analogy": "A ship has watertight compartments. The map shows not only which rooms exist but which doors can seal, who controls them, how alarms travel, and how the ship remains afloat when one compartment floods.",
+      "nextjs": [
+        "Design Vercel routes and Functions as stateless compute; use explicit APIs, storage, and event paths rather than assuming local disk or process memory is durable.",
+        "Separate public learning content, authenticated workspace, server-only integrations, and client-interactive surfaces with environment-specific configuration.",
+        "Create visible degraded states for Python API, stream, artifact, and identity outages, including retry and support receipts."
+      ],
+      "python": [
+        "Separate synchronous API, durable workers, schedulers, and migrations so each can scale and fail independently.",
+        "Use health, readiness, graceful shutdown, connection limits, timeouts, and worker concurrency derived from actual workload tests.",
+        "Keep database migrations and other one-time startup work outside replicated request processes to avoid races."
+      ],
+      "caseStudy": {
+        "situation": "The Python research service slows down, web requests pile up, and every Next.js page waits until the provider timeout finishes.",
+        "walkthrough": [
+          "The topology reveals that long work was incorrectly placed inside the interactive request failure domain.",
+          "Acme returns a durable task handle, moves work to bounded workers, and applies queue and provider concurrency limits.",
+          "The web route shows preserved case state and an honest delayed status instead of a hanging page.",
+          "Service objectives and alerts distinguish web availability from delayed research completion."
+        ],
+        "result": "A provider slowdown degrades one capability without making the entire workspace unusable.",
+        "danger": "A diagram of boxes without networks, regions, scaling, failure domains, ownership, and recovery is not a deployable architecture.",
+        "takeaway": "Show where it runs, what fails together, who owns it, and what the user sees when it is unavailable."
+      },
+      "lab": "Create the Acme deployment topology for Vercel plus a Python platform. Include networks, regions, environments, stores, providers, identity, egress, secrets, owners, scaling signals, service objectives, failure domains, degraded modes, backup, restore, and six outage walkthroughs.",
+      "checkpoint": "Can two services deployed together be assumed to share durable local files?",
+      "answer": "No. Treat service filesystems and process memory as ephemeral unless the chosen platform explicitly guarantees otherwise; use an owned durable store.",
+      "glossary": [
+        "Failure domain - components likely to fail together",
+        "Bulkhead - limit that contains failure within one area",
+        "Degraded mode - reduced but honest and safe service state"
+      ],
+      "related": [
+        227,
+        234,
+        236
+      ],
+      "sources": [
+        "Next.js deploying",
+        "Vercel Functions",
+        "FastAPI deployment concepts",
+        "FastAPI containers"
+      ]
+    },
+    {
+      "id": 229,
+      "slug": "shared-contract-conformance-kit",
+      "moduleId": "module-55",
+      "title": "Shared schemas, contracts, fixtures, and conformance cases",
+      "stability": "OpenAPI 3.1.1, JSON Schema 2020-12, and AsyncAPI 3.0.0 are checked contract baselines; code generation remains a build choice",
+      "diagram": "diagrams/229-shared-contract-conformance-kit.png",
+      "diagramPrompt": "Show CONTRACT KIT at center with JSON SCHEMA, OPENAPI, ASYNCAPI, EXAMPLES, FIXTURES, ERROR CASES, VERSION RULES. Arrows feed TYPESCRIPT and PYDANTIC implementations. Both enter CONFORMANCE RUNNER and produce SAME BEHAVIOR. Coral HANDWRITTEN DRIFT is blocked.",
+      "alt": "A shared contract kit of schemas, APIs, events, examples, fixtures, errors, and version rules feeds TypeScript and Pydantic implementations, which must pass the same conformance runner.",
+      "outcome": "Create one framework-neutral behavior contract that both future stacks can implement and test without sharing application code.",
+      "explanation": "A shared contract describes messages and behavior that must agree across stacks. JSON Schema can describe payloads, OpenAPI can describe HTTP operations, and AsyncAPI can describe event channels, but examples, error semantics, authorization, ordering, and invariants still need explicit documentation and tests. Schema compatibility is more than whether JSON parses. The contract includes required and optional fields, nullability, defaults, unknown-field behavior, identifiers, timestamps, money, pagination, version negotiation, size limits, and privacy classification. A fixture is a stable example input, event sequence, or response. Conformance cases include happy paths, invalid values, duplicates, stale revisions, timeouts, denied authority, unknown versions, partial completion, and recovery. TypeScript and Pydantic types may be generated or handwritten, but the canonical contract and fixtures remain independent. Generated code does not prove business rules, and handwritten models must not silently reinterpret the schema. Compatibility rules say which additions are safe, when a new major version is required, how old clients fail, and how adapters translate external protocol versions. Consumer tests prevent a producer from breaking a real caller without noticing. The conformance runner compares observable behavior, not internal architecture. Both projects may have different modules and libraries while still producing the same state transitions, errors, receipts, and user-visible outcomes.",
+      "trace": [
+        "Inventory commands, queries, events, artifacts, proposals, decisions, errors, and receipts shared by both stacks.",
+        "Write canonical schemas plus semantic rules for identity, authority, ordering, idempotency, privacy, and versions.",
+        "Create valid examples and adversarial fixtures, including unknown and stale cases.",
+        "Run the same black-box conformance suite against TypeScript and Python adapters.",
+        "Publish compatibility reports and require explicit review for every contract change."
+      ],
+      "analogy": "Two factories can use different machines to build the same plug. A shared drawing and gauge prove that every plug fits the socket; copying one factory's internal machine design would not be necessary.",
+      "nextjs": [
+        "Generate or validate TypeScript types at the server boundary, then map them to narrower product state rather than passing raw protocol objects through the component tree.",
+        "Keep canonical fixtures in a shared contract package and replay them through route handlers, reducers, and accessible UI states.",
+        "Fail builds when generated types are stale, schemas change without review, or a consumer fixture produces a different error or receipt."
+      ],
+      "python": [
+        "Validate canonical schemas with Pydantic adapters and keep domain models separate when business semantics are stronger than transport shapes.",
+        "Parameterize the same fixture set across API, event, policy, and workflow tests, including timezone and decimal edge cases.",
+        "Export an implementation compatibility report that records contract version, test commit, environment, and exact failed cases."
+      ],
+      "caseStudy": {
+        "situation": "The Next.js project calls a field approvalId while the Python service changes it to decision_id and begins accepting an empty evidence version.",
+        "walkthrough": [
+          "The canonical schema identifies the wire name and forbids a missing evidence revision for a consequential proposal.",
+          "Both stacks regenerate or update adapters, while their internal naming remains local.",
+          "A stale-approval fixture is run against each implementation and must return the same safe problem response.",
+          "The compatibility report records the contract change and prevents deployment until both consumers pass."
+        ],
+        "result": "The two projects evolve independently without drifting on the behavior users and services rely upon.",
+        "danger": "Sharing copied interface files without a canonical schema and behavior suite creates the appearance of type safety while semantics quietly diverge.",
+        "takeaway": "Share the contract, examples, and observable tests—not the accidental internals of either stack."
+      },
+      "lab": "Design a contract kit for task creation, progress event, evidence item, proposal, decision, receipt, and problem response. Add schemas, examples, twenty invalid fixtures, version rules, consumer matrix, and a conformance-run report format.",
+      "checkpoint": "If both stacks accept the same JSON, are they conformant?",
+      "answer": "Not necessarily. They must also agree on validation, authority, state transitions, errors, ordering, idempotency, and observable outcomes.",
+      "glossary": [
+        "Conformance - demonstrated agreement with a defined contract",
+        "Consumer test - test of what a caller depends on",
+        "Compatibility - ability of versions to interoperate safely"
+      ],
+      "related": [
+        227,
+        232,
+        238
+      ],
+      "sources": [
+        "JSON Schema 2020-12",
+        "OpenAPI 3.1.1 specification",
+        "AsyncAPI 3.0.0 specification",
+        "Pydantic models"
+      ]
+    },
+    {
+      "id": 230,
+      "slug": "nextjs-react-responsibility-map",
+      "moduleId": "module-55",
+      "title": "Next.js and React responsibility map",
+      "stability": "Current Next.js App Router guidance; exact APIs and Vercel behavior must be rechecked at project start",
+      "diagram": "diagrams/230-nextjs-react-responsibility-map.png",
+      "diagramPrompt": "Show NEXTJS APP with zones SERVER COMPONENTS, ROUTE HANDLERS, SERVER ACTIONS, CLIENT ISLANDS, EVENT REDUCER, ACCESSIBLE UI, AUTH GATE, ARTIFACT VIEW. Connect to PYTHON API through TYPED CONTRACT. Coral SECRETS IN BROWSER and RAW PROTOCOL IN COMPONENTS are blocked.",
+      "alt": "The Next.js application separates server components, route handlers, server actions, narrow client islands, an event reducer, accessible UI, authorization gates, and artifact views while using a typed contract with the Python API.",
+      "outcome": "Assign the future Next.js and React project a clear web responsibility without turning the browser into the agent backend or source of truth.",
+      "explanation": "The web project owns the human experience: navigation, readable state, accessible interaction, diagrams, case context, proposals, decisions, artifacts, recovery, learning content, and privacy controls. It does not own model secrets or authoritative refund truth. Server Components are useful for secure data access and initial rendering. Client Components are reserved for live streams, reducers, optimistic input, focus management, interactive diagrams, and device behavior that truly requires the browser. Route Handlers and Server Actions provide trusted web boundaries, but every consequential command still calls the product service with identity, tenant, intent, revision, idempotency, and authorization evidence. A server location alone does not create permission. The event adapter converts AG-UI or service updates into product-owned TypeScript events. A reducer creates explicit projections for progress, evidence, proposals, decisions, artifacts, error, and recovery instead of parsing text. The browser receives the minimum data required for the screen. Provider credentials, raw tokens, private prompts, privileged policy details, and unrelated tenant records remain server-side. Accessibility shapes the architecture: semantic routes and headings, keyboard focus after streaming updates, text status, error summaries, reflow, reduced motion, complete diagram explanations, and tested approval dialogs are release requirements.",
+      "trace": [
+        "Map each user journey to routes, layouts, initial server data, and interactive client islands.",
+        "Define web-to-service commands, queries, streams, artifacts, errors, and identity propagation.",
+        "Adapt external events into a small typed reducer and accessible component catalog.",
+        "Protect secrets and tenant data at server boundaries, then recheck authority in the product service.",
+        "Test keyboard, screen reader, stale state, reconnect, unauthorized, slow, partial, and recovery fixtures."
+      ],
+      "analogy": "A theatre's front of house guides the audience, checks tickets, shows status, and handles accessibility. It does not move scenery by reaching directly into backstage machinery; it coordinates through defined cues and responsible staff.",
+      "nextjs": [
+        "Use route groups for public learning, authenticated workspace, tasks, approvals, artifacts, privacy, settings, and administrator review with one shared design system.",
+        "Keep data fetching and mutations server-first, then introduce narrow client components for live event reduction, local drafts, zoom, keyboard labs, and offline progress.",
+        "Create story fixtures for every product state before integrating the Python service, so UI and accessibility behavior are reviewable early."
+      ],
+      "python": [
+        "Publish the contract and mock service the web team needs; do not make the Next.js project import Python implementation details.",
+        "Return typed problem responses, durable handles, artifacts, proposal versions, and receipts that the web app can explain consistently.",
+        "Provide deterministic event recordings for frontend replay and keep privileged policy and provider diagnostics out of user-facing payloads."
+      ],
+      "caseStudy": {
+        "situation": "A prototype React component calls a model provider directly, stores its key in public configuration, and treats the final text as a completed refund.",
+        "walkthrough": [
+          "Maya moves provider access and coordination behind the Python service and trusted server boundaries.",
+          "The React component consumes typed progress, evidence, proposal, and receipt state instead of raw provider text.",
+          "The final refund state appears only after the authoritative service returns the committed receipt.",
+          "A browser test proves that public bundles and network responses contain no provider key or unrelated customer data."
+        ],
+        "result": "The web project remains rich and interactive without becoming a secret-bearing business backend.",
+        "danger": "Putting orchestration, secrets, authority, and raw protocol handling into client components makes the system difficult to secure, test, and explain.",
+        "takeaway": "Let Next.js own the trustworthy experience; let typed services own privileged coordination and business truth."
+      },
+      "lab": "Create a route and component blueprint for the Acme web project. Mark every Server Component, Route Handler, Server Action, client island, stream, reducer state, accessibility behavior, cache choice, secret boundary, error, and Python dependency.",
+      "checkpoint": "Does a Server Action automatically make a refund command authorized?",
+      "answer": "No. It is a trusted server-side entrypoint, but identity, tenant, scope, policy, proposal revision, approval, and idempotency still require enforcement.",
+      "glossary": [
+        "Server Component - component rendered on the server without browser JavaScript by default",
+        "Client island - small interactive browser-owned region",
+        "Projection - UI state derived from typed records and events"
+      ],
+      "related": [
+        229,
+        232,
+        233
+      ],
+      "sources": [
+        "Next.js App Router",
+        "Next.js testing",
+        "Vercel environment variables",
+        "WCAG 2.2"
+      ]
+    },
+    {
+      "id": 231,
+      "slug": "python-fastapi-responsibility-map",
+      "moduleId": "module-55",
+      "title": "Python and FastAPI responsibility map",
+      "stability": "Current FastAPI and Pydantic guidance; durable-work and hosting products remain implementation decisions",
+      "diagram": "diagrams/231-python-fastapi-responsibility-map.png",
+      "diagramPrompt": "Show PYTHON SERVICE with API ROUTERS, DOMAIN CORE, POLICY, ORCHESTRATOR, MCP ADAPTER, A2A ADAPTER, AG-UI ADAPTER, REPOSITORIES, WORKERS, AUDIT. Pydantic CONTRACT surrounds boundaries. Coral FAT ROUTE and MODEL DIRECT TO DB are blocked.",
+      "alt": "A Python service separates API routers, domain core, policy, orchestration, MCP, A2A and AG-UI adapters, repositories, workers, and audit under Pydantic boundary contracts.",
+      "outcome": "Assign the future Python and FastAPI project clear domain, orchestration, policy, persistence, and protocol responsibilities.",
+      "explanation": "FastAPI is the service entry layer, not the entire architecture. Routers accept validated transport input, resolve identity and dependencies, call application use cases, and translate results into stable responses. The domain core owns business language and invariants such as evidence freshness, proposal binding, human authority, refund limits, and receipt semantics. It should remain understandable without knowing MCP, A2A, AG-UI, a model provider, or a database driver. The orchestration layer coordinates retrieval, peer agents, tools, durable tasks, timeouts, compensation, and progress. External protocols enter through versioned adapters that produce product commands and events. Repositories isolate operational state, evidence, artifacts, memory, audit, and authoritative integrations. Transactions protect local invariants, while idempotency and sagas or compensations handle effects across services. Background work needs a durable boundary when it must survive process restarts or exceed an interactive request. A lightweight in-process background helper is not a substitute for a durable queue and worker when loss matters. Pydantic validates shapes at boundaries, but business authorization and invariants still require explicit code. Tests must prove that a well-formed malicious request cannot cross tenant or authority boundaries.",
+      "trace": [
+        "Organize routers around product capabilities rather than provider or protocol names.",
+        "Define application use cases and domain invariants independently from transport and persistence.",
+        "Place model, MCP, A2A, AG-UI, policy, identity, and storage behind explicit ports and adapters.",
+        "Choose synchronous, durable worker, and compensation paths from effect and recovery needs.",
+        "Test domain rules, adapter conformance, repositories, workflow replay, security, and API acceptance separately."
+      ],
+      "analogy": "A restaurant's waiter accepts an order, the kitchen applies recipes and safety rules, suppliers provide ingredients, and accounting records payment. The waiter should not become the recipe, supplier, and bank at the same time.",
+      "nextjs": [
+        "Consume a stable service contract and durable handles instead of depending on Python module layout or worker implementation.",
+        "Render typed domain states and problem details; keep provider stack traces and privileged audit information on the service side.",
+        "Use synthetic API and event fixtures so the web project can proceed while service adapters are still under construction."
+      ],
+      "python": [
+        "Create packages for api, application, domain, ports, adapters, workers, persistence, policy, telemetry, and tests with a documented dependency direction.",
+        "Use dependency injection at composition roots, not hidden global clients, so provider, clock, identity, and repository behavior can be replaced in tests.",
+        "Make every effectful use case return an explicit domain result or receipt and record idempotency before retrying external work."
+      ],
+      "caseStudy": {
+        "situation": "Acme's first FastAPI route validates input, calls the model, queries the database, invokes a refund tool, and formats AG-UI events in one function.",
+        "walkthrough": [
+          "Maya separates the refund-review use case from transport and defines its domain inputs, decisions, and results.",
+          "Provider, retrieval, protocol, and repository calls move behind ports with synthetic test doubles.",
+          "The route becomes a narrow adapter, while durable work and compensation move to owned worker boundaries.",
+          "Domain tests now prove stale evidence and cross-tenant proposals fail without starting a model or database."
+        ],
+        "result": "The Python project becomes easier to test, operate, replace, and explain because every layer has one job.",
+        "danger": "A large asynchronous route can look concise while hiding business authority, unbounded retries, leaked provider errors, and untestable side effects.",
+        "takeaway": "Keep FastAPI at the edge, business rules in the core, and protocols behind adapters."
+      },
+      "lab": "Design the Python package tree and dependency rules for Acme. Include routers, use cases, domain models, ports, adapters, repositories, workers, policy, telemetry, migration, configuration, and unit, contract, integration, and workflow test locations.",
+      "checkpoint": "Does Pydantic validation prove that a request is authorized?",
+      "answer": "No. It proves the data shape. Authorization must still evaluate actor, tenant, resource, action, purpose, policy, and current state.",
+      "glossary": [
+        "Domain core - business concepts and rules independent of frameworks",
+        "Port - interface the core uses to reach an outside capability",
+        "Composition root - place where concrete dependencies are assembled"
+      ],
+      "related": [
+        229,
+        232,
+        234
+      ],
+      "sources": [
+        "FastAPI bigger applications",
+        "FastAPI testing",
+        "FastAPI deployment concepts",
+        "Pydantic models"
+      ]
+    },
+    {
+      "id": 232,
+      "slug": "cross-stack-adapter-test-loop",
+      "moduleId": "module-55",
+      "title": "Cross-stack integration, adapters, and end-to-end tests",
+      "stability": "Integration architecture pattern; exact networking and preview-environment features depend on selected platforms",
+      "diagram": "diagrams/232-cross-stack-adapter-test-loop.png",
+      "diagramPrompt": "Show USER journey crossing NEXTJS, API CONTRACT, FASTAPI, WORKFLOW, MCP AND A2A, BUSINESS SYSTEM, RECEIPT. Overlay TRACE ID and TEST PROBES. Add MOCK, CONTRACT, INTEGRATION, E2E, CHAOS layers. Teal SAME OUTCOME; coral ENVIRONMENT DRIFT is caught.",
+      "alt": "One user journey crosses Next.js, a typed API, FastAPI, workflow adapters, protocols, and a business system under a shared trace, with mock, contract, integration, end-to-end, and failure tests.",
+      "outcome": "Join the two future projects through owned adapters and a layered test strategy that proves the whole user story, not only isolated endpoints.",
+      "explanation": "Integration begins with one user journey and one trace identity. The browser request, web server action, Python command, agent task, MCP tool, business effect, event stream, and final receipt must remain correlatable without sharing secrets. Adapters protect each side from external volatility. The web adapter converts service data into product state; the Python adapters convert protocol and provider data into domain inputs and results. Mock tests give speed, contract tests give boundary agreement, integration tests give real dependency behavior, end-to-end tests give user-story evidence, and fault tests give recovery evidence. Each layer answers a different question. Test environments need known versions, seeded synthetic data, isolated tenants, deterministic clocks where practical, provider substitutes, and controlled failures. A preview URL connected to uncontrolled production-like data is not a safe test plan. End-to-end assertions include accessible text, focus, progress, proposal scope, stale-state blocking, authoritative receipt, persisted artifact, audit correlation, and recovery—not just a 200 response. A failing test should point to the contract and owner. The team keeps recordings and manifests so a portfolio demonstration can explain what was proven and what remains intentionally simulated.",
+      "trace": [
+        "Choose a vertical user journey and assign one correlation identity across every service and event.",
+        "Define adapter inputs, outputs, timeouts, retries, versions, and safe error mappings.",
+        "Build deterministic fakes, then contract and integration fixtures for each boundary.",
+        "Run the full browser-to-receipt flow with synthetic tenant data and accessibility assertions.",
+        "Inject dependency loss, duplication, delay, stale evidence, and uncertain effects; verify recovery and evidence manifests."
+      ],
+      "analogy": "A relay team practices individual running, baton exchange, the full race, and bad-weather recovery. Fast individual runners do not prove the baton will reach the finish line.",
+      "nextjs": [
+        "Use browser tests to exercise semantic controls, keyboard flow, network boundaries, streaming state, reconnect, and the final receipt.",
+        "Record trace and task identifiers in authorized test diagnostics without exposing tokens or private payloads to normal users.",
+        "Keep a deterministic service simulator for component development, but run required suites against the real Python contract before release."
+      ],
+      "python": [
+        "Provide isolated test tenants, seeded records, fake provider adapters, failure injection, and cleanup APIs restricted to test environments.",
+        "Propagate correlation through HTTP, queues, A2A, MCP, audit, and business receipts using explicit fields and OpenTelemetry context.",
+        "Run black-box conformance and end-to-end cases against packaged service builds, not only imported application functions."
+      ],
+      "caseStudy": {
+        "situation": "Both projects pass their unit tests, but the browser waits for event names the Python service never emits after an approval.",
+        "walkthrough": [
+          "The shared fixture defines the expected proposal, decision, committed, receipt, and finished sequence.",
+          "Contract tests reveal the event-name and ordering drift before deployment.",
+          "An end-to-end test then approves a synthetic refund and asserts the accessible receipt and business record.",
+          "A duplicate-submit test proves the same idempotency key returns the first receipt without a second effect."
+        ],
+        "result": "The portfolio demonstrates one coherent product rather than two applications that happen to start separately.",
+        "danger": "Unit-test confidence can hide broken serialization, identity propagation, event ordering, accessibility, timeout, and idempotency across real boundaries.",
+        "takeaway": "Prove the baton exchanges and the final user outcome, not only the runners."
+      },
+      "lab": "Write a layered test plan for three vertical slices. Include mocks, consumer contracts, real integrations, browser flows, trace assertions, accessibility checks, data isolation, failure injection, uncertain-effect recovery, cleanup, and evidence manifests.",
+      "checkpoint": "Can a successful API response alone prove the full stack worked?",
+      "answer": "No. The user-visible state, authoritative effect or safe refusal, artifact, receipt, audit correlation, and recovery behavior must also be verified.",
+      "glossary": [
+        "Vertical slice - thin end-to-end user capability",
+        "Correlation ID - identifier linking work across boundaries",
+        "Test double - controlled replacement for a dependency"
+      ],
+      "related": [
+        229,
+        230,
+        231
+      ],
+      "sources": [
+        "Next.js testing",
+        "FastAPI testing",
+        "OpenTelemetry traces",
+        "OpenAPI 3.1.1 specification"
+      ]
+    },
+    {
+      "id": 233,
+      "slug": "identity-policy-audit-services",
+      "moduleId": "module-56",
+      "title": "Authentication, secrets, tenants, policy, and audit services",
+      "stability": "Security architecture using current MCP authorization and IETF OAuth guidance; organizational and legal requirements need specialist review",
+      "diagram": "diagrams/233-identity-policy-audit-services.png",
+      "diagramPrompt": "Show USER and SERVICE identities entering AUTHENTICATION, then AUTHORIZATION POLICY with TENANT, RESOURCE, ACTION, PURPOSE, SCOPE. SECRETS VAULT feeds server only. AUDIT RECEIPT records decision. Teal LEAST PRIVILEGE; coral TOKEN PASSTHROUGH, CROSS TENANT, SECRET IN CLIENT blocked.",
+      "alt": "User and service identities pass authentication and authorization policy using tenant, resource, action, purpose, and scope; secrets remain server-side and audit records the decision while token passthrough and cross-tenant access are blocked.",
+      "outcome": "Design identity and policy as explicit services that constrain every protocol, tenant, tool, and authoritative action.",
+      "explanation": "Authentication establishes who or what is presenting a credential. Authorization decides whether that actor may perform one action on one resource in the current tenant and context. A valid token is not blanket permission. Human identity, web session, backend service identity, remote agent identity, and provider credentials have different lifecycles and trust. The architecture should never pass a user's broad token through every agent and tool without audience and scope controls. MCP authorization is optional and applies to HTTP transports when used. Its discovery, resource indicators, scope handling, and token audience rules complement—not replace—Acme's business authorization. Secrets belong in managed server-side configuration with environment separation, rotation, access logs, and least privilege. Public browser configuration, logs, prompts, build output, screenshots, and test fixtures are not secret stores. Tenant isolation must be enforced in queries, caches, indexes, artifacts, queues, events, audit, and administrator tools. A tenant field supplied by the browser cannot be trusted without binding it to the authenticated actor. Policy decisions produce explainable receipts: actor, resource, action, tenant, purpose, policy version, inputs, result, obligations, expiry, and correlation. Sensitive details are minimized while security teams retain enough evidence to investigate.",
+      "trace": [
+        "Inventory human, service, agent, provider, and administrative identities and their credential flows.",
+        "Bind every token to intended issuer, audience, resource, scope, tenant, and expiry.",
+        "Evaluate authorization beside the resource and recheck it before consequential effects.",
+        "Keep secrets server-side with environment separation, rotation, scanning, and audited access.",
+        "Test cross-tenant, confused-deputy, replay, stale-session, excessive-scope, and unavailable-policy cases."
+      ],
+      "analogy": "A passport proves identity, a ticket grants one journey, and a boarding pass names one flight and seat. Showing a passport does not authorize entering every aircraft or cargo area.",
+      "nextjs": [
+        "Resolve sessions on trusted server boundaries, derive tenant and permissions from the server, and send the browser only safe capability indicators.",
+        "Keep environment variables private by default and test built assets and network responses for accidental secret exposure.",
+        "Render denied and step-up states accessibly, preserving non-sensitive drafts while avoiding disclosure of protected resource details."
+      ],
+      "python": [
+        "Centralize authentication adapters and policy inputs, but enforce resource-level authorization inside each application use case.",
+        "Use audience-bound service credentials and avoid forwarding tokens to services for which they were not issued.",
+        "Record minimized policy and audit receipts with tamper-evident storage controls and restricted query paths."
+      ],
+      "caseStudy": {
+        "situation": "A support manager copies an Acme workspace URL from one tenant into another signed-in browser session.",
+        "walkthrough": [
+          "The web server ignores the tenant in the URL as authority and resolves the actor's current memberships.",
+          "The Python service rechecks access to the specific case and evidence resources.",
+          "Caches and artifact URLs include server-enforced tenant partitioning and do not reveal whether a forbidden case exists.",
+          "The denial receipt records the policy version and correlation without copying customer content."
+        ],
+        "result": "A valid user session cannot become cross-tenant access through a changed URL or reused artifact link.",
+        "danger": "Broad token passthrough and browser-supplied tenant identifiers create confused-deputy and cross-tenant failure paths across every agent tool.",
+        "takeaway": "Authenticate the actor, authorize the exact resource and action, bind the tenant, and keep secrets out of the browser."
+      },
+      "lab": "Create an identity and policy matrix for users, admins, services, agents, MCP clients, A2A peers, and providers. Add issuer, audience, resource, scope, tenant, purpose, expiry, storage, rotation, step-up, audit, denial, and twelve attack tests.",
+      "checkpoint": "If an access token is valid, may a service send it to any downstream tool?",
+      "answer": "No. The token must be intended for that resource and audience with appropriate scope; forwarding it elsewhere can expose credentials and create a confused deputy.",
+      "glossary": [
+        "Audience - service a token is intended for",
+        "Confused deputy - trusted component tricked into misusing its authority",
+        "Least privilege - only the minimum access required"
+      ],
+      "related": [
+        225,
+        234,
+        239
+      ],
+      "sources": [
+        "MCP authorization",
+        "OAuth Security BCP RFC 9700",
+        "OAuth DPoP RFC 9449",
+        "OAuth Protected Resource Metadata RFC 9728",
+        "Vercel environment variables"
+      ]
+    },
+    {
+      "id": 234,
+      "slug": "polyglot-storage-decision-map",
+      "moduleId": "module-56",
+      "title": "Database, vector index, queue, cache, and artifact storage",
+      "stability": "Storage-selection pattern; exact products, capacity, consistency, and cost require workload testing",
+      "diagram": "diagrams/234-polyglot-storage-decision-map.png",
+      "diagramPrompt": "Show DATA NEED entering five stores DATABASE, VECTOR INDEX, QUEUE, CACHE, ARTIFACT STORE. Label TRUTH, SIMILARITY, DURABILITY, SPEED, LARGE FILES. Add TENANT, RETENTION, BACKUP, DELETE, ENCRYPT. Coral USE CACHE AS TRUTH and VECTOR AS AUTHORITY blocked.",
+      "alt": "Data needs are matched to a database for truth, vector index for similarity, queue for durable work, cache for speed, and artifact store for large files under tenant, retention, backup, deletion, and encryption controls.",
+      "outcome": "Select storage by the job data must perform and define consistency, tenancy, retention, backup, and recovery for each store.",
+      "explanation": "A relational database is a strong default for transactional records, relationships, constraints, and authoritative workflow state. A vector index helps similarity retrieval. A queue carries durable work. A cache reduces repeated latency. An artifact store holds larger immutable or versioned files. One object may appear in several stores, but one system should own authority. The vector row references the source document; the cache can be discarded; the artifact manifest points to the durable blob; the queue message points to workflow state. Consistency requirements differ. A committed refund needs transactional truth, while a search index may update asynchronously if the interface shows freshness and blocks stale evidence from consequential proposals. Every store needs tenant partitioning, access rules, encryption, retention, deletion, backup, restore, capacity, and cost ownership. Indexes, caches, dead-letter queues, replicas, and backups are part of the data map, not invisible implementation details. Queues require idempotent consumers, retry policy, visibility or lease rules, poison-message handling, dead-letter review, ordering decisions, and backpressure. A queue does not make a non-idempotent tool safe by itself. Storage decisions should be tested through workload and failure scenarios: hot keys, large artifacts, missing index updates, duplicate messages, restore from backup, cross-tenant filters, deletion propagation, and regional unavailability.",
+      "trace": [
+        "List data objects and the query, transaction, search, delivery, or file behavior each needs.",
+        "Assign one authoritative store and treat other copies as derived projections.",
+        "Define consistency, tenant, retention, encryption, deletion, backup, restore, and capacity per store.",
+        "Design queue idempotency, retry, dead-letter, ordering, and backpressure with user-visible states.",
+        "Run restore, stale-index, cache-loss, duplicate-message, and cross-tenant tests before release."
+      ],
+      "analogy": "A workshop uses a ledger for official inventory, shelves for parts, a work queue for jobs, a nearby tray for frequently used tools, and a warehouse for large finished items. The tray is convenient but not the inventory ledger.",
+      "nextjs": [
+        "Treat caches as performance layers with explicit freshness; never use client state or cached page output as the authoritative approval or receipt.",
+        "Use authorized, expiring artifact links or service-mediated downloads and provide file name, size, type, version, and scan status.",
+        "Show queued, delayed, retrying, dead-lettered, restored, and unavailable states without promising completion before the service receipt."
+      ],
+      "python": [
+        "Use database constraints and transactions for local invariants, with an outbox or equivalent pattern when events must follow committed state.",
+        "Keep vector embeddings and metadata reproducible from versioned source references and verify tenant filters at the query boundary.",
+        "Build idempotent workers that record attempts and outcomes, bound concurrency, quarantine poison jobs, and expose safe operational controls."
+      ],
+      "caseStudy": {
+        "situation": "A refund research job is delivered twice, the vector index contains an older policy, and the cached approval card still shows the previous amount.",
+        "walkthrough": [
+          "The worker's idempotency record prevents duplicate research artifacts and links both deliveries to one workflow.",
+          "Evidence freshness rejects the superseded policy and schedules index repair without hiding the source mismatch.",
+          "The authoritative proposal revision invalidates the cached card and requests a fresh view.",
+          "Maya retains her draft note while the product restores synchronized state."
+        ],
+        "result": "Derived storage can be stale or duplicated without producing a duplicate refund or a false approval.",
+        "danger": "Using the fastest or most fashionable store as universal truth hides consistency, deletion, tenancy, restore, and idempotency failures.",
+        "takeaway": "Give each store one job, one authority relationship, and one tested failure story."
+      },
+      "lab": "Map twenty Acme data objects to database, vector index, queue, cache, and artifact storage. Add authority, consistency, keys, tenant, encryption, retention, deletion, backup, restore, capacity, cost, and ten failure tests.",
+      "checkpoint": "Can a cache hit prove that a refund proposal is still current?",
+      "answer": "No. Sensitive state must be checked against the authoritative revision and policy; cache data is a performance projection with explicit freshness limits.",
+      "glossary": [
+        "Derived projection - copy rebuilt from an authoritative source",
+        "Backpressure - limiting incoming work when capacity is full",
+        "Dead-letter queue - holding area for repeatedly failed messages"
+      ],
+      "related": [
+        226,
+        228,
+        236
+      ],
+      "sources": [
+        "PostgreSQL documentation",
+        "pgvector documentation",
+        "Redis documentation"
+      ]
+    },
+    {
+      "id": 235,
+      "slug": "telemetry-evaluation-cost-control-plane",
+      "moduleId": "module-56",
+      "title": "Telemetry, evaluation, analytics, and cost control",
+      "stability": "OpenTelemetry semantic conventions 1.44.0 checked; GenAI conventions and provider cost fields require version-aware adapters",
+      "diagram": "diagrams/235-telemetry-evaluation-cost-control-plane.png",
+      "diagramPrompt": "Show one USER TASK branching to TRACES, METRICS, LOGS, EVALS, ANALYTICS, COST. Join through TRACE ID, TASK ID, VERSION MANIFEST. Add PRIVACY FILTER and SAMPLING. Teal DECISION EVIDENCE. Coral RAW PROMPTS EVERYWHERE, VANITY METRIC, UNBOUNDED COST blocked.",
+      "alt": "A user task produces traces, metrics, logs, evaluations, analytics, and cost evidence linked by identifiers and versions after privacy filtering and sampling, while raw prompt collection and vanity metrics are blocked.",
+      "outcome": "Design an evidence control plane that explains system behavior, product value, safety, and cost without turning telemetry into a second uncontrolled data lake.",
+      "explanation": "Traces follow one journey across components. Metrics summarize repeated behavior. Logs record discrete operational facts. Evaluations judge model or workflow outputs against criteria. Analytics measures product use. Cost records resource consumption. They overlap but are not interchangeable. OpenTelemetry provides shared concepts and semantic conventions for telemetry. Because GenAI conventions evolve, Acme records schema versions and translates provider attributes into a small product-owned vocabulary. Correlation joins task, run, trace, evidence, proposal, decision, artifact, receipt, evaluation, release, and incident. It must use opaque identifiers and controlled access rather than copying raw conversations into every system. Privacy design begins before instrumentation: allowed fields, redaction, hashing limits, sampling, retention, access, export, deletion, and no-secret rules. Debug convenience does not justify collecting every prompt, document, or tool argument. Cost control needs budgets, per-capability attribution, cached or reused work, token and tool limits, model routing policy, queue capacity, anomaly alerts, and graceful budget exhaustion. A cost chart without user outcome can reward low-quality cheap behavior. Operational and product evidence meet at release decisions. A team compares quality, safety, latency, accessibility, recovery, and cost by version and slice, while keeping illustrative course scenarios separate from measured project data.",
+      "trace": [
+        "Define the decisions telemetry must support before choosing fields or dashboards.",
+        "Create a versioned event and attribute vocabulary with privacy classification and ownership.",
+        "Propagate correlation across web, API, queues, protocols, tools, artifacts, and receipts.",
+        "Join controlled evaluations, product outcomes, accessibility evidence, incidents, and costs by version.",
+        "Test redaction, deletion, missing spans, sampling bias, budget limits, and dashboard denominators."
+      ],
+      "analogy": "A car dashboard, mechanic's diagnostic system, driving test, trip log, and fuel receipt answer different questions. Combining them helps, but recording every private conversation inside the car would not improve maintenance.",
+      "nextjs": [
+        "Emit a small typed product-event vocabulary at trusted server boundaries and keep optional analytics behind the recorded privacy choice.",
+        "Attach accessible user feedback and interface versions to opaque task identifiers without sending raw customer cases to analytics by default.",
+        "Display operational support receipts and cost or delay states only when they help the user; keep privileged traces in authorized tools."
+      ],
+      "python": [
+        "Instrument use cases and adapters with OpenTelemetry context, bounded attributes, redaction processors, and explicit semantic-convention versions.",
+        "Record evaluation and cost manifests keyed by model, prompt, tool, evidence, adapter, dataset, code, and environment versions.",
+        "Apply request, task, tenant, model, and provider budgets with predictable refusal, downgrade, queue, or human-handoff behavior."
+      ],
+      "caseStudy": {
+        "situation": "Acme sees model spending increase, but dashboards cannot tell which user outcome, release, provider retry, or failed evaluation caused it.",
+        "walkthrough": [
+          "The team defines task and capability cost attribution and propagates correlation through provider and retry paths.",
+          "A version comparison reveals one adapter is repeating retrieval after reconnect.",
+          "A replay fix reduces duplicate work while evaluation proves answer quality and recovery remain stable.",
+          "The evidence manifest records the measured result only after the corrected project run, not as a course assumption."
+        ],
+        "result": "Cost becomes an explainable system signal connected to value and quality rather than an isolated invoice.",
+        "danger": "Raw telemetry can leak sensitive content, and a cost-only optimization can remove safeguards or make outcomes worse while the bill improves.",
+        "takeaway": "Observe the user outcome, system path, quality, safety, privacy, and cost together."
+      },
+      "lab": "Design a telemetry dictionary and evidence map for the Acme pilot. Include traces, metrics, logs, evals, analytics, cost, identifiers, versions, privacy fields, redaction, sampling, retention, access, budgets, alerts, dashboards, and deletion tests.",
+      "checkpoint": "Should every model prompt and tool argument be stored for debugging?",
+      "answer": "No. Collect only what a defined purpose requires, minimize or redact sensitive content, restrict access and retention, and prefer references or synthetic reproduction when possible.",
+      "glossary": [
+        "Semantic convention - shared meaning and name for telemetry attributes",
+        "Sampling - recording only a selected portion of events",
+        "Cost attribution - linking resource use to an owned capability or outcome"
+      ],
+      "related": [
+        224,
+        226,
+        240
+      ],
+      "sources": [
+        "OpenTelemetry semantic conventions 1.44.0",
+        "OpenTelemetry GenAI conventions",
+        "OpenTelemetry traces",
+        "NIST AI Risk Management Framework"
+      ]
+    },
+    {
+      "id": 236,
+      "slug": "safe-delivery-recovery-pipeline",
+      "moduleId": "module-56",
+      "title": "CI/CD, environments, migrations, flags, rollback, and recovery",
+      "stability": "Delivery pattern using current Vercel and GitHub guidance; platform capabilities and pricing must be checked at implementation time",
+      "diagram": "diagrams/236-safe-delivery-recovery-pipeline.png",
+      "diagramPrompt": "Show CODE to CI gates LINT, TEST, CONTRACT, SECURITY, A11Y, EVAL, BUILD, PROVENANCE. Promote DEV to PREVIEW to STAGING to PRODUCTION. Add MIGRATION, FEATURE FLAG, CANARY, ROLLBACK, RESTORE. Teal VERIFIED RELEASE; coral DIRECT PROD and IRREVERSIBLE MIGRATION blocked.",
+      "alt": "Code passes lint, test, contract, security, accessibility, evaluation, build, and provenance gates before promotion across environments with migrations, flags, canaries, rollback, and restore controls.",
+      "outcome": "Design a release path that can prove what changed, limit exposure, reverse safely, and recover data as well as code.",
+      "explanation": "Continuous integration creates repeatable evidence from source changes. Continuous delivery promotes a known artifact through controlled environments. A deployment is not a release until users are intentionally exposed and the required gates remain healthy. Development, preview, staging, and production need separate identities, secrets, data, providers, queues, domains, and policy. A preview should use synthetic or properly isolated data and should never inherit production authority by convenience. The pipeline includes formatting, static checks, unit, contract, integration, workflow, security, accessibility, evaluation, build, dependency, provenance, and artifact-signing evidence appropriate to the risk. Database and index migrations require forward and backward compatibility, ownership, backup, tested rollback or roll-forward, and a plan for long-running transformations. Reverting code cannot reverse an unsafe destructive data migration. Feature flags, canaries, and rolling exposure reduce blast radius only when there is a kill switch, monitoring, deterministic fallback, owner, expiry, and cleanup. Old code paths and stale flags create lasting complexity and risk. Recovery proves more than redeployment. The team rehearses restore, queue replay, reconciliation, artifact verification, secret rotation, provider failover, and user communication, then records real recovery evidence.",
+      "trace": [
+        "Build one immutable versioned artifact with dependency and provenance evidence.",
+        "Run code, contract, security, accessibility, evaluation, and data-migration gates.",
+        "Promote through isolated environments with synthetic fixtures and version manifests.",
+        "Release gradually using flags or canaries with stop, rollback, and fallback rules.",
+        "Rehearse code rollback, data restore, queue reconciliation, and user recovery before production exposure."
+      ],
+      "analogy": "A stage production rehearses in a workshop, then on the real stage, then before a small audience. It keeps the previous set, emergency lighting, cues, and responsible crew ready; opening night is not the first complete test.",
+      "nextjs": [
+        "Use Vercel preview deployments with isolated configuration and synthetic data, then promote only the exact reviewed build.",
+        "Keep feature decisions server-resolved for sensitive behavior and render a deterministic accessible fallback when a flag or dependency is unavailable.",
+        "Verify routes, bundles, environment variables, headers, images, streaming, accessibility, and API compatibility in every promotion stage."
+      ],
+      "python": [
+        "Package the service immutably, run migrations as controlled jobs, and separate request, worker, scheduler, and maintenance processes.",
+        "Use expand-and-contract schema changes so old and new versions can coexist during rollout, with backups and reconciliation evidence.",
+        "Expose release, contract, model, prompt, policy, migration, and worker versions in authorized diagnostics and telemetry manifests."
+      ],
+      "caseStudy": {
+        "situation": "Acme deploys a new proposal schema; the web app rolls back, but the database migration has already removed the field the old version requires.",
+        "walkthrough": [
+          "The revised plan first expands the schema and supports both contract versions.",
+          "Web and service releases are canaried with compatibility tests while data is backfilled safely.",
+          "Only after the old version is retired and recovery is verified does a separate cleanup remove the legacy field.",
+          "The release manifest records code, contract, migration, flag, evidence, owner, and rollback state."
+        ],
+        "result": "Acme can reverse application exposure without discovering that the data path made rollback impossible.",
+        "danger": "A green build can still ship incompatible contracts, leaked secrets, inaccessible UI, unsafe migrations, untested restores, and unrecoverable external effects.",
+        "takeaway": "Release a known artifact through evidence gates, and rehearse recovery for code, data, work, and users."
+      },
+      "lab": "Design the dual-stack delivery pipeline. Include environment isolation, artifact provenance, all test gates, preview data, migrations, flags, canary, kill switch, rollback, restore, queue replay, secret rotation, incident communication, owners, and release manifest.",
+      "checkpoint": "Does rolling back application code automatically restore the previous data model?",
+      "answer": "No. Data changes need their own compatibility, backup, rollback or roll-forward, and reconciliation strategy.",
+      "glossary": [
+        "Promotion - moving the same reviewed artifact to a later environment",
+        "Canary - limited exposure used to detect problems",
+        "Provenance - evidence describing how an artifact was produced"
+      ],
+      "related": [
+        228,
+        238,
+        240
+      ],
+      "sources": [
+        "GitHub Actions documentation",
+        "Vercel deployments",
+        "Vercel rolling releases",
+        "SLSA specification",
+        "OpenSSF Scorecard"
+      ]
+    },
+    {
+      "id": 237,
+      "slug": "vertical-slice-delivery-roadmap",
+      "moduleId": "module-57",
+      "title": "Milestones, vertical slices, backlog, dependencies, and owners",
+      "stability": "Delivery-planning pattern; estimates and sample milestones remain illustrative until the implementation teams validate them",
+      "diagram": "diagrams/237-vertical-slice-delivery-roadmap.png",
+      "diagramPrompt": "Show OUTCOME decomposed into six VERTICAL SLICES: STATIC CASE, TYPED SERVICE, EVIDENCE, PROPOSAL, COMMIT RECEIPT, RECOVERY. Each slice crosses WEB, API, DATA, TEST, OPS. Add BACKLOG cards with OWNER, DEPENDENCY, ACCEPTANCE, DEMO. Coral LAYER FIRST and BIG BANG blocked.",
+      "alt": "A user outcome becomes six demonstrable vertical slices that each cross web, API, data, tests, and operations, with owned backlog items, dependencies, acceptance criteria, and demos.",
+      "outcome": "Turn the architecture into small end-to-end milestones that create demonstrable evidence and reduce the most important uncertainty early.",
+      "explanation": "A milestone is a meaningful capability or risk decision, not a calendar label. A vertical slice crosses the minimum interface, service, data, policy, test, and operational path needed to demonstrate one user outcome. Layer-first plans build all databases, then all APIs, then all screens. They delay integration evidence and make it easy to discover at the end that contracts, authority, and user state do not fit. Thin slices reveal those problems early. The first slice can be a static but accessible product story. The next can introduce a typed service and synthetic records. Later slices add evidence, agent coordination, proposals, authoritative effects, recovery, and operations in controlled steps. Backlog items name outcome, scope, acceptance evidence, dependencies, owner, reviewer, risk, estimate confidence, and definition of done. Protocol setup without a user or conformance outcome is an implementation task inside a slice, not the roadmap's purpose. Dependencies include contracts, identity, tenant data, fixtures, provider access, environments, policy decisions, content, accessibility review, and operational ownership. The plan identifies which can proceed in parallel and which block a gate. Every milestone ends with a demonstration and evidence review. Estimates and example dates are plainly illustrative until the actual builders size the work and discover constraints.",
+      "trace": [
+        "Write the final user journey and the riskiest unknowns the project must retire.",
+        "Define thin slices that cross the system and end in observable user value or a risk decision.",
+        "Break each slice into owned backlog items with dependencies and acceptance evidence.",
+        "Sequence contract, identity, data, provider, accessibility, security, and operations prerequisites.",
+        "Review each demonstration, update evidence, and replan from what the team actually learned."
+      ],
+      "analogy": "Building a bridge one entire material at a time would leave no usable crossing for months. A temporary narrow crossing proves the route and foundations before the full roadway expands.",
+      "nextjs": [
+        "Start with accessible static fixtures for all user states, then connect one real query or command per slice without redesigning the component vocabulary.",
+        "Make each backlog item identify route, state, browser behavior, contract, test, and visible acceptance evidence.",
+        "Use preview deployments for milestone demos with synthetic data and a manifest that states what is real, simulated, and intentionally absent."
+      ],
+      "python": [
+        "Begin with domain and contract fixtures, then add one real adapter or persistence boundary per slice behind the same application interface.",
+        "Separate discovery spikes from deliverable items and capture their decision, evidence, and consequences in architecture records.",
+        "Keep workflow, policy, and failure fixtures runnable in CI from the first slice so later integrations cannot erase early safety rules."
+      ],
+      "caseStudy": {
+        "situation": "Acme's initial backlog has separate epics for frontend, backend, database, agents, security, and testing, with integration scheduled last.",
+        "walkthrough": [
+          "Maya reorganizes work around a visible policy-review journey using synthetic data.",
+          "The first slice renders all states; the second returns typed evidence; the third adds a bounded proposal and human decision.",
+          "A later slice commits a simulated refund through an idempotent service and produces a receipt.",
+          "Recovery, security, evaluation, and operations are added as acceptance gates in every slice rather than one final hardening phase."
+        ],
+        "result": "Acme has usable demonstrations and integration evidence throughout the project instead of one risky big-bang reveal.",
+        "danger": "A backlog grouped only by technology can report busy teams while no complete user outcome, authority boundary, or recovery path actually works.",
+        "takeaway": "Deliver thin complete stories, and use every milestone to retire uncertainty with evidence."
+      },
+      "lab": "Create a six-slice roadmap from static product story to production-readiness demonstration. For every slice add outcome, scope, exclusions, backlog, owners, dependencies, risks, acceptance tests, evidence, demo, rollback, and clearly illustrative estimate assumptions.",
+      "checkpoint": "Is a completed database schema automatically a useful milestone?",
+      "answer": "Not by itself. A milestone should demonstrate user value or retire a named risk through an observable slice and evidence.",
+      "glossary": [
+        "Vertical slice - thin capability crossing all required layers",
+        "Dependency - prerequisite that another item relies on",
+        "Estimate confidence - how certain the team is about a forecast"
+      ],
+      "related": [
+        224,
+        232,
+        238
+      ],
+      "sources": [
+        "NIST AI RMF Playbook",
+        "GitHub Actions documentation",
+        "Next.js testing",
+        "FastAPI testing"
+      ]
+    },
+    {
+      "id": 238,
+      "slug": "production-test-pyramid",
+      "moduleId": "module-57",
+      "title": "Contract, integration, workflow, security, and acceptance tests",
+      "stability": "Layered quality pattern; coverage thresholds alone do not establish production readiness",
+      "diagram": "diagrams/238-production-test-pyramid.png",
+      "diagramPrompt": "Show TEST PYRAMID layers UNIT, PROPERTY, CONTRACT, INTEGRATION, WORKFLOW, SECURITY, EVAL, ACCESSIBILITY, ACCEPTANCE. Feed shared FIXTURES and FAILURE INJECTION. Output EVIDENCE MANIFEST. Coral HAPPY PATH ONLY and MOCK EVERYTHING blocked.",
+      "alt": "A layered test system combines unit, property, contract, integration, workflow, security, evaluation, accessibility, and acceptance tests using shared fixtures and failure injection to produce an evidence manifest.",
+      "outcome": "Build a layered test system that proves domain rules, cross-stack contracts, real integrations, human journeys, adversarial behavior, and recovery.",
+      "explanation": "Unit tests prove small deterministic rules. Property tests explore ranges and invariants. Contract tests prove boundary agreement. Integration tests exercise real dependencies. Workflow tests replay time and failure. Acceptance tests prove the user outcome. Each layer has a distinct job. Agent systems also need controlled evaluations for variable outputs. Evaluations complement software tests; they do not replace exact checks for authorization, schema, tenant isolation, idempotency, state transitions, accessibility, or committed receipts. Shared fixtures make the two stacks comparable. They include valid cases, hostile content, ambiguous evidence, stale policy, missing scopes, duplicates, timeouts, partial success, uncertain effects, and recovery. Security tests target trust boundaries and unacceptable outcomes. They attempt cross-tenant access, prompt injection through retrieved data, tool-argument escalation, token misuse, unsafe URLs, data exfiltration, repeated effects, and audit tampering. Acceptance tests begin from Maya's perspective: visible plan, current evidence, bounded proposal, accessible decision, authoritative result, preserved work, understandable failure, and durable receipt. A passing API without that story is incomplete. The evidence manifest records code, contract, data, environment, model, prompt, policy, adapter, browser, run, result, and reviewer versions. Flaky or skipped tests remain visible debt rather than disappearing from a green summary.",
+      "trace": [
+        "Map every requirement and unacceptable outcome to one or more test layers.",
+        "Create reusable synthetic fixtures and deterministic clocks, identities, tenants, and provider doubles.",
+        "Run real boundary integrations and end-to-end browser journeys in isolated environments.",
+        "Inject malicious, duplicate, delayed, stale, partial, and uncertain behavior and verify recovery.",
+        "Publish a versioned evidence manifest including failures, flakes, skips, limitations, and owners."
+      ],
+      "analogy": "An aircraft is checked by testing parts, assembled systems, simulator scenarios, emergency procedures, and full flight acceptance. Counting screws inspected would not replace an engine-out rehearsal.",
+      "nextjs": [
+        "Combine component accessibility tests, reducer replay, server-boundary tests, browser journeys, and network failure fixtures.",
+        "Assert focus, names, roles, status messages, reflow, keyboard behavior, stale-control blocking, and complete receipt content.",
+        "Capture screenshots or traces only as supporting evidence; keep semantic assertions so layout changes do not create meaningless failures."
+      ],
+      "python": [
+        "Use pure domain tests, schema properties, adapter contracts, repository integrations, workflow replay, policy matrices, and packaged API acceptance tests.",
+        "Inject clocks, IDs, providers, and failure schedules to make expiry, retries, compensation, and uncertain-effect cases repeatable.",
+        "Test idempotency against concurrent delivery and process restart, not only sequential duplicate requests in memory."
+      ],
+      "caseStudy": {
+        "situation": "Acme reports high code coverage, yet a duplicate approval after a worker restart produces two provider calls and one inaccessible error dialog.",
+        "walkthrough": [
+          "The requirements map shows concurrency, restart, idempotency, and keyboard recovery were not represented by existing unit tests.",
+          "A workflow integration fixture kills the worker after the external effect and replays the message.",
+          "The idempotency receipt prevents a second effect, while the web acceptance test verifies focus moves to an understandable recovery summary.",
+          "Both scenarios become permanent release gates linked to the incident class."
+        ],
+        "result": "Quality evidence now covers the dangerous system interaction and the human recovery experience, not only lines of code.",
+        "danger": "Mocking every boundary and measuring only coverage can create a perfectly tested imaginary system.",
+        "takeaway": "Test rules, contracts, real boundaries, complete journeys, attacks, and recovery with the evidence each requires."
+      },
+      "lab": "Build a requirement-to-test matrix for the capstone with at least forty cases across unit, property, contract, integration, workflow, security, evaluation, accessibility, and acceptance layers. Include fixtures, environments, owners, failure injection, evidence fields, and skip policy.",
+      "checkpoint": "Can model evaluations replace deterministic authorization tests?",
+      "answer": "No. Variable-output evaluations cannot prove exact access, tenant, idempotency, schema, or state invariants; those require deterministic tests.",
+      "glossary": [
+        "Property test - test of rules across many generated inputs",
+        "Acceptance test - proof of a complete user-facing requirement",
+        "Flaky test - test whose result changes without a relevant product change"
+      ],
+      "related": [
+        229,
+        232,
+        239
+      ],
+      "sources": [
+        "Next.js testing",
+        "FastAPI testing",
+        "OWASP Agentic Applications 2026",
+        "WCAG 2.2"
+      ]
+    },
+    {
+      "id": 239,
+      "slug": "readiness-gate-system",
+      "moduleId": "module-57",
+      "title": "Threat, evaluation, accessibility, privacy, and readiness gates",
+      "stability": "Production-readiness framework combining current NIST, OWASP, and WCAG guidance with Acme-specific policy",
+      "diagram": "diagrams/239-readiness-gate-system.png",
+      "diagramPrompt": "Show RELEASE CANDIDATE entering five gates THREAT, EVALUATION, ACCESSIBILITY, PRIVACY, OPERATIONS. Each has OWNER, EVIDENCE, PASS, FAIL, EXCEPTION EXPIRY. Teal RELEASE only after REQUIRED PASS. Coral SELF APPROVAL and PERMANENT EXCEPTION blocked.",
+      "alt": "A release candidate passes owned threat, evaluation, accessibility, privacy, and operations gates with evidence, explicit pass or fail, and expiring exceptions before release.",
+      "outcome": "Combine cross-functional proof into a transparent go, conditional-go, or no-go decision without letting one team self-certify the whole system.",
+      "explanation": "A readiness gate turns an important quality into a decision with required evidence, reviewer, scope, result, exceptions, and expiry. It prevents security, evaluation, accessibility, privacy, or operations from becoming a final checklist nobody can enforce. Threat readiness covers trust boundaries, assets, actors, abuse cases, mitigations, residual risk, attack tests, dependency risk, and incident detection. OWASP guidance supplies scenarios, while Acme's architecture determines actual exposure. Evaluation readiness covers representative tasks, slices, graders, human review, uncertainty, regression, adversarial evidence, and limitations. A single average can hide failure for a policy, language, tenant, or high-impact case. Accessibility readiness uses WCAG 2.2 as a baseline plus semantic inspection and human testing with keyboard, screen reader, zoom, reflow, touch, contrast, status, errors, and reduced motion. An automated scan alone is not conformance proof. Privacy readiness verifies purpose, minimization, consent or other applicable basis, lineage, retention, access, provider transfer, export, correction, deletion, and incident response. The course is architecture guidance and does not replace legal review. Conditional exceptions are rare, owned, time-limited, visible, monitored, and paired with compensating controls and a removal plan. The same person who created a risky feature should not quietly approve its unresolved gate.",
+      "trace": [
+        "Define required evidence and independent reviewers for each readiness domain.",
+        "Run threat, evaluation, accessibility, privacy, and operational tests on the exact release candidate.",
+        "Record pass, fail, limitation, residual risk, exception, compensating control, owner, and expiry.",
+        "Block release when an unacceptable outcome or mandatory gate lacks proof.",
+        "Monitor after release and reopen the decision when models, data, tools, users, incidents, or scope change."
+      ],
+      "analogy": "A building cannot open because the paint looks good. Structural, fire, electrical, accessibility, and occupancy reviews each examine different evidence, and unresolved critical findings stop the opening.",
+      "nextjs": [
+        "Produce route-level accessibility, security-header, secret-exposure, authorization, privacy-control, and browser acceptance evidence for the exact build.",
+        "Maintain fixture routes for denied, stale, slow, partial, expired, offline, reduced-motion, and assistive-technology states.",
+        "Render release and exception status only to authorized reviewers, with evidence links and no exposure of sensitive vulnerability details."
+      ],
+      "python": [
+        "Generate policy, dependency, secret, tenant, threat, evaluation, workflow, restore, and operational evidence from packaged service artifacts.",
+        "Pin model, prompt, tool, MCP, A2A, AG-UI, policy, dataset, and schema versions in the readiness manifest.",
+        "Enforce gate results in delivery automation while keeping final risk acceptance with the authorized human role."
+      ],
+      "caseStudy": {
+        "situation": "A release improves evaluation averages, but keyboard approval fails after a streamed error and deletion verification has not reached the vector index.",
+        "walkthrough": [
+          "The accessibility and privacy gates fail independently of the quality average.",
+          "Acme blocks release, fixes focus recovery, and extends lineage-driven deletion to the index.",
+          "Human retesting and deletion evidence are attached to the same release candidate.",
+          "Only the authorized reviewers mark both gates passed; the decision receipt records remaining limitations."
+        ],
+        "result": "A strong model score cannot hide an unusable interface or incomplete privacy control.",
+        "danger": "A broad production-ready label without domain evidence, independent review, and expiring exceptions becomes marketing rather than governance.",
+        "takeaway": "Release only when the exact candidate has the cross-functional evidence its risk requires."
+      },
+      "lab": "Create five gate templates with required evidence, owners, reviewers, pass rules, exceptions, compensating controls, expiry, and recheck triggers. Apply them to a synthetic release and write the decision receipt without inventing measured results.",
+      "checkpoint": "Can a successful automated accessibility scan prove WCAG conformance?",
+      "answer": "No. Automated tools cover only part of the requirements; semantic inspection and human testing with real interaction and assistive technologies are also needed.",
+      "glossary": [
+        "Readiness gate - required evidence decision before release",
+        "Residual risk - risk remaining after controls",
+        "Compensating control - alternative protection used when a primary control is unavailable"
+      ],
+      "related": [
+        223,
+        224,
+        238
+      ],
+      "sources": [
+        "NIST AI Risk Management Framework",
+        "OWASP Agentic Applications 2026",
+        "WCAG 2.2",
+        "NIST Generative AI Profile"
+      ]
+    },
+    {
+      "id": 240,
+      "slug": "operational-ownership-loop",
+      "moduleId": "module-57",
+      "title": "Runbooks, support, incident response, and operational ownership",
+      "stability": "Operations pattern; service objectives, escalation, and regulatory reporting obligations are organization-specific",
+      "diagram": "diagrams/240-operational-ownership-loop.png",
+      "diagramPrompt": "Show ALERT entering TRIAGE, CONTAIN, COMMUNICATE, RECOVER, VERIFY, LEARN. Surround with RUNBOOK, ON CALL, SUPPORT, OWNER, STATUS, INCIDENT COMMAND, EVIDENCE. Teal SERVICE RESTORED then REGRESSION FIXTURE. Coral SILENT RETRY and OWNER UNKNOWN blocked.",
+      "alt": "An operational loop moves from alert through triage, containment, communication, recovery, verification, and learning under runbooks, on-call, support, ownership, status, incident command, and evidence.",
+      "outcome": "Define who notices, decides, communicates, recovers, verifies, and learns when the agent system behaves badly or becomes unavailable.",
+      "explanation": "Production ownership begins before deployment. Every service, queue, policy, data store, provider, model, protocol adapter, feature flag, and user-facing degraded mode has a named team, alert path, and decision authority. A runbook turns an alert into safe actions: confirm scope, protect users, stop harmful effects, preserve evidence, choose degraded mode, communicate, restore, verify, and escalate. It includes commands and links but also decision limits and rollback cautions. Support needs product-language receipts, correlation identifiers, known-issue guidance, privacy-safe diagnostics, and a path to engineering. Asking users to paste raw prompts, tokens, or customer records into tickets is not a support strategy. Incident response separates command, technical investigation, communications, legal or privacy coordination where needed, and business decisions. A clear timeline records facts without exposing private model reasoning or unverified guesses. Recovery requires verification of business state, queued work, duplicate effects, artifacts, caches, indexes, audit, and user-visible status. Restoring one API process is not enough if Maya still sees stale or uncertain decisions. Learning produces a blameless explanation of contributing conditions, control gaps, impact, detection, response, and actions. Every meaningful failure becomes a test, monitor, runbook improvement, or architecture change with an owner and due date.",
+      "trace": [
+        "Inventory components, service objectives, alerts, owners, support paths, and safe degraded modes.",
+        "Write symptom-based runbooks with containment, evidence, communication, recovery, and escalation steps.",
+        "Exercise incident roles and preserve a factual correlation-based timeline.",
+        "Reconcile authoritative effects and user-visible state before declaring recovery complete.",
+        "Convert causes and near misses into owned tests, monitors, runbooks, and architecture improvements."
+      ],
+      "analogy": "A fire drill names who calls emergency services, who guides people, which exits are safe, where everyone gathers, and how the building is checked. A map of the alarm system alone would not coordinate the response.",
+      "nextjs": [
+        "Provide honest status, preserved drafts, retry, cancel, support reference, and later-return paths for dependency and incident states.",
+        "Expose safe correlation receipts to Maya without including secrets, internal stack traces, or other tenants' details.",
+        "Keep emergency feature disablement and status messaging testable in preview fixtures and accessible under keyboard and screen-reader use."
+      ],
+      "python": [
+        "Emit actionable alerts from service objectives and unacceptable outcomes rather than every individual provider warning.",
+        "Build administrative containment for pausing workers, disabling effectful tools, quarantining tenants, rotating credentials, and replaying work with authorization.",
+        "Create reconciliation jobs that compare workflow, business receipts, queue state, artifacts, and projections after uncertain effects."
+      ],
+      "caseStudy": {
+        "situation": "A provider timeout occurs after a refund request may have been accepted, and automatic retries begin creating conflicting states.",
+        "walkthrough": [
+          "The runbook disables further retries for the affected idempotency class and places cases in an uncertain state.",
+          "Incident responders query authoritative provider receipts and Acme's idempotency records using correlation IDs.",
+          "Maya sees preserved work and a support reference while confirmed commits and safe retries are reconciled.",
+          "The post-incident action adds an uncertain-effect fixture, alert, bounded retry rule, and updated provider runbook."
+        ],
+        "result": "Acme restores trustworthy business and interface state rather than merely restarting the service.",
+        "danger": "Silent retries can multiply harm, while an ownerless alert can leave users in an uncertain state long after infrastructure appears healthy.",
+        "takeaway": "Operate the complete user and business outcome: detect, contain, communicate, reconcile, verify, and learn."
+      },
+      "lab": "Write two runbooks and one incident exercise for provider uncertain effects, cross-tenant evidence exposure, or queue backlog. Include triggers, owners, authority, containment, evidence, communications, privacy, degraded UX, reconciliation, verification, and follow-up tests.",
+      "checkpoint": "Is service recovery complete when health checks return green?",
+      "answer": "No. Verify authoritative effects, queued work, artifacts, projections, user-visible state, notifications, and any privacy or security consequences.",
+      "glossary": [
+        "Runbook - tested guide for diagnosing and responding",
+        "Reconciliation - comparing records to restore a trustworthy shared state",
+        "Incident command - clear coordination and decision roles during disruption"
+      ],
+      "related": [
+        228,
+        235,
+        242
+      ],
+      "sources": [
+        "OpenTelemetry semantic conventions 1.44.0",
+        "NIST AI Risk Management Framework",
+        "FastAPI deployment concepts",
+        "Vercel deployments"
+      ]
+    },
+    {
+      "id": 241,
+      "slug": "architecture-review-tradeoff-defense",
+      "moduleId": "module-58",
+      "title": "Architecture review and trade-off defense",
+      "stability": "Architecture-governance pattern; decisions are revisited when assumptions, evidence, standards, or constraints change",
+      "diagram": "diagrams/241-architecture-review-tradeoff-defense.png",
+      "diagramPrompt": "Show ARCHITECTURE REVIEW BOARD around CONTEXT, REQUIREMENTS, OPTIONS, DECISION, CONSEQUENCES, EVIDENCE. Compare two OPTION cards on VALUE, RISK, COST, COMPLEXITY, REVERSIBILITY, OPERATIONS. Output ADR and ACTIONS. Coral DIAGRAM BY AUTHORITY and NO ALTERNATIVE blocked.",
+      "alt": "An architecture review compares options using requirements, value, risk, cost, complexity, reversibility, operations, and evidence, then records a decision, consequences, actions, and an architecture decision record.",
+      "outcome": "Present and defend the blueprint as a set of evidence-based trade-offs rather than a collection of boxes or fashionable technologies.",
+      "explanation": "An architecture review asks whether the design satisfies named requirements under known constraints. It examines boundaries, data, authority, protocols, failure, operations, delivery, and evidence—not visual neatness alone. A trade-off means an option improves some qualities while costing others. For example, a queue improves durability and burst handling but adds eventual consistency, operational ownership, and reconciliation work. The review pack contains context, user journey, requirements, unacceptable outcomes, quality attributes, diagrams, contracts, data map, threat model, evidence plan, deployment topology, delivery plan, and unresolved questions. For consequential choices, compare at least two credible alternatives, including the simpler non-agent option. State assumptions, evidence, rejected reasons, reversibility, migration path, and what would cause reconsideration. An architecture decision record captures the decision, status, context, options, consequences, owners, date, and superseding record. It is concise evidence, not a transcript of private reasoning. Review quality comes from challenge and traceability. Every concern becomes an accepted explanation, a design change, a risk acceptance by the authorized owner, an experiment, or an owned follow-up—not a forgotten meeting comment.",
+      "trace": [
+        "Start with the user problem, requirements, unacceptable outcomes, and quality priorities.",
+        "Walk the end-to-end journey across authority, data, protocol, deployment, failure, and recovery boundaries.",
+        "Compare credible options with evidence, assumptions, consequences, reversibility, and operating cost.",
+        "Record decisions, objections, risks, actions, owners, due dates, and recheck triggers.",
+        "Update diagrams, contracts, backlog, tests, and evidence so the review decision becomes executable."
+      ],
+      "analogy": "A building review asks whether the design supports its occupants, site, loads, fire safety, accessibility, maintenance, and budget. A beautiful floor plan cannot answer every engineering question.",
+      "nextjs": [
+        "Demonstrate the web boundary with route maps, component states, data minimization, accessibility fixtures, error recovery, and Vercel topology evidence.",
+        "Show why each client island exists and which simpler server-first path was selected elsewhere.",
+        "Link review actions to concrete routes, components, contracts, tests, release gates, and owners."
+      ],
+      "python": [
+        "Demonstrate domain boundaries, ports, durable work, data authority, policy enforcement, protocol adapters, idempotency, and operational failure paths.",
+        "Compare synchronous and queued designs, direct providers and adapters, storage options, and deployment choices using workload and recovery evidence.",
+        "Keep architecture decision records beside code and require superseding decisions when assumptions change."
+      ],
+      "caseStudy": {
+        "situation": "A reviewer asks why Acme needs both A2A and MCP, why Python is separate from Next.js, and why a queue is worth the added complexity.",
+        "walkthrough": [
+          "Maya returns to the relationship map: peer-agent tasks use A2A, declared tools and context use MCP, and product contracts meet at adapters.",
+          "The separate Python service owns durable coordination and policy, while Next.js owns the web experience and Vercel deployment lifecycle.",
+          "The queue is justified only for work that must survive the interactive request; simple commands remain synchronous.",
+          "The ADRs record alternatives, costs, recovery evidence, and conditions under which the choices should be simplified later."
+        ],
+        "result": "The blueprint is defensible because every technology choice answers a named requirement and admits its cost.",
+        "danger": "Architecture by slogan uses protocol names as justification and makes it impossible to tell what can be removed, replaced, or safely simplified.",
+        "takeaway": "Defend requirements and trade-offs, not brands or boxes."
+      },
+      "lab": "Prepare a thirty-minute architecture review pack and ten ADRs. Include context, journey, alternatives, constraints, decisions, consequences, evidence, open risks, owners, and recheck triggers. Rehearse answers to twenty skeptical questions.",
+      "checkpoint": "Is choosing a more flexible architecture always better?",
+      "answer": "No. Flexibility adds complexity and operating cost. Choose only the flexibility supported by current requirements and credible change scenarios.",
+      "glossary": [
+        "Trade-off - gain in one quality with a cost in another",
+        "ADR - architecture decision record",
+        "Quality attribute - property such as reliability, security, usability, or maintainability"
+      ],
+      "related": [
+        225,
+        228,
+        243
+      ],
+      "sources": [
+        "NIST AI Risk Management Framework",
+        "MCP 2026-07-28 specification",
+        "A2A 1.0 specification",
+        "AG-UI architecture"
+      ]
+    },
+    {
+      "id": 242,
+      "slug": "failure-game-day-recovery",
+      "moduleId": "module-58",
+      "title": "Failure game day and recovery demonstration",
+      "stability": "Resilience-exercise pattern; experiments require authorization, containment, stop conditions, and no unsanctioned production disruption",
+      "diagram": "diagrams/242-failure-game-day-recovery.png",
+      "diagramPrompt": "Show GAME DAY CONTROL with HYPOTHESIS, SCOPE, SAFETY, STOP, OBSERVE. Inject PROVIDER DOWN, QUEUE DUPLICATE, STALE POLICY, TOKEN REPLAY, REGION LOSS. Teams DETECT, CONTAIN, DEGRADE, RECOVER, RECONCILE, VERIFY. Output EVIDENCE and ACTIONS.",
+      "alt": "A controlled game day injects provider loss, duplicate queue delivery, stale policy, token replay, and regional failure while teams detect, contain, degrade, recover, reconcile, verify, and record evidence.",
+      "outcome": "Demonstrate that the designed system and team can recognize, contain, recover, reconcile, and learn from realistic failures.",
+      "explanation": "A game day is a controlled resilience exercise with a hypothesis, authorized scope, synthetic or safe target, observers, stop conditions, rollback, and evidence plan. It is not permission to surprise production users. Scenarios come from the architecture and threat model: provider unavailable, queue duplicates, stale evidence, policy service loss, token replay, artifact corruption, regional outage, cross-tenant attempt, or uncertain external effect. The exercise evaluates both technology and people. Detection, alert routing, incident roles, runbook accuracy, user-visible degraded state, support communication, reconciliation, restore, and decision authority all matter. Failure injection must remain bounded. Protect customer data, prevent irreversible effects, limit blast radius, use synthetic tenants, obtain approvals, and give an authorized controller an immediate stop mechanism. Recovery is verified against authoritative records and user outcomes. The team checks tasks, receipts, artifacts, caches, indexes, audit, notifications, accessibility, and privacy before declaring success. The report separates expected behavior, observations, surprises, timeline, evidence, limitations, and actions. Findings become backlog, tests, alerts, architecture decisions, training, and a scheduled re-exercise.",
+      "trace": [
+        "Choose one architecture assumption and write the failure hypothesis and success evidence.",
+        "Authorize scope, synthetic data, observers, communications, stop conditions, and rollback.",
+        "Inject the failure while recording detection, decisions, user state, containment, and system behavior.",
+        "Recover and reconcile every authoritative, derived, queued, and user-visible state.",
+        "Publish findings and owned actions, then rerun the scenario after improvements."
+      ],
+      "analogy": "A lifeboat drill tests alarms, crew roles, passenger guidance, equipment, timing, and headcount without first waiting for a real sinking. The drill is controlled, but the verification is serious.",
+      "nextjs": [
+        "Use a test-only scenario controller to trigger delayed streams, stale snapshots, dependency loss, expired approvals, and artifact failures in synthetic workspaces.",
+        "Verify accessible degraded messaging, preserved drafts, focus, retry, cancellation, support reference, and later recovery.",
+        "Record browser trace and semantic assertions without including customer data or production secrets in the exercise pack."
+      ],
+      "python": [
+        "Add authorized failure points at adapter boundaries for timeout, duplicate, corrupt response, unavailable policy, lost worker, and uncertain effect.",
+        "Keep safety interlocks outside the injected component and require a controller identity, scope, expiry, and audit receipt.",
+        "Run reconciliation after the experiment and compare domain state, business receipts, queues, artifacts, indexes, and telemetry."
+      ],
+      "caseStudy": {
+        "situation": "Acme believes its idempotency and recovery design is safe, but it has never tested a worker crash immediately after a provider accepts a refund.",
+        "walkthrough": [
+          "A synthetic game day injects the crash at the uncertain-effect boundary under an authorized controller.",
+          "The alert fires, retries pause, and Maya sees an honest pending verification state with her work preserved.",
+          "The runbook reconciles the provider receipt and Acme idempotency record before completing the task once.",
+          "A missing support message and slow reconciliation query become owned improvements and permanent fixtures."
+        ],
+        "result": "Acme replaces confidence in the diagram with observed recovery evidence and a clearer list of remaining weaknesses.",
+        "danger": "Uncontrolled chaos can cause real harm, while a scripted demonstration with no surprising observations proves little about resilience.",
+        "takeaway": "Test one bounded failure hypothesis, protect users, verify the whole recovery, and turn surprises into permanent improvements."
+      },
+      "lab": "Design a ninety-minute game day for three scenarios. Include hypothesis, authorization, synthetic scope, safety, stop conditions, observers, expected alerts, runbooks, user states, communications, evidence, reconciliation, verification, findings, owners, and rerun date.",
+      "checkpoint": "Should a game day inject failures into production without stakeholder approval because realism is valuable?",
+      "answer": "No. The exercise needs explicit authority, risk review, containment, stop conditions, privacy protection, and an appropriate target environment.",
+      "glossary": [
+        "Game day - controlled exercise of failure and recovery",
+        "Failure injection - deliberate bounded creation of a fault",
+        "Safety interlock - independent control that can stop or contain an experiment"
+      ],
+      "related": [
+        240,
+        241,
+        244
+      ],
+      "sources": [
+        "NIST AI Risk Management Framework",
+        "OWASP Agentic Applications 2026",
+        "OpenTelemetry traces"
+      ]
+    },
+    {
+      "id": 243,
+      "slug": "portfolio-evidence-story-map",
+      "moduleId": "module-58",
+      "title": "Portfolio evidence, README, case study, and demonstration plan",
+      "stability": "Portfolio communication pattern; only implemented and measured evidence may be presented as an achieved result",
+      "diagram": "diagrams/243-portfolio-evidence-story-map.png",
+      "diagramPrompt": "Show REQUIREMENT to ARCHITECTURE to CONTRACT to CODE to TEST to DEPLOYMENT to MEASURED RESULT chain. Surround with README, CASE STUDY, DEMO, ADR, THREAT MODEL, EVAL, RUNBOOK. Mark SCENARIO and MEASURED separately. Coral INFLATED CLAIM and SCREENSHOT ONLY blocked.",
+      "alt": "A portfolio evidence chain connects requirement, architecture, contract, code, tests, deployment, and measured results, supported by a README, case study, demo, decisions, threat model, evaluations, and runbooks with scenario and measured evidence clearly separated.",
+      "outcome": "Explain the project as a credible engineering story whose claims can be traced to artifacts, tests, deployments, and honestly measured results.",
+      "explanation": "A strong portfolio story begins with the user problem, constraints, and unacceptable outcomes. It then shows architecture decisions, implementation boundaries, verification, deployment, operations, and learning—not a list of libraries. The README is the reproducible entry point: product overview, architecture, repository map, prerequisites, setup, configuration, synthetic data, commands, tests, deployment, security, privacy, accessibility, limitations, and demonstration script. The case study explains the situation, choices, trade-offs, evidence, setbacks, and outcome. It distinguishes blueprint decisions, simulated exercises, proposed targets, and measured production or test results. Evidence artifacts include diagrams, contracts, ADRs, threat model, evaluation plan, accessibility report, conformance results, game-day report, runbooks, release manifest, screenshots, and traces. Each should have a version and clear purpose. The demonstration follows one user journey and one failure path. It shows visible state, evidence, human authority, committed receipt, and recovery while making clear which providers or effects are synthetic. Claims use measured numbers only when the later project records method, denominator, environment, sample, time window, and limitations. Until then, the course supplies definitions and evidence plans, not invented success percentages.",
+      "trace": [
+        "Write the one-sentence user problem, constraints, unacceptable outcomes, and why the selected architecture fits.",
+        "Link requirements to diagrams, contracts, code locations, tests, deployment, and evidence manifests.",
+        "Create a reproducible README and a case study that explains trade-offs and failures honestly.",
+        "Rehearse a short happy-path and failure-path demonstration using synthetic data and explicit boundaries.",
+        "Audit every claim as blueprint, simulated, proposed, or measured and attach the supporting evidence."
+      ],
+      "analogy": "A science-fair project is credible when the question, method, materials, observations, failures, and repeatable results are visible. A polished poster with an unsupported percentage is not stronger evidence.",
+      "nextjs": [
+        "Document routes, server/client boundaries, accessible UI fixtures, local setup, environment variables, browser tests, Vercel preview, and production deployment path.",
+        "Provide a seeded synthetic demo mode that reliably shows progress, approval, expiry, partial success, recovery, and receipts.",
+        "Capture visual evidence together with semantic and test reports so screenshots support rather than replace engineering proof."
+      ],
+      "python": [
+        "Document package boundaries, service and worker commands, migrations, fixtures, protocol adapters, tests, telemetry, deployment, and recovery procedures.",
+        "Ship a deterministic synthetic provider suite so reviewers can run the product without external accounts before optional live integration.",
+        "Export contract, evaluation, security, workflow, and game-day manifests in stable machine-readable and human-readable forms."
+      ],
+      "caseStudy": {
+        "situation": "Maya prepares a portfolio page that says Acme reduced review time by 60 percent, but the project has not been implemented or measured.",
+        "walkthrough": [
+          "She removes the unsupported claim and labels the course scorecard values as illustrative targets.",
+          "The case study instead demonstrates the evidence architecture, conformance suite, threat gates, and planned measurement method.",
+          "After the later project runs controlled tests, Maya may publish actual results with denominator, environment, versions, and limitations.",
+          "The demo script clearly distinguishes synthetic refund effects from any real external integration."
+        ],
+        "result": "The portfolio remains impressive because it is reproducible and honest, not because it inflates outcomes.",
+        "danger": "Unsupported metrics, hidden synthetic behavior, or a screenshot-only demo can damage trust when a reviewer asks how the result was measured or reproduced.",
+        "takeaway": "Make every claim traceable, every demo reproducible, and every limitation visible."
+      },
+      "lab": "Draft the README outline, case-study outline, evidence index, ten-minute demo script, five-minute failure demo, setup checklist, claim audit, and a measurement template that forbids presenting illustrative targets as results.",
+      "checkpoint": "May the blueprint's sample target be rewritten as a portfolio achievement?",
+      "answer": "No. Publish it as a proposed target or scenario until the implemented project measures and documents the actual result.",
+      "glossary": [
+        "Reproducibility - another person can follow the method and observe comparable behavior",
+        "Claim audit - check that every statement has appropriate evidence",
+        "Demo mode - controlled environment for showing product behavior"
+      ],
+      "related": [
+        224,
+        241,
+        244
+      ],
+      "sources": [
+        "SLSA specification",
+        "OpenSSF Scorecard",
+        "GitHub Actions documentation",
+        "OpenTelemetry semantic conventions 1.44.0"
+      ]
+    },
+    {
+      "id": 244,
+      "slug": "dual-project-graduation-handoff",
+      "moduleId": "module-58",
+      "title": "Graduation map and handoff to the two separate coding projects",
+      "stability": "Final blueprint checked 2026-08-25; pin all framework, protocol, provider, and platform versions again when each coding project begins",
+      "diagram": "diagrams/244-dual-project-graduation-handoff.png",
+      "diagramPrompt": "Show one BLUEPRINT PACK splitting into NEXTJS REACT PROJECT and PYTHON FASTAPI PROJECT. Shared center CONTRACTS, FIXTURES, USER JOURNEY, ACCEPTANCE, THREAT, EVAL, OPERATIONS, EVIDENCE. Each project has OWN REPO, README, DEPLOY, TEST. Converge on ONE ACME DEMO and PORTFOLIO PROOF. Coral COPY PASTE ARCHITECTURE DRIFT blocked.",
+      "alt": "One enterprise blueprint hands shared contracts, fixtures, user journeys, acceptance, threats, evaluations, operations, and evidence to separate Next.js React and Python FastAPI projects that converge on one Acme demonstration and portfolio proof.",
+      "outcome": "Package the entire course into a clean implementation handoff so the two later full-stack projects can begin independently and reunite through one tested product contract.",
+      "explanation": "Volume 10 finishes the design phase. It does not pretend that planning is implementation. The handoff states exactly what the later Next.js and Python projects must build, what they share, what each owns, and how completion will be proven. The shared pack contains the problem brief, user journeys, requirements, unacceptable outcomes, architecture, trust boundaries, contract kit, fixtures, data map, threat model, evaluation plan, accessibility criteria, release gates, runbooks, game day, and evidence manifest. The Next.js project owns the web and learning experience, accessible state, interaction, event projection, artifact views, privacy controls, and Vercel deployment. The Python project owns domain rules, orchestration, adapters, durable work, policy, persistence, audit, and service deployment. They remain separate artifacts and repositories or clearly separated workspaces. Neither copies the other's internals. They exchange versioned commands, queries, events, problems, artifacts, and receipts through the shared conformance kit. Implementation begins with deterministic synthetic services and fixtures, then introduces real protocol SDKs and providers behind adapters. Every addition passes the same contract, security, evaluation, accessibility, recovery, and evidence gates. Graduation evidence is a reproducible dual-stack demonstration: one user journey, one consequential decision, one authoritative or safely simulated receipt, one failure and recovery, one version manifest, and honest measured results only where measurement truly occurred.",
+      "trace": [
+        "Freeze the blueprint version and inventory every handoff artifact, open question, assumption, owner, and decision.",
+        "Create separate Next.js and Python backlogs mapped to the same vertical slices, contracts, and acceptance cases.",
+        "Start both projects with synthetic fixtures and conformance runners before live providers or privileged tools.",
+        "Integrate through versioned adapters, run the complete gate system, deploy independently, and perform a controlled game day.",
+        "Publish the reproducible portfolio pack with actual evidence, measured results where valid, limitations, and the next learning roadmap."
+      ],
+      "analogy": "An architect hands builders drawings, specifications, materials rules, inspections, and acceptance tests. The electrical and structural teams work separately, but their interfaces and final building must agree.",
+      "nextjs": [
+        "Create a dedicated project with App Router routes, server-first data access, narrow client islands, an accessible product-event reducer, visual lessons, synthetic demo mode, tests, and Vercel deployment.",
+        "Import or generate only the shared wire contracts and fixtures; keep UI state and component architecture native to TypeScript and React.",
+        "Prove the browser journey, accessibility, secret boundary, authorization handoff, reconnect, proposal binding, receipt, and failure recovery."
+      ],
+      "python": [
+        "Create a dedicated FastAPI project with domain, application, ports, adapters, workers, stores, policy, telemetry, migrations, tests, and service deployment.",
+        "Implement the canonical contract through Pydantic boundary models while keeping domain semantics independent and stronger where needed.",
+        "Prove idempotency, tenant isolation, evidence freshness, protocol conformance, durable recovery, audit, evaluation, and operational game-day behavior."
+      ],
+      "caseStudy": {
+        "situation": "Acme is ready to code, but Maya wants to avoid two teams interpreting the diagrams differently and building incompatible demos.",
+        "walkthrough": [
+          "She versions the blueprint and assigns every shared contract, open decision, and acceptance case an owner.",
+          "The web and Python backlogs use the same six vertical slices and synthetic fixtures while maintaining separate implementation responsibilities.",
+          "A conformance runner and end-to-end suite reunite the projects at every milestone rather than only at the end.",
+          "The final demonstration shows the policy review, bounded approval, authoritative simulated receipt, provider-failure recovery, and complete evidence manifest."
+        ],
+        "result": "The learner graduates with an implementation-ready map for two serious portfolio projects and a clear standard for proving they work together.",
+        "danger": "Starting both codebases without a frozen contract and acceptance pack invites duplicated authority, incompatible events, divergent fixtures, and a late integration rewrite.",
+        "takeaway": "Separate the implementations, share the product contract and proof, and reunite them through tested user outcomes."
+      },
+      "lab": "Assemble the final handoff directory: blueprint index, Next.js backlog, Python backlog, shared contract kit, fixtures, acceptance matrix, environment map, risk register, gate templates, runbooks, game-day plan, demo script, claim audit, owners, and version-recheck checklist.",
+      "checkpoint": "Should the two projects share all internal domain and UI types to prevent drift?",
+      "answer": "No. Share canonical wire contracts, fixtures, and behavior tests. Let each project keep native internal models and adapters so implementation concerns remain properly separated.",
+      "glossary": [
+        "Handoff - complete transfer of decisions and build-ready evidence",
+        "Wire contract - agreed data and behavior at a service boundary",
+        "Graduation evidence - reproducible proof that the planned system was implemented and verified"
+      ],
+      "related": [
+        229,
+        237,
+        243
+      ],
+      "sources": [
+        "MCP 2026-07-28 specification",
+        "A2A 1.0 specification",
+        "AG-UI architecture",
+        "Next.js App Router",
+        "FastAPI bigger applications",
+        "WCAG 2.2"
+      ]
+    }
+  ]
+}
