@@ -73,4 +73,6 @@ assert.equal(search.length, total);
 assert.equal(new Set(search.map(s => `${s.courseId}:${s.chapterNumber}`)).size, total);
 for (const entry of search) assert(articles.has(`${entry.courseId}:${entry.chapterNumber}`));
 assert(search.some(s => s.courseId === 'hospital' && s.plainText.includes('ORG-T99')));
+assert.equal(search.filter(s => s.courseId === 'filepilot').length, 16, 'FilePilot publication coverage');
+assert(search.some(s => s.courseId === 'filepilot' && s.plainText.includes('reconciliation')), 'FilePilot recovery search coverage');
 console.log(`PASS: ${seen.size} collections, ${total} articles, ${images.size} flattened images, search coverage, anchors, stable course contracts and lazy image dimensions.`);

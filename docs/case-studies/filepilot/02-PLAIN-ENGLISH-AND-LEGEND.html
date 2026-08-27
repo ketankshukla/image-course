@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FilePilot — The Whole Flow in Plain English</title>
+<style type="text/css">:root{color-scheme:light;--ink:#19283c;--muted:#56667a;--blue:#145bd8;--navy:#081a33;--line:#dce5ef;--paper:#fff;--bg:#edf2f7}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:30px}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.75 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:#145ac0;text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:3px solid #d58b00;outline-offset:4px}
+.skip{position:fixed;top:-100px;left:16px;z-index:10;background:white;padding:10px}
+.skip:focus{top:10px}
+aside{position:fixed;inset:0 auto 0 0;width:284px;overflow:auto;padding:30px 22px;background:var(--navy);color:#e9f0fa;border-right:1px solid #244363}
+.brand{font-size:12px;letter-spacing:.17em;text-transform:uppercase;color:#76dcf3;font-weight:700}
+aside h2{font-size:22px;line-height:1.3;margin:12px 0 22px;color:white;border:0;padding:0}
+aside ul{list-style:none;margin:0;padding:0}
+aside li{margin:0 0 5px}
+aside li ul{margin-left:0}
+aside a{display:block;padding:7px 10px;border-radius:6px;color:#d2deed;text-decoration:none;font-size:13px;line-height:1.45}
+aside a:hover{background:#193554;color:white}
+.rail-footer{margin-top:22px;border-top:1px solid #2c4260;padding-top:20px;color:#9db0c9;font-size:12px}
+main{margin-left:284px;padding:42px clamp(24px,4vw,72px) 90px;max-width:1550px}
+.toolbar{display:flex;align-items:center;gap:15px;justify-content:space-between;margin-bottom:30px;font-size:12px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+button{font:600 13px system-ui;border:1px solid #c9d7e8;background:#fff;color:#164176;padding:10px 15px;border-radius:8px;cursor:pointer}
+button:hover{background:#e6f0ff}
+h1{font-size:clamp(40px,4.4vw,66px);line-height:1.1;letter-spacing:-.045em;background:linear-gradient(120deg,#07172e,#124481);color:white;border-radius:20px;padding:40px;margin:0 0 34px;box-shadow:0 18px 45px #0b254025}
+h2{font-size:30px;line-height:1.3;color:#103e7c;letter-spacing:-.025em;margin:58px 0 22px;padding-top:23px;border-top:3px solid #2367c9}
+h3{font-size:23px;line-height:1.35;color:#075e76;letter-spacing:-.02em;margin:34px 0 15px}
+p{margin:16px 0;max-width:90ch}
+li{margin:7px 0}
+strong{color:#113862}
+blockquote{background:#e1f1f7;border-left:5px solid #068caf;border-radius:0 12px 12px 0;margin:28px 0;padding:12px 25px;color:#184050}
+figure{margin:28px 0 32px}
+figure img{display:block;width:100%;height:auto;border-radius:14px;background:#07172d;box-shadow:0 12px 28px #0a254025}
+figcaption{font-size:14px;line-height:1.6;color:var(--muted);padding:13px 2px}
+.diagram-button{margin-top:9px;font-size:12px}
+img{max-width:100%;height:auto}
+pre{padding:23px 25px;overflow:auto;background:#091b32;color:#dfedff;border:1px solid #203a56;border-radius:12px;line-height:1.6;tab-size:4}
+code{font-family:"Cascadia Code",Consolas,monospace;font-size:.85em}
+:not(pre)>code{background:#e3eaf3;color:#98305b;padding:.12em .32em;border-radius:4px;overflow-wrap:anywhere}
+pre code{white-space:pre;color:inherit}
+table{border-collapse:separate;border-spacing:0;display:block;overflow-x:auto;max-width:100%;margin:24px 0 30px;border:1px solid var(--line);border-radius:10px;background:white;font-size:15px;line-height:1.6}
+th,td{text-align:left;vertical-align:top;padding:13px 16px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-width:130px}
+th{background:#103c78;color:white;font-weight:650}
+tr:nth-child(even) td{background:#f4f7fb}
+tr:last-child td{border-bottom:0}
+th:last-child,td:last-child{border-right:0}
+hr{border:0;border-top:1px solid var(--line);margin:40px 0}
+dialog{border:1px solid #375679;border-radius:15px;padding:0;background:#07172e;color:white;width:96vw;max-width:1900px;max-height:96vh;overflow:hidden}
+dialog::backdrop{background:#030b17dd}
+.zoom-toolbar{display:flex;gap:10px;align-items:center;justify-content:flex-end;padding:12px 18px;background:#102943}
+.zoom-toolbar span{margin-right:auto;font-size:14px}
+.zoom-body{overflow:auto;max-height:82vh;padding:12px}
+.zoom-body img{display:block;width:100%;max-width:none;margin:auto;height:auto}
+footer{margin-top:60px;border-top:1px solid var(--line);padding-top:20px;font-size:13px;color:var(--muted)}
+@media(max-width:1000px){aside{position:relative;width:auto;padding:24px}aside nav ul{columns:2}aside li{break-inside:avoid}.rail-footer{display:none}main{margin-left:0;padding:28px 24px 60px}}
+@media(max-width:600px){body{font-size:16px}aside nav ul{columns:1}aside{max-height:330px}main{padding:22px 16px 50px}h1{font-size:38px;padding:27px}h2{font-size:26px}h3{font-size:21px}.toolbar{font-size:10px}pre{padding:17px;font-size:14px}.zoom-toolbar{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{aside,.toolbar,.diagram-button,dialog{display:none!important}body{background:white;font-size:11pt}main{margin:0;max-width:none;padding:0}h1{color:#12345a;background:none;padding:0;box-shadow:none;font-size:32pt}h2,h3{break-after:avoid}figure,blockquote{break-inside:avoid}pre{background:#f3f5f9;color:#152f4e;white-space:pre-wrap}pre code{white-space:pre-wrap}table{display:table;font-size:9pt}th,td{min-width:0;padding:7px}figure img{box-shadow:none}}
+</style><style type="text/css">
+body{font-size:24px;line-height:1.7}
+main{max-width:1500px}
+p{max-width:65ch}
+h2{font-size:36px}
+h3{font-size:28px;color:#17478a}
+blockquote{background:#edf4ff;border-left-color:#245ac4;color:#19283c}
+table{font-size:21px}
+figcaption{font-size:20px}
+pre{font-size:20px}
+:not(pre)>code{background:#edf4ff;color:#17478a}
+button{min-height:44px;font-size:16px}
+aside a{font-size:15px}
+.brand{color:#c4d8fa}
+a:focus-visible,button:focus-visible{outline-color:#245ac4}
+@media(max-width:600px){body{font-size:24px}h2{font-size:32px}h3{font-size:27px}pre{font-size:18px}aside a{font-size:15px}}
+@media print{body{font-size:12pt}h2{font-size:22pt}h3{font-size:17pt}table{font-size:10pt}pre{font-size:10pt}}
+</style>
+</head>
+<body>
+<a class="skip" href="#content">Skip to document</a>
+<aside aria-label="Document contents">
+<div class="brand">Visual learning library</div>
+<h2>FilePilot</h2>
+<ul>
+<li><a href="#filepilot--the-whole-flow-in-plain-english" id="toc-filepilot--the-whole-flow-in-plain-english">FilePilot — The
+Whole Flow in Plain English</a>
+<ul>
+<li><a href="#at-a-glance" id="toc-at-a-glance">At a glance</a></li>
+<li><a href="#what-the-diagram-teaches" id="toc-what-the-diagram-teaches">What the diagram teaches</a></li>
+<li><a href="#technology-legend" id="toc-technology-legend">Technology
+legend</a></li>
+<li><a href="#why-mcp-rag-and-a2a-are-different" id="toc-why-mcp-rag-and-a2a-are-different">Why MCP, RAG, and A2A are
+different</a></li>
+<li><a href="#how-to-present-it" id="toc-how-to-present-it">How to
+present it</a></li>
+</ul></li>
+</ul>
+<div class="rail-footer">Self-contained reading edition<br>Diagrams and styles embedded</div>
+</aside>
+<main id="content">
+<div class="toolbar"><span>Illustrated reference guide</span><button type="button" onclick="window.print()">Print / Save PDF</button></div>
+<h1 id="filepilot--the-whole-flow-in-plain-english">FilePilot — The
+Whole Flow in Plain English</h1>
+<h2 id="at-a-glance">At a glance</h2>
+<p>Think of FilePilot as a careful librarian. The librarian can read the
+labels, look inside permitted books, and suggest a better arrangement.
+But rearranging the shelves requires an approved checklist. The
+checklist is checked again just before each book moves.</p>
+<h2 id="what-the-diagram-teaches">What the diagram teaches</h2>
+<p><img role="img" aria-label="A selected folder produces an inventory, then a proposed plan. Approval does not bypass execution checks. Verification and a journal support understandable results and recovery." src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9Ijg2MCIgdmlld0JveD0iMCAwIDEyMDAgODYwIiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUgZGVzYyI+Cjx0aXRsZSBpZD0idGl0bGUiPkZyb20gcmVxdWVzdCB0byB2ZXJpZmllZCByZXN1bHQ8L3RpdGxlPjxkZXNjIGlkPSJkZXNjIj5BIHByb3Bvc2FsIGlzIG5vdCBwZXJtaXNzaW9uLiBBcHByb3ZhbCBpcyBub3QgcHJvb2Ygb2YgY29tcGxldGlvbi4gRmFpbHVyZSBvciBhbWJpZ3VpdHkg4oaSIHN0b3Agc2FmZWx5LCBwcmVzZXJ2ZSBldmlkZW5jZSwgcmVxdWVzdCByZXZpZXcuPC9kZXNjPgo8ZGVmcz48bWFya2VyIGlkPSJhcnJvdyIgbWFya2VyV2lkdGg9IjEyIiBtYXJrZXJIZWlnaHQ9IjEyIiByZWZYPSIxMCIgcmVmWT0iNSIgb3JpZW50PSJhdXRvIj48cGF0aCBkPSJNMCAwIEwxMCA1IEwwIDEwIiBmaWxsPSJub25lIiBzdHJva2U9IiMyNDVhYzQiIHN0cm9rZS13aWR0aD0iMiIvPjwvbWFya2VyPjwvZGVmcz4KPHJlY3Qgd2lkdGg9IjEyMDAiIGhlaWdodD0iODYwIiByeD0iMjQiIGZpbGw9IiNmNWY4ZmYiLz48cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSIxMTIiIHJ4PSIyNCIgZmlsbD0iIzBjMjk0ZiIvPgo8dGV4dCB4PSIzNiIgeT0iNDgiIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIzMiIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0id2hpdGUiPkZyb20gcmVxdWVzdCB0byB2ZXJpZmllZCByZXN1bHQ8L3RleHQ+Cjx0ZXh0IHg9IjM2IiB5PSI4NiIgZm9udC1mYW1pbHk9IlNlZ29lIFVJLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjIyIiBmaWxsPSIjZGJlOGZmIj5BIHByb3Bvc2FsIGlzIG5vdCBwZXJtaXNzaW9uLiBBcHByb3ZhbCBpcyBub3QgcHJvb2Ygb2YgY29tcGxldGlvbi48L3RleHQ+CjxwYXRoIGQ9Ik01NDAgMjIwIEw2NjAgMjIwIiBzdHJva2U9IiMyNDVhYzQiIHN0cm9rZS13aWR0aD0iNCIgZmlsbD0ibm9uZSIgbWFya2VyLWVuZD0idXJsKCNhcnJvdykiLz4KPHBhdGggZD0iTTkxMCAyOTAgTDkxMCAzNTAiIHN0cm9rZT0iIzI0NWFjNCIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIiBtYXJrZXItZW5kPSJ1cmwoI2Fycm93KSIvPgo8cGF0aCBkPSJNNjYwIDQzMCBMNTQwIDQzMCIgc3Ryb2tlPSIjMjQ1YWM0IiBzdHJva2Utd2lkdGg9IjQiIGZpbGw9Im5vbmUiIG1hcmtlci1lbmQ9InVybCgjYXJyb3cpIi8+CjxwYXRoIGQ9Ik0yOTAgNTAwIEwyOTAgNTYwIiBzdHJva2U9IiMyNDVhYzQiIHN0cm9rZS13aWR0aD0iNCIgZmlsbD0ibm9uZSIgbWFya2VyLWVuZD0idXJsKCNhcnJvdykiLz4KPHBhdGggZD0iTTU0MCA2NDAgTDY2MCA2NDAiIHN0cm9rZT0iIzI0NWFjNCIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIiBtYXJrZXItZW5kPSJ1cmwoI2Fycm93KSIvPgo8Zz48cmVjdCB4PSI0MCIgeT0iMTQwIiB3aWR0aD0iNTAwIiBoZWlnaHQ9IjE1MCIgcng9IjE2IiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSIjYjZjY2VmIiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSI2MiIgeT0iMTgwIiBmb250LWZhbWlseT0iU2Vnb2UgVUksIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZvbnQtc2l6ZT0iMjYiIGZpbGw9IiMxMjM2NmIiPjEgIENob29zZSBhIHNhbmRib3g8L3RleHQ+PHRleHQgeD0iNjIiIHk9IjIyMSIgZm9udC1mYW1pbHk9IlNlZ29lIFVJLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjIzIiBmaWxsPSIjMTkyODNjIj5FeHBsaWNpdCByb290IGdyYW50PC90ZXh0Pjx0ZXh0IHg9IjYyIiB5PSIyNTMiIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMyIgZmlsbD0iIzE5MjgzYyI+Tm8gd2hvbGUtZHJpdmUgYWNjZXNzPC90ZXh0PjwvZz4KPGc+PHJlY3QgeD0iNjYwIiB5PSIxNDAiIHdpZHRoPSI1MDAiIGhlaWdodD0iMTUwIiByeD0iMTYiIGZpbGw9IndoaXRlIiBzdHJva2U9IiNiNmNjZWYiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9IjY4MiIgeT0iMTgwIiBmb250LWZhbWlseT0iU2Vnb2UgVUksIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZvbnQtc2l6ZT0iMjYiIGZpbGw9IiMxMjM2NmIiPjIgIEluc3BlY3QgYW5kIHVuZGVyc3RhbmQ8L3RleHQ+PHRleHQgeD0iNjgyIiB5PSIyMjEiIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMyIgZmlsbD0iIzE5MjgzYyI+UmVhZC1vbmx5IGludmVudG9yeSArIGV2aWRlbmNlPC90ZXh0Pjx0ZXh0IHg9IjY4MiIgeT0iMjUzIiBmb250LWZhbWlseT0iU2Vnb2UgVUksIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjMiIGZpbGw9IiMxOTI4M2MiPkZpbGVzIHJlY2VpdmUgcmV2aXNpb24gZmluZ2VycHJpbnRzPC90ZXh0PjwvZz4KPGc+PHJlY3QgeD0iNjYwIiB5PSIzNTAiIHdpZHRoPSI1MDAiIGhlaWdodD0iMTUwIiByeD0iMTYiIGZpbGw9IndoaXRlIiBzdHJva2U9IiNiNmNjZWYiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9IjY4MiIgeT0iMzkwIiBmb250LWZhbWlseT0iU2Vnb2UgVUksIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZvbnQtc2l6ZT0iMjYiIGZpbGw9IiMxMjM2NmIiPjMgIFByb3Bvc2UgZXhhY3QgY2hhbmdlczwvdGV4dD48dGV4dCB4PSI2ODIiIHk9IjQzMSIgZm9udC1mYW1pbHk9IlNlZ29lIFVJLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjIzIiBmaWxsPSIjMTkyODNjIj5BbGxvd2VkIGRlc3RpbmF0aW9ucyBvbmx5PC90ZXh0Pjx0ZXh0IHg9IjY4MiIgeT0iNDYzIiBmb250LWZhbWlseT0iU2Vnb2UgVUksIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjMiIGZpbGw9IiMxOTI4M2MiPlVuY2VydGFpbiBmaWxlcyBzdGF5IHVuY2hhbmdlZDwvdGV4dD48L2c+CjxnPjxyZWN0IHg9IjQwIiB5PSIzNTAiIHdpZHRoPSI1MDAiIGhlaWdodD0iMTUwIiByeD0iMTYiIGZpbGw9IndoaXRlIiBzdHJva2U9IiNiNmNjZWYiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9IjYyIiB5PSIzOTAiIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSwgc2Fucy1zZXJpZiIgZm9udC13ZWlnaHQ9IjcwMCIgZm9udC1zaXplPSIyNiIgZmlsbD0iIzEyMzY2YiI+NCAgUmV2aWV3IGFuZCBhcHByb3ZlPC90ZXh0Pjx0ZXh0IHg9IjYyIiB5PSI0MzEiIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMyIgZmlsbD0iIzE5MjgzYyI+QXBwcm92ZSBzZWxlY3RlZCBvcGVyYXRpb25zPC90ZXh0Pjx0ZXh0IHg9IjYyIiB5PSI0NjMiIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMyIgZmlsbD0iIzE5MjgzYyI+QmluZCBhcHByb3ZhbCB0byBwbGFuIHJldmlzaW9uPC90ZXh0PjwvZz4KPGc+PHJlY3QgeD0iNDAiIHk9IjU2MCIgd2lkdGg9IjUwMCIgaGVpZ2h0PSIxNTAiIHJ4PSIxNiIgZmlsbD0id2hpdGUiIHN0cm9rZT0iI2I2Y2NlZiIgc3Ryb2tlLXdpZHRoPSIyIi8+PHRleHQgeD0iNjIiIHk9IjYwMCIgZm9udC1mYW1pbHk9IlNlZ29lIFVJLCBzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iNzAwIiBmb250LXNpemU9IjI2IiBmaWxsPSIjMTIzNjZiIj41ICBSZWNoZWNrIGFuZCBleGVjdXRlPC90ZXh0Pjx0ZXh0IHg9IjYyIiB5PSI2NDEiIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMyIgZmlsbD0iIzE5MjgzYyI+U2luZ2xlIHdyaXRlcjsgbm8gb3ZlcndyaXRlPC90ZXh0Pjx0ZXh0IHg9IjYyIiB5PSI2NzMiIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMyIgZmlsbD0iIzE5MjgzYyI+U3RvcCBpZiBzb3VyY2Ugb3IgcG9saWN5IGNoYW5nZWQ8L3RleHQ+PC9nPgo8Zz48cmVjdCB4PSI2NjAiIHk9IjU2MCIgd2lkdGg9IjUwMCIgaGVpZ2h0PSIxNTAiIHJ4PSIxNiIgZmlsbD0id2hpdGUiIHN0cm9rZT0iI2I2Y2NlZiIgc3Ryb2tlLXdpZHRoPSIyIi8+PHRleHQgeD0iNjgyIiB5PSI2MDAiIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSwgc2Fucy1zZXJpZiIgZm9udC13ZWlnaHQ9IjcwMCIgZm9udC1zaXplPSIyNiIgZmlsbD0iIzEyMzY2YiI+NiAgVmVyaWZ5IGFuZCByZWNvcmQ8L3RleHQ+PHRleHQgeD0iNjgyIiB5PSI2NDEiIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMyIgZmlsbD0iIzE5MjgzYyI+SW5zcGVjdCB0aGUgYWN0dWFsIHJlc3VsdDwvdGV4dD48dGV4dCB4PSI2ODIiIHk9IjY3MyIgZm9udC1mYW1pbHk9IlNlZ29lIFVJLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjIzIiBmaWxsPSIjMTkyODNjIj5Kb3VybmFsIHN1cHBvcnRzIHJlY29uY2lsaWF0aW9uPC90ZXh0PjwvZz4KPHJlY3QgeD0iMzYiIHk9Ijc1MCIgd2lkdGg9IjExMjgiIGhlaWdodD0iNzYiIHJ4PSIxMiIgZmlsbD0iI2UyZWRmZiIvPjx0ZXh0IHg9IjU2IiB5PSI3OTYiIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMiIgZmlsbD0iIzEyMzY2YiI+RmFpbHVyZSBvciBhbWJpZ3VpdHkg4oaSIHN0b3Agc2FmZWx5LCBwcmVzZXJ2ZSBldmlkZW5jZSwgcmVxdWVzdCByZXZpZXcuPC90ZXh0Pjwvc3ZnPgoK" alt="A selected folder produces an inventory, then a proposed plan. Approval does not bypass execution checks. Verification and a journal support understandable results and recovery." /></p>
+<h3 id="1-you-choose-the-shelf">1. You choose the shelf</h3>
+<p>Maya chooses a sandbox folder. The application records a root
+identifier, such as ROOT-DEMO, and a policy saying which actions are
+allowed. Other components use that identifier rather than accepting a
+new unrestricted path every time. This is like giving someone a key to
+one cupboard rather than the entire building.</p>
+<h3 id="2-the-explorer-makes-a-catalog">2. The explorer makes a
+catalog</h3>
+<p>An inventory lists the files the application is allowed to inspect.
+Each record has a file identifier, a location relative to the selected
+root, a size, and a revision fingerprint. A hash is one part of that
+fingerprint: changing file bytes normally changes the hash. The catalog
+is a dated observation, not a permanent guarantee.</p>
+<h3 id="3-search-finds-evidence">3. Search finds evidence</h3>
+<p>Maya asks, “Which notes belong to the hospital project?” The finder
+searches only permitted, indexed content. It might return a paragraph
+mentioning discharge permissions. If the text is insufficient, it says
+so. It cannot make a reliable classification merely because a filename
+sounds medical.</p>
+<h3 id="4-the-planner-proposes-an-arrangement">4. The planner proposes
+an arrangement</h3>
+<p>The planner suggests a destination from an allowed list and explains
+why. It may use a model or simple rules. Either way, its output is data
+to validate. A model can suggest something, but cannot grant itself
+additional privileges.</p>
+<h3 id="5-you-approve-an-exact-checklist">5. You approve an exact
+checklist</h3>
+<p>The workspace shows each source, destination, explanation, and
+warning. Maya selects two moves and leaves a third unchanged. The server
+creates a new plan revision containing exactly those two operations. Her
+approval belongs to that revision, not to every future interpretation of
+“organize my files.”</p>
+<h3 id="6-the-engine-checks-and-acts">6. The engine checks and acts</h3>
+<p>The engine verifies the approval and current filesystem conditions.
+If another program edited the source, it reports “File changed since
+preview.” If the destination exists, it reports a collision. It never
+silently overwrites the destination or picks a new name after
+approval.</p>
+<h3 id="7-the-journal-makes-recovery-possible">7. The journal makes
+recovery possible</h3>
+<p>Imagine the move succeeds but the application loses power before
+updating its status. On restart, the journal says the operation was
+attempted. The engine checks where the file actually is and compares its
+identity and content. If the evidence is ambiguous, it asks for review
+rather than guessing. A journal is therefore an account of intent and
+observations, not magic protection against every disk failure.</p>
+<h2 id="technology-legend">Technology legend</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Plain-English meaning</th>
+<th>Where it fits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Python</td>
+<td>The language used for the first local engine</td>
+<td>Explorer, rules, retrieval, journal, operations</td>
+</tr>
+<tr>
+<td>MCP</td>
+<td>A standard way for an assistant to discover and call tools</td>
+<td>Read bounded file inventories and document previews</td>
+</tr>
+<tr>
+<td>RAG</td>
+<td>Find relevant evidence before composing an answer</td>
+<td>Document Finder; it is not model training</td>
+</tr>
+<tr>
+<td>A2A</td>
+<td>A protocol for one agent to request work from another</td>
+<td>Optional classifier/planner separation</td>
+</tr>
+<tr>
+<td>LLM</td>
+<td>A language model that interprets text</td>
+<td>Optional explanations and proposed categories</td>
+</tr>
+<tr>
+<td>Embedding</td>
+<td>A numerical representation useful for similarity search</td>
+<td>Optional local semantic retrieval</td>
+</tr>
+<tr>
+<td>Chunk</td>
+<td>A small passage cut from a document</td>
+<td>Retrieved with its source and revision</td>
+</tr>
+<tr>
+<td>Keyword search</td>
+<td>Search using matching words</td>
+<td>A useful first implementation without embeddings</td>
+</tr>
+<tr>
+<td>SQLite</td>
+<td>A small database stored locally</td>
+<td>Inventory metadata, plans, approvals, journal</td>
+</tr>
+<tr>
+<td>SHA-256</td>
+<td>A content fingerprint algorithm</td>
+<td>Identify candidate byte-identical files and changed bytes</td>
+</tr>
+<tr>
+<td>JSON Schema</td>
+<td>A precise description of allowed data fields</td>
+<td>Validate tool inputs and plan outputs</td>
+</tr>
+<tr>
+<td>Pydantic</td>
+<td>Python data-validation tooling</td>
+<td>A possible implementation of typed contracts</td>
+</tr>
+<tr>
+<td>FastAPI</td>
+<td>A Python web API framework</td>
+<td>Optional local browser-facing adapter</td>
+</tr>
+<tr>
+<td>React</td>
+<td>Components for an interactive interface</td>
+<td>File rows, plan review, status panels</td>
+</tr>
+<tr>
+<td>Next.js</td>
+<td>A framework around React</td>
+<td>Local workspace or separate synthetic hosted demo</td>
+</tr>
+<tr>
+<td>TypeScript</td>
+<td>JavaScript with static type checking</td>
+<td>Interface code and an alternative local engine</td>
+</tr>
+<tr>
+<td>Vercel</td>
+<td>Hosting for the website and synthetic demonstration</td>
+<td>Not direct access to a personal drive</td>
+</tr>
+<tr>
+<td>Authentication</td>
+<td>Establishing which caller is making a request</td>
+<td>Local session or approved client identity</td>
+</tr>
+<tr>
+<td>Authorization</td>
+<td>Deciding what that caller may do</td>
+<td>Root grants, read permissions, approval permissions</td>
+</tr>
+<tr>
+<td>Idempotency key</td>
+<td>A stable label for one logical request</td>
+<td>Repeated submission returns the existing job</td>
+</tr>
+<tr>
+<td>Journal</td>
+<td>A durable record of intent and observed outcomes</td>
+<td>Crash recovery and operation history</td>
+</tr>
+<tr>
+<td>Reconciliation</td>
+<td>Compare recorded state with reality</td>
+<td>Determine what happened after an interruption</td>
+</tr>
+<tr>
+<td>Junction / symbolic link</td>
+<td>A filesystem entry that redirects somewhere else</td>
+<td>A root-boundary hazard, rejected in the initial design</td>
+</tr>
+<tr>
+<td>Dry run</td>
+<td>Produce and validate a proposal without executing it</td>
+<td>Preview stage</td>
+</tr>
+<tr>
+<td>Compensation</td>
+<td>A new action intended to reverse an earlier action</td>
+<td>Conditional undo, not a guaranteed rewind</td>
+</tr>
+<tr>
+<td>Observability</td>
+<td>Enough safe signals to understand operation health</td>
+<td>Counts, timings, error categories, job states</td>
+</tr>
+</tbody>
+</table>
+<p>Not every entry must be installed on day one. Start with Python, its
+standard library, tests, and SQLite. Add protocols and UI adapters after
+the rules are independently testable. Choosing a library does not
+replace understanding its responsibility.</p>
+<h2 id="why-mcp-rag-and-a2a-are-different">Why MCP, RAG, and A2A are
+different</h2>
+<p>MCP answers “What bounded tool can I call?” RAG answers “What
+evidence supports this answer?” A2A answers “Which specialist can
+perform this separate task?” None answers “Did Maya approve moving this
+exact file?” That is your application&#39;s authorization and workflow
+responsibility.</p>
+<p>The protocol documentation describes <a href="https://modelcontextprotocol.io/specification/2025-06-18/basic/transports">MCP
+transports and local HTTP protections</a> and <a href="https://a2a-protocol.org/dev/topics/life-of-a-task/">A2A task
+lifecycles</a>. Pin the protocol and SDK versions when implementing;
+these links are references, not an instruction to adopt a development
+specification automatically.</p>
+<h2 id="how-to-present-it">How to present it</h2>
+<p>Walk through one file, not the entire technology list. Describe what
+each component knows about that file, what it is allowed to do, and what
+evidence it passes on. Then introduce the acronym for the responsibility
+the audience already understands.</p>
+</main>
+<dialog id="diagram-dialog" aria-label="Enlarged diagram">
+<div class="zoom-toolbar"><span>Diagram detail</span><button type="button" id="diagram-close">Close</button></div>
+<div class="zoom-body"><img id="diagram-large" alt></div>
+</dialog>
+<script>
+const diagramDialog = document.getElementById('diagram-dialog');
+const diagramLarge = document.getElementById('diagram-large');
+document.querySelectorAll('main img').forEach((picture) => {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'diagram-button';
+  button.textContent = 'Enlarge diagram';
+  button.addEventListener('click', () => {
+    diagramLarge.src = picture.src;
+    diagramLarge.alt = picture.alt;
+    diagramDialog.showModal();
+  });
+  picture.insertAdjacentElement('afterend', button);
+});
+document.getElementById('diagram-close').addEventListener('click', () => diagramDialog.close());
+</script>
+</body>
+</html>

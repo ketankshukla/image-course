@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FilePilot — Python Reference Architecture</title>
+<style type="text/css">:root{color-scheme:light;--ink:#19283c;--muted:#56667a;--blue:#145bd8;--navy:#081a33;--line:#dce5ef;--paper:#fff;--bg:#edf2f7}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:30px}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.75 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:#145ac0;text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:3px solid #d58b00;outline-offset:4px}
+.skip{position:fixed;top:-100px;left:16px;z-index:10;background:white;padding:10px}
+.skip:focus{top:10px}
+aside{position:fixed;inset:0 auto 0 0;width:284px;overflow:auto;padding:30px 22px;background:var(--navy);color:#e9f0fa;border-right:1px solid #244363}
+.brand{font-size:12px;letter-spacing:.17em;text-transform:uppercase;color:#76dcf3;font-weight:700}
+aside h2{font-size:22px;line-height:1.3;margin:12px 0 22px;color:white;border:0;padding:0}
+aside ul{list-style:none;margin:0;padding:0}
+aside li{margin:0 0 5px}
+aside li ul{margin-left:0}
+aside a{display:block;padding:7px 10px;border-radius:6px;color:#d2deed;text-decoration:none;font-size:13px;line-height:1.45}
+aside a:hover{background:#193554;color:white}
+.rail-footer{margin-top:22px;border-top:1px solid #2c4260;padding-top:20px;color:#9db0c9;font-size:12px}
+main{margin-left:284px;padding:42px clamp(24px,4vw,72px) 90px;max-width:1550px}
+.toolbar{display:flex;align-items:center;gap:15px;justify-content:space-between;margin-bottom:30px;font-size:12px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+button{font:600 13px system-ui;border:1px solid #c9d7e8;background:#fff;color:#164176;padding:10px 15px;border-radius:8px;cursor:pointer}
+button:hover{background:#e6f0ff}
+h1{font-size:clamp(40px,4.4vw,66px);line-height:1.1;letter-spacing:-.045em;background:linear-gradient(120deg,#07172e,#124481);color:white;border-radius:20px;padding:40px;margin:0 0 34px;box-shadow:0 18px 45px #0b254025}
+h2{font-size:30px;line-height:1.3;color:#103e7c;letter-spacing:-.025em;margin:58px 0 22px;padding-top:23px;border-top:3px solid #2367c9}
+h3{font-size:23px;line-height:1.35;color:#075e76;letter-spacing:-.02em;margin:34px 0 15px}
+p{margin:16px 0;max-width:90ch}
+li{margin:7px 0}
+strong{color:#113862}
+blockquote{background:#e1f1f7;border-left:5px solid #068caf;border-radius:0 12px 12px 0;margin:28px 0;padding:12px 25px;color:#184050}
+figure{margin:28px 0 32px}
+figure img{display:block;width:100%;height:auto;border-radius:14px;background:#07172d;box-shadow:0 12px 28px #0a254025}
+figcaption{font-size:14px;line-height:1.6;color:var(--muted);padding:13px 2px}
+.diagram-button{margin-top:9px;font-size:12px}
+img{max-width:100%;height:auto}
+pre{padding:23px 25px;overflow:auto;background:#091b32;color:#dfedff;border:1px solid #203a56;border-radius:12px;line-height:1.6;tab-size:4}
+code{font-family:"Cascadia Code",Consolas,monospace;font-size:.85em}
+:not(pre)>code{background:#e3eaf3;color:#98305b;padding:.12em .32em;border-radius:4px;overflow-wrap:anywhere}
+pre code{white-space:pre;color:inherit}
+table{border-collapse:separate;border-spacing:0;display:block;overflow-x:auto;max-width:100%;margin:24px 0 30px;border:1px solid var(--line);border-radius:10px;background:white;font-size:15px;line-height:1.6}
+th,td{text-align:left;vertical-align:top;padding:13px 16px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-width:130px}
+th{background:#103c78;color:white;font-weight:650}
+tr:nth-child(even) td{background:#f4f7fb}
+tr:last-child td{border-bottom:0}
+th:last-child,td:last-child{border-right:0}
+hr{border:0;border-top:1px solid var(--line);margin:40px 0}
+dialog{border:1px solid #375679;border-radius:15px;padding:0;background:#07172e;color:white;width:96vw;max-width:1900px;max-height:96vh;overflow:hidden}
+dialog::backdrop{background:#030b17dd}
+.zoom-toolbar{display:flex;gap:10px;align-items:center;justify-content:flex-end;padding:12px 18px;background:#102943}
+.zoom-toolbar span{margin-right:auto;font-size:14px}
+.zoom-body{overflow:auto;max-height:82vh;padding:12px}
+.zoom-body img{display:block;width:100%;max-width:none;margin:auto;height:auto}
+footer{margin-top:60px;border-top:1px solid var(--line);padding-top:20px;font-size:13px;color:var(--muted)}
+@media(max-width:1000px){aside{position:relative;width:auto;padding:24px}aside nav ul{columns:2}aside li{break-inside:avoid}.rail-footer{display:none}main{margin-left:0;padding:28px 24px 60px}}
+@media(max-width:600px){body{font-size:16px}aside nav ul{columns:1}aside{max-height:330px}main{padding:22px 16px 50px}h1{font-size:38px;padding:27px}h2{font-size:26px}h3{font-size:21px}.toolbar{font-size:10px}pre{padding:17px;font-size:14px}.zoom-toolbar{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{aside,.toolbar,.diagram-button,dialog{display:none!important}body{background:white;font-size:11pt}main{margin:0;max-width:none;padding:0}h1{color:#12345a;background:none;padding:0;box-shadow:none;font-size:32pt}h2,h3{break-after:avoid}figure,blockquote{break-inside:avoid}pre{background:#f3f5f9;color:#152f4e;white-space:pre-wrap}pre code{white-space:pre-wrap}table{display:table;font-size:9pt}th,td{min-width:0;padding:7px}figure img{box-shadow:none}}
+</style><style type="text/css">
+body{font-size:24px;line-height:1.7}
+main{max-width:1500px}
+p{max-width:65ch}
+h2{font-size:36px}
+h3{font-size:28px;color:#17478a}
+blockquote{background:#edf4ff;border-left-color:#245ac4;color:#19283c}
+table{font-size:21px}
+figcaption{font-size:20px}
+pre{font-size:20px}
+:not(pre)>code{background:#edf4ff;color:#17478a}
+button{min-height:44px;font-size:16px}
+aside a{font-size:15px}
+.brand{color:#c4d8fa}
+a:focus-visible,button:focus-visible{outline-color:#245ac4}
+@media(max-width:600px){body{font-size:24px}h2{font-size:32px}h3{font-size:27px}pre{font-size:18px}aside a{font-size:15px}}
+@media print{body{font-size:12pt}h2{font-size:22pt}h3{font-size:17pt}table{font-size:10pt}pre{font-size:10pt}}
+</style>
+</head>
+<body>
+<a class="skip" href="#content">Skip to document</a>
+<aside aria-label="Document contents">
+<div class="brand">Visual learning library</div>
+<h2>FilePilot</h2>
+<ul>
+<li><a href="#filepilot--python-reference-architecture" id="toc-filepilot--python-reference-architecture">FilePilot — Python
+Reference Architecture</a>
+<ul>
+<li><a href="#at-a-glance" id="toc-at-a-glance">At a glance</a></li>
+<li><a href="#what-the-diagram-teaches" id="toc-what-the-diagram-teaches">What the diagram teaches</a></li>
+<li><a href="#proposed-repository-structure" id="toc-proposed-repository-structure">Proposed repository
+structure</a></li>
+<li><a href="#file-responsibilities-and-calls" id="toc-file-responsibilities-and-calls">File responsibilities and
+calls</a></li>
+<li><a href="#storage-contract" id="toc-storage-contract">Storage
+contract</a></li>
+<li><a href="#recovery-and-concurrency" id="toc-recovery-and-concurrency">Recovery and concurrency</a></li>
+<li><a href="#acceptance-gate" id="toc-acceptance-gate">Acceptance
+gate</a></li>
+<li><a href="#how-to-present-it" id="toc-how-to-present-it">How to
+present it</a></li>
+</ul></li>
+</ul>
+<div class="rail-footer">Self-contained reading edition<br>Diagrams and styles embedded</div>
+</aside>
+<main id="content">
+<div class="toolbar"><span>Illustrated reference guide</span><button type="button" onclick="window.print()">Print / Save PDF</button></div>
+<h1 id="filepilot--python-reference-architecture">FilePilot — Python
+Reference Architecture</h1>
+<h2 id="at-a-glance">At a glance</h2>
+<p>Use one Python application repository with modules that have clear
+responsibilities. Start with a CLI, SQLite, and a local single-writer
+worker. MCP and a browser API are adapters around those modules; they
+are not the place where permission rules live. A model is optional.</p>
+<h2 id="what-the-diagram-teaches">What the diagram teaches</h2>
+<p><img role="img" aria-label="The workspace uses the coordinator and contracts. Explorer, finder, and planner supply observations and proposals. The operations engine alone changes the sandbox and records outcomes." src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9Ijg2MCIgdmlld0JveD0iMCAwIDEyMDAgODYwIiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUgZGVzYyI+Cjx0aXRsZSBpZD0idGl0bGUiPk9uZSBsb2NhbCBzeXN0ZW0uIE9uZSBhdXRob3JpemVkIHdyaXRlci48L3RpdGxlPjxkZXNjIGlkPSJkZXNjIj5SZWFkIHRvb2xzIGFuZCBzdWdnZXN0aW9ucyBjYW5ub3QgYnlwYXNzIHRoZSBhcHByb3ZhbCBib3VuZGFyeS4gUDEgc3VwcGxpZXMgZmlsZSBldmlkZW5jZSB0byBQNC4gUDQgbXVzdCBpbmRlcGVuZGVudGx5IHJlY2hlY2sgZXZlcnkgb3BlcmF0aW9uLjwvZGVzYz4KPGRlZnM+PG1hcmtlciBpZD0iYXJyb3ciIG1hcmtlcldpZHRoPSIxMiIgbWFya2VySGVpZ2h0PSIxMiIgcmVmWD0iMTAiIHJlZlk9IjUiIG9yaWVudD0iYXV0byI+PHBhdGggZD0iTTAgMCBMMTAgNSBMMCAxMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMjQ1YWM0IiBzdHJva2Utd2lkdGg9IjIiLz48L21hcmtlcj48L2RlZnM+CjxyZWN0IHdpZHRoPSIxMjAwIiBoZWlnaHQ9Ijg2MCIgcng9IjI0IiBmaWxsPSIjZjVmOGZmIi8+PHJlY3Qgd2lkdGg9IjEyMDAiIGhlaWdodD0iMTEyIiByeD0iMjQiIGZpbGw9IiMwYzI5NGYiLz4KPHRleHQgeD0iMzYiIHk9IjQ4IiBmb250LWZhbWlseT0iU2Vnb2UgVUksIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMzIiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IndoaXRlIj5PbmUgbG9jYWwgc3lzdGVtLiBPbmUgYXV0aG9yaXplZCB3cml0ZXIuPC90ZXh0Pgo8dGV4dCB4PSIzNiIgeT0iODYiIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMiIgZmlsbD0iI2RiZThmZiI+UmVhZCB0b29scyBhbmQgc3VnZ2VzdGlvbnMgY2Fubm90IGJ5cGFzcyB0aGUgYXBwcm92YWwgYm91bmRhcnkuPC90ZXh0Pgo8cGF0aCBkPSJNNTQwIDIyMCBMNjYwIDIyMCIgc3Ryb2tlPSIjMjQ1YWM0IiBzdHJva2Utd2lkdGg9IjQiIGZpbGw9Im5vbmUiIG1hcmtlci1lbmQ9InVybCgjYXJyb3cpIi8+CjxwYXRoIGQ9Ik03OTAgMjkwIEw3OTAgMzUwIiBzdHJva2U9IiMyNDVhYzQiIHN0cm9rZS13aWR0aD0iNCIgZmlsbD0ibm9uZSIgbWFya2VyLWVuZD0idXJsKCNhcnJvdykiLz4KPHBhdGggZD0iTTY2MCAzOTAgTDU0MCAzOTAiIHN0cm9rZT0iIzI0NWFjNCIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIiBtYXJrZXItZW5kPSJ1cmwoI2Fycm93KSIvPgo8cGF0aCBkPSJNNzAwIDI5MCBMNzAwIDMyMCBMMjkwIDMyMCBMMjkwIDM1MCIgc3Ryb2tlPSIjMjQ1YWM0IiBzdHJva2Utd2lkdGg9IjQiIGZpbGw9Im5vbmUiIG1hcmtlci1lbmQ9InVybCgjYXJyb3cpIi8+CjxwYXRoIGQ9Ik01NDAgNjQwIEw2NjAgNjQwIiBzdHJva2U9IiMyNDVhYzQiIHN0cm9rZS13aWR0aD0iNCIgZmlsbD0ibm9uZSIgbWFya2VyLWVuZD0idXJsKCNhcnJvdykiLz4KPHBhdGggZD0iTTY2MCAyNjAgTDYwMCAyNjAgTDYwMCA1MzAgTDQwMCA1MzAgTDQwMCA1NjAiIHN0cm9rZT0iIzEyMzY2YiIgc3Ryb2tlLXdpZHRoPSI0IiBzdHJva2UtZGFzaGFycmF5PSI4IDYiIGZpbGw9Im5vbmUiIG1hcmtlci1lbmQ9InVybCgjYXJyb3cpIi8+CjxnPjxyZWN0IHg9IjQwIiB5PSIxNDAiIHdpZHRoPSI1MDAiIGhlaWdodD0iMTUwIiByeD0iMTYiIGZpbGw9IndoaXRlIiBzdHJva2U9IiNiNmNjZWYiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9IjYyIiB5PSIxODAiIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSwgc2Fucy1zZXJpZiIgZm9udC13ZWlnaHQ9IjcwMCIgZm9udC1zaXplPSIyNiIgZmlsbD0iIzEyMzY2YiI+UDUgIFJldmlldyB3b3Jrc3BhY2U8L3RleHQ+PHRleHQgeD0iNjIiIHk9IjIyMSIgZm9udC1mYW1pbHk9IlNlZ29lIFVJLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjIzIiBmaWxsPSIjMTkyODNjIj5Mb2NhbCBicm93c2VyIGludGVyZmFjZTwvdGV4dD48dGV4dCB4PSI2MiIgeT0iMjUzIiBmb250LWZhbWlseT0iU2Vnb2UgVUksIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjMiIGZpbGw9IiMxOTI4M2MiPkFwcHJvdmUgZXhhY3QgcGxhbiByZXZpc2lvbnM8L3RleHQ+PC9nPgo8Zz48cmVjdCB4PSI2NjAiIHk9IjE0MCIgd2lkdGg9IjUwMCIgaGVpZ2h0PSIxNTAiIHJ4PSIxNiIgZmlsbD0id2hpdGUiIHN0cm9rZT0iI2I2Y2NlZiIgc3Ryb2tlLXdpZHRoPSIyIi8+PHRleHQgeD0iNjgyIiB5PSIxODAiIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSwgc2Fucy1zZXJpZiIgZm9udC13ZWlnaHQ9IjcwMCIgZm9udC1zaXplPSIyNiIgZmlsbD0iIzEyMzY2YiI+Q29vcmRpbmF0b3IgKyBjb250cmFjdHM8L3RleHQ+PHRleHQgeD0iNjgyIiB5PSIyMjEiIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMyIgZmlsbD0iIzE5MjgzYyI+QXV0aGVudGljYXRlIGFuZCB2YWxpZGF0ZTwvdGV4dD48dGV4dCB4PSI2ODIiIHk9IjI1MyIgZm9udC1mYW1pbHk9IlNlZ29lIFVJLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjIzIiBmaWxsPSIjMTkyODNjIj5Sb3V0ZSByZXF1ZXN0czsgb3duIGpvYiBzdGF0ZTwvdGV4dD48L2c+CjxnPjxyZWN0IHg9IjQwIiB5PSIzNTAiIHdpZHRoPSI1MDAiIGhlaWdodD0iMTUwIiByeD0iMTYiIGZpbGw9IndoaXRlIiBzdHJva2U9IiNiNmNjZWYiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9IjYyIiB5PSIzOTAiIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSwgc2Fucy1zZXJpZiIgZm9udC13ZWlnaHQ9IjcwMCIgZm9udC1zaXplPSIyNiIgZmlsbD0iIzEyMzY2YiI+UDEgIEV4cGxvcmVyIC8gTUNQPC90ZXh0Pjx0ZXh0IHg9IjYyIiB5PSI0MzEiIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMyIgZmlsbD0iIzE5MjgzYyI+UmVhZCBwZXJtaXR0ZWQgcm9vdDwvdGV4dD48dGV4dCB4PSI2MiIgeT0iNDYzIiBmb250LWZhbWlseT0iU2Vnb2UgVUksIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjMiIGZpbGw9IiMxOTI4M2MiPkludmVudG9yeSBhbmQgYm91bmRlZCBwcmV2aWV3czwvdGV4dD48L2c+CjxnPjxyZWN0IHg9IjY2MCIgeT0iMzUwIiB3aWR0aD0iNTAwIiBoZWlnaHQ9IjE1MCIgcng9IjE2IiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSIjYjZjY2VmIiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSI2ODIiIHk9IjM5MCIgZm9udC1mYW1pbHk9IlNlZ29lIFVJLCBzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iNzAwIiBmb250LXNpemU9IjI2IiBmaWxsPSIjMTIzNjZiIj5QMiArIFAzICBGaW5kZXIgLyBwbGFubmVyPC90ZXh0Pjx0ZXh0IHg9IjY4MiIgeT0iNDMxIiBmb250LWZhbWlseT0iU2Vnb2UgVUksIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjMiIGZpbGw9IiMxOTI4M2MiPlJBRyBldmlkZW5jZSDihpIgcHJvcG9zZWQgcGxhbjwvdGV4dD48dGV4dCB4PSI2ODIiIHk9IjQ2MyIgZm9udC1mYW1pbHk9IlNlZ29lIFVJLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjIzIiBmaWxsPSIjMTkyODNjIj5PcHRpb25hbCBBMkEgc3BlY2lhbGlzdHM6IG5vIHdyaXRlczwvdGV4dD48L2c+CjxnPjxyZWN0IHg9IjQwIiB5PSI1NjAiIHdpZHRoPSI1MDAiIGhlaWdodD0iMTUwIiByeD0iMTYiIGZpbGw9IndoaXRlIiBzdHJva2U9IiNiNmNjZWYiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9IjYyIiB5PSI2MDAiIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSwgc2Fucy1zZXJpZiIgZm9udC13ZWlnaHQ9IjcwMCIgZm9udC1zaXplPSIyNiIgZmlsbD0iIzEyMzY2YiI+UDQgIE9wZXJhdGlvbnMgZW5naW5lPC90ZXh0Pjx0ZXh0IHg9IjYyIiB5PSI2NDEiIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMyIgZmlsbD0iIzE5MjgzYyI+Q2hlY2sgYXBwcm92YWwgKyBjdXJyZW50IHN0YXRlPC90ZXh0Pjx0ZXh0IHg9IjYyIiB5PSI2NzMiIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMyIgZmlsbD0iIzE5MjgzYyI+T25seSBjb21wb25lbnQgYWxsb3dlZCB0byBtb3ZlPC90ZXh0PjwvZz4KPGc+PHJlY3QgeD0iNjYwIiB5PSI1NjAiIHdpZHRoPSI1MDAiIGhlaWdodD0iMTUwIiByeD0iMTYiIGZpbGw9IndoaXRlIiBzdHJva2U9IiNiNmNjZWYiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9IjY4MiIgeT0iNjAwIiBmb250LWZhbWlseT0iU2Vnb2UgVUksIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZvbnQtc2l6ZT0iMjYiIGZpbGw9IiMxMjM2NmIiPlNhbmRib3ggKyBsb2NhbCBqb3VybmFsPC90ZXh0Pjx0ZXh0IHg9IjY4MiIgeT0iNjQxIiBmb250LWZhbWlseT0iU2Vnb2UgVUksIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjMiIGZpbGw9IiMxOTI4M2MiPk9yaWdpbmFsIGZpbGVzOyBtZXRhZGF0YSBkYXRhYmFzZTwvdGV4dD48dGV4dCB4PSI2ODIiIHk9IjY3MyIgZm9udC1mYW1pbHk9IlNlZ29lIFVJLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjIzIiBmaWxsPSIjMTkyODNjIj5SZWNvcmQgaW50ZW50IGFuZCBvYnNlcnZlZCBvdXRjb21lPC90ZXh0PjwvZz4KPHJlY3QgeD0iMzYiIHk9Ijc1MCIgd2lkdGg9IjExMjgiIGhlaWdodD0iNzYiIHJ4PSIxMiIgZmlsbD0iI2UyZWRmZiIvPjx0ZXh0IHg9IjU2IiB5PSI3OTYiIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMiIgZmlsbD0iIzEyMzY2YiI+RGFzaGVkIHJvdXRlOiBhcHByb3ZlZCBqb2JzIGZyb20gY29vcmRpbmF0b3IgdG8gUDQuIFA0IHJlY2hlY2tzIGJlZm9yZSBldmVyeSBtb3ZlLjwvdGV4dD48L3N2Zz4K" alt="The workspace uses the coordinator and contracts. Explorer, finder, and planner supply observations and proposals. The operations engine alone changes the sandbox and records outcomes." /></p>
+<p>Maya&#39;s request enters through the workspace. The coordinator
+authenticates her local session and resolves the selected root grant. It
+calls the explorer to obtain an inventory. The finder can supply
+document evidence. The planner produces a proposal referencing file IDs
+and allowed destination IDs.</p>
+<p>The coordinator persists the proposal so the UI can display a stable
+revision. Approval is recorded separately. When execution is requested,
+the coordinator submits the approved job to the operations engine. The
+engine loads the authoritative plan from storage; it never executes the
+browser&#39;s copy of the plan. This prevents a reviewer from approving one
+object while a modified request submits another.</p>
+<p>The engine records intent, checks the source and destination through
+a filesystem adapter, attempts the move, and checks the result. It then
+invalidates the file&#39;s old search location. A successful move must not
+leave a citation pointing to a nonexistent path, although its stable
+file ID may remain unchanged if identity has been verified.</p>
+<h2 id="proposed-repository-structure">Proposed repository
+structure</h2>
+<pre class="text"><code>filepilot-platform/
+  pyproject.toml
+  README.md
+  src/filepilot/
+    cli.py
+    contracts.py
+    policy.py
+    roots.py
+    inventory.py
+    fingerprints.py
+    extraction.py
+    retrieval.py
+    planner.py
+    approvals.py
+    operations.py
+    reconciliation.py
+    audit.py
+    adapters/
+      filesystem_windows.py
+      mcp_server.py
+      http_api.py
+      classifier_a2a.py
+    storage/
+      database.py
+      migrations/001_initial.sql
+  tests/
+    unit/
+    integration/
+    protocol/
+    recovery/
+  fixtures/                     Synthetic text and expected outcomes
+  apps/workspace/               Optional local Next.js interface
+  contracts/                   Language-neutral schemas
+  docs/                        Implementation notes, not private traces</code></pre>
+<p>Runtime state and managed files live outside this repository. Do not
+make the repository itself the first managed root. Otherwise a cleanup
+can move the program&#39;s own database or source files while it is
+running.</p>
+<h2 id="file-responsibilities-and-calls">File responsibilities and
+calls</h2>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Principal functions to implement</th>
+<th>Calls</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>roots.py</code></td>
+<td><code>grant_root</code>, <code>authorize_root</code>,
+<code>revoke_root</code></td>
+<td>Policy and root registry</td>
+</tr>
+<tr>
+<td><code>inventory.py</code></td>
+<td><code>scan_root</code>, <code>get_file_record</code></td>
+<td>Root checks, read-only filesystem adapter</td>
+</tr>
+<tr>
+<td><code>fingerprints.py</code></td>
+<td><code>fingerprint</code>, <code>same_revision</code></td>
+<td>Bounded byte reads and metadata</td>
+</tr>
+<tr>
+<td><code>extraction.py</code></td>
+<td><code>extract_text</code>, <code>split_passages</code></td>
+<td>Approved readers, resource limits</td>
+</tr>
+<tr>
+<td><code>retrieval.py</code></td>
+<td><code>index_file</code>, <code>search_evidence</code></td>
+<td>Current grants, revision checks, index</td>
+</tr>
+<tr>
+<td><code>planner.py</code></td>
+<td><code>propose_plan</code>, <code>validate_plan</code></td>
+<td>Allowed destinations, evidence IDs</td>
+</tr>
+<tr>
+<td><code>approvals.py</code></td>
+<td><code>approve_revision</code>, <code>authorize_execution</code></td>
+<td>Current identity, digest, expiry</td>
+</tr>
+<tr>
+<td><code>operations.py</code></td>
+<td><code>claim_job</code>, <code>execute_operation</code></td>
+<td>Approval checks, journal, OS adapter</td>
+</tr>
+<tr>
+<td><code>reconciliation.py</code></td>
+<td><code>reconcile_operation</code>,
+<code>propose_reverse_plan</code></td>
+<td>Journal and current filesystem observations</td>
+</tr>
+</tbody>
+</table>
+<p>The read tools must not import the mutating adapter methods. Protocol
+adapters call application services; application services do not call
+protocol adapters. That dependency direction keeps a protocol upgrade
+from changing the core rules.</p>
+<h2 id="storage-contract">Storage contract</h2>
+<p>Use tables for roots, files, document revisions, chunks, plans, plan
+operations, approvals, jobs, and operation events. A plan is immutable
+once presented for approval; edits create a new revision. Enforce
+uniqueness on an execution request&#39;s idempotency key within its
+principal/root scope and record the associated plan digest. Reusing a
+key for a different plan is an error, not a new job.</p>
+<p>The journal records operation ID, expected source identity, target,
+intent time, observed result, and safe error category. Full paths may be
+necessary in the private local database for recovery; they should not be
+copied into public logs. Protect the database using local OS permissions
+and an appropriate encrypted-storage strategy for the intended
+deployment. Ordinary SQLite is not inherently an encrypted vault.</p>
+<h2 id="recovery-and-concurrency">Recovery and concurrency</h2>
+<p>Use one writer initially. A process-level ownership lock prevents two
+workers from manipulating the same sandbox. A crashed worker&#39;s jobs must
+enter reconciliation before they can be resumed. An in-process lock
+alone does not protect against a second process or another application
+changing files.</p>
+<p>The adapter must report facts rather than optimistic booleans: source
+missing, destination present with expected identity, destination
+occupied by different content, permission denied, and unsupported
+operation are distinct observations. For ambiguous states, the engine
+requests review. A background retry should never invent a new target
+name.</p>
+<h2 id="acceptance-gate">Acceptance gate</h2>
+<p>You can test the domain without running MCP, a browser, or a model.
+Protocol integration tests then prove that the same denials occur
+through external adapters. Recovery tests terminate the writer at known
+points and inspect both journal state and actual files after restart.
+This is an architectural target, not a statement that those tests
+already exist in an application repository.</p>
+<h2 id="how-to-present-it">How to present it</h2>
+<p>Trace one approved operation through <code>approvals</code>,
+<code>operations</code>, the filesystem adapter, and
+<code>reconciliation</code>. Then replace the planner with a
+deterministic fake and show that the safety contract is unchanged.</p>
+</main>
+<dialog id="diagram-dialog" aria-label="Enlarged diagram">
+<div class="zoom-toolbar"><span>Diagram detail</span><button type="button" id="diagram-close">Close</button></div>
+<div class="zoom-body"><img id="diagram-large" alt></div>
+</dialog>
+<script>
+const diagramDialog = document.getElementById('diagram-dialog');
+const diagramLarge = document.getElementById('diagram-large');
+document.querySelectorAll('main img').forEach((picture) => {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'diagram-button';
+  button.textContent = 'Enlarge diagram';
+  button.addEventListener('click', () => {
+    diagramLarge.src = picture.src;
+    diagramLarge.alt = picture.alt;
+    diagramDialog.showModal();
+  });
+  picture.insertAdjacentElement('afterend', button);
+});
+document.getElementById('diagram-close').addEventListener('click', () => diagramDialog.close());
+</script>
+</body>
+</html>

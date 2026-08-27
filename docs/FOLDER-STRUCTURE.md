@@ -2,7 +2,7 @@
 
 ## At a glance
 
-The course website remains one Git repository. Its ten course collections now live together under `courses`. All case-study documents live under `docs/case-studies`, separated into Acme and HarborCare. This reorganization did not create application repositories or deploy a hospital system.
+The course website remains one Git repository. Its ten course collections live together under `courses`. All case-study documents live under `docs/case-studies`, separated into Acme, HarborCare, and FilePilot. These are teaching collections; adding them does not install or deploy their proposed applications.
 
 ```text
 image-course/
@@ -36,6 +36,12 @@ image-course/
 │       │   ├── repository-assets/
 │       │   ├── beginner-assets/
 │       │   └── ...               Main architecture, deployment and beginner guides
+│       ├── filepilot/
+│       │   ├── collection.json   Website publication allowlist
+│       │   ├── 00-START-HERE.md / .html
+│       │   ├── ...               Strategy, legend, safety and architecture guides
+│       │   ├── manual-build/     Eight sequential workbook documents
+│       │   └── assets/           Four original architecture diagrams
 │       └── hospital/
 │           ├── 00-START-HERE.md / .html
 │           ├── 01-PROJECT-STRATEGY.md / .html
@@ -55,6 +61,8 @@ image-course/
 
 ## 1. Start reading here
 
+- [FilePilot safe file-automation collection](case-studies/filepilot/00-START-HERE.html)
+- [FilePilot manual-build series](case-studies/filepilot/manual-build/00-START-HERE.html)
 - [HarborCare hospital case-study collection](case-studies/hospital/00-START-HERE.html)
 - [HarborCare manual-build series](case-studies/hospital/manual-build/00-START-HERE.html)
 - [Acme project strategy](case-studies/acme/strategy/PROJECT-STRATEGY.html)
@@ -98,6 +106,8 @@ From the repository root, run `npm run build:content` to regenerate course conte
 
 Run `python scripts/build_documents.py` to rebuild the HarborCare HTML editions and this folder guide. It requires Pandoc and keeps each Markdown document beside its HTML counterpart. The existing Acme asset folders retain their own rebuild scripts, now beneath the new case-study location.
 
+Run `python scripts/build_documents.py --collection filepilot` for FilePilot's 16 HTML editions and the workspace guides. These use the larger blue reading style. The verifier checks both supported collections and their executable foundation exercises.
+
 Run `python scripts/verify_documents.py` to check the new document collection, embedded assets, local links and learning exercise. These checks complement—not replace—visual and browser testing of a future application.
 
 The website now integrates these materials through explicit `collection.json` publication manifests. Case-study folders with a manifest are automatically discovered; unlisted drafts stay unpublished. The local HTML editions remain independent reading copies. See [Publishing a New Case Study](PUBLISHING-CASE-STUDIES.html) for the complete workflow. The website build is Node-only; Python and Pandoc are optional local document tools.
@@ -107,3 +117,5 @@ The website now integrates these materials through explicit `collection.json` pu
 Keep this repository for learning content. When implementation begins, create sibling repositories such as `harborcare-platform` for Python/hybrid and, later, `harborcare-platform-ts` for the alternative. The five projects can be modules or services within each application repository. They do not require five nested Git repositories.
 
 Acme's future application repositories remain separate from HarborCare's. Sharing educational patterns does not mean sharing patient fixtures, credentials, deployments or release databases. None of those future repositories has been created by this documentation work.
+
+FilePilot's future Python/hybrid code belongs in a sibling `filepilot-platform` repository. Its optional TypeScript counterpart belongs in `filepilot-platform-ts`. Managed files, local indexes, approvals and operation journals must remain outside the teaching repository and application checkouts. See [FilePilot repositories and deployment](case-studies/filepilot/07-REPOSITORIES-AND-DEPLOYMENT.html).

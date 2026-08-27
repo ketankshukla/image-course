@@ -1972,6 +1972,119 @@
       "dataUrl": "/library/collections/hospital.95a3ff7aa407c9832d99.json"
     },
     {
+      "id": "filepilot",
+      "kind": "case-study",
+      "title": "FilePilot — Safe File Automation",
+      "subtitle": "Find, understand, and organize local files with approved plans and recoverable operations.",
+      "icon": "🗂️",
+      "slug": "filepilot",
+      "chaptersCount": 16,
+      "modules": [
+        {
+          "number": 1,
+          "title": "Start here",
+          "icon": "🧭",
+          "chapters": [
+            {
+              "number": 1,
+              "title": "FilePilot — Your Personal File Operations Assistant",
+              "slug": "00-start-here"
+            },
+            {
+              "number": 2,
+              "title": "FilePilot — Project Strategy",
+              "slug": "01-project-strategy"
+            },
+            {
+              "number": 3,
+              "title": "FilePilot — The Whole Flow in Plain English",
+              "slug": "02-plain-english-and-legend"
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "title": "Architecture & safety",
+          "icon": "🛠️",
+          "chapters": [
+            {
+              "number": 4,
+              "title": "FilePilot — Safety Policy and Adversarial Tests",
+              "slug": "03-safety-policy-and-tests"
+            },
+            {
+              "number": 5,
+              "title": "FilePilot — Python Reference Architecture",
+              "slug": "04-python-architecture"
+            },
+            {
+              "number": 6,
+              "title": "FilePilot — Next.js Workspace with a Local Python Engine",
+              "slug": "05-hybrid-architecture"
+            },
+            {
+              "number": 7,
+              "title": "FilePilot — TypeScript Counterpart",
+              "slug": "06-typescript-architecture"
+            },
+            {
+              "number": 8,
+              "title": "FilePilot — Repositories, Runtime Data, and Deployment",
+              "slug": "07-repositories-and-deployment"
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "title": "Build it step by step",
+          "icon": "🧠",
+          "chapters": [
+            {
+              "number": 9,
+              "title": "Build FilePilot Manually — Start Here",
+              "slug": "00-start-here"
+            },
+            {
+              "number": 10,
+              "title": "Build FilePilot — Foundations and Your First Tests",
+              "slug": "01-foundations"
+            },
+            {
+              "number": 11,
+              "title": "Build FilePilot — The Read-Only MCP Explorer",
+              "slug": "02-mcp-explorer"
+            },
+            {
+              "number": 12,
+              "title": "Build FilePilot — Private Document Search with RAG",
+              "slug": "03-document-rag"
+            },
+            {
+              "number": 13,
+              "title": "Build FilePilot — Organization Planning and Optional A2A",
+              "slug": "04-planner-and-a2a"
+            },
+            {
+              "number": 14,
+              "title": "Build FilePilot — Approved Operations and Crash Recovery",
+              "slug": "05-safe-operations"
+            },
+            {
+              "number": 15,
+              "title": "Build FilePilot — The Human Review Workspace",
+              "slug": "06-file-workspace"
+            },
+            {
+              "number": 16,
+              "title": "Build FilePilot — Testing, Packaging, and a Production Demo",
+              "slug": "07-production-demo"
+            }
+          ]
+        }
+      ],
+      "dataUrl": "/library/collections/filepilot.03d47ea957433d66fbe0.json"
+    },
+    {
       "id": "library-guides",
       "kind": "guide",
       "title": "Using & Growing This Library",
@@ -1998,8 +2111,8 @@
           ]
         }
       ],
-      "dataUrl": "/library/collections/library-guides.699e984bc7c7f82281e7.json"
+      "dataUrl": "/library/collections/library-guides.c671a042ac469f00322a.json"
     }
   ],
-  "searchUrl": "/library/search.18cc3b0ba53550fe3bb6.json"
+  "searchUrl": "/library/search.667bb0536520c71d36f1.json"
 }

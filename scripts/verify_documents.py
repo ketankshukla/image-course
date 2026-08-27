@@ -38,6 +38,10 @@ class Page(HTMLParser):
 def main():
     sources = sorted(HOSPITAL.rglob("*.md"))
     assert len(sources) == 16, f"Expected 16 hospital guides, got {len(sources)}"
+    filepilot = ROOT / "docs/case-studies/filepilot"
+    filepilot_sources = sorted(filepilot.rglob("*.md"))
+    assert len(filepilot_sources) == 16, f"Expected 16 FilePilot guides, got {len(filepilot_sources)}"
+    sources.extend(filepilot_sources)
     sources.append(ROOT / "docs/FOLDER-STRUCTURE.md")
     sources.append(ROOT / "docs/PUBLISHING-CASE-STUDIES.md")
     image_count = 0
@@ -75,6 +79,14 @@ def main():
     result = unittest.TextTestRunner(stream=io.StringIO()).run(
         unittest.defaultTestLoader.loadTestsFromTestCase(namespace["PickupPolicyTests"]))
     assert result.wasSuccessful(), result.errors + result.failures
+    pilot_lesson = (filepilot / "manual-build/01-FOUNDATIONS.md").read_text(encoding="utf-8")
+    pilot_blocks = re.findall(r"```python\n(.*?)```", pilot_lesson, re.S)
+    assert len(pilot_blocks) == 1
+    pilot_namespace = {"__name__": "filepilot_exercise"}
+    exec(compile(pilot_blocks[0], "filepilot-foundations", "exec"), pilot_namespace)
+    pilot_result = unittest.TextTestRunner(stream=io.StringIO()).run(
+        unittest.defaultTestLoader.loadTestsFromTestCase(pilot_namespace["ApprovalTests"]))
+    assert pilot_result.wasSuccessful(), pilot_result.errors + pilot_result.failures
     # Course Markdown image references must still resolve after the move.
     course_images = 0
     for source in (ROOT / "courses").glob("*/diagram-docs/*.md"):
@@ -84,7 +96,7 @@ def main():
             assert (source.parent / unquote(target)).exists(), (source, target)
             course_images += 1
     print(f"PASS: {len(sources)} HTML/Markdown pairs; {image_count} embedded diagrams; "
-          f"{result.testsRun} executable exercise tests; {course_images} course image references.")
+          f"{result.testsRun + pilot_result.testsRun} executable exercise tests; {course_images} course image references.")
 
 
 if __name__ == "__main__":

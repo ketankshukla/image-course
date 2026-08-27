@@ -1,4 +1,5 @@
-"""Render the HarborCare collection and folder guide with embedded assets."""
+"""Render a supported case-study collection and workspace guides with embedded assets."""
+import argparse
 import shutil
 import subprocess
 from pathlib import Path
@@ -9,6 +10,10 @@ HOSPITAL = DOCS / "case-studies" / "hospital"
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--collection", choices=["hospital", "filepilot"], default="hospital")
+    args = parser.parse_args()
+    collection = DOCS / "case-studies" / args.collection
     pandoc = shutil.which("pandoc")
     if not pandoc:
         candidate = Path.home() / "AppData/Local/Pandoc/pandoc.exe"
@@ -16,7 +21,7 @@ def main():
             pandoc = str(candidate)
     if not pandoc:
         raise SystemExit("Install Pandoc before building document editions.")
-    documents = sorted(HOSPITAL.rglob("*.md")) + [DOCS / "FOLDER-STRUCTURE.md", DOCS / "PUBLISHING-CASE-STUDIES.md"]
+    documents = sorted(collection.rglob("*.md")) + [DOCS / "FOLDER-STRUCTURE.md", DOCS / "PUBLISHING-CASE-STUDIES.md"]
     for source in documents:
         title = source.read_text(encoding="utf-8").splitlines()[0].lstrip("# ")
         subprocess.run([
@@ -24,8 +29,9 @@ def main():
             "--embed-resources", "--toc", "--toc-depth=2",
             f"--template={DOCS / 'assets/document.template.html'}",
             f"--css={DOCS / 'assets/document.css'}",
+            *([f"--css={DOCS / 'assets/reading-document.css'}"] if args.collection == "filepilot" else []),
             "--metadata", f"title={title}",
-            "--metadata", "edition=HarborCare" if source.parent != DOCS else "edition=Workspace guide",
+            "--metadata", ("edition=FilePilot" if args.collection == "filepilot" else "edition=HarborCare") if source.parent != DOCS else "edition=Workspace guide",
             f"--output={source.with_suffix('.html').name}",
         ], cwd=source.parent, check=True)
         print(f"Rendered {source.relative_to(ROOT)}")

@@ -59,6 +59,23 @@ footer{margin-top:60px;border-top:1px solid var(--line);padding-top:20px;font-si
 @media(max-width:600px){body{font-size:16px}aside nav ul{columns:1}aside{max-height:330px}main{padding:22px 16px 50px}h1{font-size:38px;padding:27px}h2{font-size:26px}h3{font-size:21px}.toolbar{font-size:10px}pre{padding:17px;font-size:14px}.zoom-toolbar{flex-wrap:wrap}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 @media print{aside,.toolbar,.diagram-button,dialog{display:none!important}body{background:white;font-size:11pt}main{margin:0;max-width:none;padding:0}h1{color:#12345a;background:none;padding:0;box-shadow:none;font-size:32pt}h2,h3{break-after:avoid}figure,blockquote{break-inside:avoid}pre{background:#f3f5f9;color:#152f4e;white-space:pre-wrap}pre code{white-space:pre-wrap}table{display:table;font-size:9pt}th,td{min-width:0;padding:7px}figure img{box-shadow:none}}
+</style><style type="text/css">
+body{font-size:24px;line-height:1.7}
+main{max-width:1500px}
+p{max-width:65ch}
+h2{font-size:36px}
+h3{font-size:28px;color:#17478a}
+blockquote{background:#edf4ff;border-left-color:#245ac4;color:#19283c}
+table{font-size:21px}
+figcaption{font-size:20px}
+pre{font-size:20px}
+:not(pre)>code{background:#edf4ff;color:#17478a}
+button{min-height:44px;font-size:16px}
+aside a{font-size:15px}
+.brand{color:#c4d8fa}
+a:focus-visible,button:focus-visible{outline-color:#245ac4}
+@media(max-width:600px){body{font-size:24px}h2{font-size:32px}h3{font-size:27px}pre{font-size:18px}aside a{font-size:15px}}
+@media print{body{font-size:12pt}h2{font-size:22pt}h3{font-size:17pt}table{font-size:10pt}pre{font-size:10pt}}
 </style>
 </head>
 <body>
@@ -91,10 +108,10 @@ application code belongs</a></li>
 Workspace</h1>
 <h2 id="at-a-glance">At a glance</h2>
 <p>The course website remains one Git repository. Its ten course
-collections now live together under <code>courses</code>. All case-study
-documents live under <code>docs/case-studies</code>, separated into Acme
-and HarborCare. This reorganization did not create application
-repositories or deploy a hospital system.</p>
+collections live together under <code>courses</code>. All case-study
+documents live under <code>docs/case-studies</code>, separated into
+Acme, HarborCare, and FilePilot. These are teaching collections; adding
+them does not install or deploy their proposed applications.</p>
 <pre class="text"><code>image-course/
 ├── app/                          Course website pages and interface
 ├── lib/                          Website helpers and types
@@ -126,6 +143,12 @@ repositories or deploy a hospital system.</p>
 │       │   ├── repository-assets/
 │       │   ├── beginner-assets/
 │       │   └── ...               Main architecture, deployment and beginner guides
+│       ├── filepilot/
+│       │   ├── collection.json   Website publication allowlist
+│       │   ├── 00-START-HERE.md / .html
+│       │   ├── ...               Strategy, legend, safety and architecture guides
+│       │   ├── manual-build/     Eight sequential workbook documents
+│       │   └── assets/           Four original architecture diagrams
 │       └── hospital/
 │           ├── 00-START-HERE.md / .html
 │           ├── 01-PROJECT-STRATEGY.md / .html
@@ -143,6 +166,10 @@ repositories or deploy a hospital system.</p>
 └── ...                           Framework, TypeScript and Git configuration</code></pre>
 <h2 id="1-start-reading-here">1. Start reading here</h2>
 <ul>
+<li><a href="case-studies/filepilot/00-START-HERE.html">FilePilot safe
+file-automation collection</a></li>
+<li><a href="case-studies/filepilot/manual-build/00-START-HERE.html">FilePilot
+manual-build series</a></li>
 <li><a href="case-studies/hospital/00-START-HERE.html">HarborCare
 hospital case-study collection</a></li>
 <li><a href="case-studies/hospital/manual-build/00-START-HERE.html">HarborCare
@@ -240,6 +267,11 @@ HarborCare HTML editions and this folder guide. It requires Pandoc and
 keeps each Markdown document beside its HTML counterpart. The existing
 Acme asset folders retain their own rebuild scripts, now beneath the new
 case-study location.</p>
+<p>Run
+<code>python scripts/build_documents.py --collection filepilot</code>
+for FilePilot&#39;s 16 HTML editions and the workspace guides. These use the
+larger blue reading style. The verifier checks both supported
+collections and their executable foundation exercises.</p>
 <p>Run <code>python scripts/verify_documents.py</code> to check the new
 document collection, embedded assets, local links and learning exercise.
 These checks complement—not replace—visual and browser testing of a
@@ -263,6 +295,12 @@ They do not require five nested Git repositories.</p>
 HarborCare&#39;s. Sharing educational patterns does not mean sharing patient
 fixtures, credentials, deployments or release databases. None of those
 future repositories has been created by this documentation work.</p>
+<p>FilePilot&#39;s future Python/hybrid code belongs in a sibling
+<code>filepilot-platform</code> repository. Its optional TypeScript
+counterpart belongs in <code>filepilot-platform-ts</code>. Managed
+files, local indexes, approvals and operation journals must remain
+outside the teaching repository and application checkouts. See <a href="case-studies/filepilot/07-REPOSITORIES-AND-DEPLOYMENT.html">FilePilot
+repositories and deployment</a>.</p>
 </main>
 <dialog id="diagram-dialog" aria-label="Enlarged diagram">
 <div class="zoom-toolbar"><span>Diagram detail</span><button type="button" id="diagram-close">Close</button></div>

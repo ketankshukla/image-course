@@ -1,0 +1,17 @@
+/* Comfortable blue reading edition, layered after document.css. */
+body{font-size:24px;line-height:1.7}
+main{max-width:1500px}
+p{max-width:65ch}
+h2{font-size:36px}
+h3{font-size:28px;color:#17478a}
+blockquote{background:#edf4ff;border-left-color:#245ac4;color:#19283c}
+table{font-size:21px}
+figcaption{font-size:20px}
+pre{font-size:20px}
+:not(pre)>code{background:#edf4ff;color:#17478a}
+button{min-height:44px;font-size:16px}
+aside a{font-size:15px}
+.brand{color:#c4d8fa}
+a:focus-visible,button:focus-visible{outline-color:#245ac4}
+@media(max-width:600px){body{font-size:24px}h2{font-size:32px}h3{font-size:27px}pre{font-size:18px}aside a{font-size:15px}}
+@media print{body{font-size:12pt}h2{font-size:22pt}h3{font-size:17pt}table{font-size:10pt}pre{font-size:10pt}}
