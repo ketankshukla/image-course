@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { CourseData, SiteManifest } from "@/lib/types";
@@ -27,6 +27,18 @@ export default function CourseClient({ manifest }: { manifest: SiteManifest }) {
   const [highlightQuery, setHighlightQuery] = useState("");
   const [error, setError] = useState("");
   const [retry, setRetry] = useState(0);
+  const [readingSize, setReadingSize] = useState(24);
+  useEffect(() => {
+    try {
+      const saved = Number(localStorage.getItem("libraryReadingSize"));
+      if ([22, 24, 28].includes(saved)) setReadingSize(saved);
+    } catch { /* Reading controls also work when storage is unavailable. */ }
+  }, []);
+  function changeReadingSize(size: number) {
+    if (![22, 24, 28].includes(size)) return;
+    setReadingSize(size);
+    try { localStorage.setItem("libraryReadingSize", String(size)); } catch { /* Optional preference persistence. */ }
+  }
   const currentSummary = manifest.courses.find(c => c.id === selection.courseId);
   const currentCourse = selection.courseId ? loaded[selection.courseId] : undefined;
   const currentChapter = currentCourse && selection.number ? chapterByNumber(currentCourse.modules).get(selection.number) : undefined;
@@ -135,9 +147,9 @@ export default function CourseClient({ manifest }: { manifest: SiteManifest }) {
   const progress = totalChapters ? Math.round(completedTotal / totalChapters * 100) : 0;
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen" style={{ "--reading-size": `${readingSize}px` } as CSSProperties}>
       <a className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 z-[60] bg-white p-3" href="#main-content" onClick={event => { event.preventDefault(); document.getElementById("main-content")?.focus(); }}>Skip to content</a>
-      <header className="course-header fixed top-0 left-0 right-0 z-50 h-[60px] bg-gradient-to-r from-primary to-primary-dark text-white shadow-lg flex items-center justify-between px-5">
+      <header className="site-header course-header fixed top-0 left-0 right-0 z-50 h-[60px] text-white shadow-lg flex items-center justify-between px-5">
         <Link href="/" onClick={e => { e.preventDefault(); navigate(null); }} className="flex items-center gap-3 no-underline text-white">
           <span className="text-2xl">🎓</span><span className="font-serif text-xl font-bold">Visual <span className="text-accent">Library</span></span>
         </Link>
@@ -155,11 +167,11 @@ export default function CourseClient({ manifest }: { manifest: SiteManifest }) {
           searchQuery={searchQuery} onSearch={setSearchQuery} onToggleCourse={toggleCourse}
           onToggleModule={toggleModule} onSelectChapter={navigate} onCloseSidebar={() => setSidebarOpen(false)} />
         <main id="main-content" tabIndex={-1} className="main-content min-w-0 flex-1 p-4 md:p-8 md:ml-[var(--sidebar-width)]">
-          <div className="bg-white rounded-2xl shadow p-5 md:p-10 min-h-[calc(100vh-140px)]">
+          <div className="reading-surface bg-white rounded-2xl p-5 md:p-10 min-h-[calc(100vh-140px)]">
             {searchQuery.trim() ? <SearchResults query={searchQuery} searchUrl={manifest.searchUrl} onSelect={(id, n) => navigate(id, n, searchQuery.trim())} />
               : error ? <div role="alert" className="p-8"><h1 className="text-2xl mb-4">Something needs attention</h1><p>{error}</p><button className="mt-4 underline" onClick={() => { setError(""); setRetry(n => n + 1); }}>Try again</button></div>
               : currentSummary && !currentCourse ? <p role="status" className="p-12 text-center">Loading collection…</p>
-              : currentChapter && currentCourse ? <ChapterContent key={`${currentCourse.id}:${currentChapter.number}`} chapter={currentChapter} course={currentCourse} completed={completed[currentCourse.id] || []} onMarkComplete={n => markComplete(currentCourse.id, n)} onNavigate={navigate} highlightQuery={highlightQuery} />
+              : currentChapter && currentCourse ? <ChapterContent key={`${currentCourse.id}:${currentChapter.number}`} chapter={currentChapter} course={currentCourse} completed={completed[currentCourse.id] || []} onMarkComplete={n => markComplete(currentCourse.id, n)} onNavigate={navigate} highlightQuery={highlightQuery} readingSize={readingSize} onReadingSizeChange={changeReadingSize} />
               : currentCourse ? <CourseWelcome course={currentCourse} completed={completed[currentCourse.id] || []} onStart={() => { const first = currentCourse.modules[0]?.chapters[0]; if (first) navigate(currentCourse.id, first.number); }} />
               : <SiteWelcome manifest={visibleManifest} shelf={shelf} allCollections={manifest.courses} onShelfChange={changeShelf} completedByCourse={completed} completedTotal={completedTotal} totalChapters={totalChapters} onSelectCourse={navigate} />}
           </div>

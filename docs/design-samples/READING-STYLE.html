@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A More Comfortable Reading Style</title>
+  <style>
+    :root { --reading-size: 24px; color-scheme: light; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: #19283c; background: #edf2f7; }
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 36px 24px; }
+    main { max-width: 1040px; margin: auto; padding: 48px 60px; background: #fff; border: 1px solid #dce5ef; border-radius: 22px; box-shadow: 0 16px 48px #0b254012; }
+    .label { margin: 0 0 22px; color: #145bd8; font-size: 15px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+    header { padding: 32px 36px; border-radius: 16px; background: linear-gradient(120deg, #07172e, #124481); }
+    h1 { margin: 0; color: #fff; font-size: clamp(42px, 5vw, 68px); line-height: 1.12; letter-spacing: -.035em; }
+    h2 { margin: 32px 0 14px; padding-top: 22px; border-top: 3px solid #2367c9; color: #103e7c; font-size: 36px; line-height: 1.25; letter-spacing: -.02em; }
+    p { margin: 18px 0; font-size: var(--reading-size); line-height: 1.7; max-width: 65ch; }
+    strong { color: #113862; }
+    .takeaway { margin-top: 26px; padding: 18px 24px; border-left: 5px solid #145bd8; border-radius: 0 12px 12px 0; background: #edf4ff; }
+    .takeaway p { margin: 0; }
+    .reading-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; padding: 20px 0 4px; color: #425b7d; font-size: 17px; }
+    .sizes { display: flex; align-items: center; gap: 8px; }
+    button { font: inherit; color: #17478a; background: #f3f7ff; border: 1px solid #c8d9f3; border-radius: 8px; min-width: 44px; min-height: 44px; cursor: pointer; }
+    button[aria-pressed="true"] { color: white; background: #245ac4; border-color: #245ac4; }
+    button:focus-visible, summary:focus-visible { outline: 3px solid #145bd8; outline-offset: 4px; }
+    .note-title { display: block; margin-bottom: 8px; color: #17478a; font-weight: 700; font-size: 19px; }
+    .example { margin: 28px 0; padding: 24px; background: #f5f8ff; border: 1px solid #c8d9f3; border-radius: 12px; }
+    .example p { margin: 0; }
+    figure { margin: 30px 0; }
+    figure img { display: block; width: 100%; height: auto; border-radius: 14px; }
+    figcaption { padding: 16px 20px; background: #f0f5ff; color: #294b78; border-radius: 0 0 12px 12px; font-size: calc(var(--reading-size) * .9); line-height: 1.6; }
+    .recap { background: #12366b; padding: 26px; border-radius: 14px; color: #fff; }
+    .recap p { margin: 0; }
+    .recap strong { color: white; }
+    details { margin-top: 24px; padding: 20px 24px; border: 1px solid #c8d9f3; border-radius: 12px; background: #f5f8ff; }
+    summary { cursor: pointer; font-size: var(--reading-size); font-weight: 600; color: #17478a; }
+    .palette { display: grid; grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); gap: 12px; margin: 24px 0; }
+    .swatch { border: 1px solid #dce5ef; border-radius: 12px; overflow: hidden; }
+    .swatch div { height: 56px; }
+    .swatch span { display: block; padding: 10px 12px; font-size: 16px; line-height: 1.5; }
+    footer { margin-top: 28px; padding-top: 18px; border-top: 1px solid #dce5ef; color: #56667a; font-size: 16px; line-height: 1.6; }
+    @media (max-width: 640px) { body { padding: 14px 10px; } main { padding: 26px 22px; } header { padding: 24px; } h2 { font-size: 32px; } }
+    @page { size: A4; margin: 16mm; }
+    @media print { body { padding: 0; background: white; } main { padding: 0; border: 0; box-shadow: none; } header { background: none; padding: 0; } h1 { color: #103e7c; font-size: 36pt; } h2 { font-size: 23pt; margin-top: 20px; } p { font-size: 16pt; line-height: 1.55; } .takeaway { break-inside: avoid; } footer { font-size: 10pt; } }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="label">Reading style sample · Not a website update</div>
+    <header><h1>The right information.<br>The right person.</h1></header>
+    <div class="reading-bar"><span>About 2 minutes · Synthetic learning example</span><div class="sizes" role="group" aria-label="Body text size"><span>Text size</span><button type="button" data-size="22" aria-label="22 pixel body text" aria-pressed="false">22</button><button type="button" data-size="24" aria-label="24 pixel body text" aria-pressed="true">24</button><button type="button" data-size="28" aria-label="28 pixel body text" aria-pressed="false">28</button></div></div>
+    <p>A hospital team needs to arrange a patient's journey home. The doctor, the insurer, and the transport company all help with the same task—but they do not need to see the same information.</p>
+    <h2>Start with a simple question</h2>
+    <p><strong>What does this person need to do their job?</strong> The transport company needs a pickup location, a destination, and a time. It does not need the patient's diagnosis or complete medical history.</p>
+    <p>A well-designed system checks permission before sharing anything. It prepares a small, relevant packet instead of sending the entire record and hoping the recipient ignores the private details.</p>
+    <aside class="takeaway" aria-label="Key idea"><p><strong>The key idea:</strong> permission to receive some information is not permission to receive everything.</p></aside>
+    <h2>See the journey</h2>
+    <p>Follow the diagram from left to right. Each step answers a different question: who is asking, what may they see, who approved it, and where will it go?</p>
+    <figure><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDQwIiBoZWlnaHQ9IjYyMCIgdmlld0JveD0iMCAwIDE0NDAgNjIwIiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUgZGVzYyI+PHRpdGxlIGlkPSJ0aXRsZSI+T25lIGRpc2NoYXJnZSwgZGlmZmVyZW50IGluZm9ybWF0aW9uPC90aXRsZT48ZGVzYyBpZD0iZGVzYyI+UHJpdmF0ZSBpbmZvcm1hdGlvbiBkb2VzIG5vdCBiZWNvbWUgcHVibGljIGp1c3QgYmVjYXVzZSBvbmUgcmVjaXBpZW50IG1heSByZWNlaXZlIGl0LjwvZGVzYz48cmVjdCB3aWR0aD0iMTQ0MCIgaGVpZ2h0PSI2MjAiIHJ4PSIyNCIgZmlsbD0iIzA5MTYyYiIvPjxnIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSxBcmlhbCxzYW5zLXNlcmlmIj48dGV4dCB4PSI2MCIgeT0iNjgiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiM1MGM4ZGQiIGxldHRlci1zcGFjaW5nPSIzIj5IQVJCT1JDQVJFIMK3IFNZTlRIRVRJQyBMRUFSTklORyBDQVNFPC90ZXh0Pjx0ZXh0IHg9IjYwIiB5PSIxMzAiIGZvbnQtc2l6ZT0iNDMiIGZpbGw9IndoaXRlIiBmb250LXdlaWdodD0iNzAwIj5PbmUgZGlzY2hhcmdlLCBkaWZmZXJlbnQgaW5mb3JtYXRpb248L3RleHQ+PHJlY3QgeD0iNjAiIHk9IjE5MCIgd2lkdGg9IjMxMCIgaGVpZ2h0PSIyNjAiIHJ4PSIxNiIgZmlsbD0iIzExMmU0ZCIgc3Ryb2tlPSIjMzE1NTcyIi8+PHRleHQgeD0iODAiIHk9IjIzMiIgZmlsbD0iIzc3ZTJjYyIgZm9udC1zaXplPSIyMCIgZm9udC13ZWlnaHQ9IjcwMCI+MSAgVkVSSUZZPC90ZXh0Pjx0ZXh0IHg9IjgwIiB5PSIyODYiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNlZGY1ZmYiPkF1dGhlbnRpY2F0ZSB0aGUgcmVxdWVzdGVyPC90ZXh0Pjx0ZXh0IHg9IjgwIiB5PSIzNDAiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNlZGY1ZmYiPkNvbmZpcm0gcGF0aWVudCArIGVuY291bnRlcjwvdGV4dD48dGV4dCB4PSI4MCIgeT0iMzk0IiBmb250LXNpemU9IjE4IiBmaWxsPSIjZWRmNWZmIj5DaGVjayBjdXJyZW50IGFzc2lnbm1lbnQ8L3RleHQ+PHBhdGggZD0iTSAzNzQgMzIwIGggMTggbSAtNyAtNyBsIDcgNyAtNyA3IiBmaWxsPSJub25lIiBzdHJva2U9IiM1MGM4ZGQiIHN0cm9rZS13aWR0aD0iMyIvPjxyZWN0IHg9IjQwMCIgeT0iMTkwIiB3aWR0aD0iMzEwIiBoZWlnaHQ9IjI2MCIgcng9IjE2IiBmaWxsPSIjMTEyZTRkIiBzdHJva2U9IiMzMTU1NzIiLz48dGV4dCB4PSI0MjAiIHk9IjIzMiIgZmlsbD0iIzc3ZTJjYyIgZm9udC1zaXplPSIyMCIgZm9udC13ZWlnaHQ9IjcwMCI+MiAgUFJFUEFSRTwvdGV4dD48dGV4dCB4PSI0MjAiIHk9IjI4NiIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2VkZjVmZiI+UmVhZCBvbmx5IHBlcm1pdHRlZCBldmlkZW5jZTwvdGV4dD48dGV4dCB4PSI0MjAiIHk9IjM0MCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2VkZjVmZiI+U2VwYXJhdGUgcHVibGljIGluZm9ybWF0aW9uPC90ZXh0Pjx0ZXh0IHg9IjQyMCIgeT0iMzk0IiBmb250LXNpemU9IjE4IiBmaWxsPSIjZWRmNWZmIj5CdWlsZCByZWNpcGllbnQtc3BlY2lmaWMgcGFja2V0PC90ZXh0PjxwYXRoIGQ9Ik0gNzE0IDMyMCBoIDE4IG0gLTcgLTcgbCA3IDcgLTcgNyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNTBjOGRkIiBzdHJva2Utd2lkdGg9IjMiLz48cmVjdCB4PSI3NDAiIHk9IjE5MCIgd2lkdGg9IjMxMCIgaGVpZ2h0PSIyNjAiIHJ4PSIxNiIgZmlsbD0iIzExMmU0ZCIgc3Ryb2tlPSIjMzE1NTcyIi8+PHRleHQgeD0iNzYwIiB5PSIyMzIiIGZpbGw9IiM3N2UyY2MiIGZvbnQtc2l6ZT0iMjAiIGZvbnQtd2VpZ2h0PSI3MDAiPjMgIFJFVklFVzwvdGV4dD48dGV4dCB4PSI3NjAiIHk9IjI4NiIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2VkZjVmZiI+U2hvdyBleGFjdCBmaWVsZHMgKyByZWNpcGllbnQ8L3RleHQ+PHRleHQgeD0iNzYwIiB5PSIzNDAiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNlZGY1ZmYiPkJpbmQgYXBwcm92YWwgdG8gcGFja2V0IGRpZ2VzdDwvdGV4dD48dGV4dCB4PSI3NjAiIHk9IjM5NCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2VkZjVmZiI+UmVjb3JkIHB1cnBvc2UgYW5kIGV4cGlyeTwvdGV4dD48cGF0aCBkPSJNIDEwNTQgMzIwIGggMTggbSAtNyAtNyBsIDcgNyAtNyA3IiBmaWxsPSJub25lIiBzdHJva2U9IiM1MGM4ZGQiIHN0cm9rZS13aWR0aD0iMyIvPjxyZWN0IHg9IjEwODAiIHk9IjE5MCIgd2lkdGg9IjMxMCIgaGVpZ2h0PSIyNjAiIHJ4PSIxNiIgZmlsbD0iIzExMmU0ZCIgc3Ryb2tlPSIjMzE1NTcyIi8+PHRleHQgeD0iMTEwMCIgeT0iMjMyIiBmaWxsPSIjNzdlMmNjIiBmb250LXNpemU9IjIwIiBmb250LXdlaWdodD0iNzAwIj40ICBSRUxFQVNFPC90ZXh0Pjx0ZXh0IHg9IjExMDAiIHk9IjI4NiIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2VkZjVmZiI+UmVjaGVjayBjdXJyZW50IGF1dGhvcml6YXRpb248L3RleHQ+PHRleHQgeD0iMTEwMCIgeT0iMzQwIiBmb250LXNpemU9IjE4IiBmaWxsPSIjZWRmNWZmIj5TZW5kIHRvIHRlc3QgcmVjZWl2ZXIgb25seTwvdGV4dD48dGV4dCB4PSIxMTAwIiB5PSIzOTQiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNlZGY1ZmYiPlJlY29yZCByZWNlaXB0IG9yIHVuY2VydGFpbnR5PC90ZXh0PjxyZWN0IHg9IjYwIiB5PSI0OTIiIHdpZHRoPSIxMzIwIiBoZWlnaHQ9Ijc2IiByeD0iMTIiIGZpbGw9IiMxOTM4NGEiLz48dGV4dCB4PSI4NCIgeT0iNTM3IiBmb250LXNpemU9IjIwIiBmaWxsPSIjZThmY2ZmIj5Qcml2YXRlIGluZm9ybWF0aW9uIGRvZXMgbm90IGJlY29tZSBwdWJsaWMganVzdCBiZWNhdXNlIG9uZSByZWNpcGllbnQgbWF5IHJlY2VpdmUgaXQuPC90ZXh0PjwvZz48L3N2Zz4K" width="1440" height="620" alt="Four steps in a synthetic hospital discharge: verify the requester, prepare permitted information, review the exact packet, and recheck before release."><figcaption><strong>What to notice:</strong> permission is checked before information is prepared and again before it is sent. Approval is not the same as delivery.</figcaption></figure>
+    <aside class="example" aria-label="Worked example"><span class="note-title">A small, concrete example</span><p>The assigned driver receives “Demo Ward A, 3:00 pm, wheelchair assistance.” The diagnosis stays out of the pickup packet. An unrelated transport company receives no patient information.</p></aside>
+    <details><summary>Pause and think: is the pickup location now public?</summary><p>No. It is still private information. One assigned recipient may use it for one approved task; that does not make it available to everyone.</p></details>
+    <h2>One thing to remember</h2>
+    <div class="recap"><p><strong>Share what is needed, with the person who needs it, for the task they are allowed to perform.</strong></p></div>
+    <h2>More blues in this family</h2>
+    <p>Keep the main page white and the text dark. Let the blues give different passages a purpose: sapphire for emphasis, powder blue for key ideas, and a quieter ice blue for examples.</p>
+    <div class="palette" aria-label="Reading palette">
+      <div class="swatch"><div style="background:#081a33"></div><span>Midnight navy<br>#081A33</span></div>
+      <div class="swatch"><div style="background:#245ac4"></div><span>Sapphire<br>#245AC4</span></div>
+      <div class="swatch"><div style="background:#7094d1"></div><span>Cornflower<br>#7094D1</span></div>
+      <div class="swatch"><div style="background:#edf4ff"></div><span>Powder blue<br>#EDF4FF</span></div>
+      <div class="swatch"><div style="background:#f5f8ff"></div><span>Ice blue<br>#F5F8FF</span></div>
+    </div>
+    <p>For longer lessons, I would also add a collapsible contents list and a “continue where you left off” option. Keep these outside the main reading column so the lesson remains the focus.</p>
+    <footer>Same font family and navy-blue palette as your HTML guides.<br>Body: 24px (previously 18px) · Section headings: 36px · Title: up to 68px.</footer>
+  </main>
+  <script>
+    document.querySelectorAll('[data-size]').forEach(button => {
+      button.addEventListener('click', () => {
+        document.documentElement.style.setProperty('--reading-size', button.dataset.size + 'px');
+        document.querySelectorAll('[data-size]').forEach(choice => choice.setAttribute('aria-pressed', String(choice === button)));
+      });
+    });
+  </script>
+</body>
+</html>

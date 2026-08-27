@@ -2,10 +2,13 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
+import ReadingControls from "./ReadingControls";
 import { Chapter, CourseData } from "@/lib/types";
 import { chapterByNumber, cn, highlightInHtml } from "@/lib/utils";
 
 interface ChapterContentProps {
+  readingSize: number;
+  onReadingSizeChange: (size: number) => void;
   chapter: Chapter;
   course: CourseData;
   completed: number[];
@@ -21,6 +24,8 @@ export default function ChapterContent({
   onMarkComplete,
   onNavigate,
   highlightQuery = "",
+  readingSize,
+  onReadingSizeChange,
 }: ChapterContentProps) {
   const map = chapterByNumber(course.modules);
   const prev = chapter.prev;
@@ -109,9 +114,10 @@ export default function ChapterContent({
   return (
     <div className="chapter-content" ref={rootRef}>
       <div className="chapter-header mb-10 pb-6 border-b-2 border-gray-200">
-        <h1 className="text-2xl md:text-3xl font-serif text-gray-900 mb-2">
+        <h1 className="chapter-title">
           {chapter.fullTitle}
         </h1>
+        <ReadingControls size={readingSize} onChange={onReadingSizeChange} />
 
         {chapter.image && <figure className="hero-figure my-6">
           <Image

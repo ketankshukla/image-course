@@ -3,19 +3,6 @@
 @tailwind utilities;
 
 :root {
-  --primary: #0e7490;
-  --primary-dark: #155e75;
-  --primary-light: #22d3ee;
-  --secondary: #10b981;
-  --secondary-dark: #059669;
-  --accent: #f4a261;
-  --dark: #0f172a;
-  --gray-900: #111827;
-  --gray-700: #374151;
-  --gray-500: #6b7280;
-  --gray-300: #d1d5db;
-  --gray-200: #e5e7eb;
-  --gray-100: #f3f4f6;
   --white: #ffffff;
   --sidebar-width: 320px;
 }
@@ -32,7 +19,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: var(--reading-font);
   color: var(--gray-900);
   line-height: 1.3;
 }

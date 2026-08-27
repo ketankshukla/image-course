@@ -10,17 +10,18 @@ const config: Config = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: "#0e7490",
-          dark: "#155e75",
-          light: "#22d3ee",
+          DEFAULT: "rgb(var(--primary-rgb) / <alpha-value>)",
+          dark: "rgb(var(--primary-dark-rgb) / <alpha-value>)",
+          light: "rgb(var(--primary-light-rgb) / <alpha-value>)",
         },
-        secondary: "#10b981",
-        accent: "#f4a261",
-        dark: "#0f172a",
+        secondary: "rgb(var(--primary-rgb) / <alpha-value>)",
+        accent: "rgb(var(--accent-rgb) / <alpha-value>)",
+        dark: "rgb(var(--navy-rgb) / <alpha-value>)",
+        gray: Object.fromEntries([50, 100, 200, 300, 400, 500, 600, 700, 800, 900].map(shade => [shade, `rgb(var(--gray-${shade}-rgb) / <alpha-value>)`])),
       },
       fontFamily: {
-        sans: ["ui-sans-serif", "system-ui", "sans-serif"],
-        serif: ["Georgia", "serif"],
+        sans: ["var(--reading-font)"],
+        serif: ["var(--reading-font)"],
       },
     },
   },

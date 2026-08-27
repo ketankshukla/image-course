@@ -55,3 +55,9 @@ If the volume includes a `Volume X Course Content.json` file with `modules` and 
 - Vercel runs the same Node-only `npm run build` as local builds; Python/Pandoc are only for optional legacy/local document tooling.
 - Do not run legacy `scripts/build_content.py` after the library build: it writes the old manifest schema.
 - The build prunes only obsolete generated files under `public/library`; never delete original sources or legacy output folders as part of content generation.
+
+### Reading theme
+
+- `app/theme.css` is the shared blue-and-white palette and reading typography, imported after structural `globals.css`. Tailwind colors reference its CSS variables.
+- Article text defaults to 24px with 22/24/28px controls. The validated `libraryReadingSize` browser preference persists between articles and visits; storage is optional.
+- Keep navigation compact, headings in the system sans-serif font, and tables/code horizontally scrollable on mobile. Theme changes do not require editing or rebuilding individual Markdown documents by hand.
