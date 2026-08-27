@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.10" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Python Project Strategy</title>
+  <style>
+
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+.display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+  <style type="text/css">:root {
+color-scheme: light;
+--ink: #172033;
+--muted: #5d677b;
+--navy: #08172f;
+--blue: #155eef;
+--cyan: #0891b2;
+--line: #dbe4f0;
+--panel: #f5f8fc;
+--warning: #fff7ed;
+}
+* { box-sizing: border-box; }
+body {
+margin: 0;
+background: #eef3f9;
+color: var(--ink);
+font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+font-size: 18px;
+line-height: 1.72;
+}
+body > main,
+body > article,
+body > section,
+body > div,
+body > header,
+body > h1,
+body > p,
+body > table,
+body > ul,
+body > ol,
+body > pre,
+body > blockquote {
+max-width: 1040px;
+margin-left: auto;
+margin-right: auto;
+}
+body {
+padding: 56px max(24px, calc((100vw - 1120px) / 2)) 96px;
+}
+h1, h2, h3 {
+line-height: 1.22;
+letter-spacing: -0.025em;
+}
+h1 {
+margin: 0 0 42px;
+padding: 42px 48px;
+border-radius: 22px;
+color: white;
+background: linear-gradient(135deg, var(--navy), #103e82 72%, #087f9c);
+font-size: clamp(2.2rem, 5vw, 4.3rem);
+box-shadow: 0 20px 55px rgba(8, 23, 47, 0.22);
+}
+h2 {
+margin-top: 64px;
+padding-top: 18px;
+border-top: 3px solid var(--blue);
+color: #0c3f91;
+font-size: 2rem;
+}
+h3 {
+margin-top: 40px;
+color: #075f78;
+font-size: 1.4rem;
+}
+p, li { max-width: 82ch; }
+a { color: #075fc7; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+strong { color: #0d3575; }
+blockquote {
+margin-top: 28px;
+margin-bottom: 28px;
+padding: 20px 26px;
+border-left: 5px solid var(--cyan);
+border-radius: 0 12px 12px 0;
+background: #e8f7fb;
+color: #183c4b;
+font-size: 1.08em;
+}
+table {
+width: 100%;
+margin-top: 28px;
+margin-bottom: 34px;
+border-collapse: separate;
+border-spacing: 0;
+overflow: hidden;
+border: 1px solid var(--line);
+border-radius: 14px;
+background: white;
+box-shadow: 0 8px 24px rgba(30, 55, 90, 0.08);
+}
+th, td {
+padding: 14px 17px;
+border-right: 1px solid var(--line);
+border-bottom: 1px solid var(--line);
+text-align: left;
+vertical-align: top;
+}
+th { background: #0d3b7d; color: white; }
+tr:nth-child(even) td { background: var(--panel); }
+tr:last-child td { border-bottom: 0; }
+th:last-child, td:last-child { border-right: 0; }
+code {
+padding: 0.14em 0.38em;
+border: 1px solid #d8e1ee;
+border-radius: 5px;
+background: #edf2f8;
+color: #9f1239;
+font-family: "Cascadia Code", Consolas, monospace;
+font-size: 0.88em;
+}
+pre {
+overflow-x: auto;
+padding: 24px 28px;
+border-radius: 14px;
+background: #07152b;
+color: #e7f3ff;
+box-shadow: 0 10px 28px rgba(8, 23, 47, 0.16);
+}
+pre code { padding: 0; border: 0; background: transparent; color: inherit; }
+hr { max-width: 1040px; margin: 54px auto; border: 0; border-top: 1px solid var(--line); }
+@media (max-width: 720px) {
+body { padding: 20px 16px 64px; font-size: 16px; }
+h1 { padding: 28px 24px; border-radius: 14px; }
+h2 { margin-top: 48px; }
+table { display: block; overflow-x: auto; }
+}
+@media print {
+body { padding: 0; background: white; font-size: 11pt; }
+h1 { color: #0b2d60; background: none; box-shadow: none; padding: 0; }
+h2 { break-after: avoid; }
+pre, blockquote, table { break-inside: avoid; box-shadow: none; }
+}
+</style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Python Project Strategy</h1>
+</header>
+<h1 id="python-project-strategy-for-the-244-diagram-visual-agent-course">Python
+Project Strategy for the 244-Diagram Visual Agent Course</h1>
+<h2 id="executive-recommendation">Executive recommendation</h2>
+<p>Do <strong>not</strong> build one project per diagram. That would
+create 244 tiny demonstrations with repeated setup, shallow
+implementations, and no convincing production story.</p>
+<p>Also, do <strong>not</strong> begin with one enormous application
+that tries to implement all ten courses at once. That creates a monolith
+which takes months before anything useful can be demonstrated.</p>
+<p>The strongest approach is a <strong>portfolio suite</strong>:</p>
+<ol type="1">
+<li>Use one consistent real-world case study across the entire
+series.</li>
+<li>Build four independently runnable Python projects around that case
+study.</li>
+<li>Combine those four projects into one production-style capstone.</li>
+<li>Treat every diagram as a requirement, test, failure experiment,
+architectural decision, or presentation aid within those projects.</li>
+</ol>
+<p>The recommended case study is an <strong>AI-assisted customer
+case-resolution platform</strong>. A customer submits a complicated
+case—for example an insurance claim, loan-document query, billing
+dispute, or support escalation. The system retrieves evidence, calls
+operational tools, delegates specialist work, pauses for human approval,
+and produces an auditable resolution.</p>
+<p>For the examples below, I will call it <strong>Acme Case Resolution
+Platform</strong>. The name can change later without changing the
+architecture.</p>
+<hr />
+<h2 id="why-one-project-per-image-is-the-wrong-model">Why one project
+per image is the wrong model</h2>
+<p>A diagram normally explains one idea, not one complete application.
+For example:</p>
+<ul>
+<li>Stateless MCP requests are one transport behavior.</li>
+<li>Idempotency is one safety property.</li>
+<li>Hybrid retrieval is one RAG stage.</li>
+<li>A2A task states are one collaboration contract.</li>
+<li>Human approval is one workflow checkpoint.</li>
+<li>Trace correlation is one observability requirement.</li>
+</ul>
+<p>If each becomes a separate repository, every repository needs its own
+installation instructions, configuration, fake data, API, tests,
+logging, and explanation. Most of the work will be repeated plumbing. A
+reviewer will see many toy programs but little evidence that the pieces
+can work together.</p>
+<p>It also produces an awkward demonstration. You would have to say:</p>
+<blockquote>
+<p>“Here is my idempotency demo. Now open another repository for my
+queue demo. Now open another repository for my approval demo.”</p>
+</blockquote>
+<p>That is much weaker than saying:</p>
+<blockquote>
+<p>“Here is one customer case. Watch it move through retrieval, policy,
+delegation, approval, execution, recovery, and audit. Now I will
+deliberately break one stage and show the system recover.”</p>
+</blockquote>
+<p>The second version demonstrates engineering judgment, not just
+isolated code.</p>
+<hr />
+<h2 id="why-one-giant-project-is-also-risky">Why one giant project is
+also risky</h2>
+<p>A single application spanning all 244 diagrams sounds coherent, but
+it creates three problems.</p>
+<p>First, there is no early finish line. You can work for weeks on
+infrastructure before producing a useful demonstration.</p>
+<p>Second, unrelated lessons become tightly coupled. A change to the RAG
+index should not make it difficult to demonstrate MCP discovery. A UI
+experiment should not require rebuilding the durable workflow
+engine.</p>
+<p>Third, a reviewer may not know where to look. A huge repository can
+conceal good work because the boundaries are unclear.</p>
+<p>The answer is therefore one <strong>shared case study</strong>,
+implemented as several <strong>small but real systems</strong> with
+explicit contracts between them.</p>
+<hr />
+<h2 id="the-recommended-portfolio-suite">The recommended portfolio
+suite</h2>
+<h3 id="project-1--mcp-operations-gateway">Project 1 — MCP Operations
+Gateway</h3>
+<p>This is the controlled capability layer. It exposes business
+operations as MCP tools and business information as MCP resources.</p>
+<p>Example capabilities:</p>
+<ul>
+<li><code>get_case</code></li>
+<li><code>list_case_documents</code></li>
+<li><code>calculate_refund</code></li>
+<li><code>draft_resolution</code></li>
+<li><code>issue_credit</code></li>
+<li><code>request_human_approval</code></li>
+<li><code>get_policy_resource</code></li>
+<li><code>get_audit_receipt</code></li>
+</ul>
+<p>The project should demonstrate:</p>
+<ul>
+<li>tool, resource, and prompt discovery;</li>
+<li>JSON Schema input validation;</li>
+<li>stateless HTTP handling;</li>
+<li>authentication and authorization;</li>
+<li>least-privilege tool access;</li>
+<li>idempotency keys for side effects;</li>
+<li>task handles for long-running operations;</li>
+<li>structured results and receipts;</li>
+<li>protocol-version and capability negotiation;</li>
+<li>conformance tests and error correlation.</li>
+</ul>
+<p>This project mainly turns the MCP diagrams from Volumes 1–4 into
+executable behavior.</p>
+<p><strong>Best live demonstration:</strong> call
+<code>issue_credit</code> twice with the same idempotency key. Show that
+only one credit is issued and that both calls resolve to the same
+business receipt.</p>
+<h3 id="project-2--evidence-rag-workbench">Project 2 — Evidence RAG
+Workbench</h3>
+<p>This is the governed knowledge system. It ingests policies, case
+documents, tables, scanned forms, notes, and structured records, then
+produces evidence packs rather than unsupported answers.</p>
+<p>The project should demonstrate:</p>
+<ul>
+<li>source ownership and authority;</li>
+<li>layout-aware parsing;</li>
+<li>OCR and multimodal evidence intake;</li>
+<li>provenance and retention metadata;</li>
+<li>semantic chunking;</li>
+<li>parent-child retrieval;</li>
+<li>lexical, vector, and structured retrieval;</li>
+<li>authorization before search;</li>
+<li>reranking and diversity;</li>
+<li>bounded multi-hop retrieval;</li>
+<li>immutable versions and as-of-time retrieval;</li>
+<li>claim-level citation lineage;</li>
+<li>conflict detection, uncertainty, and abstention;</li>
+<li>retrieval and answer-quality evaluation.</li>
+</ul>
+<p>This project is the executable expression of Volume 5 and the RAG
+sections of Volumes 1–3.</p>
+<p><strong>Best live demonstration:</strong> ask a question whose answer
+changed between two policy versions. Show the current answer, then run
+the same query “as of” an earlier date and display the older evidence
+and citation chain.</p>
+<h3 id="project-3--a2a-specialist-network">Project 3 — A2A Specialist
+Network</h3>
+<p>This is the multi-agent collaboration layer. A coordinator delegates
+bounded work to independently owned specialist agents.</p>
+<p>Suggested specialist agents:</p>
+<ul>
+<li><strong>Triage Agent</strong> — classifies the case and identifies
+missing information.</li>
+<li><strong>Policy Agent</strong> — constructs a cited evidence
+pack.</li>
+<li><strong>Finance Agent</strong> — calculates refunds or
+adjustments.</li>
+<li><strong>Risk Agent</strong> — checks policy and risk
+constraints.</li>
+<li><strong>Reviewer Agent</strong> — challenges unsupported claims and
+identifies disagreement.</li>
+</ul>
+<p>The project should demonstrate:</p>
+<ul>
+<li>agent-card discovery;</li>
+<li>trust and allowlisting;</li>
+<li>message, task, artifact, and task-state separation;</li>
+<li>streaming, polling, and push delivery;</li>
+<li>cancellation;</li>
+<li>bounded delegation;</li>
+<li>ownership handoff;</li>
+<li>artifact aggregation;</li>
+<li>disagreement handling;</li>
+<li>final-authority rules;</li>
+<li>protocol adapters and correlation IDs.</li>
+</ul>
+<p>Use the official A2A Python SDK behind a thin adapter owned by your
+code. The SDK is evolving, so protocol-specific types should not leak
+through the entire business layer. Pin the exact version used by the
+project and test the adapter contract. The official SDK is published as
+<code>a2a-sdk</code> and maintained in the <a href="https://github.com/a2aproject/a2a-python">A2A Python
+repository</a>.</p>
+<p><strong>Best live demonstration:</strong> let the Policy Agent and
+Risk Agent disagree. Show that the coordinator does not average their
+answers or allow the loudest agent to win; it routes the conflict to the
+named final authority.</p>
+<h3 id="project-4--durable-workflow-and-reliability-lab">Project 4 —
+Durable Workflow and Reliability Lab</h3>
+<p>This is the execution and evaluation environment. It owns
+long-running case state and gives you a controlled place to demonstrate
+failures.</p>
+<p>The project should demonstrate:</p>
+<ul>
+<li>separate conversation, run, task, and workflow state;</li>
+<li>explicit state machines;</li>
+<li>snapshots, replay, and schema evolution;</li>
+<li>queues, leases, acknowledgement, and visibility timeouts;</li>
+<li>backpressure and priority;</li>
+<li>retries, idempotency, and poison work;</li>
+<li>deadlines, cancellation, and compensation;</li>
+<li>fan-out/fan-in and join policies;</li>
+<li>schedules and external resume events;</li>
+<li>human interruption and approval;</li>
+<li>steering, replanning, and invalidation;</li>
+<li>race conditions and stale-state protection;</li>
+<li>traces, metrics, logs, receipts, and cost ledgers;</li>
+<li>golden datasets, graders, quality slices, and regression gates;</li>
+<li>chaos tests and recovery runbooks.</li>
+</ul>
+<p>This project covers Volumes 3, 6, 7, and 8 particularly well.</p>
+<p>You can implement the first version with explicit Python
+state-machine code and PostgreSQL. Once the behavior is understood, add
+a durable orchestration framework if it improves the demonstration.
+LangGraph, for example, officially focuses on durable execution,
+streaming, persistence, and human-in-the-loop workflows. Keep the
+business state model independent of the framework so the project
+demonstrates your architecture rather than only your knowledge of a
+library.</p>
+<p><strong>Best live demonstration:</strong> terminate the worker midway
+through a case, restart it, and show that it resumes from the last
+durable checkpoint without repeating an already committed payment.</p>
+<h3 id="project-5--acme-case-resolution-platform">Project 5 — Acme Case
+Resolution Platform</h3>
+<p>This is the integration capstone, not a fifth implementation from
+scratch. It composes Projects 1–4 behind a simple interface.</p>
+<p>A complete case journey is:</p>
+<ol type="1">
+<li>A person submits a case and supporting documents.</li>
+<li>The RAG Workbench builds an authorized evidence pack.</li>
+<li>The coordinator creates A2A tasks for relevant specialists.</li>
+<li>Specialists return artifacts, not informal chat snippets.</li>
+<li>The workflow engine aggregates their work and records
+disagreement.</li>
+<li>The MCP Gateway exposes any approved operational action.</li>
+<li>A human approves or rejects high-impact changes.</li>
+<li>The domain service commits the change using an idempotency key.</li>
+<li>The system returns a receipt and preserves the complete trace.</li>
+</ol>
+<p>The capstone should have a thin web interface, but the substantial
+engineering should remain in Python. A practical split is:</p>
+<ul>
+<li>Python/FastAPI for APIs and domain services;</li>
+<li>Pydantic models for boundary validation;</li>
+<li>PostgreSQL for durable business and workflow state;</li>
+<li>a vector index appropriate to the chosen scale;</li>
+<li>Redis or a real message broker only when the queue demonstration
+requires it;</li>
+<li>OpenTelemetry-compatible traces and metrics;</li>
+<li>pytest for unit, contract, integration, conformance, and failure
+tests;</li>
+<li>a small React/Next.js interface or a lightweight Python UI for
+demonstrations.</li>
+</ul>
+<p>The official MCP Python SDK supports clients, servers, tools,
+resources, prompts, structured output, authentication, and Streamable
+HTTP. Use the stable supported line, pin it, and isolate it behind your
+own adapter because SDK majors and experimental features can change. See
+the <a href="https://github.com/modelcontextprotocol/python-sdk">official MCP
+Python SDK</a>.</p>
+<hr />
+<h2 id="how-the-ten-volumes-should-map-to-the-projects">How the ten
+volumes should map to the projects</h2>
+<table>
+<thead>
+<tr>
+<th>Course</th>
+<th>Main engineering outcome</th>
+<th>Primary project</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Volume 1</td>
+<td>Understand the complete agent system and its boundaries</td>
+<td>Capstone skeleton</td>
+</tr>
+<tr>
+<td>Volume 2</td>
+<td>Build the HTTP, JSON, validation, identity, and storage
+foundation</td>
+<td>Shared Python platform</td>
+</tr>
+<tr>
+<td>Volume 3</td>
+<td>Add production MCP, durable state, memory, security, evaluation, and
+agent UI events</td>
+<td>MCP Gateway + Reliability Lab</td>
+</tr>
+<tr>
+<td>Volume 4</td>
+<td>Implement protocol negotiation, correlation, conformance, A2A, and
+adapters</td>
+<td>MCP Gateway + A2A Network</td>
+</tr>
+<tr>
+<td>Volume 5</td>
+<td>Build governed ingestion, retrieval, freshness, citations, and
+evaluation</td>
+<td>Evidence RAG Workbench</td>
+</tr>
+<tr>
+<td>Volume 6</td>
+<td>Build durable orchestration, queues, compensation, delegation, and
+recovery</td>
+<td>Reliability Lab + A2A Network</td>
+</tr>
+<tr>
+<td>Volume 7</td>
+<td>Add identity, policy, tenant isolation, sandboxing, privacy, and
+audit</td>
+<td>Shared security layer across all projects</td>
+</tr>
+<tr>
+<td>Volume 8</td>
+<td>Add traces, evaluations, cost controls, rollout gates, and incident
+learning</td>
+<td>Reliability Lab</td>
+</tr>
+<tr>
+<td>Volume 9</td>
+<td>Build the event-driven user experience, recovery UI, consent, and
+accessibility</td>
+<td>Capstone interface</td>
+</tr>
+<tr>
+<td>Volume 10</td>
+<td>Integrate, deploy, test, operate, defend, and present the
+architecture</td>
+<td>Final capstone</td>
+</tr>
+</tbody>
+</table>
+<p>The courses therefore become an engineering sequence. They do not
+need ten unrelated capstones.</p>
+<hr />
+<h2 id="what-each-of-the-244-diagrams-becomes">What each of the 244
+diagrams becomes</h2>
+<p>Every diagram should be assigned one of five implementation
+roles.</p>
+<h3 id="1-executable-feature">1. Executable feature</h3>
+<p>The diagram becomes working behavior in the system.</p>
+<p>Examples:</p>
+<ul>
+<li>MCP discovery lists real tools.</li>
+<li>A2A task lifecycle changes real persisted task states.</li>
+<li>Hybrid search merges real lexical and vector candidates.</li>
+<li>Human approval actually pauses and resumes a workflow.</li>
+</ul>
+<h3 id="2-automated-test">2. Automated test</h3>
+<p>The diagram becomes a correctness property.</p>
+<p>Examples:</p>
+<ul>
+<li>A repeated idempotency key cannot create a second side effect.</li>
+<li>An unauthorized tenant&#39;s documents never enter candidate
+generation.</li>
+<li>A stale workflow version cannot overwrite current state.</li>
+<li>Every result is correlated with the correct request.</li>
+</ul>
+<h3 id="3-failure-injection-scenario">3. Failure-injection scenario</h3>
+<p>The diagram becomes a demonstration of what happens when something
+breaks.</p>
+<p>Examples:</p>
+<ul>
+<li>Kill a worker after a side effect but before acknowledgement.</li>
+<li>Delay one branch of a fan-out beyond the join deadline.</li>
+<li>replay a duplicate A2A event;</li>
+<li>expire a human approval;</li>
+<li>make the vector index unavailable;</li>
+<li>inject an untrusted instruction into a retrieved document.</li>
+</ul>
+<h3 id="4-architectural-decision-record">4. Architectural decision
+record</h3>
+<p>Some diagrams explain a choice rather than runtime behavior.</p>
+<p>Examples:</p>
+<ul>
+<li>Orchestration versus choreography.</li>
+<li>Local function versus MCP versus A2A.</li>
+<li>Relational database versus task store versus vector index.</li>
+<li>Current A2A vocabulary versus historical ACP vocabulary.</li>
+</ul>
+<p>These should become short ADRs containing the decision, alternatives,
+trade-offs, and evidence.</p>
+<h3 id="5-presentation-scene">5. Presentation scene</h3>
+<p>Some diagrams are best used to explain a completed feature during a
+demonstration. Embed the diagram directly beside the live scenario, then
+show the relevant trace, state, artifact, or test result underneath
+it.</p>
+<p>This gives every image a practical purpose without pretending every
+image deserves a separate application.</p>
+<hr />
+<h2 id="the-demonstration-unit-pattern">The demonstration-unit
+pattern</h2>
+<p>Create one small “scenario” for each important diagram or closely
+related group of diagrams. A scenario is much smaller than a
+project.</p>
+<p>Each scenario should contain:</p>
+<pre class="text"><code>scenario.yaml
+README.md
+seed.py
+run.py
+expected.json
+tests/</code></pre>
+<p><code>scenario.yaml</code> records:</p>
+<ul>
+<li>the diagrams demonstrated;</li>
+<li>the services required;</li>
+<li>the starting state;</li>
+<li>the action to perform;</li>
+<li>the expected state transition;</li>
+<li>the evidence that proves success;</li>
+<li>the optional fault to inject.</li>
+</ul>
+<p>For example, the idempotency scenario could say:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> duplicate-credit-request</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">diagrams</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="dv">2</span><span class="kw">,</span><span class="at"> </span><span class="dv">54</span><span class="kw">,</span><span class="at"> </span><span class="dv">131</span><span class="kw">]</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">start</span><span class="kw">:</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">case_id</span><span class="kw">:</span><span class="at"> CASE-1042</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">credit_status</span><span class="kw">:</span><span class="at"> not_issued</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">action</span><span class="kw">:</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">calls</span><span class="kw">:</span><span class="at"> </span><span class="dv">2</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">idempotency_key</span><span class="kw">:</span><span class="at"> CASE-1042-CREDIT-1</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">expect</span><span class="kw">:</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">credits_created</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">receipts_returned</span><span class="kw">:</span><span class="at"> </span><span class="dv">2</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">receipt_business_id_count</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="fu">fault</span><span class="kw">:</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">disconnect_after_commit</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code></pre></div>
+<p>This one scenario demonstrates three diagrams across three volumes
+and produces measurable evidence.</p>
+<hr />
+<h2 id="recommended-repository-shape">Recommended repository shape</h2>
+<p>Start with one monorepo so that shared contracts, fixtures, and local
+startup remain manageable:</p>
+<pre class="text"><code>acme-agent-platform/
+├── apps/
+│   ├── case_api/                 # FastAPI business API
+│   ├── demo_ui/                  # Small demonstration interface
+│   └── scenario_runner/          # Runs diagram scenarios
+├── services/
+│   ├── mcp_gateway/
+│   ├── rag_workbench/
+│   ├── coordinator_agent/
+│   ├── policy_agent/
+│   ├── finance_agent/
+│   ├── risk_agent/
+│   └── workflow_worker/
+├── packages/
+│   ├── contracts/                # Pydantic message and artifact models
+│   ├── domain/                   # Business rules with no protocol dependency
+│   ├── authz/                    # Identity and policy decisions
+│   ├── audit/                    # Receipts and provenance
+│   ├── telemetry/                # Trace and metric helpers
+│   └── testkit/                  # Fakes, fixtures, chaos controls
+├── scenarios/
+│   ├── mcp/
+│   ├── rag/
+│   ├── a2a/
+│   ├── workflow/
+│   ├── security/
+│   └── reliability/
+├── tests/
+│   ├── unit/
+│   ├── contract/
+│   ├── integration/
+│   ├── conformance/
+│   ├── evaluation/
+│   └── chaos/
+├── docs/
+│   ├── architecture/
+│   ├── decisions/
+│   ├── demonstrations/
+│   └── diagram-map.md
+├── docker-compose.yml
+├── pyproject.toml
+└── README.md</code></pre>
+<p>Each service must be runnable independently. The monorepo is for
+convenience, not permission to blur ownership.</p>
+<p>If one component later becomes impressive enough to deserve its own
+public repository, extract it then. Do not pay that coordination cost on
+day one.</p>
+<hr />
+<h2 id="build-order">Build order</h2>
+<h3 id="phase-1--one-thin-vertical-slice">Phase 1 — One thin vertical
+slice</h3>
+<p>Build one complete but simple path:</p>
+<pre class="text"><code>Question → Retrieve policy → Draft answer → Human approves → Record receipt</code></pre>
+<p>Use one policy document, one MCP tool, one agent, one database table,
+and one trace. No multi-agent network yet.</p>
+<p>This proves that the repository starts, the boundaries communicate,
+and the user receives a result.</p>
+<h3 id="phase-2--make-the-mcp-boundary-real">Phase 2 — Make the MCP
+boundary real</h3>
+<p>Move business capabilities behind the MCP Gateway. Add discovery,
+validation, authentication, authorization, structured results,
+idempotency, and receipts.</p>
+<p>At the end of this phase, Project 1 is independently
+demonstrable.</p>
+<h3 id="phase-3--build-the-evidence-pipeline">Phase 3 — Build the
+evidence pipeline</h3>
+<p>Add governed ingestion, chunking, hybrid retrieval, reranking,
+citations, versioning, authorization-before-search, and evaluation.</p>
+<p>At the end of this phase, Project 2 is independently
+demonstrable.</p>
+<h3 id="phase-4--add-specialist-delegation">Phase 4 — Add specialist
+delegation</h3>
+<p>Introduce two specialist agents first, not five. Give them agent
+cards, bounded task contracts, task states, artifacts, cancellation, and
+explicit final authority.</p>
+<p>At the end of this phase, Project 3 is independently
+demonstrable.</p>
+<h3 id="phase-5--make-it-durable">Phase 5 — Make it durable</h3>
+<p>Persist workflow state, add checkpoints, queues, retries, deadlines,
+compensation, approval interrupts, replay protection, and recovery
+tests.</p>
+<p>At the end of this phase, Project 4 is independently
+demonstrable.</p>
+<h3 id="phase-6--add-production-controls">Phase 6 — Add production
+controls</h3>
+<p>Add tenant isolation, least privilege, prompt-injection defenses,
+secrets, audit chains, traces, golden datasets, cost budgets, canary
+releases, chaos tests, and runbooks.</p>
+<h3 id="phase-7--build-the-capstone-experience">Phase 7 — Build the
+capstone experience</h3>
+<p>Add the web interface, scenario selector, trace view, evidence
+viewer, task timeline, approval controls, artifact cards, and recovery
+actions.</p>
+<p>The interface should make the invisible architecture visible. A
+reviewer should be able to see:</p>
+<ul>
+<li>which agent owns the current task;</li>
+<li>which evidence supports each claim;</li>
+<li>which tool was proposed;</li>
+<li>which policy allowed or denied it;</li>
+<li>whether a human decision is required;</li>
+<li>what was committed;</li>
+<li>which receipt proves it;</li>
+<li>how long and how much the run cost;</li>
+<li>what happened after an injected failure.</li>
+</ul>
+<hr />
+<h2 id="how-many-demonstrations-should-you-actually-build">How many
+demonstrations should you actually build?</h2>
+<p>Do not attempt 244 equally detailed demonstrations.</p>
+<p>Use three levels:</p>
+<h3 id="level-a--portfolio-demonstrations-about-12">Level A — Portfolio
+demonstrations: about 12</h3>
+<p>These are polished, narrated, end-to-end scenarios that a recruiter
+or engineer can run.</p>
+<p>Recommended set:</p>
+<ol type="1">
+<li>MCP discovery and structured tool call.</li>
+<li>Safe side effect with retry and idempotency.</li>
+<li>Long-running task with progress and recovery.</li>
+<li>Authorized hybrid RAG with claim-level citations.</li>
+<li>As-of-time retrieval across policy versions.</li>
+<li>Conflict detection and abstention.</li>
+<li>A2A delegation with task and artifact lifecycle.</li>
+<li>Multi-agent disagreement with final authority.</li>
+<li>Human approval interrupt and resume.</li>
+<li>Worker crash, replay, and exactly-once business effect.</li>
+<li>Prompt-injection/exfiltration attempt blocked by policy.</li>
+<li>Full case resolution with trace, evaluation, cost, and audit
+receipt.</li>
+</ol>
+<h3 id="level-b--engineering-scenarios-roughly-3550">Level B —
+Engineering scenarios: roughly 35–50</h3>
+<p>These are runnable tests or fault-injection cases. They may have a
+short README and command-line output rather than a polished UI.</p>
+<h3 id="level-c--coverage-mappings-all-remaining-diagrams">Level C —
+Coverage mappings: all remaining diagrams</h3>
+<p>These become tests, ADRs, assertions, or documentation references.
+They still map to code, but they do not need a separate live
+performance.</p>
+<p>This gives you complete conceptual coverage without producing
+hundreds of shallow programs.</p>
+<hr />
+<h2 id="what-makes-the-projects-convincing">What makes the projects
+convincing</h2>
+<p>A good portfolio project is not proved by screenshots or a large
+dependency list. It is proved by observable behavior.</p>
+<p>For every major feature, capture:</p>
+<ul>
+<li>the input contract;</li>
+<li>the resulting state transition;</li>
+<li>the trace or correlation ID;</li>
+<li>the retrieved evidence and citation lineage;</li>
+<li>the policy decision;</li>
+<li>the produced artifact;</li>
+<li>the business receipt;</li>
+<li>the test that prevents regression;</li>
+<li>the behavior under one realistic failure.</li>
+</ul>
+<p>Avoid claims such as “production-ready,” “exactly once,” “secure,” or
+“99% accurate” unless a test or measurement shown in the repository
+supports the claim.</p>
+<p>The strongest README sentence is not:</p>
+<blockquote>
+<p>“This project uses MCP, A2A, RAG, LangGraph, FastAPI, and
+PostgreSQL.”</p>
+</blockquote>
+<p>It is:</p>
+<blockquote>
+<p>“This case was interrupted after the refund committed but before the
+worker acknowledged it. On recovery, the workflow resumed, the
+idempotency key prevented a duplicate refund, and the original receipt
+was returned.”</p>
+</blockquote>
+<p>That sentence describes engineering evidence.</p>
+<hr />
+<h2 id="final-answer">Final answer</h2>
+<p>Use <strong>one long case-study domain</strong>, but do not use one
+inseparable application.</p>
+<p>Build:</p>
+<ol type="1">
+<li>an MCP Operations Gateway;</li>
+<li>an Evidence RAG Workbench;</li>
+<li>an A2A Specialist Network;</li>
+<li>a Durable Workflow and Reliability Lab;</li>
+<li>an integration capstone that composes all four.</li>
+</ol>
+<p>Organize them initially in one Python monorepo. Turn the 244 diagrams
+into a mixture of executable features, automated tests, failure
+scenarios, architectural decisions, and presentation scenes. Polish
+approximately twelve demonstrations; make another 35–50 runnable
+engineering scenarios; map the remainder to code and tests without
+forcing each one to become a toy project.</p>
+<p>This structure gives you both things a strong portfolio needs:</p>
+<ul>
+<li><strong>depth</strong>, because one realistic case travels through
+the complete system; and</li>
+<li><strong>range</strong>, because each subsystem can be started,
+tested, explained, and demonstrated independently.</li>
+</ul>
+</body>
+</html>
