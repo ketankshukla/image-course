@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HarborCare — Repositories and Deployment</title>
+<style type="text/css">:root{color-scheme:light;--ink:#19283c;--muted:#56667a;--blue:#145bd8;--navy:#081a33;--line:#dce5ef;--paper:#fff;--bg:#edf2f7}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:30px}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.75 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:#145ac0;text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:3px solid #d58b00;outline-offset:4px}
+.skip{position:fixed;top:-100px;left:16px;z-index:10;background:white;padding:10px}
+.skip:focus{top:10px}
+aside{position:fixed;inset:0 auto 0 0;width:284px;overflow:auto;padding:30px 22px;background:var(--navy);color:#e9f0fa;border-right:1px solid #244363}
+.brand{font-size:12px;letter-spacing:.17em;text-transform:uppercase;color:#76dcf3;font-weight:700}
+aside h2{font-size:22px;line-height:1.3;margin:12px 0 22px;color:white;border:0;padding:0}
+aside ul{list-style:none;margin:0;padding:0}
+aside li{margin:0 0 5px}
+aside li ul{margin-left:0}
+aside a{display:block;padding:7px 10px;border-radius:6px;color:#d2deed;text-decoration:none;font-size:13px;line-height:1.45}
+aside a:hover{background:#193554;color:white}
+.rail-footer{margin-top:22px;border-top:1px solid #2c4260;padding-top:20px;color:#9db0c9;font-size:12px}
+main{margin-left:284px;padding:42px clamp(24px,4vw,72px) 90px;max-width:1550px}
+.toolbar{display:flex;align-items:center;gap:15px;justify-content:space-between;margin-bottom:30px;font-size:12px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+button{font:600 13px system-ui;border:1px solid #c9d7e8;background:#fff;color:#164176;padding:10px 15px;border-radius:8px;cursor:pointer}
+button:hover{background:#e6f0ff}
+h1{font-size:clamp(40px,4.4vw,66px);line-height:1.1;letter-spacing:-.045em;background:linear-gradient(120deg,#07172e,#124481);color:white;border-radius:20px;padding:40px;margin:0 0 34px;box-shadow:0 18px 45px #0b254025}
+h2{font-size:30px;line-height:1.3;color:#103e7c;letter-spacing:-.025em;margin:58px 0 22px;padding-top:23px;border-top:3px solid #2367c9}
+h3{font-size:23px;line-height:1.35;color:#075e76;letter-spacing:-.02em;margin:34px 0 15px}
+p{margin:16px 0;max-width:90ch}
+li{margin:7px 0}
+strong{color:#113862}
+blockquote{background:#e1f1f7;border-left:5px solid #068caf;border-radius:0 12px 12px 0;margin:28px 0;padding:12px 25px;color:#184050}
+figure{margin:28px 0 32px}
+figure img{display:block;width:100%;height:auto;border-radius:14px;background:#07172d;box-shadow:0 12px 28px #0a254025}
+figcaption{font-size:14px;line-height:1.6;color:var(--muted);padding:13px 2px}
+.diagram-button{margin-top:9px;font-size:12px}
+img{max-width:100%;height:auto}
+pre{padding:23px 25px;overflow:auto;background:#091b32;color:#dfedff;border:1px solid #203a56;border-radius:12px;line-height:1.6;tab-size:4}
+code{font-family:"Cascadia Code",Consolas,monospace;font-size:.85em}
+:not(pre)>code{background:#e3eaf3;color:#98305b;padding:.12em .32em;border-radius:4px;overflow-wrap:anywhere}
+pre code{white-space:pre;color:inherit}
+table{border-collapse:separate;border-spacing:0;display:block;overflow-x:auto;max-width:100%;margin:24px 0 30px;border:1px solid var(--line);border-radius:10px;background:white;font-size:15px;line-height:1.6}
+th,td{text-align:left;vertical-align:top;padding:13px 16px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-width:130px}
+th{background:#103c78;color:white;font-weight:650}
+tr:nth-child(even) td{background:#f4f7fb}
+tr:last-child td{border-bottom:0}
+th:last-child,td:last-child{border-right:0}
+hr{border:0;border-top:1px solid var(--line);margin:40px 0}
+dialog{border:1px solid #375679;border-radius:15px;padding:0;background:#07172e;color:white;width:96vw;max-width:1900px;max-height:96vh;overflow:hidden}
+dialog::backdrop{background:#030b17dd}
+.zoom-toolbar{display:flex;gap:10px;align-items:center;justify-content:flex-end;padding:12px 18px;background:#102943}
+.zoom-toolbar span{margin-right:auto;font-size:14px}
+.zoom-body{overflow:auto;max-height:82vh;padding:12px}
+.zoom-body img{display:block;width:100%;max-width:none;margin:auto;height:auto}
+footer{margin-top:60px;border-top:1px solid var(--line);padding-top:20px;font-size:13px;color:var(--muted)}
+@media(max-width:1000px){aside{position:relative;width:auto;padding:24px}aside nav ul{columns:2}aside li{break-inside:avoid}.rail-footer{display:none}main{margin-left:0;padding:28px 24px 60px}}
+@media(max-width:600px){body{font-size:16px}aside nav ul{columns:1}aside{max-height:330px}main{padding:22px 16px 50px}h1{font-size:38px;padding:27px}h2{font-size:26px}h3{font-size:21px}.toolbar{font-size:10px}pre{padding:17px;font-size:14px}.zoom-toolbar{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{aside,.toolbar,.diagram-button,dialog{display:none!important}body{background:white;font-size:11pt}main{margin:0;max-width:none;padding:0}h1{color:#12345a;background:none;padding:0;box-shadow:none;font-size:32pt}h2,h3{break-after:avoid}figure,blockquote{break-inside:avoid}pre{background:#f3f5f9;color:#152f4e;white-space:pre-wrap}pre code{white-space:pre-wrap}table{display:table;font-size:9pt}th,td{min-width:0;padding:7px}figure img{box-shadow:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#content">Skip to document</a>
+<aside aria-label="Document contents">
+<div class="brand">Visual learning library</div>
+<h2>HarborCare</h2>
+<ul>
+<li><a href="#harborcare--repositories-and-deployment" id="toc-harborcare--repositories-and-deployment">HarborCare —
+Repositories and Deployment</a>
+<ul>
+<li><a href="#keep-teaching-material-application-code-and-live-state-separate" id="toc-keep-teaching-material-application-code-and-live-state-separate">Keep
+teaching material, application code, and live state separate</a></li>
+<li><a href="#1-proposed-local-layout" id="toc-1-proposed-local-layout">1. Proposed local layout</a></li>
+<li><a href="#2-why-not-add-hospital-patients-to-acmes-database" id="toc-2-why-not-add-hospital-patients-to-acmes-database">2. Why not
+add hospital patients to Acme&#39;s database?</a></li>
+<li><a href="#3-deployment-map" id="toc-3-deployment-map">3. Deployment
+map</a></li>
+<li><a href="#4-environments" id="toc-4-environments">4.
+Environments</a></li>
+<li><a href="#5-release-procedure" id="toc-5-release-procedure">5.
+Release procedure</a></li>
+<li><a href="#6-deployment-acceptance" id="toc-6-deployment-acceptance">6. Deployment acceptance</a></li>
+</ul></li>
+</ul>
+<div class="rail-footer">Self-contained reading edition<br>Diagrams and styles embedded</div>
+</aside>
+<main id="content">
+<div class="toolbar"><span>Illustrated reference guide</span><button type="button" onclick="window.print()">Print / Save PDF</button></div>
+<h1 id="harborcare--repositories-and-deployment">HarborCare —
+Repositories and Deployment</h1>
+<h2 id="keep-teaching-material-application-code-and-live-state-separate">Keep
+teaching material, application code, and live state separate</h2>
+<p>This document describes future application repositories. The files
+created now are learning documents inside <code>image-course</code>; no
+HarborCare app or cloud service is being provisioned.</p>
+<h2 id="1-proposed-local-layout">1. Proposed local layout</h2>
+<pre class="text"><code>parent-folder/
+├── image-course/                       This learning repository
+│   ├── courses/                        Ten course volumes and their assets
+│   └── docs/case-studies/
+│       ├── acme/
+│       └── hospital/
+├── acme-agent-platform/                Future Acme Python/hybrid app
+├── harborcare-privacy-platform/        Future HarborCare Python/hybrid app
+└── harborcare-privacy-platform-ts/     Optional later TS counterpart</code></pre>
+<p>Each application has one Git repository at its root. P1–P5 are
+modules and demonstrable projects within that repository, not five
+nested repositories. Do not place a new <code>.git</code> directory
+inside a course lesson folder.</p>
+<h2 id="2-why-not-add-hospital-patients-to-acmes-database">2. Why not
+add hospital patients to Acme&#39;s database?</h2>
+<p>HarborCare has different contracts, risks, fixtures, and release
+semantics. A financial receipt and a disclosure receipt are not
+interchangeable. Reusing ideas is useful; sharing a live data store and
+permissions just to avoid creating another repo is not.</p>
+<p>Start with independent application repos and small explicit contract
+fixtures. If a policy or protocol helper later becomes genuinely
+reusable, extract it as a versioned library after its consumers and
+compatibility rules are clear.</p>
+<h2 id="3-deployment-map">3. Deployment map</h2>
+<p><img role="img" aria-label="The web, policy/release gateway, evidence service, agents, workflow, and synthetic receiver are separate runtime responsibilities backed by scoped persistent stores." src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDQwIiBoZWlnaHQ9IjYyMCIgdmlld0JveD0iMCAwIDE0NDAgNjIwIiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUgZGVzYyI+PHRpdGxlIGlkPSJ0aXRsZSI+Rml2ZSBwcm9qZWN0cywgb25lIHByaXZhY3kgYm91bmRhcnk8L3RpdGxlPjxkZXNjIGlkPSJkZXNjIj5BbGwgcHJvamVjdHMgc2hhcmUgZGV0ZXJtaW5pc3RpYyBwb2xpY3kgY29udHJhY3RzOyBvbmx5IHRoZSByZWxlYXNlIHNlcnZpY2UgZGlzcGF0Y2hlcyBwYWNrZXRzLjwvZGVzYz48cmVjdCB3aWR0aD0iMTQ0MCIgaGVpZ2h0PSI2MjAiIHJ4PSIyNCIgZmlsbD0iIzA5MTYyYiIvPjxnIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSxBcmlhbCxzYW5zLXNlcmlmIj48dGV4dCB4PSI2MCIgeT0iNjgiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiM1MGM4ZGQiIGxldHRlci1zcGFjaW5nPSIzIj5IQVJCT1JDQVJFIMK3IFNZTlRIRVRJQyBMRUFSTklORyBDQVNFPC90ZXh0Pjx0ZXh0IHg9IjYwIiB5PSIxMzAiIGZvbnQtc2l6ZT0iNDMiIGZpbGw9IndoaXRlIiBmb250LXdlaWdodD0iNzAwIj5GaXZlIHByb2plY3RzLCBvbmUgcHJpdmFjeSBib3VuZGFyeTwvdGV4dD48cmVjdCB4PSI2MCIgeT0iMTkwIiB3aWR0aD0iMzEwIiBoZWlnaHQ9IjI2MCIgcng9IjE2IiBmaWxsPSIjMTEyZTRkIiBzdHJva2U9IiMzMTU1NzIiLz48dGV4dCB4PSI4MCIgeT0iMjMyIiBmaWxsPSIjNzdlMmNjIiBmb250LXNpemU9IjIwIiBmb250LXdlaWdodD0iNzAwIj5QNSAgV09SS1NQQUNFPC90ZXh0Pjx0ZXh0IHg9IjgwIiB5PSIyODYiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNlZGY1ZmYiPlJldmlld2VyIHNlZXMgc2FmZSBwcm9qZWN0aW9uPC90ZXh0Pjx0ZXh0IHg9IjgwIiB5PSIzNDAiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNlZGY1ZmYiPlNlcnZlciB2ZXJpZmllcyBlYWNoIHJlcXVlc3Q8L3RleHQ+PHRleHQgeD0iODAiIHk9IjM5NCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2VkZjVmZiI+QnJvd3NlciBuZXZlciBnZXRzIGZ1bGwgY2hhcnQ8L3RleHQ+PHBhdGggZD0iTSAzNzQgMzIwIGggMTggbSAtNyAtNyBsIDcgNyAtNyA3IiBmaWxsPSJub25lIiBzdHJva2U9IiM1MGM4ZGQiIHN0cm9rZS13aWR0aD0iMyIvPjxyZWN0IHg9IjQwMCIgeT0iMTkwIiB3aWR0aD0iMzEwIiBoZWlnaHQ9IjI2MCIgcng9IjE2IiBmaWxsPSIjMTEyZTRkIiBzdHJva2U9IiMzMTU1NzIiLz48dGV4dCB4PSI0MjAiIHk9IjIzMiIgZmlsbD0iIzc3ZTJjYyIgZm9udC1zaXplPSIyMCIgZm9udC13ZWlnaHQ9IjcwMCI+UDEgKyBQMiAgRVZJREVOQ0U8L3RleHQ+PHRleHQgeD0iNDIwIiB5PSIyODYiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNlZGY1ZmYiPk1DUCBjb250cm9scyB0b29sIGFjY2VzczwvdGV4dD48dGV4dCB4PSI0MjAiIHk9IjM0MCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2VkZjVmZiI+UkFHIHNjb3BlcyByZXRyaWV2YWwgZmlyc3Q8L3RleHQ+PHRleHQgeD0iNDIwIiB5PSIzOTQiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNlZGY1ZmYiPlBvbGljeSBkZWNpZGVzLCBub3QgdGhlIG1vZGVsPC90ZXh0PjxwYXRoIGQ9Ik0gNzE0IDMyMCBoIDE4IG0gLTcgLTcgbCA3IDcgLTcgNyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNTBjOGRkIiBzdHJva2Utd2lkdGg9IjMiLz48cmVjdCB4PSI3NDAiIHk9IjE5MCIgd2lkdGg9IjMxMCIgaGVpZ2h0PSIyNjAiIHJ4PSIxNiIgZmlsbD0iIzExMmU0ZCIgc3Ryb2tlPSIjMzE1NTcyIi8+PHRleHQgeD0iNzYwIiB5PSIyMzIiIGZpbGw9IiM3N2UyY2MiIGZvbnQtc2l6ZT0iMjAiIGZvbnQtd2VpZ2h0PSI3MDAiPlAzICBDT09SRElOQVRJT048L3RleHQ+PHRleHQgeD0iNzYwIiB5PSIyODYiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNlZGY1ZmYiPlNjaGVkdWxpbmcgLyBjbGFpbXMgLyB0cmFuc3BvcnQ8L3RleHQ+PHRleHQgeD0iNzYwIiB5PSIzNDAiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNlZGY1ZmYiPkJvdW5kZWQgQTJBIHRhc2sgZW52ZWxvcGVzPC90ZXh0Pjx0ZXh0IHg9Ijc2MCIgeT0iMzk0IiBmb250LXNpemU9IjE4IiBmaWxsPSIjZWRmNWZmIj5ObyBjb3BpZWQgZnVsbCBjb252ZXJzYXRpb248L3RleHQ+PHBhdGggZD0iTSAxMDU0IDMyMCBoIDE4IG0gLTcgLTcgbCA3IDcgLTcgNyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNTBjOGRkIiBzdHJva2Utd2lkdGg9IjMiLz48cmVjdCB4PSIxMDgwIiB5PSIxOTAiIHdpZHRoPSIzMTAiIGhlaWdodD0iMjYwIiByeD0iMTYiIGZpbGw9IiMxMTJlNGQiIHN0cm9rZT0iIzMxNTU3MiIvPjx0ZXh0IHg9IjExMDAiIHk9IjIzMiIgZmlsbD0iIzc3ZTJjYyIgZm9udC1zaXplPSIyMCIgZm9udC13ZWlnaHQ9IjcwMCI+UDQgIERJU0NMT1NVUkU8L3RleHQ+PHRleHQgeD0iMTEwMCIgeT0iMjg2IiBmb250LXNpemU9IjE4IiBmaWxsPSIjZWRmNWZmIj5FeGFjdCBwYWNrZXQgKyBodW1hbiBhcHByb3ZhbDwvdGV4dD48dGV4dCB4PSIxMTAwIiB5PSIzNDAiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNlZGY1ZmYiPk91dGJveCArIGZpbmFsIGRpc3BhdGNoIGNoZWNrPC90ZXh0Pjx0ZXh0IHg9IjExMDAiIHk9IjM5NCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2VkZjVmZiI+TG9jYWwgcmVjaXBpZW50IHNpbXVsYXRvcjwvdGV4dD48cmVjdCB4PSI2MCIgeT0iNDkyIiB3aWR0aD0iMTMyMCIgaGVpZ2h0PSI3NiIgcng9IjEyIiBmaWxsPSIjMTkzODRhIi8+PHRleHQgeD0iODQiIHk9IjUzNyIgZm9udC1zaXplPSIyMCIgZmlsbD0iI2U4ZmNmZiI+QWxsIHByb2plY3RzIHNoYXJlIGRldGVybWluaXN0aWMgcG9saWN5IGNvbnRyYWN0czsgb25seSB0aGUgcmVsZWFzZSBzZXJ2aWNlIGRpc3BhdGNoZXMgcGFja2V0cy48L3RleHQ+PC9nPjwvc3ZnPgo=" alt="The web, policy/release gateway, evidence service, agents, workflow, and synthetic receiver are separate runtime responsibilities backed by scoped persistent stores." /></p>
+<table>
+<thead>
+<tr>
+<th>Runtime</th>
+<th>Python/hybrid deployment</th>
+<th>TypeScript deployment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reviewer UI</td>
+<td>Next.js on Vercel</td>
+<td>Next.js on Vercel</td>
+</tr>
+<tr>
+<td>Case and policy APIs</td>
+<td>Python HTTP services</td>
+<td>TypeScript server entry points</td>
+</tr>
+<tr>
+<td>MCP gateway/release domain</td>
+<td>Restricted Python service</td>
+<td>Restricted TypeScript service</td>
+</tr>
+<tr>
+<td>Evidence processing</td>
+<td>Python API/ingestion worker</td>
+<td>Server-only package and bounded jobs initially</td>
+</tr>
+<tr>
+<td>Specialist agents</td>
+<td>Independent Python A2A services</td>
+<td>Independent TypeScript A2A services</td>
+</tr>
+<tr>
+<td>Orchestration</td>
+<td>Database-backed Python workers</td>
+<td>Workflow DevKit plus application records</td>
+</tr>
+<tr>
+<td>External destination</td>
+<td>Local/private synthetic receiver</td>
+<td>Local/private synthetic receiver</td>
+</tr>
+<tr>
+<td>Data</td>
+<td>Isolated PostgreSQL roles and private objects</td>
+<td>Same ownership model, separate environment</td>
+</tr>
+</tbody>
+</table>
+<p>One repo can build multiple services. Each service gets a release
+identifier, health signal, credentials, and rollback strategy. A Git
+commit does not atomically update every running service.</p>
+<h2 id="4-environments">4. Environments</h2>
+<p>Local development uses synthetic fixtures and a test receiver.
+Integration previews use isolated credentials and resettable synthetic
+datasets. The production <strong>demo</strong> has authenticated
+reviewer controls, quotas, curated fixtures, and no arbitrary patient
+upload or egress.</p>
+<p>Do not describe a synthetic hosted demo as ready for real protected
+health information. Before that expansion, review vendor agreements,
+access controls, retention, audit, incident handling, model data use,
+regional requirements, and all applicable law with the responsible
+organization.</p>
+<h2 id="5-release-procedure">5. Release procedure</h2>
+<p>Run policy unit tests, protocol integration, wrong-patient tests,
+field-leakage canary checks, and revocation/recovery scenarios before
+building. Apply additive migrations with one executor. Deploy compatible
+provider services before consumers, then run a synthetic disclosure
+smoke test.</p>
+<p>Record commit, image/deployment IDs, contract version, policy bundle
+version, and migration version. Paused jobs and approved packets may
+depend on old versions. Do not delete compatibility code while those
+records remain active without an explicit migration or expiry plan.</p>
+<p>Keep source policy fixtures in Git, but do not keep live patient
+records, raw audit exports, packet bodies, or secrets there. Even hashes
+and IDs can remain sensitive in a real environment.</p>
+<h2 id="6-deployment-acceptance">6. Deployment acceptance</h2>
+<p>Verify that every service points to the same intended environment,
+recipients are allowlisted by stable identity, model calls contain only
+authorized context, logs contain no canary secrets, and queued releases
+stop under revoked authority. Restore a backup into an isolated
+environment with outbound delivery disabled before starting workers.</p>
+<p>The final proof is not “the website loads.” It is “the right
+recipient gets the exact permitted packet, the wrong recipient gets
+nothing, and uncertainty is handled without widening disclosure.”</p>
+</main>
+<dialog id="diagram-dialog" aria-label="Enlarged diagram">
+<div class="zoom-toolbar"><span>Diagram detail</span><button type="button" id="diagram-close">Close</button></div>
+<div class="zoom-body"><img id="diagram-large" alt></div>
+</dialog>
+<script>
+const diagramDialog = document.getElementById('diagram-dialog');
+const diagramLarge = document.getElementById('diagram-large');
+document.querySelectorAll('main img').forEach((picture) => {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'diagram-button';
+  button.textContent = 'Enlarge diagram';
+  button.addEventListener('click', () => {
+    diagramLarge.src = picture.src;
+    diagramLarge.alt = picture.alt;
+    diagramDialog.showModal();
+  });
+  picture.insertAdjacentElement('afterend', button);
+});
+document.getElementById('diagram-close').addEventListener('click', () => diagramDialog.close());
+</script>
+</body>
+</html>

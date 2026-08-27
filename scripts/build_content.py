@@ -10,6 +10,7 @@ import markdown as md
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parent.parent
+COURSE_ROOT = ROOT / "courses"
 OUT_DATA = ROOT / "data"
 OUT_COURSES = ROOT / "public" / "courses"
 OUT_IMAGES = ROOT / "public" / "images"
@@ -227,7 +228,7 @@ def build_json_lesson_body(lesson: dict, course_id: str, related_map: dict[int, 
 
 def process_course_from_json(config: dict) -> tuple[dict, dict, set[str]]:
     course_id = config["id"]
-    source_dir = ROOT / config["source_dir"]
+    source_dir = COURSE_ROOT / config["source_dir"]
     json_path = source_dir / config["content_json"]
     source_img = source_dir / "diagrams"
 
@@ -342,7 +343,7 @@ def process_course_from_json(config: dict) -> tuple[dict, dict, set[str]]:
 
 
 def process_course(config: dict) -> tuple[dict, dict, set[str]]:
-    source_dir = ROOT / config["source_dir"]
+    source_dir = COURSE_ROOT / config["source_dir"]
     source_md = source_dir / "diagram-docs"
     source_img = source_dir / "diagrams"
     course_id = config["id"]

@@ -1,0 +1,79 @@
+[
+  {
+    "id": "01",
+    "source_dir": "Visual Course 01",
+    "title": "Visual Course Volume 1 \u2014 MCP, ACP, A2A and RAG",
+    "subtitle": "A visual course on modern agent architecture, capabilities, collaboration, and retrieval.",
+    "icon": "\ud83c\udfa8"
+  },
+  {
+    "id": "02",
+    "source_dir": "Visual Course 02",
+    "title": "Visual Course Volume 2 \u2014 Build Your First Agent System",
+    "subtitle": "The implementation bridge from web basics to MCP, RAG, A2A, reliability, and deployment.",
+    "icon": "\ud83d\udee0\ufe0f"
+  },
+  {
+    "id": "03",
+    "source_dir": "Visual Course 03",
+    "title": "Visual Course Volume 3 \u2014 Production Agent Systems",
+    "subtitle": "Turn a working agent demo into a durable, secure, measurable system.",
+    "icon": "\ud83d\ude80"
+  },
+  {
+    "id": "04",
+    "source_dir": "Visual Course 04",
+    "title": "Visual Course Volume 4 \u2014 Protocol Engineering and Interoperability",
+    "subtitle": "Read, test, connect, and safely evolve MCP, A2A, and AG-UI systems.",
+    "icon": "\ud83d\udd17",
+    "content_json": "Volume 4 Course Content.json"
+  },
+  {
+    "id": "05",
+    "source_dir": "Visual Course 05",
+    "title": "Visual Course Volume 5 \u2014 Knowledge Systems and Advanced RAG",
+    "subtitle": "Build permission-aware, fresh, explainable, and measurable evidence systems.",
+    "icon": "\ud83d\udd0d",
+    "content_json": "Volume 5 Course Content.json"
+  },
+  {
+    "id": "06",
+    "source_dir": "Visual Course 06",
+    "title": "Visual Course Volume 6 \u2014 Durable Orchestration and Multi-Agent Workflows",
+    "subtitle": "Design queues, sagas, A2A delegation, and recovery so agent work survives failure.",
+    "icon": "\ud83c\udf93",
+    "content_json": "Volume 6 Course Content.json"
+  },
+  {
+    "id": "07",
+    "source_dir": "Visual Course 07",
+    "title": "Visual Course Volume 7 \u2014 Agent Identity, Security, and Governance",
+    "subtitle": "Protect every identity, capability, data path, tenant, and consequential action.",
+    "icon": "\ud83d\udd12",
+    "content_json": "Volume 7 Course Content.json"
+  },
+  {
+    "id": "08",
+    "source_dir": "Visual Course 08",
+    "title": "Visual Course Volume 8 \u2014 Evaluation, Observability, and AgentOps",
+    "subtitle": "Prove quality, safety, latency, cost, and recovery before and after release.",
+    "icon": "\ud83d\udcca",
+    "content_json": "Volume 8 Course Content.json"
+  },
+  {
+    "id": "09",
+    "source_dir": "Visual Course 09",
+    "title": "Visual Course Volume 9 \u2014 Agentic Product Design and Human Control",
+    "subtitle": "Turn complex agent work into an understandable, accessible, and recoverable human experience.",
+    "icon": "\ud83e\uddd1\u200d\ud83d\udcbb",
+    "content_json": "Volume 9 Course Content.json"
+  },
+  {
+    "id": "10",
+    "source_dir": "Visual Course 10",
+    "title": "Visual Course Volume 10 \u2014 Enterprise Architecture and Dual-Stack Project Blueprint",
+    "subtitle": "Assemble the architecture, contracts, delivery, and operational handoff for a real agent platform.",
+    "icon": "\ud83c\udfdb\ufe0f",
+    "content_json": "Volume 10 Course Content.json"
+  }
+]

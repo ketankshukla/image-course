@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Build HarborCare by Hand</title>
+<style type="text/css">:root{color-scheme:light;--ink:#19283c;--muted:#56667a;--blue:#145bd8;--navy:#081a33;--line:#dce5ef;--paper:#fff;--bg:#edf2f7}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:30px}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.75 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:#145ac0;text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:3px solid #d58b00;outline-offset:4px}
+.skip{position:fixed;top:-100px;left:16px;z-index:10;background:white;padding:10px}
+.skip:focus{top:10px}
+aside{position:fixed;inset:0 auto 0 0;width:284px;overflow:auto;padding:30px 22px;background:var(--navy);color:#e9f0fa;border-right:1px solid #244363}
+.brand{font-size:12px;letter-spacing:.17em;text-transform:uppercase;color:#76dcf3;font-weight:700}
+aside h2{font-size:22px;line-height:1.3;margin:12px 0 22px;color:white;border:0;padding:0}
+aside ul{list-style:none;margin:0;padding:0}
+aside li{margin:0 0 5px}
+aside li ul{margin-left:0}
+aside a{display:block;padding:7px 10px;border-radius:6px;color:#d2deed;text-decoration:none;font-size:13px;line-height:1.45}
+aside a:hover{background:#193554;color:white}
+.rail-footer{margin-top:22px;border-top:1px solid #2c4260;padding-top:20px;color:#9db0c9;font-size:12px}
+main{margin-left:284px;padding:42px clamp(24px,4vw,72px) 90px;max-width:1550px}
+.toolbar{display:flex;align-items:center;gap:15px;justify-content:space-between;margin-bottom:30px;font-size:12px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+button{font:600 13px system-ui;border:1px solid #c9d7e8;background:#fff;color:#164176;padding:10px 15px;border-radius:8px;cursor:pointer}
+button:hover{background:#e6f0ff}
+h1{font-size:clamp(40px,4.4vw,66px);line-height:1.1;letter-spacing:-.045em;background:linear-gradient(120deg,#07172e,#124481);color:white;border-radius:20px;padding:40px;margin:0 0 34px;box-shadow:0 18px 45px #0b254025}
+h2{font-size:30px;line-height:1.3;color:#103e7c;letter-spacing:-.025em;margin:58px 0 22px;padding-top:23px;border-top:3px solid #2367c9}
+h3{font-size:23px;line-height:1.35;color:#075e76;letter-spacing:-.02em;margin:34px 0 15px}
+p{margin:16px 0;max-width:90ch}
+li{margin:7px 0}
+strong{color:#113862}
+blockquote{background:#e1f1f7;border-left:5px solid #068caf;border-radius:0 12px 12px 0;margin:28px 0;padding:12px 25px;color:#184050}
+figure{margin:28px 0 32px}
+figure img{display:block;width:100%;height:auto;border-radius:14px;background:#07172d;box-shadow:0 12px 28px #0a254025}
+figcaption{font-size:14px;line-height:1.6;color:var(--muted);padding:13px 2px}
+.diagram-button{margin-top:9px;font-size:12px}
+img{max-width:100%;height:auto}
+pre{padding:23px 25px;overflow:auto;background:#091b32;color:#dfedff;border:1px solid #203a56;border-radius:12px;line-height:1.6;tab-size:4}
+code{font-family:"Cascadia Code",Consolas,monospace;font-size:.85em}
+:not(pre)>code{background:#e3eaf3;color:#98305b;padding:.12em .32em;border-radius:4px;overflow-wrap:anywhere}
+pre code{white-space:pre;color:inherit}
+table{border-collapse:separate;border-spacing:0;display:block;overflow-x:auto;max-width:100%;margin:24px 0 30px;border:1px solid var(--line);border-radius:10px;background:white;font-size:15px;line-height:1.6}
+th,td{text-align:left;vertical-align:top;padding:13px 16px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-width:130px}
+th{background:#103c78;color:white;font-weight:650}
+tr:nth-child(even) td{background:#f4f7fb}
+tr:last-child td{border-bottom:0}
+th:last-child,td:last-child{border-right:0}
+hr{border:0;border-top:1px solid var(--line);margin:40px 0}
+dialog{border:1px solid #375679;border-radius:15px;padding:0;background:#07172e;color:white;width:96vw;max-width:1900px;max-height:96vh;overflow:hidden}
+dialog::backdrop{background:#030b17dd}
+.zoom-toolbar{display:flex;gap:10px;align-items:center;justify-content:flex-end;padding:12px 18px;background:#102943}
+.zoom-toolbar span{margin-right:auto;font-size:14px}
+.zoom-body{overflow:auto;max-height:82vh;padding:12px}
+.zoom-body img{display:block;width:100%;max-width:none;margin:auto;height:auto}
+footer{margin-top:60px;border-top:1px solid var(--line);padding-top:20px;font-size:13px;color:var(--muted)}
+@media(max-width:1000px){aside{position:relative;width:auto;padding:24px}aside nav ul{columns:2}aside li{break-inside:avoid}.rail-footer{display:none}main{margin-left:0;padding:28px 24px 60px}}
+@media(max-width:600px){body{font-size:16px}aside nav ul{columns:1}aside{max-height:330px}main{padding:22px 16px 50px}h1{font-size:38px;padding:27px}h2{font-size:26px}h3{font-size:21px}.toolbar{font-size:10px}pre{padding:17px;font-size:14px}.zoom-toolbar{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{aside,.toolbar,.diagram-button,dialog{display:none!important}body{background:white;font-size:11pt}main{margin:0;max-width:none;padding:0}h1{color:#12345a;background:none;padding:0;box-shadow:none;font-size:32pt}h2,h3{break-after:avoid}figure,blockquote{break-inside:avoid}pre{background:#f3f5f9;color:#152f4e;white-space:pre-wrap}pre code{white-space:pre-wrap}table{display:table;font-size:9pt}th,td{min-width:0;padding:7px}figure img{box-shadow:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#content">Skip to document</a>
+<aside aria-label="Document contents">
+<div class="brand">Visual learning library</div>
+<h2>HarborCare</h2>
+<ul>
+<li><a href="#build-harborcare-by-hand" id="toc-build-harborcare-by-hand">Build HarborCare by Hand</a>
+<ul>
+<li><a href="#from-an-empty-folder-to-a-deployed-synthetic-demonstration" id="toc-from-an-empty-folder-to-a-deployed-synthetic-demonstration">From
+an empty folder to a deployed synthetic demonstration</a></li>
+<li><a href="#your-route-through-the-work" id="toc-your-route-through-the-work">Your route through the
+work</a></li>
+<li><a href="#what-by-hand-means-here" id="toc-what-by-hand-means-here">What “by hand” means here</a></li>
+<li><a href="#keep-the-promises-realistic" id="toc-keep-the-promises-realistic">Keep the promises
+realistic</a></li>
+<li><a href="#your-learning-notebook" id="toc-your-learning-notebook">Your learning notebook</a></li>
+</ul></li>
+</ul>
+<div class="rail-footer">Self-contained reading edition<br>Diagrams and styles embedded</div>
+</aside>
+<main id="content">
+<div class="toolbar"><span>Illustrated reference guide</span><button type="button" onclick="window.print()">Print / Save PDF</button></div>
+<h1 id="build-harborcare-by-hand">Build HarborCare by Hand</h1>
+<h2 id="from-an-empty-folder-to-a-deployed-synthetic-demonstration">From
+an empty folder to a deployed synthetic demonstration</h2>
+<p>This series is a construction workbook, not a claim that the
+application already exists. Build the Python reference first, then add
+its web interface. The TypeScript architecture is an alternative
+implementation, not a second system that must be running alongside
+Python.</p>
+<p><img role="img" aria-label="The workspace, evidence services, specialist agents, and disclosure service have separate responsibilities." src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDQwIiBoZWlnaHQ9IjYyMCIgdmlld0JveD0iMCAwIDE0NDAgNjIwIiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUgZGVzYyI+PHRpdGxlIGlkPSJ0aXRsZSI+Rml2ZSBwcm9qZWN0cywgb25lIHByaXZhY3kgYm91bmRhcnk8L3RpdGxlPjxkZXNjIGlkPSJkZXNjIj5BbGwgcHJvamVjdHMgc2hhcmUgZGV0ZXJtaW5pc3RpYyBwb2xpY3kgY29udHJhY3RzOyBvbmx5IHRoZSByZWxlYXNlIHNlcnZpY2UgZGlzcGF0Y2hlcyBwYWNrZXRzLjwvZGVzYz48cmVjdCB3aWR0aD0iMTQ0MCIgaGVpZ2h0PSI2MjAiIHJ4PSIyNCIgZmlsbD0iIzA5MTYyYiIvPjxnIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSxBcmlhbCxzYW5zLXNlcmlmIj48dGV4dCB4PSI2MCIgeT0iNjgiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiM1MGM4ZGQiIGxldHRlci1zcGFjaW5nPSIzIj5IQVJCT1JDQVJFIMK3IFNZTlRIRVRJQyBMRUFSTklORyBDQVNFPC90ZXh0Pjx0ZXh0IHg9IjYwIiB5PSIxMzAiIGZvbnQtc2l6ZT0iNDMiIGZpbGw9IndoaXRlIiBmb250LXdlaWdodD0iNzAwIj5GaXZlIHByb2plY3RzLCBvbmUgcHJpdmFjeSBib3VuZGFyeTwvdGV4dD48cmVjdCB4PSI2MCIgeT0iMTkwIiB3aWR0aD0iMzEwIiBoZWlnaHQ9IjI2MCIgcng9IjE2IiBmaWxsPSIjMTEyZTRkIiBzdHJva2U9IiMzMTU1NzIiLz48dGV4dCB4PSI4MCIgeT0iMjMyIiBmaWxsPSIjNzdlMmNjIiBmb250LXNpemU9IjIwIiBmb250LXdlaWdodD0iNzAwIj5QNSAgV09SS1NQQUNFPC90ZXh0Pjx0ZXh0IHg9IjgwIiB5PSIyODYiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNlZGY1ZmYiPlJldmlld2VyIHNlZXMgc2FmZSBwcm9qZWN0aW9uPC90ZXh0Pjx0ZXh0IHg9IjgwIiB5PSIzNDAiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNlZGY1ZmYiPlNlcnZlciB2ZXJpZmllcyBlYWNoIHJlcXVlc3Q8L3RleHQ+PHRleHQgeD0iODAiIHk9IjM5NCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2VkZjVmZiI+QnJvd3NlciBuZXZlciBnZXRzIGZ1bGwgY2hhcnQ8L3RleHQ+PHBhdGggZD0iTSAzNzQgMzIwIGggMTggbSAtNyAtNyBsIDcgNyAtNyA3IiBmaWxsPSJub25lIiBzdHJva2U9IiM1MGM4ZGQiIHN0cm9rZS13aWR0aD0iMyIvPjxyZWN0IHg9IjQwMCIgeT0iMTkwIiB3aWR0aD0iMzEwIiBoZWlnaHQ9IjI2MCIgcng9IjE2IiBmaWxsPSIjMTEyZTRkIiBzdHJva2U9IiMzMTU1NzIiLz48dGV4dCB4PSI0MjAiIHk9IjIzMiIgZmlsbD0iIzc3ZTJjYyIgZm9udC1zaXplPSIyMCIgZm9udC13ZWlnaHQ9IjcwMCI+UDEgKyBQMiAgRVZJREVOQ0U8L3RleHQ+PHRleHQgeD0iNDIwIiB5PSIyODYiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNlZGY1ZmYiPk1DUCBjb250cm9scyB0b29sIGFjY2VzczwvdGV4dD48dGV4dCB4PSI0MjAiIHk9IjM0MCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2VkZjVmZiI+UkFHIHNjb3BlcyByZXRyaWV2YWwgZmlyc3Q8L3RleHQ+PHRleHQgeD0iNDIwIiB5PSIzOTQiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNlZGY1ZmYiPlBvbGljeSBkZWNpZGVzLCBub3QgdGhlIG1vZGVsPC90ZXh0PjxwYXRoIGQ9Ik0gNzE0IDMyMCBoIDE4IG0gLTcgLTcgbCA3IDcgLTcgNyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNTBjOGRkIiBzdHJva2Utd2lkdGg9IjMiLz48cmVjdCB4PSI3NDAiIHk9IjE5MCIgd2lkdGg9IjMxMCIgaGVpZ2h0PSIyNjAiIHJ4PSIxNiIgZmlsbD0iIzExMmU0ZCIgc3Ryb2tlPSIjMzE1NTcyIi8+PHRleHQgeD0iNzYwIiB5PSIyMzIiIGZpbGw9IiM3N2UyY2MiIGZvbnQtc2l6ZT0iMjAiIGZvbnQtd2VpZ2h0PSI3MDAiPlAzICBDT09SRElOQVRJT048L3RleHQ+PHRleHQgeD0iNzYwIiB5PSIyODYiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNlZGY1ZmYiPlNjaGVkdWxpbmcgLyBjbGFpbXMgLyB0cmFuc3BvcnQ8L3RleHQ+PHRleHQgeD0iNzYwIiB5PSIzNDAiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNlZGY1ZmYiPkJvdW5kZWQgQTJBIHRhc2sgZW52ZWxvcGVzPC90ZXh0Pjx0ZXh0IHg9Ijc2MCIgeT0iMzk0IiBmb250LXNpemU9IjE4IiBmaWxsPSIjZWRmNWZmIj5ObyBjb3BpZWQgZnVsbCBjb252ZXJzYXRpb248L3RleHQ+PHBhdGggZD0iTSAxMDU0IDMyMCBoIDE4IG0gLTcgLTcgbCA3IDcgLTcgNyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNTBjOGRkIiBzdHJva2Utd2lkdGg9IjMiLz48cmVjdCB4PSIxMDgwIiB5PSIxOTAiIHdpZHRoPSIzMTAiIGhlaWdodD0iMjYwIiByeD0iMTYiIGZpbGw9IiMxMTJlNGQiIHN0cm9rZT0iIzMxNTU3MiIvPjx0ZXh0IHg9IjExMDAiIHk9IjIzMiIgZmlsbD0iIzc3ZTJjYyIgZm9udC1zaXplPSIyMCIgZm9udC13ZWlnaHQ9IjcwMCI+UDQgIERJU0NMT1NVUkU8L3RleHQ+PHRleHQgeD0iMTEwMCIgeT0iMjg2IiBmb250LXNpemU9IjE4IiBmaWxsPSIjZWRmNWZmIj5FeGFjdCBwYWNrZXQgKyBodW1hbiBhcHByb3ZhbDwvdGV4dD48dGV4dCB4PSIxMTAwIiB5PSIzNDAiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNlZGY1ZmYiPk91dGJveCArIGZpbmFsIGRpc3BhdGNoIGNoZWNrPC90ZXh0Pjx0ZXh0IHg9IjExMDAiIHk9IjM5NCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2VkZjVmZiI+TG9jYWwgcmVjaXBpZW50IHNpbXVsYXRvcjwvdGV4dD48cmVjdCB4PSI2MCIgeT0iNDkyIiB3aWR0aD0iMTMyMCIgaGVpZ2h0PSI3NiIgcng9IjEyIiBmaWxsPSIjMTkzODRhIi8+PHRleHQgeD0iODQiIHk9IjUzNyIgZm9udC1zaXplPSIyMCIgZmlsbD0iI2U4ZmNmZiI+QWxsIHByb2plY3RzIHNoYXJlIGRldGVybWluaXN0aWMgcG9saWN5IGNvbnRyYWN0czsgb25seSB0aGUgcmVsZWFzZSBzZXJ2aWNlIGRpc3BhdGNoZXMgcGFja2V0cy48L3RleHQ+PC9nPjwvc3ZnPgo=" alt="The workspace, evidence services, specialist agents, and disclosure service have separate responsibilities." /></p>
+<h2 id="your-route-through-the-work">Your route through the work</h2>
+<table>
+<thead>
+<tr>
+<th>Order</th>
+<th>Workbook</th>
+<th>Finished checkpoint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><a href="01-FOUNDATIONS.html">Foundations</a> · <a href="01-FOUNDATIONS.md">Markdown</a></td>
+<td>Synthetic fixtures and a tested permission rule</td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="02-MCP-TOOLS.html">P1: MCP tools</a> · <a href="02-MCP-TOOLS.md">Markdown</a></td>
+<td>A tool returns only an authorized projection</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="03-PERMISSION-AWARE-RAG.html">P2: Permission-aware RAG</a>
+· <a href="03-PERMISSION-AWARE-RAG.md">Markdown</a></td>
+<td>Evidence is filtered before the model sees it</td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="04-A2A-COORDINATION.html">P3: A2A coordination</a> · <a href="04-A2A-COORDINATION.md">Markdown</a></td>
+<td>Specialists exchange narrowly scoped tasks</td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="05-DISCLOSURE-WORKFLOW.html">P4: Disclosure workflow</a> ·
+<a href="05-DISCLOSURE-WORKFLOW.md">Markdown</a></td>
+<td>Approval, revocation and uncertain delivery are tested</td>
+</tr>
+<tr>
+<td>6</td>
+<td><a href="06-PRIVACY-WORKSPACE.html">P5: Privacy workspace</a> · <a href="06-PRIVACY-WORKSPACE.md">Markdown</a></td>
+<td>A reviewer understands and controls the exact disclosure</td>
+</tr>
+<tr>
+<td>7</td>
+<td><a href="07-PRODUCTION-DEMO.html">Production-demo operations</a> ·
+<a href="07-PRODUCTION-DEMO.md">Markdown</a></td>
+<td>Isolated environments, deployment and recovery evidence</td>
+</tr>
+</tbody>
+</table>
+<h2 id="what-by-hand-means-here">What “by hand” means here</h2>
+<p>Start with small ordinary functions and tests. Only add protocol
+servers, model calls, storage, and deployment after those functions
+behave correctly. Each chapter names the files to create, the functions
+they own, what calls them, and the tests that must pass before moving
+on. The small executable exercise in the foundations chapter teaches one
+rule; it does not implement the whole platform.</p>
+<p>For each file, write a one-sentence responsibility before writing
+code. For each function, name its inputs, output, failure result, and
+permitted side effects. For every successful test, write at least one
+corresponding denial test. This is how you learn to build the system
+rather than merely reproduce a folder tree.</p>
+<p>The workbook begins with small learning modules. The architecture
+documents show the eventual service layout: move these tested functions
+into those service packages as the application grows, rather than
+maintaining duplicate policy implementations. Likewise, the workbook&#39;s
+<code>cases/[id]</code> page and the architecture&#39;s
+<code>requests/[requestId]</code> page are alternative route names for
+the same reviewer view; choose one convention when building the
+application.</p>
+<h2 id="keep-the-promises-realistic">Keep the promises realistic</h2>
+<p>The workbooks give detailed implementation recipes, not thousands of
+lines of finished application code. Later SDK adapters require the
+current official documentation and pinned versions when you implement
+them. Complete each acceptance gate before calling that project
+implemented. A green unit test does not prove a network protocol works;
+a working protocol does not prove privacy is correct.</p>
+<p>Use only synthetic information. Keep the receiver local or in an
+isolated test environment. There is no emergency override, real hospital
+connector, insurer integration, or patient upload feature in the first
+release. Do not convert a teaching demo into a real-data service by
+changing an environment variable.</p>
+<h2 id="your-learning-notebook">Your learning notebook</h2>
+<p>For every chapter, save the command you ran, the expected result, the
+actual result, and one failure you deliberately introduced. Keep
+screenshots free of private data and access tokens. The strongest final
+demonstration is not just a successful pickup packet: it is showing that
+the wrong agency, wrong patient, stale approval, and repeated delivery
+attempts are handled safely.</p>
+<p>Return to the <a href="../00-START-HERE.html">case-study
+collection</a> for strategy, policy and architecture explanations.</p>
+</main>
+<dialog id="diagram-dialog" aria-label="Enlarged diagram">
+<div class="zoom-toolbar"><span>Diagram detail</span><button type="button" id="diagram-close">Close</button></div>
+<div class="zoom-body"><img id="diagram-large" alt></div>
+</dialog>
+<script>
+const diagramDialog = document.getElementById('diagram-dialog');
+const diagramLarge = document.getElementById('diagram-large');
+document.querySelectorAll('main img').forEach((picture) => {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'diagram-button';
+  button.textContent = 'Enlarge diagram';
+  button.addEventListener('click', () => {
+    diagramLarge.src = picture.src;
+    diagramLarge.alt = picture.alt;
+    diagramDialog.showModal();
+  });
+  picture.insertAdjacentElement('afterend', button);
+});
+document.getElementById('diagram-close').addEventListener('click', () => diagramDialog.close());
+</script>
+</body>
+</html>

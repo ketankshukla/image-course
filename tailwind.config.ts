@@ -19,8 +19,8 @@ const config: Config = {
         dark: "#0f172a",
       },
       fontFamily: {
-        sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
-        serif: ["Playfair Display", "Georgia", "serif"],
+        sans: ["ui-sans-serif", "system-ui", "sans-serif"],
+        serif: ["Georgia", "serif"],
       },
     },
   },

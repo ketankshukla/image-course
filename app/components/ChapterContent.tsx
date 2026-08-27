@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import Image from "next/image";
 import { Chapter, CourseData } from "@/lib/types";
 import { chapterByNumber, cn, highlightInHtml } from "@/lib/utils";
 
@@ -27,11 +28,32 @@ export default function ChapterContent({
   const rootRef = useRef<HTMLDivElement>(null);
   const bodyRef = useRef<HTMLDivElement>(null);
   const [matchIndex, setMatchIndex] = useState(0);
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const [zoom, setZoom] = useState<{ src: string; alt: string; width: number; height: number } | null>(null);
 
   const { highlightedHtml, matchCount } = useMemo(
     () => highlightInHtml(chapter.body, highlightQuery),
     [chapter.body, highlightQuery]
   );
+
+  useEffect(() => {
+    if (zoom) dialogRef.current?.showModal();
+  }, [zoom]);
+
+  useEffect(() => {
+    const cleanups: (() => void)[] = [];
+    bodyRef.current?.querySelectorAll("img").forEach(img => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "diagram-enlarge";
+      button.textContent = "Enlarge diagram";
+      const open = () => setZoom({ src: img.src, alt: img.alt, width: Number(img.getAttribute("width")) || img.naturalWidth, height: Number(img.getAttribute("height")) || img.naturalHeight });
+      button.addEventListener("click", open);
+      img.insertAdjacentElement("afterend", button);
+      cleanups.push(() => { button.removeEventListener("click", open); button.remove(); });
+    });
+    return () => cleanups.forEach(cleanup => cleanup());
+  }, [highlightedHtml]);
 
   // Reset to the first match whenever the chapter or query changes.
   useEffect(() => {
@@ -91,17 +113,21 @@ export default function ChapterContent({
           {chapter.fullTitle}
         </h1>
 
-        <figure className="hero-figure my-6">
-          <img
+        {chapter.image && <figure className="hero-figure my-6">
+          <Image
             src={chapter.image}
             alt={chapter.imageAlt}
+            width={chapter.imageWidth || 1536}
+            height={chapter.imageHeight || 1024}
+            priority
             className="w-full h-auto rounded-xl shadow-md"
           />
-        </figure>
+          <button className="diagram-enlarge" onClick={() => setZoom({ src: chapter.image, alt: chapter.imageAlt, width: chapter.imageWidth || 1536, height: chapter.imageHeight || 1024 })}>Enlarge diagram</button>
+        </figure>}
 
         <div className="chapter-meta flex flex-wrap items-center gap-3 mb-3">
           <span className="chapter-badge px-3 py-1 bg-primary text-white rounded-full text-xs font-semibold">
-            Module {chapter.moduleNumber}: {chapter.moduleTitle}
+            {chapter.moduleTitle}
           </span>
           <span className="chapter-time text-sm text-gray-500 flex items-center gap-1">
             📖 {chapter.readTime} min read
@@ -119,6 +145,11 @@ export default function ChapterContent({
           </p>
         )}
       </div>
+
+      {!!chapter.toc?.length && <details className="article-toc rounded-xl border border-gray-200 p-4 mb-8">
+        <summary className="cursor-pointer font-semibold text-primary">On this page · {chapter.toc.length} sections</summary>
+        <nav aria-label="On this page" className="mt-3"><ul className="space-y-2 text-sm">{chapter.toc.map(item => <li key={item.id}><a href={`#course=${course.id}&chapter=${chapter.number}&anchor=${encodeURIComponent(item.id)}`} className="text-primary hover:underline">{item.title}</a></li>)}</ul></nav>
+      </details>}
 
       {matchCount > 0 && (
         <div className="match-nav sticky top-[70px] z-30 flex items-center gap-2 mb-6 px-3 py-2 bg-white rounded-lg border border-gray-200 shadow-sm">
@@ -145,6 +176,11 @@ export default function ChapterContent({
         className="content-body"
         dangerouslySetInnerHTML={{ __html: highlightedHtml }}
       />
+
+      <dialog ref={dialogRef} className="diagram-dialog" aria-label="Enlarged diagram" onClose={() => setZoom(null)}>
+        <div className="sticky top-0 flex justify-between items-center bg-white p-3 border-b"><span className="font-semibold">Diagram detail</span><button className="px-4 py-2 rounded bg-gray-100" onClick={() => dialogRef.current?.close()}>Close</button></div>
+        {zoom && <div className="overflow-auto p-3"><Image src={zoom.src} alt={zoom.alt} width={zoom.width} height={zoom.height} className="h-auto max-w-none" style={{ width: Math.max(1200, zoom.width) }} /></div>}
+      </dialog>
 
       <div className="chapter-nav flex flex-col sm:flex-row justify-between mt-12 pt-8 border-t-2 border-gray-200 gap-3">
         {prev ? (

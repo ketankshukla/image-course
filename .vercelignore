@@ -1,0 +1,14 @@
+# Keep Markdown, collection manifests and source diagrams available to Node builds.
+**/*.html
+**/*.docx
+**/*.pdf
+**/*.zip
+**/__pycache__/**
+**/*.pyc
+docs/**/VERIFICATION.md
+docs/**/GENERATION-PROMPTS.md
+public/courses/**
+public/images/**
+public/search-index.json
+public/library/**
+.next/**

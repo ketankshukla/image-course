@@ -1,317 +1,170 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import Link from "next/link";
+import dynamic from "next/dynamic";
 import { CourseData, SiteManifest } from "@/lib/types";
 import { chapterByNumber } from "@/lib/utils";
 import Sidebar from "./Sidebar";
 import ChapterContent from "./ChapterContent";
 import { SiteWelcome, CourseWelcome } from "./WelcomeScreens";
-import SearchResults from "./SearchResults";
+const SearchResults = dynamic(() => import("./SearchResults"), { loading: () => <p role="status">Loading search…</p> });
+
+type Shelf = "course" | "case-study" | "guide";
+type Selection = { courseId: string | null; number: number | null; anchor: string | null };
 
 export default function CourseClient({ manifest }: { manifest: SiteManifest }) {
-  const [loadedCourses, setLoadedCourses] = useState<Record<string, CourseData>>({});
-  const [currentCourseId, setCurrentCourseId] = useState<string | null>(null);
-  const [currentChapterNumber, setCurrentChapterNumber] = useState<number | null>(null);
+  const [loaded, setLoaded] = useState<Record<string, CourseData>>({});
+  const cache = useRef<Record<string, Promise<CourseData>>>({});
+  const [selection, setSelection] = useState<Selection>({ courseId: null, number: null, anchor: null });
+  const [shelf, setShelf] = useState<Shelf>("course");
   const [expandedCourses, setExpandedCourses] = useState<Set<string>>(new Set());
   const [expandedModules, setExpandedModules] = useState<Record<string, Set<number>>>({});
-  const [completedByCourse, setCompletedByCourse] = useState<Record<string, number[]>>({});
+  const [completed, setCompleted] = useState<Record<string, number[]>>({});
+  const [progressReady, setProgressReady] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [loadingCourseId, setLoadingCourseId] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [highlightQuery, setHighlightQuery] = useState("");
+  const [error, setError] = useState("");
+  const [retry, setRetry] = useState(0);
+  const currentSummary = manifest.courses.find(c => c.id === selection.courseId);
+  const currentCourse = selection.courseId ? loaded[selection.courseId] : undefined;
+  const currentChapter = currentCourse && selection.number ? chapterByNumber(currentCourse.modules).get(selection.number) : undefined;
+  const totalChapters = manifest.courses.reduce((sum, c) => sum + c.chaptersCount, 0);
+  const completedTotal = manifest.courses.reduce((sum, c) => sum + (completed[c.id] || []).length, 0);
 
-  const totalChapters = useMemo(
-    () => manifest.courses.reduce((a, c) => a + c.chaptersCount, 0),
-    [manifest.courses]
-  );
-
-  const completedTotal = useMemo(
-    () => Object.values(completedByCourse).flat().length,
-    [completedByCourse]
-  );
-
-  const overallProgress = totalChapters > 0 ? Math.round((completedTotal / totalChapters) * 100) : 0;
-
-  // Load completed progress from localStorage.
   useEffect(() => {
-    if (typeof window === "undefined") return;
     try {
-      const saved = JSON.parse(localStorage.getItem("courseProgress") || "{}");
-      if (typeof saved === "object" && saved !== null) {
-        setCompletedByCourse(saved);
+      const value = JSON.parse(localStorage.getItem("courseProgress") || "{}");
+      const safe: Record<string, number[]> = {};
+      for (const course of manifest.courses) {
+        const valid = new Set(course.modules.flatMap(m => m.chapters.map(c => c.number)));
+        if (Array.isArray(value?.[course.id])) safe[course.id] = [...new Set<number>(value[course.id].filter((n: number) => valid.has(n)))];
       }
-    } catch {
-      // ignore
-    }
-  }, []);
+      setCompleted(safe);
+    } catch { /* Storage is optional. */ }
+    setProgressReady(true);
+  }, [manifest]);
 
-  // Persist completed progress.
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    localStorage.setItem("courseProgress", JSON.stringify(completedByCourse));
-  }, [completedByCourse]);
+    if (!progressReady) return;
+    try { localStorage.setItem("courseProgress", JSON.stringify(completed)); } catch { /* Private browsing. */ }
+  }, [completed, progressReady]);
 
-  // Parse URL hash on load and back/forward.
   useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const parseHash = () => {
+    const parse = () => {
       const hash = window.location.hash.slice(1);
       const params = new URLSearchParams(hash);
-      const courseId = params.get("course");
-      const chapterNum = params.get("chapter");
-
-      if (courseId && manifest.courses.some((c) => c.id === courseId)) {
-        if (chapterNum) {
-          selectChapter(courseId, parseInt(chapterNum, 10));
-        } else {
-          selectCourse(courseId);
-        }
-      } else if (chapterNum && !courseId) {
-        // Legacy hash from single-course version: #chapter-30
-        const num = parseInt(chapterNum, 10);
-        if (num <= 30) {
-          selectChapter("01", num);
-        } else {
-          // Try course 02 if it exists and covers that number range.
-          const has02 = manifest.courses.some((c) => c.id === "02");
-          if (has02) selectChapter("02", num);
-          else selectChapter("01", num);
-        }
+      const legacy = hash.match(/^chapter-(\d+)$/);
+      const numberText = params.get("chapter") || legacy?.[1];
+      const number = numberText ? Number(numberText) : null;
+      const id = params.get("course") || (number ? manifest.courses.find(c => c.kind === "course" && c.modules.some(m => m.chapters.some(ch => ch.number === number)))?.id : null);
+      const collection = manifest.courses.find(c => c.id === id);
+      if (id && (!collection || (number !== null && !collection.modules.some(m => m.chapters.some(c => c.number === number))))) {
+        setError("That article is not available. Choose a collection from the library.");
+        setSelection({ courseId: null, number: null, anchor: null });
+        return;
       }
-    };
-
-    parseHash();
-
-    const onPop = () => parseHash();
-    window.addEventListener("popstate", onPop);
-    return () => window.removeEventListener("popstate", onPop);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [manifest.courses]);
-
-  async function loadCourse(id: string): Promise<CourseData | null> {
-    if (loadedCourses[id]) return loadedCourses[id];
-
-    setLoadingCourseId(id);
-    try {
-      const res = await fetch(`/courses/${id}.json`);
-      if (!res.ok) throw new Error(`Failed to load course ${id}: ${res.status}`);
-      const data: CourseData = await res.json();
-      setLoadedCourses((prev) => ({ ...prev, [id]: data }));
-      return data;
-    } catch (err) {
-      console.error("Error loading course:", id, err);
-      return null;
-    } finally {
-      setLoadingCourseId(null);
-    }
-  }
-
-  async function selectCourse(id: string) {
-    setCurrentCourseId(id);
-    setCurrentChapterNumber(null);
-    setExpandedCourses((prev) => new Set(prev).add(id));
-    await loadCourse(id);
-  }
-
-  async function selectChapter(courseId: string, chapterNumber: number, highlightTerm = "") {
-    const course = await loadCourse(courseId);
-    if (!course) return;
-
-    const chapter = chapterByNumber(course.modules).get(chapterNumber);
-    if (!chapter) return;
-
-    setCurrentCourseId(courseId);
-    setCurrentChapterNumber(chapterNumber);
-    setSearchQuery("");
-    setHighlightQuery(highlightTerm);
-    setExpandedCourses((prev) => new Set(prev).add(courseId));
-    setExpandedModules((prev) => {
-      const next: Record<string, Set<number>> = { ...prev };
-      if (!next[courseId]) next[courseId] = new Set();
-      else next[courseId] = new Set(next[courseId]);
-      next[courseId].add(chapter.moduleNumber);
-      return next;
-    });
-
-    if (typeof window !== "undefined") {
-      if (!highlightTerm) {
-        window.scrollTo(0, 0);
-      }
-      if (window.innerWidth <= 768) {
-        setSidebarOpen(false);
-      }
-      history.pushState(
-        null,
-        "",
-        `#course=${courseId}&chapter=${chapterNumber}`
-      );
-    }
-  }
-
-  function toggleCourse(id: string) {
-    setExpandedCourses((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-  }
-
-  function toggleModule(courseId: string, moduleNumber: number) {
-    setExpandedModules((prev) => {
-      const next: Record<string, Set<number>> = { ...prev };
-      if (!next[courseId]) next[courseId] = new Set();
-      else next[courseId] = new Set(next[courseId]);
-
-      if (next[courseId].has(moduleNumber)) {
-        next[courseId].delete(moduleNumber);
+      setError("");
+      setSearchQuery("");
+      setSelection({ courseId: id || null, number, anchor: params.get("anchor") });
+      if (collection) {
+        setShelf(collection.kind);
+        setExpandedCourses(prev => new Set(prev).add(collection.id));
+        const section = collection.modules.find(m => m.chapters.some(c => c.number === number));
+        if (section) setExpandedModules(prev => ({ ...prev, [collection.id]: new Set(prev[collection.id]).add(section.number) }));
       } else {
-        next[courseId].add(moduleNumber);
+        const requestedShelf = params.get("shelf");
+        setShelf(requestedShelf === "case-study" || requestedShelf === "guide" ? requestedShelf : "course");
       }
-      return next;
-    });
-  }
-
-  function markComplete(courseId: string, chapterNumber: number) {
-    setCompletedByCourse((prev) => {
-      const arr = prev[courseId] || [];
-      if (arr.includes(chapterNumber)) return prev;
-      return { ...prev, [courseId]: [...arr, chapterNumber] };
-    });
-  }
-
-  const currentCourse = currentCourseId ? loadedCourses[currentCourseId] : null;
-  const currentChapter =
-    currentCourse && currentChapterNumber
-      ? chapterByNumber(currentCourse.modules).get(currentChapterNumber)
-      : null;
+      setSidebarOpen(false);
+    };
+    parse();
+    window.addEventListener("popstate", parse);
+    window.addEventListener("hashchange", parse);
+    return () => { window.removeEventListener("popstate", parse); window.removeEventListener("hashchange", parse); };
+  }, [manifest]);
 
   useEffect(() => {
-    if (currentChapter) {
-      document.title = `${currentChapter.fullTitle} | ${currentCourse?.title || manifest.siteTitle}`;
-    } else if (currentCourse) {
-      document.title = `${currentCourse.title} | ${manifest.siteTitle}`;
-    } else {
-      document.title = manifest.siteTitle;
-    }
-  }, [currentChapter, currentCourse, manifest.siteTitle]);
+    if (!currentSummary || loaded[currentSummary.id]) return;
+    let cancelled = false;
+    const { id, dataUrl } = currentSummary;
+    if (!cache.current[id]) cache.current[id] = fetch(dataUrl).then(async response => {
+      if (!response.ok) throw Error("Unable to load this collection. Please try again.");
+      const data: CourseData = await response.json();
+      if (data.id !== id) throw Error("Unexpected collection response.");
+      return data;
+    });
+    cache.current[id].then(data => {
+      if (!cancelled) setLoaded(prev => ({ ...prev, [id]: data }));
+    }).catch(() => {
+      delete cache.current[id];
+      if (!cancelled) setError("Unable to load this collection. Please try again.");
+    });
+    return () => { cancelled = true; };
+  }, [currentSummary, loaded, retry]);
 
-  const headerTitle = currentCourse ? currentCourse.title : manifest.siteTitle;
+  useEffect(() => {
+    document.title = currentChapter ? `${currentChapter.title} | ${currentCourse?.title}` : currentSummary?.title || manifest.siteTitle;
+    if (selection.anchor && currentChapter) {
+      document.getElementById(selection.anchor)?.scrollIntoView({ block: "start" });
+    } else if (!highlightQuery) window.scrollTo(0, 0);
+  }, [currentChapter, currentCourse, currentSummary, selection.anchor, highlightQuery, manifest.siteTitle]);
+
+  function navigate(id: string | null, number?: number, highlight = "") {
+    const url = id ? `#course=${id}${number ? `&chapter=${number}` : ""}` : window.location.pathname;
+    history.pushState(null, "", url);
+    setHighlightQuery(highlight);
+    window.dispatchEvent(new PopStateEvent("popstate"));
+  }
+  function toggleCourse(id: string) {
+    setExpandedCourses(prev => { const next = new Set(prev); if (next.has(id)) next.delete(id); else next.add(id); return next; });
+  }
+  function toggleModule(id: string, number: number) {
+    setExpandedModules(prev => { const next = new Set(prev[id]); if (next.has(number)) next.delete(number); else next.add(number); return { ...prev, [id]: next }; });
+  }
+  function changeShelf(next: Shelf) {
+    history.pushState(null, "", `#shelf=${next}`);
+    setHighlightQuery("");
+    window.dispatchEvent(new PopStateEvent("popstate"));
+  }
+  function markComplete(id: string, number: number) {
+    setCompleted(prev => ({ ...prev, [id]: [...new Set([...(prev[id] || []), number])] }));
+  }
+  const visibleManifest = useMemo(() => ({ ...manifest, courses: manifest.courses.filter(c => c.kind === shelf) }), [manifest, shelf]);
+  const progress = totalChapters ? Math.round(completedTotal / totalChapters * 100) : 0;
 
   return (
     <div className="min-h-screen">
+      <a className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 z-[60] bg-white p-3" href="#main-content" onClick={event => { event.preventDefault(); document.getElementById("main-content")?.focus(); }}>Skip to content</a>
       <header className="course-header fixed top-0 left-0 right-0 z-50 h-[60px] bg-gradient-to-r from-primary to-primary-dark text-white shadow-lg flex items-center justify-between px-5">
-        <a href="/" className="logo flex items-center gap-3 no-underline">
-          <span className="text-2xl">🎓</span>
-          <span className="font-serif text-xl font-bold">
-            Visual <span className="text-accent">Course</span>
-          </span>
-        </a>
-        <span className="course-title-header hidden lg:block font-medium opacity-90 text-sm truncate max-w-md text-center">
-          {headerTitle}
-        </span>
-        <div className="header-actions flex items-center gap-4">
-          <div className="progress-indicator hidden sm:flex items-center gap-2 text-sm">
-            <span>Progress</span>
-            <div className="w-[120px] h-[6px] bg-white/30 rounded-full overflow-hidden">
-              <div
-                className="h-full bg-accent rounded-full transition-all duration-300"
-                style={{ width: `${overallProgress}%` }}
-              />
-            </div>
-            <span className="w-8 text-right">{overallProgress}%</span>
-          </div>
-          <button
-            onClick={() => setSidebarOpen((s) => !s)}
-            className="menu-toggle md:hidden bg-white/20 hover:bg-white/30 border-0 text-white px-3 py-2 rounded-md text-lg cursor-pointer"
-            aria-label="Toggle menu"
-          >
-            ☰
-          </button>
+        <Link href="/" onClick={e => { e.preventDefault(); navigate(null); }} className="flex items-center gap-3 no-underline text-white">
+          <span className="text-2xl">🎓</span><span className="font-serif text-xl font-bold">Visual <span className="text-accent">Library</span></span>
+        </Link>
+        <span className="hidden lg:block text-sm truncate max-w-md">{currentSummary?.title || "Concepts → Case studies → Working projects"}</span>
+        <div className="flex items-center gap-4">
+          <span className="hidden sm:block text-sm">Reading progress {progress}%</span>
+          <button onClick={() => setSidebarOpen(s => !s)} className="md:hidden bg-white/20 px-3 py-2 rounded-md" aria-label="Toggle menu" aria-expanded={sidebarOpen}>☰</button>
         </div>
       </header>
-
-      {sidebarOpen && (
-        <div
-          className="sidebar-overlay fixed inset-0 bg-black/50 z-40 md:hidden"
-          style={{ top: "60px" }}
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
-
-      <div className="course-layout flex mt-[60px] min-h-[calc(100vh-60px)]">
-        <Sidebar
-          manifest={manifest}
-          open={sidebarOpen}
-          currentCourseId={currentCourseId}
-          currentChapterNumber={currentChapterNumber}
-          expandedCourses={expandedCourses}
-          expandedModules={expandedModules}
-          completedByCourse={completedByCourse}
-          searchQuery={searchQuery}
-          onSearch={setSearchQuery}
-          onToggleCourse={toggleCourse}
-          onToggleModule={toggleModule}
-          onSelectChapter={selectChapter}
-          onCloseSidebar={() => setSidebarOpen(false)}
-        />
-
-        <main
-          className={cn(
-            "main-content flex-1 p-6 md:p-10",
-            "md:ml-[var(--sidebar-width)]"
-          )}
-        >
-          <div className="content-wrapper bg-white rounded-2xl shadow p-6 md:p-12 min-h-[calc(100vh-140px)]">
-            {searchQuery.trim() ? (
-              <SearchResults
-                query={searchQuery}
-                onSelect={(courseId, chapterNumber) =>
-                  selectChapter(courseId, chapterNumber, searchQuery.trim())
-                }
-              />
-            ) : loadingCourseId && !currentCourse ? (
-              <div className="flex items-center justify-center h-64 text-gray-500">
-                <div className="text-center">
-                  <div className="text-3xl mb-3">⏳</div>
-                  <p>Loading course...</p>
-                </div>
-              </div>
-            ) : currentChapter && currentCourse ? (
-              <ChapterContent
-                chapter={currentChapter}
-                course={currentCourse}
-                completed={completedByCourse[currentCourse.id] || []}
-                onMarkComplete={(n) => markComplete(currentCourse.id, n)}
-                onNavigate={selectChapter}
-                highlightQuery={highlightQuery}
-              />
-            ) : currentCourse ? (
-              <CourseWelcome
-                course={currentCourse}
-                completed={completedByCourse[currentCourse.id] || []}
-                onStart={() => {
-                  const first = currentCourse.modules[0]?.chapters[0];
-                  if (first) selectChapter(currentCourse.id, first.number);
-                }}
-              />
-            ) : (
-              <SiteWelcome
-                manifest={manifest}
-                completedByCourse={completedByCourse}
-                completedTotal={completedTotal}
-                totalChapters={totalChapters}
-                onSelectCourse={selectCourse}
-              />
-            )}
+      {sidebarOpen && <div className="fixed inset-0 top-[60px] bg-black/50 z-30 md:hidden" onClick={() => setSidebarOpen(false)} />}
+      <div className="flex mt-[60px] min-h-[calc(100vh-60px)]">
+        <Sidebar manifest={manifest} shelf={shelf} onShelfChange={changeShelf} open={sidebarOpen}
+          currentCourseId={selection.courseId} currentChapterNumber={selection.number}
+          expandedCourses={expandedCourses} expandedModules={expandedModules} completedByCourse={completed}
+          searchQuery={searchQuery} onSearch={setSearchQuery} onToggleCourse={toggleCourse}
+          onToggleModule={toggleModule} onSelectChapter={navigate} onCloseSidebar={() => setSidebarOpen(false)} />
+        <main id="main-content" tabIndex={-1} className="main-content min-w-0 flex-1 p-4 md:p-8 md:ml-[var(--sidebar-width)]">
+          <div className="bg-white rounded-2xl shadow p-5 md:p-10 min-h-[calc(100vh-140px)]">
+            {searchQuery.trim() ? <SearchResults query={searchQuery} searchUrl={manifest.searchUrl} onSelect={(id, n) => navigate(id, n, searchQuery.trim())} />
+              : error ? <div role="alert" className="p-8"><h1 className="text-2xl mb-4">Something needs attention</h1><p>{error}</p><button className="mt-4 underline" onClick={() => { setError(""); setRetry(n => n + 1); }}>Try again</button></div>
+              : currentSummary && !currentCourse ? <p role="status" className="p-12 text-center">Loading collection…</p>
+              : currentChapter && currentCourse ? <ChapterContent key={`${currentCourse.id}:${currentChapter.number}`} chapter={currentChapter} course={currentCourse} completed={completed[currentCourse.id] || []} onMarkComplete={n => markComplete(currentCourse.id, n)} onNavigate={navigate} highlightQuery={highlightQuery} />
+              : currentCourse ? <CourseWelcome course={currentCourse} completed={completed[currentCourse.id] || []} onStart={() => { const first = currentCourse.modules[0]?.chapters[0]; if (first) navigate(currentCourse.id, first.number); }} />
+              : <SiteWelcome manifest={visibleManifest} shelf={shelf} allCollections={manifest.courses} onShelfChange={changeShelf} completedByCourse={completed} completedTotal={completedTotal} totalChapters={totalChapters} onSelectCourse={navigate} />}
           </div>
         </main>
       </div>
     </div>
   );
-}
-
-function cn(...classes: (string | false | null | undefined)[]) {
-  return classes.filter(Boolean).join(" ");
 }

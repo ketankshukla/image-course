@@ -1,7 +1,12 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "next build",
+  "buildCommand": "npm run build",
   "framework": "nextjs",
-  "installCommand": "npm install",
-  "outputDirectory": ".next"
+  "installCommand": "npm ci",
+  "headers": [
+    {
+      "source": "/library/:path*",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    }
+  ]
 }

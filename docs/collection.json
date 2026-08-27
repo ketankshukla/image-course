@@ -1,0 +1,23 @@
+{
+  "id": "library-guides",
+  "kind": "guide",
+  "title": "Using & Growing This Library",
+  "subtitle": "Find your way around the files and publish the next case study.",
+  "icon": "🧭",
+  "order": 3,
+  "sections": [
+    {
+      "title": "Library guides",
+      "documents": [
+        {
+          "id": 1,
+          "file": "FOLDER-STRUCTURE.md"
+        },
+        {
+          "id": 2,
+          "file": "PUBLISHING-CASE-STUDIES.md"
+        }
+      ]
+    }
+  ]
+}

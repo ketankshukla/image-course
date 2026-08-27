@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>$title$</title>
+$for(css)$
+<link rel="stylesheet" href="$css$">
+$endfor$
+</head>
+<body>
+<a class="skip" href="#reading">Skip to document</a>
+<aside aria-label="Document navigation">
+<div class="brand">Visual Agent Course</div>
+<h2>$edition$<br>Architecture</h2>
+<nav aria-label="Contents">$toc$</nav>
+<div class="rail-footer">Five portfolio projects<br>$if(diagramcount)$$diagramcount$$else$Four$endif$ embedded diagrams<br>Proposed implementation blueprint</div>
+</aside>
+<main id="reading">
+<div class="toolbar"><span>From strategy to implementation</span><button type="button" id="print-button">Print / Save PDF</button></div>
+$body$
+<footer>Acme Agent Platform · All case data and amounts are illustrative. This is a proposed architecture, not an implemented or deployed application.</footer>
+</main>
+<dialog id="diagram-dialog" aria-label="Enlarged architecture diagram">
+<div class="zoom-toolbar"><span>Architecture diagram</span><button type="button" id="fit-button">Fit</button><button type="button" id="zoom-button">Zoom 150%</button><button type="button" id="close-button">Close</button></div>
+<div class="zoom-body"><img id="zoom-image" alt=""></div>
+</dialog>
+<script>
+const dialog = document.getElementById('diagram-dialog');
+const zoomImage = document.getElementById('zoom-image');
+document.getElementById('print-button').addEventListener('click', () => window.print());
+document.querySelectorAll('main img').forEach((img, index) => {
+  let figure = img.closest('figure');
+  if (!figure) {
+    figure = document.createElement('figure');
+    const parent = img.parentElement;
+    if (parent.tagName === 'P' && parent.childElementCount === 1) parent.replaceWith(figure);
+    else img.parentNode.insertBefore(figure, img);
+    figure.appendChild(img);
+    const caption = document.createElement('figcaption');
+    caption.textContent = img.alt;
+    figure.appendChild(caption);
+  }
+  const button = document.createElement('button');
+  button.type = 'button'; button.className = 'diagram-button';
+  button.textContent = 'Enlarge diagram ' + (index + 1);
+  button.addEventListener('click', () => {
+    zoomImage.src = img.src; zoomImage.alt = img.alt;
+    zoomImage.style.width = '100%'; dialog.showModal();
+  });
+  figure.appendChild(button);
+});
+document.getElementById('close-button').addEventListener('click', () => dialog.close());
+document.getElementById('fit-button').addEventListener('click', () => zoomImage.style.width = '100%');
+document.getElementById('zoom-button').addEventListener('click', () => zoomImage.style.width = '150%');
+dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
+</script>
+</body>
+</html>

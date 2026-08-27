@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>$title$</title>
+$for(css)$<link rel="stylesheet" href="$css$">$endfor$
+</head>
+<body>
+<a class="skip" href="#reading">Skip to lesson</a>
+<aside aria-label="Workbook navigation">
+<div class="brand">Build It Yourself</div>
+<h2>Manual Build<br>Workbooks</h2>
+<nav aria-label="Series"><a href="00-START-HERE.html">Start here · Series map</a></nav>
+<nav aria-label="This workbook">$toc$</nav>
+<div class="rail-footer">Python / Next.js primary path<br>TypeScript translation notes<br>Learn · Build · Test · Explain</div>
+</aside>
+<main id="reading">
+<div class="toolbar"><span>From an empty folder to a production demo</span><button id="print-button" type="button">Print / Save PDF</button></div>
+$body$
+<footer>Manual construction workbook · Fictional data and simulated credits only. Application integration and production readiness must be verified in the future implementation.</footer>
+</main>
+<dialog id="diagram-dialog" aria-label="Enlarged lesson diagram">
+<div class="zoom-toolbar"><span>Lesson diagram</span><button id="fit-button" type="button">Fit</button><button id="zoom-button" type="button">Zoom 150%</button><button id="close-button" type="button">Close</button></div>
+<div class="zoom-body"><img id="zoom-image" alt=""></div>
+</dialog>
+<script>
+const dialog = document.getElementById('diagram-dialog');
+const enlarged = document.getElementById('zoom-image');
+document.getElementById('print-button').onclick = () => window.print();
+document.querySelectorAll('main img').forEach((img, index) => {
+  let figure = img.closest('figure');
+  if (!figure) {
+    figure = document.createElement('figure');
+    const parent = img.parentElement;
+    if (parent.tagName === 'P' && parent.childElementCount === 1) parent.replaceWith(figure);
+    else img.parentNode.insertBefore(figure, img);
+    figure.appendChild(img);
+    const caption = document.createElement('figcaption');
+    caption.textContent = img.alt;
+    figure.appendChild(caption);
+  }
+  const button = document.createElement('button');
+  button.type = 'button'; button.className = 'diagram-button';
+  button.textContent = 'Enlarge diagram ' + (index + 1);
+  button.onclick = () => { enlarged.src = img.src; enlarged.alt = img.alt; enlarged.style.width = '100%'; dialog.showModal(); };
+  figure.appendChild(button);
+});
+document.getElementById('fit-button').onclick = () => enlarged.style.width = '100%';
+document.getElementById('zoom-button').onclick = () => enlarged.style.width = '150%';
+document.getElementById('close-button').onclick = () => dialog.close();
+dialog.onclick = event => { if (event.target === dialog) dialog.close(); };
+</script>
+</body>
+</html>

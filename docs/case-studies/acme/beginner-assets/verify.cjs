@@ -1,0 +1,23 @@
+const fs = require('node:fs');
+const path = require('node:path');
+const vm = require('node:vm');
+const root = path.resolve(__dirname, '..');
+const stem = path.join(root, 'THE-WHOLE-PROJECT-IN-PLAIN-ENGLISH');
+const md = fs.readFileSync(stem + '.md', 'utf8');
+const html = fs.readFileSync(stem + '.html', 'utf8');
+const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(m => m[1]);
+if (ids.length !== new Set(ids).size) throw Error('Duplicate identifiers');
+for (const a of html.matchAll(/href="#([^"]+)"/g)) if (!ids.includes(a[1])) throw Error('Broken navigation');
+const refs = [...md.matchAll(/!\[[^\]]*\]\(([^)]+)\)/g)];
+const images = [...html.matchAll(/<img[^>]*src="([^"]+)"/g)];
+if (refs.length !== 2 || images.length !== 2) throw Error('Image count');
+images.forEach((image, i) => {
+  const src = image[1], comma = src.indexOf(',');
+  if (!src.startsWith('data:image/svg+xml')) throw Error('Nonembedded SVG');
+  const bytes = src.slice(0, comma).includes(';base64') ? Buffer.from(src.slice(comma + 1), 'base64') : Buffer.from(decodeURIComponent(src.slice(comma + 1)));
+  if (!bytes.equals(fs.readFileSync(path.join(root, refs[i][1])))) throw Error('Image mismatch');
+});
+if (/<(?:script|link)[^>]*(?:src|href)=/i.test(html)) throw Error('External rendering dependency');
+for (const s of html.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/g)) new vm.Script(s[1]);
+if ([...md.matchAll(/^## \d+\./gm)].length !== 18) throw Error('Chapter count');
+console.log('PASS: 18 sections, two byte-identical embedded diagrams, valid navigation and script syntax, no external rendering dependencies; ' + md.split(/\s+/).length + ' words.');

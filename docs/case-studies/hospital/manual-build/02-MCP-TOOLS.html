@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2. P1: Privacy-Gated MCP Tools</title>
+<style type="text/css">:root{color-scheme:light;--ink:#19283c;--muted:#56667a;--blue:#145bd8;--navy:#081a33;--line:#dce5ef;--paper:#fff;--bg:#edf2f7}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:30px}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.75 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:#145ac0;text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:3px solid #d58b00;outline-offset:4px}
+.skip{position:fixed;top:-100px;left:16px;z-index:10;background:white;padding:10px}
+.skip:focus{top:10px}
+aside{position:fixed;inset:0 auto 0 0;width:284px;overflow:auto;padding:30px 22px;background:var(--navy);color:#e9f0fa;border-right:1px solid #244363}
+.brand{font-size:12px;letter-spacing:.17em;text-transform:uppercase;color:#76dcf3;font-weight:700}
+aside h2{font-size:22px;line-height:1.3;margin:12px 0 22px;color:white;border:0;padding:0}
+aside ul{list-style:none;margin:0;padding:0}
+aside li{margin:0 0 5px}
+aside li ul{margin-left:0}
+aside a{display:block;padding:7px 10px;border-radius:6px;color:#d2deed;text-decoration:none;font-size:13px;line-height:1.45}
+aside a:hover{background:#193554;color:white}
+.rail-footer{margin-top:22px;border-top:1px solid #2c4260;padding-top:20px;color:#9db0c9;font-size:12px}
+main{margin-left:284px;padding:42px clamp(24px,4vw,72px) 90px;max-width:1550px}
+.toolbar{display:flex;align-items:center;gap:15px;justify-content:space-between;margin-bottom:30px;font-size:12px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+button{font:600 13px system-ui;border:1px solid #c9d7e8;background:#fff;color:#164176;padding:10px 15px;border-radius:8px;cursor:pointer}
+button:hover{background:#e6f0ff}
+h1{font-size:clamp(40px,4.4vw,66px);line-height:1.1;letter-spacing:-.045em;background:linear-gradient(120deg,#07172e,#124481);color:white;border-radius:20px;padding:40px;margin:0 0 34px;box-shadow:0 18px 45px #0b254025}
+h2{font-size:30px;line-height:1.3;color:#103e7c;letter-spacing:-.025em;margin:58px 0 22px;padding-top:23px;border-top:3px solid #2367c9}
+h3{font-size:23px;line-height:1.35;color:#075e76;letter-spacing:-.02em;margin:34px 0 15px}
+p{margin:16px 0;max-width:90ch}
+li{margin:7px 0}
+strong{color:#113862}
+blockquote{background:#e1f1f7;border-left:5px solid #068caf;border-radius:0 12px 12px 0;margin:28px 0;padding:12px 25px;color:#184050}
+figure{margin:28px 0 32px}
+figure img{display:block;width:100%;height:auto;border-radius:14px;background:#07172d;box-shadow:0 12px 28px #0a254025}
+figcaption{font-size:14px;line-height:1.6;color:var(--muted);padding:13px 2px}
+.diagram-button{margin-top:9px;font-size:12px}
+img{max-width:100%;height:auto}
+pre{padding:23px 25px;overflow:auto;background:#091b32;color:#dfedff;border:1px solid #203a56;border-radius:12px;line-height:1.6;tab-size:4}
+code{font-family:"Cascadia Code",Consolas,monospace;font-size:.85em}
+:not(pre)>code{background:#e3eaf3;color:#98305b;padding:.12em .32em;border-radius:4px;overflow-wrap:anywhere}
+pre code{white-space:pre;color:inherit}
+table{border-collapse:separate;border-spacing:0;display:block;overflow-x:auto;max-width:100%;margin:24px 0 30px;border:1px solid var(--line);border-radius:10px;background:white;font-size:15px;line-height:1.6}
+th,td{text-align:left;vertical-align:top;padding:13px 16px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-width:130px}
+th{background:#103c78;color:white;font-weight:650}
+tr:nth-child(even) td{background:#f4f7fb}
+tr:last-child td{border-bottom:0}
+th:last-child,td:last-child{border-right:0}
+hr{border:0;border-top:1px solid var(--line);margin:40px 0}
+dialog{border:1px solid #375679;border-radius:15px;padding:0;background:#07172e;color:white;width:96vw;max-width:1900px;max-height:96vh;overflow:hidden}
+dialog::backdrop{background:#030b17dd}
+.zoom-toolbar{display:flex;gap:10px;align-items:center;justify-content:flex-end;padding:12px 18px;background:#102943}
+.zoom-toolbar span{margin-right:auto;font-size:14px}
+.zoom-body{overflow:auto;max-height:82vh;padding:12px}
+.zoom-body img{display:block;width:100%;max-width:none;margin:auto;height:auto}
+footer{margin-top:60px;border-top:1px solid var(--line);padding-top:20px;font-size:13px;color:var(--muted)}
+@media(max-width:1000px){aside{position:relative;width:auto;padding:24px}aside nav ul{columns:2}aside li{break-inside:avoid}.rail-footer{display:none}main{margin-left:0;padding:28px 24px 60px}}
+@media(max-width:600px){body{font-size:16px}aside nav ul{columns:1}aside{max-height:330px}main{padding:22px 16px 50px}h1{font-size:38px;padding:27px}h2{font-size:26px}h3{font-size:21px}.toolbar{font-size:10px}pre{padding:17px;font-size:14px}.zoom-toolbar{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{aside,.toolbar,.diagram-button,dialog{display:none!important}body{background:white;font-size:11pt}main{margin:0;max-width:none;padding:0}h1{color:#12345a;background:none;padding:0;box-shadow:none;font-size:32pt}h2,h3{break-after:avoid}figure,blockquote{break-inside:avoid}pre{background:#f3f5f9;color:#152f4e;white-space:pre-wrap}pre code{white-space:pre-wrap}table{display:table;font-size:9pt}th,td{min-width:0;padding:7px}figure img{box-shadow:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#content">Skip to document</a>
+<aside aria-label="Document contents">
+<div class="brand">Visual learning library</div>
+<h2>HarborCare</h2>
+<ul>
+<li><a href="#2-p1-privacy-gated-mcp-tools" id="toc-2-p1-privacy-gated-mcp-tools">2. P1: Privacy-Gated MCP Tools</a>
+<ul>
+<li><a href="#at-a-glance" id="toc-at-a-glance">At a glance</a></li>
+<li><a href="#1-create-the-service-in-layers" id="toc-1-create-the-service-in-layers">1. Create the service in
+layers</a></li>
+<li><a href="#2-build-the-preview-function-before-exposing-a-server" id="toc-2-build-the-preview-function-before-exposing-a-server">2. Build
+the preview function before exposing a server</a></li>
+<li><a href="#3-wrap-the-service-with-narrow-tools" id="toc-3-wrap-the-service-with-narrow-tools">3. Wrap the service with
+narrow tools</a></li>
+<li><a href="#4-trace-one-request-through-the-files" id="toc-4-trace-one-request-through-the-files">4. Trace one request
+through the files</a></li>
+<li><a href="#5-tests-and-failure-handling" id="toc-5-tests-and-failure-handling">5. Tests and failure
+handling</a></li>
+<li><a href="#6-acceptance-gate" id="toc-6-acceptance-gate">6.
+Acceptance gate</a></li>
+</ul></li>
+</ul>
+<div class="rail-footer">Self-contained reading edition<br>Diagrams and styles embedded</div>
+</aside>
+<main id="content">
+<div class="toolbar"><span>Illustrated reference guide</span><button type="button" onclick="window.print()">Print / Save PDF</button></div>
+<h1 id="2-p1-privacy-gated-mcp-tools">2. P1: Privacy-Gated MCP
+Tools</h1>
+<h2 id="at-a-glance">At a glance</h2>
+<p>MCP gives an agent a standard way to discover and call tools. It does
+not decide whether the caller may see a patient record. Your service
+must enforce that rule on every call, including calls made without the
+friendly user interface.</p>
+<p><img role="img" aria-label="Tool access and evidence retrieval sit behind the same policy boundary." src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDQwIiBoZWlnaHQ9IjYyMCIgdmlld0JveD0iMCAwIDE0NDAgNjIwIiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUgZGVzYyI+PHRpdGxlIGlkPSJ0aXRsZSI+Rml2ZSBwcm9qZWN0cywgb25lIHByaXZhY3kgYm91bmRhcnk8L3RpdGxlPjxkZXNjIGlkPSJkZXNjIj5BbGwgcHJvamVjdHMgc2hhcmUgZGV0ZXJtaW5pc3RpYyBwb2xpY3kgY29udHJhY3RzOyBvbmx5IHRoZSByZWxlYXNlIHNlcnZpY2UgZGlzcGF0Y2hlcyBwYWNrZXRzLjwvZGVzYz48cmVjdCB3aWR0aD0iMTQ0MCIgaGVpZ2h0PSI2MjAiIHJ4PSIyNCIgZmlsbD0iIzA5MTYyYiIvPjxnIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSxBcmlhbCxzYW5zLXNlcmlmIj48dGV4dCB4PSI2MCIgeT0iNjgiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiM1MGM4ZGQiIGxldHRlci1zcGFjaW5nPSIzIj5IQVJCT1JDQVJFIMK3IFNZTlRIRVRJQyBMRUFSTklORyBDQVNFPC90ZXh0Pjx0ZXh0IHg9IjYwIiB5PSIxMzAiIGZvbnQtc2l6ZT0iNDMiIGZpbGw9IndoaXRlIiBmb250LXdlaWdodD0iNzAwIj5GaXZlIHByb2plY3RzLCBvbmUgcHJpdmFjeSBib3VuZGFyeTwvdGV4dD48cmVjdCB4PSI2MCIgeT0iMTkwIiB3aWR0aD0iMzEwIiBoZWlnaHQ9IjI2MCIgcng9IjE2IiBmaWxsPSIjMTEyZTRkIiBzdHJva2U9IiMzMTU1NzIiLz48dGV4dCB4PSI4MCIgeT0iMjMyIiBmaWxsPSIjNzdlMmNjIiBmb250LXNpemU9IjIwIiBmb250LXdlaWdodD0iNzAwIj5QNSAgV09SS1NQQUNFPC90ZXh0Pjx0ZXh0IHg9IjgwIiB5PSIyODYiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNlZGY1ZmYiPlJldmlld2VyIHNlZXMgc2FmZSBwcm9qZWN0aW9uPC90ZXh0Pjx0ZXh0IHg9IjgwIiB5PSIzNDAiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNlZGY1ZmYiPlNlcnZlciB2ZXJpZmllcyBlYWNoIHJlcXVlc3Q8L3RleHQ+PHRleHQgeD0iODAiIHk9IjM5NCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2VkZjVmZiI+QnJvd3NlciBuZXZlciBnZXRzIGZ1bGwgY2hhcnQ8L3RleHQ+PHBhdGggZD0iTSAzNzQgMzIwIGggMTggbSAtNyAtNyBsIDcgNyAtNyA3IiBmaWxsPSJub25lIiBzdHJva2U9IiM1MGM4ZGQiIHN0cm9rZS13aWR0aD0iMyIvPjxyZWN0IHg9IjQwMCIgeT0iMTkwIiB3aWR0aD0iMzEwIiBoZWlnaHQ9IjI2MCIgcng9IjE2IiBmaWxsPSIjMTEyZTRkIiBzdHJva2U9IiMzMTU1NzIiLz48dGV4dCB4PSI0MjAiIHk9IjIzMiIgZmlsbD0iIzc3ZTJjYyIgZm9udC1zaXplPSIyMCIgZm9udC13ZWlnaHQ9IjcwMCI+UDEgKyBQMiAgRVZJREVOQ0U8L3RleHQ+PHRleHQgeD0iNDIwIiB5PSIyODYiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNlZGY1ZmYiPk1DUCBjb250cm9scyB0b29sIGFjY2VzczwvdGV4dD48dGV4dCB4PSI0MjAiIHk9IjM0MCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2VkZjVmZiI+UkFHIHNjb3BlcyByZXRyaWV2YWwgZmlyc3Q8L3RleHQ+PHRleHQgeD0iNDIwIiB5PSIzOTQiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNlZGY1ZmYiPlBvbGljeSBkZWNpZGVzLCBub3QgdGhlIG1vZGVsPC90ZXh0PjxwYXRoIGQ9Ik0gNzE0IDMyMCBoIDE4IG0gLTcgLTcgbCA3IDcgLTcgNyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNTBjOGRkIiBzdHJva2Utd2lkdGg9IjMiLz48cmVjdCB4PSI3NDAiIHk9IjE5MCIgd2lkdGg9IjMxMCIgaGVpZ2h0PSIyNjAiIHJ4PSIxNiIgZmlsbD0iIzExMmU0ZCIgc3Ryb2tlPSIjMzE1NTcyIi8+PHRleHQgeD0iNzYwIiB5PSIyMzIiIGZpbGw9IiM3N2UyY2MiIGZvbnQtc2l6ZT0iMjAiIGZvbnQtd2VpZ2h0PSI3MDAiPlAzICBDT09SRElOQVRJT048L3RleHQ+PHRleHQgeD0iNzYwIiB5PSIyODYiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNlZGY1ZmYiPlNjaGVkdWxpbmcgLyBjbGFpbXMgLyB0cmFuc3BvcnQ8L3RleHQ+PHRleHQgeD0iNzYwIiB5PSIzNDAiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNlZGY1ZmYiPkJvdW5kZWQgQTJBIHRhc2sgZW52ZWxvcGVzPC90ZXh0Pjx0ZXh0IHg9Ijc2MCIgeT0iMzk0IiBmb250LXNpemU9IjE4IiBmaWxsPSIjZWRmNWZmIj5ObyBjb3BpZWQgZnVsbCBjb252ZXJzYXRpb248L3RleHQ+PHBhdGggZD0iTSAxMDU0IDMyMCBoIDE4IG0gLTcgLTcgbCA3IDcgLTcgNyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNTBjOGRkIiBzdHJva2Utd2lkdGg9IjMiLz48cmVjdCB4PSIxMDgwIiB5PSIxOTAiIHdpZHRoPSIzMTAiIGhlaWdodD0iMjYwIiByeD0iMTYiIGZpbGw9IiMxMTJlNGQiIHN0cm9rZT0iIzMxNTU3MiIvPjx0ZXh0IHg9IjExMDAiIHk9IjIzMiIgZmlsbD0iIzc3ZTJjYyIgZm9udC1zaXplPSIyMCIgZm9udC13ZWlnaHQ9IjcwMCI+UDQgIERJU0NMT1NVUkU8L3RleHQ+PHRleHQgeD0iMTEwMCIgeT0iMjg2IiBmb250LXNpemU9IjE4IiBmaWxsPSIjZWRmNWZmIj5FeGFjdCBwYWNrZXQgKyBodW1hbiBhcHByb3ZhbDwvdGV4dD48dGV4dCB4PSIxMTAwIiB5PSIzNDAiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNlZGY1ZmYiPk91dGJveCArIGZpbmFsIGRpc3BhdGNoIGNoZWNrPC90ZXh0Pjx0ZXh0IHg9IjExMDAiIHk9IjM5NCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2VkZjVmZiI+TG9jYWwgcmVjaXBpZW50IHNpbXVsYXRvcjwvdGV4dD48cmVjdCB4PSI2MCIgeT0iNDkyIiB3aWR0aD0iMTMyMCIgaGVpZ2h0PSI3NiIgcng9IjEyIiBmaWxsPSIjMTkzODRhIi8+PHRleHQgeD0iODQiIHk9IjUzNyIgZm9udC1zaXplPSIyMCIgZmlsbD0iI2U4ZmNmZiI+QWxsIHByb2plY3RzIHNoYXJlIGRldGVybWluaXN0aWMgcG9saWN5IGNvbnRyYWN0czsgb25seSB0aGUgcmVsZWFzZSBzZXJ2aWNlIGRpc3BhdGNoZXMgcGFja2V0cy48L3RleHQ+PC9nPjwvc3ZnPgo=" alt="Tool access and evidence retrieval sit behind the same policy boundary." /></p>
+<h2 id="1-create-the-service-in-layers">1. Create the service in
+layers</h2>
+<p>Add these files beneath <code>backend/harborcare/</code> in this
+order:</p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Function to build</th>
+<th>Responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>identity.py</code></td>
+<td><code>resolve_actor(credentials)</code></td>
+<td>Validate identity through the configured identity provider</td>
+</tr>
+<tr>
+<td><code>relationships.py</code></td>
+<td><code>resolve_scope(actor, encounter_id)</code></td>
+<td>Load current hospital, patient and assignment relationships</td>
+</tr>
+<tr>
+<td><code>patient_repository.py</code></td>
+<td><code>read_permitted_fields(scope, fields)</code></td>
+<td>Read only the permitted data projection</td>
+</tr>
+<tr>
+<td><code>disclosure_service.py</code></td>
+<td><code>preview_disclosure(actor, request)</code></td>
+<td>Apply policy and construct a safe preview</td>
+</tr>
+<tr>
+<td><code>mcp_server.py</code></td>
+<td>Tool adapters</td>
+<td>Validate protocol inputs and call the service</td>
+</tr>
+</tbody>
+</table>
+<p>For the first local tests, use explicit test identities injected by a
+fixture adapter. Do not accept an unrestricted production header such as
+<code>X-Role: doctor</code>. Keep the test identity adapter unavailable
+outside the test configuration.</p>
+<h2 id="2-build-the-preview-function-before-exposing-a-server">2. Build
+the preview function before exposing a server</h2>
+<p><code>preview_disclosure</code> receives a verified actor and a
+validated request. Resolve the patient and recipient relationships,
+evaluate the policy, fetch only authorized fields, and construct the
+preview. A denied request stops before the patient repository is read. A
+REVIEW decision permits preparation only when its allowed fields and
+preparation permission explicitly permit that step; it never permits
+transmission.</p>
+<p>Return a preview ID, allowed field values, recipient display name and
+stable ID, purpose label, policy revision, expiry, and a clear “not
+sent” state. Keep internal rule diagnostics separate from the response
+shown to an untrusted caller. The reviewer may need reasons; an
+unauthorized requester must not learn which private facts exist.</p>
+<h2 id="3-wrap-the-service-with-narrow-tools">3. Wrap the service with
+narrow tools</h2>
+<p>Start with <code>get_public_hospital_information</code>,
+<code>preview_transport_packet</code>, and
+<code>get_release_status</code>. The public tool queries only the
+curated public corpus. Status lookup must verify access to that
+particular release. A guessed release ID is not authorization.</p>
+<p>Later add a tool that submits an approved release request to P4. Do
+not add a tool called <code>get_full_patient_chart</code> merely because
+it makes a demonstration easier. Do not allow the model to supply a
+delivery URL; resolve the destination from a verified recipient
+registry.</p>
+<p>Use the official MCP SDK and its current authorization guidance when
+implementing the network adapter. Pin and record the SDK version. Keep
+domain tests independent of it so a protocol upgrade cannot quietly
+change the policy rules.</p>
+<h2 id="4-trace-one-request-through-the-files">4. Trace one request
+through the files</h2>
+<p>A coordinator requests a transport preview for ENC-100. The MCP
+adapter validates the shape, authenticates the caller, and calls
+<code>preview_disclosure</code>. The service checks the caller&#39;s
+assignment and the recipient registry. The policy permits the pickup
+projection for ORG-T01. The repository returns those fields and the
+adapter serializes the result.</p>
+<p>Now substitute ORG-T99. The identity may be genuine, but the
+organization is not assigned to this task. The service denies the
+request before the record read. This is the difference between
+authentication—knowing who someone is—and authorization—deciding what
+that person may do here.</p>
+<h2 id="5-tests-and-failure-handling">5. Tests and failure handling</h2>
+<p>Add <code>tests/test_mcp_contracts.py</code> for malformed inputs,
+unknown fields, unauthorized status lookup, and attempts to supply a
+recipient URL. Add integration tests that call the actual protocol
+server, not just the Python function. Assert that tool errors contain
+neither the clinical canary nor other-patient identifiers.</p>
+<p>Simulate a policy-store outage. The tool should fail closed with a
+retriable service error, not revert to unrestricted reads. Simulate a
+database timeout after authorization: no preview is invented and no
+release is recorded. An observability event may contain a safe error
+category and request ID, but not the complete tool arguments or patient
+record.</p>
+<h2 id="6-acceptance-gate">6. Acceptance gate</h2>
+<p>You can demonstrate discovery, an authorized projection, and a direct
+unauthorized protocol call that is denied. P1 is still not a disclosure
+workflow: previews cannot send packets. Keep that separation visible in
+both the code and the demonstration.</p>
+</main>
+<dialog id="diagram-dialog" aria-label="Enlarged diagram">
+<div class="zoom-toolbar"><span>Diagram detail</span><button type="button" id="diagram-close">Close</button></div>
+<div class="zoom-body"><img id="diagram-large" alt></div>
+</dialog>
+<script>
+const diagramDialog = document.getElementById('diagram-dialog');
+const diagramLarge = document.getElementById('diagram-large');
+document.querySelectorAll('main img').forEach((picture) => {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'diagram-button';
+  button.textContent = 'Enlarge diagram';
+  button.addEventListener('click', () => {
+    diagramLarge.src = picture.src;
+    diagramLarge.alt = picture.alt;
+    diagramDialog.showModal();
+  });
+  picture.insertAdjacentElement('afterend', button);
+});
+document.getElementById('diagram-close').addEventListener('click', () => diagramDialog.close());
+</script>
+</body>
+</html>

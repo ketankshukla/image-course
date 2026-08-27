@@ -1,0 +1,763 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Where the Projects Live - Repositories and Deployment</title>
+<style type="text/css">:root{color-scheme:light;--ink:#19283c;--muted:#56667a;--blue:#145bd8;--navy:#081a33;--line:#dce5ef;--paper:#fff;--bg:#edf2f7}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:30px}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.75 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:#145ac0;text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:3px solid #d58b00;outline-offset:4px}
+.skip{position:fixed;top:-100px;left:16px;z-index:10;background:white;padding:10px}
+.skip:focus{top:10px}
+aside{position:fixed;inset:0 auto 0 0;width:284px;overflow:auto;padding:30px 22px;background:var(--navy);color:#e9f0fa;border-right:1px solid #244363}
+.brand{font-size:12px;letter-spacing:.17em;text-transform:uppercase;color:#76dcf3;font-weight:700}
+aside h2{font-size:22px;line-height:1.3;margin:12px 0 22px;color:white;border:0;padding:0}
+aside ul{list-style:none;margin:0;padding:0}
+aside li{margin:0 0 5px}
+aside li ul{margin-left:0}
+aside a{display:block;padding:7px 10px;border-radius:6px;color:#d2deed;text-decoration:none;font-size:13px;line-height:1.45}
+aside a:hover{background:#193554;color:white}
+.rail-footer{margin-top:22px;border-top:1px solid #2c4260;padding-top:20px;color:#9db0c9;font-size:12px}
+main{margin-left:284px;padding:42px clamp(24px,4vw,72px) 90px;max-width:1550px}
+.toolbar{display:flex;align-items:center;gap:15px;justify-content:space-between;margin-bottom:30px;font-size:12px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+button{font:600 13px system-ui;border:1px solid #c9d7e8;background:#fff;color:#164176;padding:10px 15px;border-radius:8px;cursor:pointer}
+button:hover{background:#e6f0ff}
+h1{font-size:clamp(40px,4.4vw,66px);line-height:1.1;letter-spacing:-.045em;background:linear-gradient(120deg,#07172e,#124481);color:white;border-radius:20px;padding:40px;margin:0 0 34px;box-shadow:0 18px 45px #0b254025}
+h2{font-size:30px;line-height:1.3;color:#103e7c;letter-spacing:-.025em;margin:58px 0 22px;padding-top:23px;border-top:3px solid #2367c9}
+h3{font-size:23px;line-height:1.35;color:#075e76;letter-spacing:-.02em;margin:34px 0 15px}
+p{margin:16px 0;max-width:90ch}
+li{margin:7px 0}
+strong{color:#113862}
+blockquote{background:#e1f1f7;border-left:5px solid #068caf;border-radius:0 12px 12px 0;margin:28px 0;padding:12px 25px;color:#184050}
+figure{margin:28px 0 32px}
+figure img{display:block;width:100%;height:auto;border-radius:14px;background:#07172d;box-shadow:0 12px 28px #0a254025}
+figcaption{font-size:14px;line-height:1.6;color:var(--muted);padding:13px 2px}
+.diagram-button{margin-top:9px;font-size:12px}
+img{max-width:100%;height:auto}
+pre{padding:23px 25px;overflow:auto;background:#091b32;color:#dfedff;border:1px solid #203a56;border-radius:12px;line-height:1.6;tab-size:4}
+code{font-family:"Cascadia Code",Consolas,monospace;font-size:.85em}
+:not(pre)>code{background:#e3eaf3;color:#98305b;padding:.12em .32em;border-radius:4px;overflow-wrap:anywhere}
+pre code{white-space:pre;color:inherit}
+table{border-collapse:separate;border-spacing:0;display:block;overflow-x:auto;max-width:100%;margin:24px 0 30px;border:1px solid var(--line);border-radius:10px;background:white;font-size:15px;line-height:1.6}
+th,td{text-align:left;vertical-align:top;padding:13px 16px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-width:130px}
+th{background:#103c78;color:white;font-weight:650}
+tr:nth-child(even) td{background:#f4f7fb}
+tr:last-child td{border-bottom:0}
+th:last-child,td:last-child{border-right:0}
+hr{border:0;border-top:1px solid var(--line);margin:40px 0}
+dialog{border:1px solid #375679;border-radius:15px;padding:0;background:#07172e;color:white;width:96vw;max-width:1900px;max-height:96vh;overflow:hidden}
+dialog::backdrop{background:#030b17dd}
+.zoom-toolbar{display:flex;gap:10px;align-items:center;justify-content:flex-end;padding:12px 18px;background:#102943}
+.zoom-toolbar span{margin-right:auto;font-size:14px}
+.zoom-body{overflow:auto;max-height:82vh;padding:12px}
+.zoom-body img{display:block;width:100%;max-width:none;margin:auto;height:auto}
+footer{margin-top:60px;border-top:1px solid var(--line);padding-top:20px;font-size:13px;color:var(--muted)}
+@media(max-width:1000px){aside{position:relative;width:auto;padding:24px}aside nav ul{columns:2}aside li{break-inside:avoid}.rail-footer{display:none}main{margin-left:0;padding:28px 24px 60px}}
+@media(max-width:600px){body{font-size:16px}aside nav ul{columns:1}aside{max-height:330px}main{padding:22px 16px 50px}h1{font-size:38px;padding:27px}h2{font-size:26px}h3{font-size:21px}.toolbar{font-size:10px}pre{padding:17px;font-size:14px}.zoom-toolbar{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{aside,.toolbar,.diagram-button,dialog{display:none!important}body{background:white;font-size:11pt}main{margin:0;max-width:none;padding:0}h1{color:#12345a;background:none;padding:0;box-shadow:none;font-size:32pt}h2,h3{break-after:avoid}figure,blockquote{break-inside:avoid}pre{background:#f3f5f9;color:#152f4e;white-space:pre-wrap}pre code{white-space:pre-wrap}table{display:table;font-size:9pt}th,td{min-width:0;padding:7px}figure img{box-shadow:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#reading">Skip to document</a>
+<aside aria-label="Document navigation">
+<div class="brand">Visual Agent Course</div>
+<h2>Repository &amp; Deployment<br>Architecture</h2>
+<nav aria-label="Contents"><ul>
+<li><a href="#where-the-projects-live" id="toc-where-the-projects-live">Where the Projects Live</a>
+<ul>
+<li><a href="#a-practical-guide-to-folders-git-repositories-and-deployment" id="toc-a-practical-guide-to-folders-git-repositories-and-deployment">A
+practical guide to folders, Git repositories, and deployment</a></li>
+<li><a href="#1-at-a-glance" id="toc-1-at-a-glance">1. At a
+glance</a></li>
+<li><a href="#2-what-the-diagram-teaches" id="toc-2-what-the-diagram-teaches">2. What the diagram teaches</a></li>
+<li><a href="#3-how-many-git-repositories-would-we-create" id="toc-3-how-many-git-repositories-would-we-create">3. How many Git
+repositories would we create?</a></li>
+<li><a href="#4-where-the-five-portfolio-projects-appear" id="toc-4-where-the-five-portfolio-projects-appear">4. Where the five
+portfolio projects appear</a></li>
+<li><a href="#5-why-keep-applications-outside-image-course" id="toc-5-why-keep-applications-outside-image-course">5. Why keep
+applications outside image-course?</a></li>
+<li><a href="#6-one-repo-several-deployments" id="toc-6-one-repo-several-deployments">6. One repo, several
+deployments</a></li>
+<li><a href="#7-pythonhybrid-deployment-plan" id="toc-7-pythonhybrid-deployment-plan">7. Python/hybrid deployment
+plan</a></li>
+<li><a href="#8-typescript-deployment-plan" id="toc-8-typescript-deployment-plan">8. TypeScript deployment
+plan</a></li>
+<li><a href="#9-where-databases-and-uploaded-files-belong" id="toc-9-where-databases-and-uploaded-files-belong">9. Where databases
+and uploaded files belong</a></li>
+<li><a href="#10-local-preview-and-production-are-separate-worlds" id="toc-10-local-preview-and-production-are-separate-worlds">10. Local,
+preview, and production are separate worlds</a></li>
+<li><a href="#11-how-git-changes-become-releases" id="toc-11-how-git-changes-become-releases">11. How Git changes become
+releases</a></li>
+<li><a href="#12-a-safe-multi-service-release-example" id="toc-12-a-safe-multi-service-release-example">12. A safe
+multi-service release example</a></li>
+<li><a href="#13-when-would-i-split-more-repositories" id="toc-13-when-would-i-split-more-repositories">13. When would I split
+more repositories?</a></li>
+<li><a href="#14-what-i-would-create-when-you-ask-me-to-build" id="toc-14-what-i-would-create-when-you-ask-me-to-build">14. What I
+would create when you ask me to build</a></li>
+<li><a href="#15-the-final-recommendation" id="toc-15-the-final-recommendation">15. The final
+recommendation</a></li>
+</ul></li>
+</ul></nav>
+<div class="rail-footer">Five portfolio projects<br>Two embedded diagrams<br>Proposed implementation blueprint</div>
+</aside>
+<main id="reading">
+<div class="toolbar"><span>From strategy to implementation</span><button type="button" id="print-button">Print / Save PDF</button></div>
+<h1 id="where-the-projects-live">Where the Projects Live</h1>
+<h2 id="a-practical-guide-to-folders-git-repositories-and-deployment">A
+practical guide to folders, Git repositories, and deployment</h2>
+<p><strong>My recommendation: keep the course separate, build one
+Python/hybrid application repository first, and create a second
+application repository only when we build the TypeScript
+counterpart.</strong></p>
+<p>The five portfolio projects belong together inside each application
+repository. They do not need five separate Git repositories. Their
+services can still be deployed independently.</p>
+<p>This document is a proposed implementation plan. No application
+repositories, cloud projects, databases, or deployments have been
+created by writing it. Names below are proposed names, not claims that
+matching GitHub repositories or cloud resources already exist.</p>
+<h2 id="1-at-a-glance">1. At a glance</h2>
+<p><img role="img" aria-label="Three sibling repositories separate the learning material, the Python and hybrid application, and the later TypeScript counterpart. Each application repository contains all five portfolio projects." src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAwIiBoZWlnaHQ9IjczMCIgdmlld0JveD0iMCAwIDE0MDAgNzMwIiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUgZGVzYyI+Cjx0aXRsZSBpZD0idGl0bGUiPlRocmVlIHNpYmxpbmcgcmVwb3NpdG9yaWVzLCBub3QgcmVwb3NpdG9yaWVzIGluc2lkZSBpbWFnZS1jb3Vyc2U8L3RpdGxlPgo8ZGVzYyBpZD0iZGVzYyI+VGhlIGV4aXN0aW5nIGxlYXJuaW5nIHJlcG9zaXRvcnkgc3RheXMgc2VwYXJhdGUgZnJvbSBhIFB5dGhvbiBhbmQgaHlicmlkIGFwcGxpY2F0aW9uIHJlcG9zaXRvcnkgYW5kIGEgbGF0ZXIgVHlwZVNjcmlwdCBhcHBsaWNhdGlvbiByZXBvc2l0b3J5LiBFYWNoIGFwcGxpY2F0aW9uIGNvbnRhaW5zIGFsbCBmaXZlIHBvcnRmb2xpbyBwcm9qZWN0cy48L2Rlc2M+CjxyZWN0IHdpZHRoPSIxNDAwIiBoZWlnaHQ9IjczMCIgcng9IjI0IiBmaWxsPSIjMDkxNjJiIi8+CjxnIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZmlsbD0iI2YxZjdmZiI+Cjx0ZXh0IHg9IjYwIiB5PSI3MCIgZm9udC1zaXplPSIzNiIgZm9udC13ZWlnaHQ9ImJvbGQiPlJFUE9TSVRPUklFUzogV0hFUkUgVEhFIENPREUgTElWRVM8L3RleHQ+Cjx0ZXh0IHg9IjYwIiB5PSIxMTAiIGZvbnQtc2l6ZT0iMjMiIGZpbGw9IiM4ZGI2ZGQiPlNpYmxpbmcgZm9sZGVycyBvbiB5b3VyIGRyaXZlIOKAoiBpbmRlcGVuZGVudCBHaXQgaGlzdG9yaWVzPC90ZXh0Pgo8ZyBmaWxsPSIjMTAyOTQ0IiBzdHJva2U9IiMzYzkxY2UiIHN0cm9rZS13aWR0aD0iMiI+CjxyZWN0IHg9IjUwIiB5PSIxNjAiIHdpZHRoPSI0MTAiIGhlaWdodD0iNDIwIiByeD0iMTgiLz4KPHJlY3QgeD0iNDk1IiB5PSIxNjAiIHdpZHRoPSI0MTAiIGhlaWdodD0iNDIwIiByeD0iMTgiLz4KPHJlY3QgeD0iOTQwIiB5PSIxNjAiIHdpZHRoPSI0MTAiIGhlaWdodD0iNDIwIiByeD0iMTgiLz4KPC9nPgo8ZyBmb250LXNpemU9IjI3IiBmb250LXdlaWdodD0iYm9sZCI+Cjx0ZXh0IHg9IjgwIiB5PSIyMTAiPmltYWdlLWNvdXJzZTwvdGV4dD4KPHRleHQgeD0iNTI1IiB5PSIyMTAiPmFjbWUtYWdlbnQtcGxhdGZvcm08L3RleHQ+Cjx0ZXh0IHg9Ijk3MCIgeT0iMjEwIj5hY21lLWFnZW50LXBsYXRmb3JtLXRzPC90ZXh0Pgo8L2c+CjxnIGZvbnQtc2l6ZT0iMjEiIGZpbGw9IiM2NmRkZDMiPgo8dGV4dCB4PSI4MCIgeT0iMjUwIj5FWElTVElORyDigKIgTEVBUk5JTkcgTUFURVJJQUw8L3RleHQ+Cjx0ZXh0IHg9IjUyNSIgeT0iMjUwIj5CVUlMRCBGSVJTVCDigKIgUFlUSE9OICsgV0VCPC90ZXh0Pgo8dGV4dCB4PSI5NzAiIHk9IjI1MCI+TEFURVIg4oCiIFRZUEVTQ1JJUFQ8L3RleHQ+CjwvZz4KPGcgZm9udC1zaXplPSIyNCI+Cjx0ZXh0IHg9IjgwIiB5PSIzMTUiPkNvdXJzZXMgYW5kIGRpYWdyYW1zPC90ZXh0Pjx0ZXh0IHg9IjgwIiB5PSIzNjUiPkFyY2hpdGVjdHVyZSBndWlkZXM8L3RleHQ+PHRleHQgeD0iODAiIHk9IjQxNSI+Q291cnNlIHdlYnNpdGU8L3RleHQ+PHRleHQgeD0iODAiIHk9IjQ2NSI+T25lIGV4aXN0aW5nIC5naXQgZm9sZGVyPC90ZXh0Pgo8dGV4dCB4PSI1MjUiIHk9IjMxNSI+UDEgTUNQIMK3IFAyIFJBRyDCtyBQMyBBMkE8L3RleHQ+PHRleHQgeD0iNTI1IiB5PSIzNjUiPlA0IFdvcmtmbG93IMK3IFA1IENhc2UgVUk8L3RleHQ+PHRleHQgeD0iNTI1IiB5PSI0MTUiPlB5dGhvbiBiYWNrZW5kICsgTmV4dC5qczwvdGV4dD48dGV4dCB4PSI1MjUiIHk9IjQ2NSI+T25lIG5ldyAuZ2l0IGZvbGRlcjwvdGV4dD4KPHRleHQgeD0iOTcwIiB5PSIzMTUiPlAxIE1DUCDCtyBQMiBSQUcgwrcgUDMgQTJBPC90ZXh0Pjx0ZXh0IHg9Ijk3MCIgeT0iMzY1Ij5QNCBXb3JrZmxvdyDCtyBQNSBDYXNlIFVJPC90ZXh0Pjx0ZXh0IHg9Ijk3MCIgeT0iNDE1Ij5UeXBlU2NyaXB0IGltcGxlbWVudGF0aW9uPC90ZXh0Pjx0ZXh0IHg9Ijk3MCIgeT0iNDY1Ij5PbmUgbmV3IC5naXQgZm9sZGVyPC90ZXh0Pgo8L2c+Cjx0ZXh0IHg9IjgwIiB5PSI1NDAiIGZvbnQtc2l6ZT0iMjEiIGZpbGw9IiM4ZGI2ZGQiPkRvZXMgbm90IGNvbnRhaW4gdGhlIGFwcCByZXBvczwvdGV4dD4KPHRleHQgeD0iNTI1IiB5PSI1NDAiIGZvbnQtc2l6ZT0iMjEiIGZpbGw9IiM4ZGI2ZGQiPk5vIG5lc3RlZCBHaXQgcmVwb3MgZm9yIFAx4oCTUDU8L3RleHQ+Cjx0ZXh0IHg9Ijk3MCIgeT0iNTQwIiBmb250LXNpemU9IjIxIiBmaWxsPSIjOGRiNmRkIj5ObyBuZXN0ZWQgR2l0IHJlcG9zIGZvciBQMeKAk1A1PC90ZXh0Pgo8dGV4dCB4PSI2MCIgeT0iNjQ1IiBmb250LXNpemU9IjI3IiBmb250LXdlaWdodD0iYm9sZCI+T25lIHJlcG9zaXRvcnkgY2FuIGNvbnRhaW4gc2V2ZXJhbCBpbmRlcGVuZGVudGx5IGRlcGxveWVkIHNlcnZpY2VzLjwvdGV4dD4KPHRleHQgeD0iNjAiIHk9IjY5MCIgZm9udC1zaXplPSIyMiIgZmlsbD0iIzhkYjZkZCI+UHJvcG9zZWQgYXBwbGljYXRpb24gbmFtZXMuIE9ubHkgaW1hZ2UtY291cnNlIGFscmVhZHkgZXhpc3RzIGluIHRoaXMgcGxhbi48L3RleHQ+CjwvZz48L3N2Zz4K" alt="Three sibling repositories separate the learning material, the Python and hybrid application, and the later TypeScript counterpart. Each application repository contains all five portfolio projects." /></p>
+<p>I would <strong>not</strong> build the applications inside
+<code>image-course</code>, and I would <strong>not</strong> put separate
+Git repositories inside its subfolders.</p>
+<p>I would use this local arrangement:</p>
+<pre class="text"><code>E:/
+├── image-course/                  Existing Git repository
+│   ├── .git/
+│   ├── app/                       Course website
+│   ├── courses/                   Visual Course 01 ... 10, with assets
+│   └── docs/
+│       ├── general/
+│       └── case-studies/          Acme and HarborCare documents
+│
+├── acme-agent-platform/           New Python/hybrid Git repository
+│   ├── .git/
+│   ├── apps/web/                  Next.js interface
+│   ├── backend/                   Python services and workers
+│   ├── packages/api-contracts/
+│   ├── tests/
+│   └── docs/projects/             P1–P5 explanations and demos
+│
+└── acme-agent-platform-ts/        Later TypeScript Git repository
+    ├── .git/
+    ├── apps/
+    ├── packages/
+    ├── tests/
+    └── docs/projects/             P1–P5 explanations and demos</code></pre>
+<p>The exact parent directory is not important. They could also live
+under a neutral <code>E:/projects/</code> folder. The important point is
+that they are <strong>siblings</strong>, not repositories nested inside
+the course repository.</p>
+<p>The explicit drive paths above answer the folder-location question;
+they are not required runtime paths or paths to display in the finished
+applications.</p>
+<h2 id="2-what-the-diagram-teaches">2. What the diagram teaches</h2>
+<h3 id="a-folder-repository-project-and-deployment-are-different-things">A
+folder, repository, project, and deployment are different things</h3>
+<p>A folder is an organizational container on your computer. A Git
+repository records changes to files. A portfolio project is a coherent
+piece of work you can demonstrate. A deployment is a running version of
+software hosted somewhere.</p>
+<p>Think of the application repository as a workshop. Inside it are
+several work areas: tools, evidence search, specialist agents, workflow
+management, and the case interface. They share specifications and tests.
+Some of those work areas produce independently running services, but
+they still belong to the same workshop.</p>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Example in our setup</th>
+<th>Does it need its own Git repository?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Learning repository</td>
+<td><code>image-course</code></td>
+<td>Yes, already separate</td>
+</tr>
+<tr>
+<td>Application repository</td>
+<td><code>acme-agent-platform</code></td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Portfolio project</td>
+<td>P2 Evidence RAG Workbench</td>
+<td>Not initially</td>
+</tr>
+<tr>
+<td>Shared package</td>
+<td>Contract schemas</td>
+<td>Not initially</td>
+</tr>
+<tr>
+<td>Running service</td>
+<td>Policy agent</td>
+<td>No; can deploy from an app subfolder</td>
+</tr>
+<tr>
+<td>Cloud project</td>
+<td>Vercel web application configuration</td>
+<td>No; multiple cloud projects may use one repo</td>
+</tr>
+<tr>
+<td>Deployment</td>
+<td>A particular built version of that web app</td>
+<td>No; a repo produces many deployments over time</td>
+</tr>
+</tbody>
+</table>
+<p>This resolves the apparent contradiction in the earlier documents:
+<strong>one application repository and multiple deployable services are
+compatible choices.</strong></p>
+<h3 id="a-concrete-example-changing-the-credit-proposal">A concrete
+example: changing the credit proposal</h3>
+<p>Suppose we add a <code>policy_version</code> field to the proposal
+for case <code>CASE-1042</code>. The backend produces it, the approval
+screen displays it, the execution rules validate it, and tests verify
+it.</p>
+<p>Inside one repository, those related changes can be reviewed together
+in one pull request. We can see whether the contract, producer,
+consumer, and tests agree before accepting the change.</p>
+<p>With five separate repositories, the same change may require several
+pull requests, published package versions, and careful coordination.
+That complexity is useful when independent teams need it. It is
+unnecessary overhead for your first integrated portfolio platform.</p>
+<p>However, one merged commit does <strong>not</strong> make multiple
+deployments atomic. The web service and backend may update at different
+times. That is why backward-compatible contracts and ordered releases
+still matter, even in one repository.</p>
+<h2 id="3-how-many-git-repositories-would-we-create">3. How many Git
+repositories would we create?</h2>
+<p>Initially, just <strong>one new application repository</strong>, in
+addition to the existing learning repository.</p>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Repositories</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Today</td>
+<td>Existing <code>image-course</code></td>
+<td>Learning material and course site</td>
+</tr>
+<tr>
+<td>Build the Python foundation</td>
+<td>Add <code>acme-agent-platform</code></td>
+<td>One home for Python business logic and services</td>
+</tr>
+<tr>
+<td>Add the hybrid Next.js interface</td>
+<td>Keep using <code>acme-agent-platform</code></td>
+<td>The UI is another application entry point, not a new backend
+fork</td>
+</tr>
+<tr>
+<td>Build the TypeScript counterpart</td>
+<td>Add <code>acme-agent-platform-ts</code></td>
+<td>Separate implementation and release lifecycle</td>
+</tr>
+</tbody>
+</table>
+<p>The Python-only guide and hybrid guide describe <strong>successive
+stages of the same recommended repository</strong>, not two mandatory
+repositories to maintain forever. We can tag a working Python-first
+release, then add the Next.js interface while preserving its backend
+contracts.</p>
+<p>The earlier proposed name <code>acme-agent-platform-hybrid</code> can
+be understood as a descriptive alternative. For implementation, I
+recommend the simpler <code>acme-agent-platform</code> so adding a web
+interface does not require renaming or copying the project.</p>
+<p>Do not create permanent <code>python</code>, <code>hybrid</code>, and
+<code>typescript</code> branches as substitutes for separate products.
+Branches are for changes in progress. Use release tags for meaningful
+milestones and a separate repo for the genuinely separate TypeScript
+implementation.</p>
+<h2 id="4-where-the-five-portfolio-projects-appear">4. Where the five
+portfolio projects appear</h2>
+<p>The five projects remain distinct through their code ownership,
+documentation, tests, and demonstration scenarios—not by duplicating
+infrastructure five times.</p>
+<table>
+<thead>
+<tr>
+<th>Portfolio project</th>
+<th>Python/hybrid code area</th>
+<th>TypeScript code area</th>
+<th>Demo entry</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1 MCP Operations Gateway</td>
+<td><code>backend/src/acme/mcp_gateway</code> and
+<code>domain</code></td>
+<td><code>apps/mcp-service</code>,
+<code>packages/operations-domain</code></td>
+<td>Approved, denied, and repeated tool calls</td>
+</tr>
+<tr>
+<td>P2 Evidence RAG Workbench</td>
+<td><code>backend/src/acme/rag</code></td>
+<td><code>packages/rag</code> and ingestion workflow</td>
+<td>Search and inline evidence</td>
+</tr>
+<tr>
+<td>P3 A2A Specialist Network</td>
+<td><code>backend/src/acme/agents</code></td>
+<td><code>apps/policy-agent</code>, <code>apps/finance-agent</code></td>
+<td>Independent task delegation</td>
+</tr>
+<tr>
+<td>P4 Workflow and Reliability Lab</td>
+<td><code>backend/src/acme/workflow</code> and <code>lab</code></td>
+<td>Web workflow entry points plus recovery tests</td>
+<td>Pause, retry, and reconcile</td>
+</tr>
+<tr>
+<td>P5 Case Resolution Platform</td>
+<td><code>apps/web</code> and Python Case API</td>
+<td><code>apps/web</code> and case-domain package</td>
+<td>Complete customer dispute</td>
+</tr>
+</tbody>
+</table>
+<p>Each repository would have a documentation area like this:</p>
+<pre class="text"><code>docs/projects/
+├── 01-mcp-gateway/README.md
+├── 02-rag-workbench/README.md
+├── 03-a2a-specialists/README.md
+├── 04-workflow-reliability/README.md
+└── 05-case-platform/README.md
+
+fixtures/scenarios/
+├── approved-credit/
+├── insufficient-evidence/
+├── stale-approval/
+└── lost-execution-response/</code></pre>
+<p>Those documentation folders point to real implementation modules.
+They do not contain five copied applications. A portfolio page can link
+directly to each project&#39;s README, scenario, and relevant tests within
+the same GitHub repository.</p>
+<h2 id="5-why-keep-applications-outside-image-course">5. Why keep
+applications outside image-course?</h2>
+<p>The course repository has a different job. It contains source
+lessons, diagrams, content generation, and a reading website. It should
+remain easy to build and publish without installing every application
+service.</p>
+<p>Separating the applications keeps their database migrations, test
+fixtures, backend dependencies, deployment credentials, and release
+history out of the learning site&#39;s lifecycle. A change to an MCP tool
+should not unintentionally become a change to the course website
+build.</p>
+<p>It also makes the portfolio clearer. A reviewer can clone the
+application repo and follow its own start-up instructions without
+downloading the entire teaching collection. Conversely, someone reading
+the course does not need to run a database and several agents.</p>
+<p>Do not introduce nested <code>.git</code> directories or submodules
+here. They would add special cloning, staging, and version-management
+rules without solving a current need. The course may link to the
+applications, but it does not need to own their checkouts.</p>
+<h2 id="6-one-repo-several-deployments">6. One repo, several
+deployments</h2>
+<p><img role="img" aria-label="Build-to-deployment mapping: the hybrid repo produces a Vercel web app and Python services; the TypeScript repo produces a web deployment and independent protocol-service deployments. Persistent storage sits outside Git." src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAwIiBoZWlnaHQ9IjgyMCIgdmlld0JveD0iMCAwIDE0MDAgODIwIiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUgZGVzYyI+Cjx0aXRsZSBpZD0idGl0bGUiPk9uZSBhcHBsaWNhdGlvbiByZXBvc2l0b3J5IHByb2R1Y2VzIG11bHRpcGxlIGRlcGxveW1lbnRzPC90aXRsZT4KPGRlc2MgaWQ9ImRlc2MiPlRoZSBoeWJyaWQgcmVwb3NpdG9yeSBwcm9kdWNlcyBhIFZlcmNlbCB3ZWIgZGVwbG95bWVudCBhbmQgUHl0aG9uIGNvbnRhaW5lciBzZXJ2aWNlcy4gVGhlIFR5cGVTY3JpcHQgcmVwb3NpdG9yeSBwcm9kdWNlcyBzZXBhcmF0ZSB3ZWIsIE1DUCwgUG9saWN5LCBhbmQgRmluYW5jZSBkZXBsb3ltZW50cy4gQm90aCB1c2UgZXh0ZXJuYWwgcGVyc2lzdGVudCBzdG9yYWdlIHdpdGggc2VwYXJhdGUgcm9sZXMgYW5kIGlzb2xhdGVkIGVudmlyb25tZW50cy48L2Rlc2M+CjxyZWN0IHdpZHRoPSIxNDAwIiBoZWlnaHQ9IjgyMCIgcng9IjI0IiBmaWxsPSIjMDkxNjJiIi8+CjxkZWZzPjxtYXJrZXIgaWQ9ImFycm93IiBtYXJrZXJXaWR0aD0iMTAiIG1hcmtlckhlaWdodD0iMTAiIHJlZlg9IjkiIHJlZlk9IjUiIG9yaWVudD0iYXV0byI+PHBhdGggZD0iTTAgMCBMMTAgNSBMMCAxMFoiIGZpbGw9IiM1NWQ0ZWQiLz48L21hcmtlcj48L2RlZnM+CjxnIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZmlsbD0iI2YxZjdmZiI+Cjx0ZXh0IHg9IjU1IiB5PSI2NSIgZm9udC1zaXplPSIzNSIgZm9udC13ZWlnaHQ9ImJvbGQiPkRFUExPWU1FTlRTOiBXSEVSRSBUSEUgU09GVFdBUkUgUlVOUzwvdGV4dD4KPHRleHQgeD0iNTUiIHk9IjEwOCIgZm9udC1zaXplPSIyMiIgZmlsbD0iIzhkYjZkZCI+QXJyb3dzIHNob3cgYnVpbGQtdG8tZGVwbG95bWVudCBtYXBwaW5nLCBub3QgcnVudGltZSBBUEkgY2FsbHMuPC90ZXh0Pgo8ZyBmaWxsPSIjMTAyOTQ0IiBzdHJva2U9IiMzYzkxY2UiIHN0cm9rZS13aWR0aD0iMiI+CjxyZWN0IHg9IjUwIiB5PSIxNTUiIHdpZHRoPSIzODAiIGhlaWdodD0iMjE1IiByeD0iMTgiLz48cmVjdCB4PSI1MTAiIHk9IjE1NSIgd2lkdGg9IjgzMCIgaGVpZ2h0PSI4NSIgcng9IjE1Ii8+PHJlY3QgeD0iNTEwIiB5PSIyNzUiIHdpZHRoPSI4MzAiIGhlaWdodD0iOTUiIHJ4PSIxNSIvPgo8cmVjdCB4PSI1MCIgeT0iNDE1IiB3aWR0aD0iMzgwIiBoZWlnaHQ9IjIxMCIgcng9IjE4Ii8+PHJlY3QgeD0iNTEwIiB5PSI0MTUiIHdpZHRoPSI4MzAiIGhlaWdodD0iODUiIHJ4PSIxNSIvPjxyZWN0IHg9IjUxMCIgeT0iNTM1IiB3aWR0aD0iODMwIiBoZWlnaHQ9IjkwIiByeD0iMTUiLz4KPHJlY3QgeD0iNTAiIHk9IjY3NSIgd2lkdGg9IjEyOTAiIGhlaWdodD0iMTA1IiByeD0iMTgiLz4KPC9nPgo8ZyBmb250LXNpemU9IjI2IiBmb250LXdlaWdodD0iYm9sZCI+PHRleHQgeD0iNzUiIHk9IjIxMCI+UFlUSE9OIC8gSFlCUklEIFJFUE88L3RleHQ+PHRleHQgeD0iNzUiIHk9IjQ3MCI+VFlQRVNDUklQVCBSRVBPPC90ZXh0PjwvZz4KPGcgZm9udC1zaXplPSIyMyI+PHRleHQgeD0iNzUiIHk9IjI2NSI+YXBwcy93ZWI8L3RleHQ+PHRleHQgeD0iNzUiIHk9IjMxNSI+YmFja2VuZDwvdGV4dD48dGV4dCB4PSI3NSIgeT0iNTIwIj5hcHBzL3dlYjwvdGV4dD48dGV4dCB4PSI3NSIgeT0iNTcwIj5hcHBzL21jcC1zZXJ2aWNlICsgYWdlbnRzPC90ZXh0PjwvZz4KPGcgc3Ryb2tlPSIjNTVkNGVkIiBzdHJva2Utd2lkdGg9IjMiIGZpbGw9Im5vbmUiIG1hcmtlci1lbmQ9InVybCgjYXJyb3cpIj48cGF0aCBkPSJNNDMwIDIxMCBMNDk1IDE5OCIvPjxwYXRoIGQ9Ik00MzAgMzE1IEw0OTUgMzIyIi8+PHBhdGggZD0iTTQzMCA0NzAgTDQ5NSA0NTgiLz48cGF0aCBkPSJNNDMwIDU2NSBMNDk1IDU4MCIvPjwvZz4KPGcgZm9udC1zaXplPSIyNCI+PHRleHQgeD0iNTM1IiB5PSIxOTAiIGZpbGw9IiM2NmRkZDMiPlZFUkNFTDwvdGV4dD48dGV4dCB4PSI1MzUiIHk9IjIyMiI+TmV4dC5qcyB3ZWIgYXBwbGljYXRpb24gYW5kIGJyb3dzZXItZmFjaW5nIEFQSTwvdGV4dD4KPHRleHQgeD0iNTM1IiB5PSIzMTAiIGZpbGw9IiM2NmRkZDMiPkNPTlRBSU5FUiBIT1NUIOKAoiBTRVBBUkFURSBTRVJWSUNFIEVOVFJJRVM8L3RleHQ+PHRleHQgeD0iNTM1IiB5PSIzNDUiPkNhc2UgQVBJIMK3IE1DUCDCtyBSQUcgwrcgYWdlbnRzIMK3IHdvcmtmbG93IC8gaW5nZXN0aW9uIHdvcmtlcnM8L3RleHQ+Cjx0ZXh0IHg9IjUzNSIgeT0iNDUwIiBmaWxsPSIjNjZkZGQzIj5WRVJDRUwgV0VCIFBST0pFQ1Q8L3RleHQ+PHRleHQgeD0iNTM1IiB5PSI0ODMiPk5leHQuanMgY2FzZSBVSSAvIEFQSSArIGR1cmFibGUgd29ya2Zsb3cgZW50cnkgcG9pbnRzPC90ZXh0Pgo8dGV4dCB4PSI1MzUiIHk9IjU3MCIgZmlsbD0iIzY2ZGRkMyI+U0VQQVJBVEUgUFJPVE9DT0wgU0VSVklDRSBERVBMT1lNRU5UUzwvdGV4dD48dGV4dCB4PSI1MzUiIHk9IjYwNyI+TUNQIHNlcnZpY2UgwrcgUG9saWN5IGFnZW50IMK3IEZpbmFuY2UgYWdlbnQ8L3RleHQ+Cjx0ZXh0IHg9Ijc1IiB5PSI3MTUiIGZvbnQtd2VpZ2h0PSJib2xkIj5FWFRFUk5BTCBTVE9SQUdFIOKAoiBOT1QgVEhFIEdJVCBSRVBPU0lUT1JZPC90ZXh0Pjx0ZXh0IHg9Ijc1IiB5PSI3NTUiPlBvc3RncmVTUUwgKyBwcml2YXRlIG9iamVjdHMg4oCiIHNlcGFyYXRlIGNyZWRlbnRpYWxzIOKAoiBpc29sYXRlZCBwcmV2aWV3IGFuZCBwcm9kdWN0aW9uIGRhdGE8L3RleHQ+PC9nPgo8L2c+PC9zdmc+Cg==" alt="Build-to-deployment mapping: the hybrid repo produces a Vercel web app and Python services; the TypeScript repo produces a web deployment and independent protocol-service deployments. Persistent storage sits outside Git." /></p>
+<p>Vercel supports connecting multiple projects to one Git repository
+and choosing an application Root Directory for each. Shared workspace
+packages must be available to the build, including source outside the
+selected root when required. That means separate service deployments do
+not require separate GitHub repositories. <a href="https://vercel.com/docs/monorepos">Vercel monorepos</a>, <a href="https://vercel.com/docs/monorepos/monorepo-faq">monorepo build
+settings</a>.</p>
+<p>The arrows above represent <strong>which source produces which
+deployment</strong>, not runtime network calls. At runtime, services
+call configured URLs and authenticate to one another. They do not call a
+GitHub repository or a local folder.</p>
+<h2 id="7-pythonhybrid-deployment-plan">7. Python/hybrid deployment
+plan</h2>
+<p>Use one Vercel project for the Next.js interface, and a
+container-capable host for the Python APIs and workers in this baseline.
+Several service entries can use the same repository—and even the same
+built backend image—with different start commands and credentials.</p>
+<table>
+<thead>
+<tr>
+<th>Proposed deployment name</th>
+<th>Source</th>
+<th>Runtime role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>acme-web</code></td>
+<td><code>apps/web</code></td>
+<td>Next.js UI and browser-facing server layer</td>
+</tr>
+<tr>
+<td><code>acme-case-api</code></td>
+<td><code>backend</code></td>
+<td>Accept commands and serve authorized case data</td>
+</tr>
+<tr>
+<td><code>acme-mcp</code></td>
+<td><code>backend</code></td>
+<td>Controlled operational tools and ledger access</td>
+</tr>
+<tr>
+<td><code>acme-rag-api</code></td>
+<td><code>backend</code></td>
+<td>Retrieval queries and evidence packs</td>
+</tr>
+<tr>
+<td><code>acme-policy-agent</code></td>
+<td><code>backend</code></td>
+<td>Policy A2A endpoint and task handling</td>
+</tr>
+<tr>
+<td><code>acme-finance-agent</code></td>
+<td><code>backend</code></td>
+<td>Finance A2A endpoint and task handling</td>
+</tr>
+<tr>
+<td><code>acme-workflow-worker</code></td>
+<td><code>backend</code></td>
+<td>Durable coordination and recovery</td>
+</tr>
+<tr>
+<td><code>acme-relay</code></td>
+<td><code>backend</code></td>
+<td>Deliver persisted outbox work</td>
+</tr>
+<tr>
+<td><code>acme-ingestion-worker</code></td>
+<td><code>backend</code></td>
+<td>Process uploaded source documents</td>
+</tr>
+</tbody>
+</table>
+<p>These are logical runtime roles, not a requirement to provision nine
+paid machines immediately. Local development can run them with one
+Compose configuration. A small hosted demonstration can share compute
+while keeping process responsibilities and permissions explicit.
+Specialist background execution must also have a durable runner; it must
+not exist only as an untracked task inside an HTTP request.</p>
+<p>The Python services use restricted database roles. The web server
+calls the Case API; it does not receive unrestricted direct access to
+Python-owned tables. The workflow uses MCP and A2A clients to reach the
+relevant services.</p>
+<p>Only the required public endpoints should be internet-reachable. A
+worker that only reads a job queue does not need a public website.
+Private network access and machine authentication should protect backend
+calls where supported.</p>
+<h2 id="8-typescript-deployment-plan">8. TypeScript deployment plan</h2>
+<p>Use the same conceptual boundaries, but deploy TypeScript application
+entry points. The first release can keep RAG as a server-only package
+used by durable workflow steps rather than creating a separate RAG
+API.</p>
+<table>
+<thead>
+<tr>
+<th>Proposed cloud project</th>
+<th>Application root</th>
+<th>Responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>acme-ts-web</code></td>
+<td><code>apps/web</code></td>
+<td>Case UI/API and case workflow entry points</td>
+</tr>
+<tr>
+<td><code>acme-ts-mcp</code></td>
+<td><code>apps/mcp-service</code></td>
+<td>MCP transport and operational domain commands</td>
+</tr>
+<tr>
+<td><code>acme-ts-policy</code></td>
+<td><code>apps/policy-agent</code></td>
+<td>Independent Policy A2A service</td>
+</tr>
+<tr>
+<td><code>acme-ts-finance</code></td>
+<td><code>apps/finance-agent</code></td>
+<td>Independent Finance A2A service</td>
+</tr>
+</tbody>
+</table>
+<p>All four can connect to the same <code>acme-agent-platform-ts</code>
+Git repository. Their builds, credentials, health checks, and deployment
+versions remain distinct. Configure workspace dependency access and
+package builds for each entry point; merely pointing at a directory is
+not the whole setup.</p>
+<p>The protocol adapters must be tested against their selected hosting
+runtime. If a chosen transport requires persistent process-local
+sessions, adapt the state handling or use a suitable persistent host for
+that service. A TypeScript repo does not force every service onto
+Vercel.</p>
+<p>Workflow orchestration is not a permanent Node process inside a page
+request. Durable workflow entry points coordinate bounded steps. Heavy
+parsing that exceeds runtime budgets may use a separate worker. Those
+choices alter deployment, not the number of Git repositories.</p>
+<h2 id="9-where-databases-and-uploaded-files-belong">9. Where databases
+and uploaded files belong</h2>
+<p>Git stores source code, schema migrations, synthetic fixtures, and
+configuration templates. It does not store the live database, customer
+uploads, production credentials, or workflow execution history.</p>
+<table>
+<thead>
+<tr>
+<th>Resource</th>
+<th>Local development</th>
+<th>Hosted environments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PostgreSQL</td>
+<td>Local instance or container</td>
+<td>Managed database with restricted roles</td>
+</tr>
+<tr>
+<td>Uploaded sources</td>
+<td>Local/private development storage</td>
+<td>Private object storage</td>
+</tr>
+<tr>
+<td>Secrets</td>
+<td>Ignored local environment files</td>
+<td>Environment-specific secret settings</td>
+</tr>
+<tr>
+<td>Synthetic fixtures</td>
+<td>Versioned in Git</td>
+<td>Explicit seed step into isolated demo data</td>
+</tr>
+<tr>
+<td>Migrations</td>
+<td>Versioned in Git</td>
+<td>Applied through controlled release tooling</td>
+</tr>
+</tbody>
+</table>
+<p>One PostgreSQL instance may initially contain separately owned
+schemas. That is different from giving all services one administrator
+password. The MCP domain owns the credit ledger; agents own task
+records; RAG owns evidence records.</p>
+<p>Keep the Python and TypeScript demo databases separate. When
+comparing their outputs, run the same synthetic scenario in each. Do not
+let both coordinators issue actions against one real case.
+Cross-language tests can deliberately connect selected protocol peers,
+with one coordinator and one authoritative ledger for each test.</p>
+<h2 id="10-local-preview-and-production-are-separate-worlds">10. Local,
+preview, and production are separate worlds</h2>
+<p>Vercel&#39;s Git integration can produce preview deployments for
+non-production branches and production deployments from the configured
+production branch. That is a code-deployment feature; it does not
+automatically isolate the databases and service URLs your code uses. <a href="https://vercel.com/docs/git">Vercel Git deployments</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Environment</th>
+<th>Purpose</th>
+<th>Data and access</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Local</td>
+<td>Build and debug</td>
+<td>Synthetic local data and developer credentials</td>
+</tr>
+<tr>
+<td>Preview</td>
+<td>Review a proposed change</td>
+<td>Isolated synthetic data; no production write authority</td>
+</tr>
+<tr>
+<td>Production demo</td>
+<td>Stable portfolio experience</td>
+<td>Controlled fictional dataset, quotas, authenticated sensitive
+controls</td>
+</tr>
+</tbody>
+</table>
+<p>For the first hosted version, use a controlled integration-preview
+backend rather than creating a full backend stack for every tiny UI
+change. Give each preview a separate authorized tenant namespace or
+resettable isolated dataset. Schema-changing or backend-changing work
+needs its own compatible integration environment; a shared preview
+service is not safe for arbitrary incompatible changes.</p>
+<p>For TypeScript services, maintain an environment-specific map of web,
+MCP, Policy, and Finance URLs. A web preview must not accidentally call
+the production MCP writer. Branch previews of separate services also do
+not automatically know one another&#39;s URLs: wire them explicitly or use
+tested dependency-routing facilities.</p>
+<p>Secrets and service URLs should be configured per environment. Do not
+put production credentials into a preview build or a public browser
+variable. Any synthetic failure-injection controls must be protected and
+excluded from real production use.</p>
+<h2 id="11-how-git-changes-become-releases">11. How Git changes become
+releases</h2>
+<p>My recommended working sequence is:</p>
+<pre class="text"><code>Feature branch
+    → change code, contracts, and tests together
+    → open a pull request
+    → run automated checks
+    → deploy to an isolated preview/integration environment
+    → test the complete case flow
+    → merge the approved change
+    → release compatible services in a controlled order
+    → verify the receipt-backed outcome</code></pre>
+<p>Use short-lived branches, such as
+<code>codex/add-policy-evidence</code>, and keep <code>main</code>
+stable. Continuous integration should run formatting/type checks, unit
+tests, contract tests, database tests, and the appropriate end-to-end
+scenarios.</p>
+<p>Start with conservative build checks. Later, skip unaffected services
+when the dependency graph proves they are unaffected. A change to shared
+contracts or security packages may affect several deployments even if
+their own app folders did not change.</p>
+<p>Use either the hosting provider&#39;s Git deployment integration or an
+explicit deployment pipeline for a given release path. Do not configure
+two independent mechanisms that both release the same commit
+unintentionally. For the multi-service platform, gate production
+releases on the integration checks rather than assuming every push is
+safe to publish immediately.</p>
+<p>Record a release manifest containing the Git commit, service
+deployment identifiers, schema migration version, and contract version.
+One commit can build several deployable artifacts; recording them makes
+rollback and troubleshooting explainable.</p>
+<h2 id="12-a-safe-multi-service-release-example">12. A safe
+multi-service release example</h2>
+<p>Return to the proposed <code>policy_version</code> field. A safe
+release adds the field before making it mandatory everywhere.</p>
+<ol type="1">
+<li>Apply an additive database migration that old code can
+tolerate.</li>
+<li>Deploy providers that can return and accept the new field while
+preserving compatibility.</li>
+<li>Deploy the updated clients and UI.</li>
+<li>Run the case scenario and verify the expected approval binding and
+receipt.</li>
+<li>Only later remove compatibility behavior after older clients and
+paused workflows no longer depend on it.</li>
+</ol>
+<p>Database migrations should have one controlled executor, not run
+competitively from every web instance on startup. Test migration
+behavior on an isolated database before the production demo.</p>
+<p>A code rollback does not undo database changes or issued business
+actions. Old code must remain compatible with the expanded schema, and
+any completed credit remains a recorded fact. Similarly, paused workflow
+runs require a tested version strategy before old handlers are
+removed.</p>
+<p>Do not blindly promote a preview artifact built with preview-only
+endpoints or configuration into production. Build or stage a
+production-target artifact with the correct configuration, validate it,
+and then release it. Environment compatibility matters as much as
+source-code identity.</p>
+<h2 id="13-when-would-i-split-more-repositories">13. When would I split
+more repositories?</h2>
+<p>I would split a component when it has a genuinely independent owner,
+access policy, release cadence, or external consumer base. For example,
+an MCP toolkit that several unrelated products consume might eventually
+deserve a standalone library repository and versioned releases.</p>
+<p>I would not split simply to make the GitHub profile show more tiles.
+Five well-explained projects within a tested platform demonstrate more
+than five disconnected repositories that cannot run together.</p>
+<p>The reverse alternative—putting Python, TypeScript, and the course in
+one enormous repository—can work for an experienced team with strong
+build tooling. For your learning and portfolio workflow, it makes the
+repository heavier and the boundaries less obvious. Two focused
+implementation repositories are easier to compare and explain.</p>
+<p>Initially, keep small language-neutral contract fixtures in both
+application repos with an explicit contract version and synchronization
+check. Do not introduce a third shared-contract repository on day one.
+If updates become frequent, publish a versioned contract artifact with
+generated clients and compatibility tests.</p>
+<h2 id="14-what-i-would-create-when-you-ask-me-to-build">14. What I
+would create when you ask me to build</h2>
+<p>The first implementation would create
+<code>acme-agent-platform</code> as a sibling of
+<code>image-course</code>, with one Git repository at its root. It would
+contain the Python backend, shared contracts, fixtures, tests, and later
+the Next.js interface. There would be no <code>.git</code> directories
+inside the five project areas.</p>
+<p>I would prove one complete local case first: submit, retrieve
+evidence, delegate, approve, execute, and recover the receipt after a
+simulated failure. Then I would configure the hosted demo and its
+isolated data. GitHub repository creation, repository visibility, cloud
+provisioning, and production publication would be explicit
+implementation actions—not side effects of generating this document.</p>
+<p>If you then ask for the TypeScript counterpart, I would create its
+sibling repository and reuse the behavioral specification rather than
+copying Python internals into a TypeScript-shaped wrapper. Both
+implementations would be judged by the same business and protocol
+tests.</p>
+<p>The architecture guides stay here in the learning repository. Each
+application gets its own operational README and concise
+implementation-specific documentation, linked back to the course where
+useful. We do not copy all 244 source diagrams into every
+deployment.</p>
+<h2 id="15-the-final-recommendation">15. The final recommendation</h2>
+<p><strong>Folders:</strong> separate sibling application folders
+outside <code>image-course</code>.</p>
+<p><strong>Git:</strong> one repo for the Python/hybrid platform; a
+second repo for the later TypeScript counterpart; no separate repo per
+diagram or per P1–P5 module.</p>
+<p><strong>Deployment:</strong> multiple services can be built and
+deployed from each application repo, with separate credentials and clear
+ownership.</p>
+<p><strong>Build order:</strong> complete the Python/hybrid platform
+first, then decide whether the TypeScript comparison adds enough value
+to build next.</p>
+<p>In short: <strong>organize Git around coherent products, organize
+deployments around runtime responsibilities, and organize the course
+around learning.</strong></p>
+<footer>Acme Agent Platform · All case data and amounts are illustrative. This is a proposed architecture, not an implemented or deployed application.</footer>
+</main>
+<dialog id="diagram-dialog" aria-label="Enlarged architecture diagram">
+<div class="zoom-toolbar"><span>Architecture diagram</span><button type="button" id="fit-button">Fit</button><button type="button" id="zoom-button">Zoom 150%</button><button type="button" id="close-button">Close</button></div>
+<div class="zoom-body"><img id="zoom-image" alt></div>
+</dialog>
+<script>
+const dialog = document.getElementById('diagram-dialog');
+const zoomImage = document.getElementById('zoom-image');
+document.getElementById('print-button').addEventListener('click', () => window.print());
+document.querySelectorAll('main img').forEach((img, index) => {
+  let figure = img.closest('figure');
+  if (!figure) {
+    figure = document.createElement('figure');
+    const parent = img.parentElement;
+    if (parent.tagName === 'P' && parent.childElementCount === 1) parent.replaceWith(figure);
+    else img.parentNode.insertBefore(figure, img);
+    figure.appendChild(img);
+    const caption = document.createElement('figcaption');
+    caption.textContent = img.alt;
+    figure.appendChild(caption);
+  }
+  const button = document.createElement('button');
+  button.type = 'button'; button.className = 'diagram-button';
+  button.textContent = 'Enlarge diagram ' + (index + 1);
+  button.addEventListener('click', () => {
+    zoomImage.src = img.src; zoomImage.alt = img.alt;
+    zoomImage.style.width = '100%'; dialog.showModal();
+  });
+  figure.appendChild(button);
+});
+document.getElementById('close-button').addEventListener('click', () => dialog.close());
+document.getElementById('fit-button').addEventListener('click', () => zoomImage.style.width = '100%');
+document.getElementById('zoom-button').addEventListener('click', () => zoomImage.style.width = '150%');
+dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
+</script>
+</body>
+</html>

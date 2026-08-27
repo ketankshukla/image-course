@@ -1,0 +1,81 @@
+{
+  "id": "acme",
+  "kind": "case-study",
+  "title": "Acme Agent Platform",
+  "subtitle": "Build a business agent platform with MCP, RAG, specialist agents and reliable workflows.",
+  "icon": "🏢",
+  "order": 1,
+  "sections": [
+    {
+      "title": "Start here",
+      "documents": [
+        {
+          "id": 1,
+          "file": "strategy/PROJECT-STRATEGY.md"
+        },
+        {
+          "id": 2,
+          "file": "THE-WHOLE-PROJECT-IN-PLAIN-ENGLISH.md"
+        }
+      ]
+    },
+    {
+      "title": "Architecture & deployment",
+      "documents": [
+        {
+          "id": 3,
+          "file": "PROJECT-ARCHITECTURE.md"
+        },
+        {
+          "id": 4,
+          "file": "HYBRID-ARCHITECTURE.md"
+        },
+        {
+          "id": 5,
+          "file": "TYPESCRIPT-ARCHITECTURE.md"
+        },
+        {
+          "id": 6,
+          "file": "REPOSITORIES-AND-DEPLOYMENT.md"
+        }
+      ]
+    },
+    {
+      "title": "Build it step by step",
+      "documents": [
+        {
+          "id": 7,
+          "file": "manual-build/00-START-HERE.md"
+        },
+        {
+          "id": 8,
+          "file": "manual-build/01-FOUNDATIONS.md"
+        },
+        {
+          "id": 9,
+          "file": "manual-build/02-MCP-GATEWAY.md"
+        },
+        {
+          "id": 10,
+          "file": "manual-build/03-RAG-WORKBENCH.md"
+        },
+        {
+          "id": 11,
+          "file": "manual-build/04-A2A-SPECIALISTS.md"
+        },
+        {
+          "id": 12,
+          "file": "manual-build/05-DURABLE-WORKFLOW.md"
+        },
+        {
+          "id": 13,
+          "file": "manual-build/06-CASE-PLATFORM.md"
+        },
+        {
+          "id": 14,
+          "file": "manual-build/07-PRODUCTION.md"
+        }
+      ]
+    }
+  ]
+}

@@ -10,30 +10,36 @@ interface ScoredResult extends SearchIndexEntry {
 }
 
 interface SearchResultsProps {
+  searchUrl: string;
   query: string;
   onSelect: (courseId: string, chapterNumber: number) => void;
 }
 
 export default function SearchResults({
   query,
+  searchUrl,
   onSelect,
 }: SearchResultsProps) {
   const [index, setIndex] = useState<SearchIndexEntry[] | null>(null);
+  const [error, setError] = useState(false);
+  const [attempt, setAttempt] = useState(0);
 
   useEffect(() => {
     let cancelled = false;
-    fetch("/search-index.json", { cache: "no-store" })
-      .then((res) => res.json())
+    setError(false);
+    fetch(searchUrl)
+      .then((res) => { if (!res.ok) throw Error("Search unavailable"); return res.json(); })
       .then((data: SearchIndexEntry[]) => {
         if (!cancelled) setIndex(data);
       })
       .catch((err) => {
+        if (!cancelled) setError(true);
         console.error("Failed to load search index:", err);
       });
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [searchUrl, attempt]);
 
   const { results, totalMatches } = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -79,6 +85,8 @@ export default function SearchResults({
     return { results: all.slice(0, 30), totalMatches: all.length };
   }, [query, index]);
 
+  if (error) return <div role="alert"><p>Search could not load.</p><button className="underline mt-3" onClick={() => setAttempt(a => a + 1)}>Retry search</button></div>;
+
   if (!index) {
     return (
       <div className="flex items-center justify-center h-64 text-gray-500">
@@ -106,7 +114,7 @@ export default function SearchResults({
       {results.length === 0 ? (
         <div className="text-center py-16 text-gray-500">
           <div className="text-3xl mb-3">🔍</div>
-          <p>No matching diagrams found.</p>
+          <p>No matching articles found.</p>
         </div>
       ) : (
         <ul className="space-y-4">

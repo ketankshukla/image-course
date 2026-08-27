@@ -5,6 +5,7 @@
 
 # Next.js
 /.next
+/public/library/
 /out
 
 # Production

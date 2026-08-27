@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>00-START-HERE - Manual Build Workbook</title>
+<style type="text/css">:root{color-scheme:light;--ink:#19283c;--muted:#56667a;--blue:#145bd8;--navy:#081a33;--line:#dce5ef;--paper:#fff;--bg:#edf2f7}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:30px}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.75 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:#145ac0;text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:3px solid #d58b00;outline-offset:4px}
+.skip{position:fixed;top:-100px;left:16px;z-index:10;background:white;padding:10px}
+.skip:focus{top:10px}
+aside{position:fixed;inset:0 auto 0 0;width:284px;overflow:auto;padding:30px 22px;background:var(--navy);color:#e9f0fa;border-right:1px solid #244363}
+.brand{font-size:12px;letter-spacing:.17em;text-transform:uppercase;color:#76dcf3;font-weight:700}
+aside h2{font-size:22px;line-height:1.3;margin:12px 0 22px;color:white;border:0;padding:0}
+aside ul{list-style:none;margin:0;padding:0}
+aside li{margin:0 0 5px}
+aside li ul{margin-left:0}
+aside a{display:block;padding:7px 10px;border-radius:6px;color:#d2deed;text-decoration:none;font-size:13px;line-height:1.45}
+aside a:hover{background:#193554;color:white}
+.rail-footer{margin-top:22px;border-top:1px solid #2c4260;padding-top:20px;color:#9db0c9;font-size:12px}
+main{margin-left:284px;padding:42px clamp(24px,4vw,72px) 90px;max-width:1550px}
+.toolbar{display:flex;align-items:center;gap:15px;justify-content:space-between;margin-bottom:30px;font-size:12px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+button{font:600 13px system-ui;border:1px solid #c9d7e8;background:#fff;color:#164176;padding:10px 15px;border-radius:8px;cursor:pointer}
+button:hover{background:#e6f0ff}
+h1{font-size:clamp(40px,4.4vw,66px);line-height:1.1;letter-spacing:-.045em;background:linear-gradient(120deg,#07172e,#124481);color:white;border-radius:20px;padding:40px;margin:0 0 34px;box-shadow:0 18px 45px #0b254025}
+h2{font-size:30px;line-height:1.3;color:#103e7c;letter-spacing:-.025em;margin:58px 0 22px;padding-top:23px;border-top:3px solid #2367c9}
+h3{font-size:23px;line-height:1.35;color:#075e76;letter-spacing:-.02em;margin:34px 0 15px}
+p{margin:16px 0;max-width:90ch}
+li{margin:7px 0}
+strong{color:#113862}
+blockquote{background:#e1f1f7;border-left:5px solid #068caf;border-radius:0 12px 12px 0;margin:28px 0;padding:12px 25px;color:#184050}
+figure{margin:28px 0 32px}
+figure img{display:block;width:100%;height:auto;border-radius:14px;background:#07172d;box-shadow:0 12px 28px #0a254025}
+figcaption{font-size:14px;line-height:1.6;color:var(--muted);padding:13px 2px}
+.diagram-button{margin-top:9px;font-size:12px}
+img{max-width:100%;height:auto}
+pre{padding:23px 25px;overflow:auto;background:#091b32;color:#dfedff;border:1px solid #203a56;border-radius:12px;line-height:1.6;tab-size:4}
+code{font-family:"Cascadia Code",Consolas,monospace;font-size:.85em}
+:not(pre)>code{background:#e3eaf3;color:#98305b;padding:.12em .32em;border-radius:4px;overflow-wrap:anywhere}
+pre code{white-space:pre;color:inherit}
+table{border-collapse:separate;border-spacing:0;display:block;overflow-x:auto;max-width:100%;margin:24px 0 30px;border:1px solid var(--line);border-radius:10px;background:white;font-size:15px;line-height:1.6}
+th,td{text-align:left;vertical-align:top;padding:13px 16px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-width:130px}
+th{background:#103c78;color:white;font-weight:650}
+tr:nth-child(even) td{background:#f4f7fb}
+tr:last-child td{border-bottom:0}
+th:last-child,td:last-child{border-right:0}
+hr{border:0;border-top:1px solid var(--line);margin:40px 0}
+dialog{border:1px solid #375679;border-radius:15px;padding:0;background:#07172e;color:white;width:96vw;max-width:1900px;max-height:96vh;overflow:hidden}
+dialog::backdrop{background:#030b17dd}
+.zoom-toolbar{display:flex;gap:10px;align-items:center;justify-content:flex-end;padding:12px 18px;background:#102943}
+.zoom-toolbar span{margin-right:auto;font-size:14px}
+.zoom-body{overflow:auto;max-height:82vh;padding:12px}
+.zoom-body img{display:block;width:100%;max-width:none;margin:auto;height:auto}
+footer{margin-top:60px;border-top:1px solid var(--line);padding-top:20px;font-size:13px;color:var(--muted)}
+@media(max-width:1000px){aside{position:relative;width:auto;padding:24px}aside nav ul{columns:2}aside li{break-inside:avoid}.rail-footer{display:none}main{margin-left:0;padding:28px 24px 60px}}
+@media(max-width:600px){body{font-size:16px}aside nav ul{columns:1}aside{max-height:330px}main{padding:22px 16px 50px}h1{font-size:38px;padding:27px}h2{font-size:26px}h3{font-size:21px}.toolbar{font-size:10px}pre{padding:17px;font-size:14px}.zoom-toolbar{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{aside,.toolbar,.diagram-button,dialog{display:none!important}body{background:white;font-size:11pt}main{margin:0;max-width:none;padding:0}h1{color:#12345a;background:none;padding:0;box-shadow:none;font-size:32pt}h2,h3{break-after:avoid}figure,blockquote{break-inside:avoid}pre{background:#f3f5f9;color:#152f4e;white-space:pre-wrap}pre code{white-space:pre-wrap}table{display:table;font-size:9pt}th,td{min-width:0;padding:7px}figure img{box-shadow:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#reading">Skip to lesson</a>
+<aside aria-label="Workbook navigation">
+<div class="brand">Build It Yourself</div>
+<h2>Manual Build<br>Workbooks</h2>
+<nav aria-label="Series"><a href="00-START-HERE.html">Start here · Series map</a></nav>
+<nav aria-label="This workbook"><ul>
+<li><a href="#build-it-yourself" id="toc-build-it-yourself">Build It
+Yourself</a>
+<ul>
+<li><a href="#seven-workbooks-from-an-empty-folder-to-a-production-demo" id="toc-seven-workbooks-from-an-empty-folder-to-a-production-demo">Seven
+workbooks: from an empty folder to a production demo</a></li>
+<li><a href="#1-your-route-through-the-series" id="toc-1-your-route-through-the-series">1. Your route through the
+series</a></li>
+<li><a href="#2-the-case-we-will-keep-using" id="toc-2-the-case-we-will-keep-using">2. The case we will keep
+using</a></li>
+<li><a href="#3-how-to-study-each-lesson" id="toc-3-how-to-study-each-lesson">3. How to study each lesson</a></li>
+<li><a href="#4-what-from-scratch-means-here" id="toc-4-what-from-scratch-means-here">4. What from scratch means
+here</a></li>
+<li><a href="#5-what-counts-as-completion" id="toc-5-what-counts-as-completion">5. What counts as
+completion?</a></li>
+<li><a href="#6-keep-the-work-outside-the-course-repository" id="toc-6-keep-the-work-outside-the-course-repository">6. Keep the work
+outside the course repository</a></li>
+</ul></li>
+</ul></nav>
+<div class="rail-footer">Python / Next.js primary path<br>TypeScript translation notes<br>Learn · Build · Test · Explain</div>
+</aside>
+<main id="reading">
+<div class="toolbar"><span>From an empty folder to a production demo</span><button id="print-button" type="button">Print / Save PDF</button></div>
+<h1 id="build-it-yourself">Build It Yourself</h1>
+<h2 id="seven-workbooks-from-an-empty-folder-to-a-production-demo">Seven
+workbooks: from an empty folder to a production demo</h2>
+<p>This series teaches you how to build the five Acme projects manually.
+The primary route is Python services followed by a Next.js interface.
+Each project also explains its TypeScript implementation path. Start
+with one route; do not maintain two half-finished implementations at
+once.</p>
+<p><strong>These are construction workbooks, not a claim that the
+application already exists.</strong> They give you file order, function
+contracts, algorithms, small code lessons, tests, failure exercises, and
+release gates. The short code listings are complete for the named
+exercise, not a substitute for the entire production codebase. Framework
+adapters and deployment settings must be implemented and tested against
+the versions you select. No application code, cloud resources, or
+deployments are created by these documents.</p>
+<h2 id="1-your-route-through-the-series">1. Your route through the
+series</h2>
+<p><img role="img" aria-label="Manual learning sequence: foundations, safe tools, evidence, specialists, durable orchestration, user interface, then production. Test each layer before adding the next." src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDQwIiBoZWlnaHQ9IjY2MCIgdmlld0JveD0iMCAwIDE0NDAgNjYwIiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUgZGVzYyI+PHRpdGxlIGlkPSJ0aXRsZSI+WU9VUiBNQU5VQUwgQlVJTEQgUEFUSDwvdGl0bGU+PGRlc2MgaWQ9ImRlc2MiPkVhY2ggc3RhZ2UgbGVhdmVzIHNvbWV0aGluZyBzbWFsbCB0aGF0IHlvdSBjYW4gcnVuIGFuZCBleHBsYWluLiAxICBGT1VOREFUSU9OUywgMiAgTUNQIFRPT0xTLCAzICBSQUcgRVZJREVOQ0UsIDQgIEEyQSBBR0VOVFMsIDUgIFdPUktGTE9XLCA2ICBDQVNFIFVJLCA3ICBQUk9EVUNUSU9OLjwvZGVzYz48cmVjdCB3aWR0aD0iMTQ0MCIgaGVpZ2h0PSI2NjAiIHJ4PSIyNCIgZmlsbD0iIzA5MTYyYiIvPjxnIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiI+PHRleHQgeD0iNTUiIHk9Ijc1IiBmaWxsPSIjZjJmN2ZmIiBmb250LXNpemU9IjM3IiBmb250LXdlaWdodD0iYm9sZCI+WU9VUiBNQU5VQUwgQlVJTEQgUEFUSDwvdGV4dD48dGV4dCB4PSI1NSIgeT0iMTIwIiBmaWxsPSIjOWRiYWQ5IiBmb250LXNpemU9IjI0Ij5FYWNoIHN0YWdlIGxlYXZlcyBzb21ldGhpbmcgc21hbGwgdGhhdCB5b3UgY2FuIHJ1biBhbmQgZXhwbGFpbi48L3RleHQ+PHJlY3QgeD0iNTUiIHk9IjE4NSIgd2lkdGg9IjMxMCIgaGVpZ2h0PSIxMzUiIHJ4PSIxNiIgZmlsbD0iIzExMmU0ZCIgc3Ryb2tlPSIjNGRjOGRkIiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSI3NSIgeT0iMjMzIiBmb250LXNpemU9IjI2IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iI2ZmZiI+MSAgRk9VTkRBVElPTlM8L3RleHQ+PHRleHQgeD0iNzUiIHk9IjI3NyIgZm9udC1zaXplPSIyMyIgZmlsbD0iIzcyZTBjYiI+UGFja2FnZSArIHRlc3RzPC90ZXh0Pjx0ZXh0IHg9IjM3MCIgeT0iMjY1IiBmb250LXNpemU9IjI4IiBmaWxsPSIjNTRkOGU5Ij7ihpI8L3RleHQ+PHJlY3QgeD0iNDAwIiB5PSIxODUiIHdpZHRoPSIzMTAiIGhlaWdodD0iMTM1IiByeD0iMTYiIGZpbGw9IiMxMTJlNGQiIHN0cm9rZT0iIzRkYzhkZCIgc3Ryb2tlLXdpZHRoPSIyIi8+PHRleHQgeD0iNDIwIiB5PSIyMzMiIGZvbnQtc2l6ZT0iMjYiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjZmZmIj4yICBNQ1AgVE9PTFM8L3RleHQ+PHRleHQgeD0iNDIwIiB5PSIyNzciIGZvbnQtc2l6ZT0iMjMiIGZpbGw9IiM3MmUwY2IiPlNhZmUgdHJhbnNhY3Rpb25zPC90ZXh0Pjx0ZXh0IHg9IjcxNSIgeT0iMjY1IiBmb250LXNpemU9IjI4IiBmaWxsPSIjNTRkOGU5Ij7ihpI8L3RleHQ+PHJlY3QgeD0iNzQ1IiB5PSIxODUiIHdpZHRoPSIzMTAiIGhlaWdodD0iMTM1IiByeD0iMTYiIGZpbGw9IiMxMTJlNGQiIHN0cm9rZT0iIzRkYzhkZCIgc3Ryb2tlLXdpZHRoPSIyIi8+PHRleHQgeD0iNzY1IiB5PSIyMzMiIGZvbnQtc2l6ZT0iMjYiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjZmZmIj4zICBSQUcgRVZJREVOQ0U8L3RleHQ+PHRleHQgeD0iNzY1IiB5PSIyNzciIGZvbnQtc2l6ZT0iMjMiIGZpbGw9IiM3MmUwY2IiPlNvdXJjZXMgKyBjaXRhdGlvbnM8L3RleHQ+PHRleHQgeD0iMTA2MCIgeT0iMjY1IiBmb250LXNpemU9IjI4IiBmaWxsPSIjNTRkOGU5Ij7ihpI8L3RleHQ+PHJlY3QgeD0iMTA5MCIgeT0iMTg1IiB3aWR0aD0iMzEwIiBoZWlnaHQ9IjEzNSIgcng9IjE2IiBmaWxsPSIjMTEyZTRkIiBzdHJva2U9IiM0ZGM4ZGQiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9IjExMTAiIHk9IjIzMyIgZm9udC1zaXplPSIyNiIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiNmZmYiPjQgIEEyQSBBR0VOVFM8L3RleHQ+PHRleHQgeD0iMTExMCIgeT0iMjc3IiBmb250LXNpemU9IjIzIiBmaWxsPSIjNzJlMGNiIj5UYXNrcyArIGFydGlmYWN0czwvdGV4dD48cmVjdCB4PSI1NSIgeT0iMzk1IiB3aWR0aD0iMzEwIiBoZWlnaHQ9IjEzNSIgcng9IjE2IiBmaWxsPSIjMTEyZTRkIiBzdHJva2U9IiM0ZGM4ZGQiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9Ijc1IiB5PSI0NDMiIGZvbnQtc2l6ZT0iMjYiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjZmZmIj41ICBXT1JLRkxPVzwvdGV4dD48dGV4dCB4PSI3NSIgeT0iNDg3IiBmb250LXNpemU9IjIzIiBmaWxsPSIjNzJlMGNiIj5BcHByb3ZhbCArIHJlY292ZXJ5PC90ZXh0Pjx0ZXh0IHg9IjM3MCIgeT0iNDc1IiBmb250LXNpemU9IjI4IiBmaWxsPSIjNTRkOGU5Ij7ihpI8L3RleHQ+PHJlY3QgeD0iNDAwIiB5PSIzOTUiIHdpZHRoPSIzMTAiIGhlaWdodD0iMTM1IiByeD0iMTYiIGZpbGw9IiMxMTJlNGQiIHN0cm9rZT0iIzRkYzhkZCIgc3Ryb2tlLXdpZHRoPSIyIi8+PHRleHQgeD0iNDIwIiB5PSI0NDMiIGZvbnQtc2l6ZT0iMjYiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjZmZmIj42ICBDQVNFIFVJPC90ZXh0Pjx0ZXh0IHg9IjQyMCIgeT0iNDg3IiBmb250LXNpemU9IjIzIiBmaWxsPSIjNzJlMGNiIj5VbmRlcnN0YW5kYWJsZSBjb250cm9sczwvdGV4dD48dGV4dCB4PSI3MTUiIHk9IjQ3NSIgZm9udC1zaXplPSIyOCIgZmlsbD0iIzU0ZDhlOSI+4oaSPC90ZXh0PjxyZWN0IHg9Ijc0NSIgeT0iMzk1IiB3aWR0aD0iMzEwIiBoZWlnaHQ9IjEzNSIgcng9IjE2IiBmaWxsPSIjMTEyZTRkIiBzdHJva2U9IiM0ZGM4ZGQiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9Ijc2NSIgeT0iNDQzIiBmb250LXNpemU9IjI2IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iI2ZmZiI+NyAgUFJPRFVDVElPTjwvdGV4dD48dGV4dCB4PSI3NjUiIHk9IjQ4NyIgZm9udC1zaXplPSIyMyIgZmlsbD0iIzcyZTBjYiI+T3BlcmF0ZSArIHJlc3RvcmU8L3RleHQ+PHRleHQgeD0iMTExMCIgeT0iNDI1IiBmb250LXNpemU9IjIzIiBmaWxsPSIjOWRiYWQ5Ij5SZWFkIDHigJM0LCB0aGVuIDXigJM3LjwvdGV4dD48dGV4dCB4PSI1NSIgeT0iNjA1IiBmb250LXNpemU9IjI1IiBmaWxsPSIjZjJmN2ZmIj5BIHBhc3NpbmcgY2hlY2twb2ludCBpcyBldmlkZW5jZSwgbm90IGp1c3QgYSBjb21wbGV0ZWQgZmlsZS48L3RleHQ+PC9nPjwvc3ZnPgo=" alt="Manual learning sequence: foundations, safe tools, evidence, specialists, durable orchestration, user interface, then production. Test each layer before adding the next." /></p>
+<table>
+<thead>
+<tr>
+<th>Order</th>
+<th>Workbook</th>
+<th>What you will be able to build</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><a href="01-FOUNDATIONS.html">Foundations</a> · <a href="01-FOUNDATIONS.md">Markdown</a></td>
+<td>Empty repository, Python package, tests, database setup, shared
+contracts</td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="02-MCP-GATEWAY.html">P1 — MCP Gateway</a> · <a href="02-MCP-GATEWAY.md">Markdown</a></td>
+<td>Business functions exposed as controlled tools, with safe repeated
+writes</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="03-RAG-WORKBENCH.html">P2 — RAG Workbench</a> · <a href="03-RAG-WORKBENCH.md">Markdown</a></td>
+<td>Ingestion, authorized search, source versions, evidence packs</td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="04-A2A-SPECIALISTS.html">P3 — A2A Specialists</a> · <a href="04-A2A-SPECIALISTS.md">Markdown</a></td>
+<td>Independent Policy and Finance agents with durable task records</td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="05-DURABLE-WORKFLOW.html">P4 — Durable Workflow</a> · <a href="05-DURABLE-WORKFLOW.md">Markdown</a></td>
+<td>Jobs, approval, retries, restart recovery, reconciliation</td>
+</tr>
+<tr>
+<td>6</td>
+<td><a href="06-CASE-PLATFORM.html">P5 — Case Platform</a> · <a href="06-CASE-PLATFORM.md">Markdown</a></td>
+<td>Next.js workspace connecting the complete customer journey</td>
+</tr>
+<tr>
+<td>7</td>
+<td><a href="07-PRODUCTION.html">Production and Operations</a> · <a href="07-PRODUCTION.md">Markdown</a></td>
+<td>Release pipeline, isolated environments, backups, monitoring,
+recovery drills</td>
+</tr>
+</tbody>
+</table>
+<p>Each HTML file embeds the diagrams it needs. Links between workbooks
+are for moving to the next lesson; you do not need to leave a lesson to
+view its diagrams. Keep the Markdown files for notes or future
+edits.</p>
+<h2 id="2-the-case-we-will-keep-using">2. The case we will keep
+using</h2>
+<p>Acme receives a dispute about a $120 service charge. Its fictional
+policy permits a $75 credit. The Policy specialist checks eligibility;
+Finance checks the arithmetic. Maya, an authorized reviewer, approves
+the exact proposal. The system writes a simulated ledger entry and
+returns a receipt.</p>
+<p>The fixed demonstration identifiers are tenant <code>TENANT-A</code>,
+account <code>ACCOUNT-7</code>, and case <code>CASE-1042</code>. Money
+is represented in minor units: 12000 and 7500 USD cents. These values
+are synthetic. There is no real bank, payment provider, or private
+customer dataset.</p>
+<p>The most important demonstration is a lost response after a committed
+credit. On retry, the system returns the original receipt rather than
+creating another credit. Everything you learn about files, functions,
+protocols, and deployment serves this understandable outcome.</p>
+<h2 id="3-how-to-study-each-lesson">3. How to study each lesson</h2>
+<p>First read the outcome. Create only the files named in that lesson.
+Write the smallest function that expresses the rule. Write its test. Run
+the test and inspect the result. Then deliberately break one assumption
+and confirm that the test detects it.</p>
+<p>Before moving on, explain the function aloud: “It receives this,
+checks that, changes these records, and returns this.” If you cannot
+describe a function without saying “the framework handles it,” inspect
+the boundary more closely.</p>
+<p>Each workbook contains a file/function build ledger. Treat every row
+as a small implementation task, not as a file to paste blindly. Create
+empty <code>__init__.py</code> files in Python package directories as
+they are introduced. Test-file names are proposed names for the
+application you will build, not files already present in this course
+repository.</p>
+<h2 id="4-what-from-scratch-means-here">4. What from scratch means
+here</h2>
+<p>You write the application rules, state transitions, storage adapters,
+UI composition, tests, and operational procedures. You still use
+established libraries for HTTP servers, protocol transports, database
+drivers, and authentication. Learning to build a car does not require
+inventing steel; learning an MCP application does not require
+implementing the protocol parser yourself.</p>
+<p>The workbooks distinguish three kinds of material: <strong>typeable
+exercise</strong>, <strong>algorithm to implement</strong>, and
+<strong>version-sensitive integration</strong>. The first can be entered
+directly into the named files. The second specifies your own
+application&#39;s behavior. The third must be matched to installed SDK
+documentation and checked with real integration tests.</p>
+<p>The main path is detailed Python/hybrid instruction. The TypeScript
+sections are translation work plans with file/function mappings and
+acceptance criteria, not a second full line-by-line SDK reference. When
+the actual repositories exist, pin these guides to tagged code
+checkpoints so every lesson can be compared with a runnable
+implementation.</p>
+<h2 id="5-what-counts-as-completion">5. What counts as completion?</h2>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Evidence you must produce</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Function works</td>
+<td>Passing test for normal and invalid input</td>
+</tr>
+<tr>
+<td>Persistence works</td>
+<td>Data survives restarting the process</td>
+</tr>
+<tr>
+<td>Protocol works</td>
+<td>An official client calls a real server endpoint</td>
+</tr>
+<tr>
+<td>System works</td>
+<td>Complete case ends with a matching receipt</td>
+</tr>
+<tr>
+<td>Recovery works</td>
+<td>A deliberately interrupted case safely resumes</td>
+</tr>
+<tr>
+<td>Production demo works</td>
+<td>Correct secrets, isolated data, tested restore, monitored
+release</td>
+</tr>
+</tbody>
+</table>
+<p>Do not mark a lesson complete because the code merely looks correct.
+A successful model response is not proof of authorization, a passing UI
+test is not proof of transactional safety, and a successful deployment
+is not proof of backup recovery.</p>
+<h2 id="6-keep-the-work-outside-the-course-repository">6. Keep the work
+outside the course repository</h2>
+<p>Build the application in the sibling <code>acme-agent-platform</code>
+repository described in the repository guide. The lessons remain in
+<code>image-course</code>. Use one Git history for all five
+Python/hybrid projects. Add the TypeScript counterpart in its own
+sibling repository later.</p>
+<p>The production destination is initially a <strong>controlled
+portfolio demo using fictional data</strong>. A real customer-facing
+financial system needs additional threat modeling, privacy and
+operational review, provider-specific reconciliation, and appropriate
+professional oversight. This series does not turn a simulated ledger
+into a live payment product.</p>
+<footer>Manual construction workbook · Fictional data and simulated credits only. Application integration and production readiness must be verified in the future implementation.</footer>
+</main>
+<dialog id="diagram-dialog" aria-label="Enlarged lesson diagram">
+<div class="zoom-toolbar"><span>Lesson diagram</span><button id="fit-button" type="button">Fit</button><button id="zoom-button" type="button">Zoom 150%</button><button id="close-button" type="button">Close</button></div>
+<div class="zoom-body"><img id="zoom-image" alt></div>
+</dialog>
+<script>
+const dialog = document.getElementById('diagram-dialog');
+const enlarged = document.getElementById('zoom-image');
+document.getElementById('print-button').onclick = () => window.print();
+document.querySelectorAll('main img').forEach((img, index) => {
+  let figure = img.closest('figure');
+  if (!figure) {
+    figure = document.createElement('figure');
+    const parent = img.parentElement;
+    if (parent.tagName === 'P' && parent.childElementCount === 1) parent.replaceWith(figure);
+    else img.parentNode.insertBefore(figure, img);
+    figure.appendChild(img);
+    const caption = document.createElement('figcaption');
+    caption.textContent = img.alt;
+    figure.appendChild(caption);
+  }
+  const button = document.createElement('button');
+  button.type = 'button'; button.className = 'diagram-button';
+  button.textContent = 'Enlarge diagram ' + (index + 1);
+  button.onclick = () => { enlarged.src = img.src; enlarged.alt = img.alt; enlarged.style.width = '100%'; dialog.showModal(); };
+  figure.appendChild(button);
+});
+document.getElementById('fit-button').onclick = () => enlarged.style.width = '100%';
+document.getElementById('zoom-button').onclick = () => enlarged.style.width = '150%';
+document.getElementById('close-button').onclick = () => dialog.close();
+dialog.onclick = event => { if (event.target === dialog) dialog.close(); };
+</script>
+</body>
+</html>

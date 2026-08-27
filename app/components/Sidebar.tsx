@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { CourseSummary, ModuleSummary, ChapterSummary, SiteManifest } from "@/lib/types";
+import { CourseSummary, ModuleSummary, SiteManifest } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 interface SidebarProps {
+  shelf: CourseSummary["kind"];
+  onShelfChange: (shelf: CourseSummary["kind"]) => void;
   manifest: SiteManifest;
   open: boolean;
   currentCourseId: string | null;
@@ -22,6 +24,8 @@ interface SidebarProps {
 
 export default function Sidebar({
   manifest,
+  shelf,
+  onShelfChange,
   open,
   currentCourseId,
   currentChapterNumber,
@@ -35,26 +39,33 @@ export default function Sidebar({
   onSelectChapter,
   onCloseSidebar,
 }: SidebarProps) {
-  const totalChapters = manifest.courses.reduce((a, c) => a + c.chaptersCount, 0);
+  const collections = manifest.courses.filter(c => c.kind === shelf);
+  const labels = { course: "Courses", "case-study": "Case Studies", guide: "Library Guides" };
 
   return (
     <aside
       className={cn(
         "sidebar fixed top-[60px] left-0 bottom-0 z-40 bg-white border-r border-gray-200 overflow-y-auto transition-transform duration-300",
         "w-[var(--sidebar-width)]",
-        open ? "translate-x-0" : "-translate-x-full",
+        open ? "translate-x-0 visible" : "-translate-x-full invisible md:visible",
         "md:translate-x-0"
       )}
     >
       <div className="sidebar-header p-6 bg-gradient-to-r from-primary-light to-primary text-white">
-        <h2 className="text-lg font-bold mb-1">🎓 Course Navigation</h2>
+        <h2 className="text-lg font-bold mb-1 text-white">🎓 Learning Library</h2>
         <p className="text-sm opacity-90">
-          {manifest.courses.length} Courses • {totalChapters} Diagrams
+          Concepts, complete projects, and build guides
         </p>
       </div>
       <SearchBox query={searchQuery} onSearch={onSearch} />
-      <nav className="py-4">
-        {manifest.courses.map((course) => (
+      <div className="grid grid-cols-3 gap-1 p-3 border-b" aria-label="Library sections">
+        {(Object.keys(labels) as CourseSummary["kind"][]).map(kind => <button key={kind}
+          aria-pressed={shelf === kind} onClick={() => onShelfChange(kind)}
+          className={cn("text-xs font-semibold rounded-lg px-2 py-3", shelf === kind ? "bg-primary text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200")}>{labels[kind]}</button>)}
+      </div>
+      <nav className="py-4" aria-label={labels[shelf]}>
+        <p className="px-5 mb-3 text-xs uppercase tracking-wide text-gray-500">{labels[shelf]} · {collections.length} collections</p>
+        {collections.map((course) => (
           <CourseGroup
             key={course.id}
             course={course}
@@ -98,7 +109,8 @@ function SearchBox({
           type="text"
           value={query}
           onChange={(e) => onSearch(e.target.value)}
-          placeholder="Find a diagram..."
+          placeholder="Search the whole library..."
+          aria-label="Search the whole library"
           className="w-full pl-9 pr-9 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
         />
         {query && (
@@ -147,6 +159,7 @@ function CourseGroup({
     <div className={cn("course-group", expanded && "expanded")}>
       <button
         onClick={onToggle}
+        aria-expanded={expanded}
         className={cn(
           "course-header flex items-center justify-between w-full text-left px-5 py-3 transition-colors border-0 cursor-pointer",
           isCurrent ? "bg-primary/10 hover:bg-primary/20" : "bg-gray-50 hover:bg-gray-100"
@@ -170,7 +183,7 @@ function CourseGroup({
       </button>
       <div
         className="course-modules overflow-hidden transition-all duration-300 bg-white border-l-4 border-gray-100"
-        style={{ maxHeight: expanded ? "2000px" : "0" }}
+        hidden={!expanded}
       >
         {course.modules.map((module) => (
           <ModuleGroup
@@ -218,6 +231,7 @@ function ModuleGroup({
     <div className={cn("module-group", expanded && "expanded")}>
       <button
         onClick={onToggle}
+        aria-expanded={expanded}
         className="module-header flex items-center justify-between w-full text-left pl-5 pr-4 py-2.5 bg-white hover:bg-gray-50 transition-colors border-0 cursor-pointer"
       >
         <span className="flex items-center gap-2 flex-1 min-w-0">
@@ -237,7 +251,7 @@ function ModuleGroup({
       </button>
       <div
         className="module-chapters overflow-hidden transition-all duration-300 bg-white"
-        style={{ maxHeight: expanded ? "1500px" : "0" }}
+        hidden={!expanded}
       >
         {module.chapters.map((chapter) => {
           const isActive = currentCourseId === course.id && currentChapterNumber === chapter.number;
@@ -246,6 +260,7 @@ function ModuleGroup({
             <a
               key={chapter.number}
               href={`#course=${course.id}&chapter=${chapter.number}`}
+              aria-current={isActive ? "page" : undefined}
               onClick={(e) => {
                 e.preventDefault();
                 onSelectChapter(course.id, chapter.number);

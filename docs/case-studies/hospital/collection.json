@@ -1,0 +1,89 @@
+{
+  "id": "hospital",
+  "kind": "case-study",
+  "title": "HarborCare Privacy Platform",
+  "subtitle": "A synthetic hospital case: share the right information with the right recipient.",
+  "icon": "🏥",
+  "order": 2,
+  "sections": [
+    {
+      "title": "Start here",
+      "documents": [
+        {
+          "id": 1,
+          "file": "00-START-HERE.md"
+        },
+        {
+          "id": 2,
+          "file": "01-PROJECT-STRATEGY.md"
+        },
+        {
+          "id": 3,
+          "file": "02-PLAIN-ENGLISH-AND-LEGEND.md"
+        }
+      ]
+    },
+    {
+      "title": "Architecture & privacy",
+      "documents": [
+        {
+          "id": 4,
+          "file": "03-PRIVACY-POLICY-AND-TESTS.md"
+        },
+        {
+          "id": 5,
+          "file": "04-PYTHON-ARCHITECTURE.md"
+        },
+        {
+          "id": 6,
+          "file": "05-HYBRID-ARCHITECTURE.md"
+        },
+        {
+          "id": 7,
+          "file": "06-TYPESCRIPT-ARCHITECTURE.md"
+        },
+        {
+          "id": 8,
+          "file": "07-REPOSITORIES-AND-DEPLOYMENT.md"
+        }
+      ]
+    },
+    {
+      "title": "Build it step by step",
+      "documents": [
+        {
+          "id": 9,
+          "file": "manual-build/00-START-HERE.md"
+        },
+        {
+          "id": 10,
+          "file": "manual-build/01-FOUNDATIONS.md"
+        },
+        {
+          "id": 11,
+          "file": "manual-build/02-MCP-TOOLS.md"
+        },
+        {
+          "id": 12,
+          "file": "manual-build/03-PERMISSION-AWARE-RAG.md"
+        },
+        {
+          "id": 13,
+          "file": "manual-build/04-A2A-COORDINATION.md"
+        },
+        {
+          "id": 14,
+          "file": "manual-build/05-DISCLOSURE-WORKFLOW.md"
+        },
+        {
+          "id": 15,
+          "file": "manual-build/06-PRIVACY-WORKSPACE.md"
+        },
+        {
+          "id": 16,
+          "file": "manual-build/07-PRODUCTION-DEMO.md"
+        }
+      ]
+    }
+  ]
+}

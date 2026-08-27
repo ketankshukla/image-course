@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>7. Operate a Production-Style Synthetic Demo</title>
+<style type="text/css">:root{color-scheme:light;--ink:#19283c;--muted:#56667a;--blue:#145bd8;--navy:#081a33;--line:#dce5ef;--paper:#fff;--bg:#edf2f7}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:30px}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.75 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:#145ac0;text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:3px solid #d58b00;outline-offset:4px}
+.skip{position:fixed;top:-100px;left:16px;z-index:10;background:white;padding:10px}
+.skip:focus{top:10px}
+aside{position:fixed;inset:0 auto 0 0;width:284px;overflow:auto;padding:30px 22px;background:var(--navy);color:#e9f0fa;border-right:1px solid #244363}
+.brand{font-size:12px;letter-spacing:.17em;text-transform:uppercase;color:#76dcf3;font-weight:700}
+aside h2{font-size:22px;line-height:1.3;margin:12px 0 22px;color:white;border:0;padding:0}
+aside ul{list-style:none;margin:0;padding:0}
+aside li{margin:0 0 5px}
+aside li ul{margin-left:0}
+aside a{display:block;padding:7px 10px;border-radius:6px;color:#d2deed;text-decoration:none;font-size:13px;line-height:1.45}
+aside a:hover{background:#193554;color:white}
+.rail-footer{margin-top:22px;border-top:1px solid #2c4260;padding-top:20px;color:#9db0c9;font-size:12px}
+main{margin-left:284px;padding:42px clamp(24px,4vw,72px) 90px;max-width:1550px}
+.toolbar{display:flex;align-items:center;gap:15px;justify-content:space-between;margin-bottom:30px;font-size:12px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+button{font:600 13px system-ui;border:1px solid #c9d7e8;background:#fff;color:#164176;padding:10px 15px;border-radius:8px;cursor:pointer}
+button:hover{background:#e6f0ff}
+h1{font-size:clamp(40px,4.4vw,66px);line-height:1.1;letter-spacing:-.045em;background:linear-gradient(120deg,#07172e,#124481);color:white;border-radius:20px;padding:40px;margin:0 0 34px;box-shadow:0 18px 45px #0b254025}
+h2{font-size:30px;line-height:1.3;color:#103e7c;letter-spacing:-.025em;margin:58px 0 22px;padding-top:23px;border-top:3px solid #2367c9}
+h3{font-size:23px;line-height:1.35;color:#075e76;letter-spacing:-.02em;margin:34px 0 15px}
+p{margin:16px 0;max-width:90ch}
+li{margin:7px 0}
+strong{color:#113862}
+blockquote{background:#e1f1f7;border-left:5px solid #068caf;border-radius:0 12px 12px 0;margin:28px 0;padding:12px 25px;color:#184050}
+figure{margin:28px 0 32px}
+figure img{display:block;width:100%;height:auto;border-radius:14px;background:#07172d;box-shadow:0 12px 28px #0a254025}
+figcaption{font-size:14px;line-height:1.6;color:var(--muted);padding:13px 2px}
+.diagram-button{margin-top:9px;font-size:12px}
+img{max-width:100%;height:auto}
+pre{padding:23px 25px;overflow:auto;background:#091b32;color:#dfedff;border:1px solid #203a56;border-radius:12px;line-height:1.6;tab-size:4}
+code{font-family:"Cascadia Code",Consolas,monospace;font-size:.85em}
+:not(pre)>code{background:#e3eaf3;color:#98305b;padding:.12em .32em;border-radius:4px;overflow-wrap:anywhere}
+pre code{white-space:pre;color:inherit}
+table{border-collapse:separate;border-spacing:0;display:block;overflow-x:auto;max-width:100%;margin:24px 0 30px;border:1px solid var(--line);border-radius:10px;background:white;font-size:15px;line-height:1.6}
+th,td{text-align:left;vertical-align:top;padding:13px 16px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-width:130px}
+th{background:#103c78;color:white;font-weight:650}
+tr:nth-child(even) td{background:#f4f7fb}
+tr:last-child td{border-bottom:0}
+th:last-child,td:last-child{border-right:0}
+hr{border:0;border-top:1px solid var(--line);margin:40px 0}
+dialog{border:1px solid #375679;border-radius:15px;padding:0;background:#07172e;color:white;width:96vw;max-width:1900px;max-height:96vh;overflow:hidden}
+dialog::backdrop{background:#030b17dd}
+.zoom-toolbar{display:flex;gap:10px;align-items:center;justify-content:flex-end;padding:12px 18px;background:#102943}
+.zoom-toolbar span{margin-right:auto;font-size:14px}
+.zoom-body{overflow:auto;max-height:82vh;padding:12px}
+.zoom-body img{display:block;width:100%;max-width:none;margin:auto;height:auto}
+footer{margin-top:60px;border-top:1px solid var(--line);padding-top:20px;font-size:13px;color:var(--muted)}
+@media(max-width:1000px){aside{position:relative;width:auto;padding:24px}aside nav ul{columns:2}aside li{break-inside:avoid}.rail-footer{display:none}main{margin-left:0;padding:28px 24px 60px}}
+@media(max-width:600px){body{font-size:16px}aside nav ul{columns:1}aside{max-height:330px}main{padding:22px 16px 50px}h1{font-size:38px;padding:27px}h2{font-size:26px}h3{font-size:21px}.toolbar{font-size:10px}pre{padding:17px;font-size:14px}.zoom-toolbar{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{aside,.toolbar,.diagram-button,dialog{display:none!important}body{background:white;font-size:11pt}main{margin:0;max-width:none;padding:0}h1{color:#12345a;background:none;padding:0;box-shadow:none;font-size:32pt}h2,h3{break-after:avoid}figure,blockquote{break-inside:avoid}pre{background:#f3f5f9;color:#152f4e;white-space:pre-wrap}pre code{white-space:pre-wrap}table{display:table;font-size:9pt}th,td{min-width:0;padding:7px}figure img{box-shadow:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#content">Skip to document</a>
+<aside aria-label="Document contents">
+<div class="brand">Visual learning library</div>
+<h2>HarborCare</h2>
+<ul>
+<li><a href="#7-operate-a-production-style-synthetic-demo" id="toc-7-operate-a-production-style-synthetic-demo">7. Operate a
+Production-Style Synthetic Demo</a>
+<ul>
+<li><a href="#at-a-glance" id="toc-at-a-glance">At a glance</a></li>
+<li><a href="#1-define-the-deployment-units" id="toc-1-define-the-deployment-units">1. Define the deployment
+units</a></li>
+<li><a href="#2-separate-environments-before-deploying" id="toc-2-separate-environments-before-deploying">2. Separate
+environments before deploying</a></li>
+<li><a href="#3-create-the-ci-gates" id="toc-3-create-the-ci-gates">3.
+Create the CI gates</a></li>
+<li><a href="#4-deploy-in-a-controlled-order" id="toc-4-deploy-in-a-controlled-order">4. Deploy in a controlled
+order</a></li>
+<li><a href="#5-monitor-decisions-not-patient-payloads" id="toc-5-monitor-decisions-not-patient-payloads">5. Monitor decisions,
+not patient payloads</a></li>
+<li><a href="#6-rehearse-rollback-and-restore" id="toc-6-rehearse-rollback-and-restore">6. Rehearse rollback and
+restore</a></li>
+<li><a href="#7-graduation-evidence" id="toc-7-graduation-evidence">7.
+Graduation evidence</a></li>
+</ul></li>
+</ul>
+<div class="rail-footer">Self-contained reading edition<br>Diagrams and styles embedded</div>
+</aside>
+<main id="content">
+<div class="toolbar"><span>Illustrated reference guide</span><button type="button" onclick="window.print()">Print / Save PDF</button></div>
+<h1 id="7-operate-a-production-style-synthetic-demo">7. Operate a
+Production-Style Synthetic Demo</h1>
+<h2 id="at-a-glance">At a glance</h2>
+<p>Production-style means repeatable builds, controlled access, observed
+failures and tested recovery. It does not mean this teaching application
+is approved to handle real patients. Keep synthetic-only operation as a
+technical restriction as well as a written warning.</p>
+<p><img role="img" aria-label="The final delivery checkpoint and reconciliation remain necessary after deployment." src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDQwIiBoZWlnaHQ9IjYyMCIgdmlld0JveD0iMCAwIDE0NDAgNjIwIiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUgZGVzYyI+PHRpdGxlIGlkPSJ0aXRsZSI+QXBwcm92YWwgaXMgbm90IGRlbGl2ZXJ5PC90aXRsZT48ZGVzYyBpZD0iZGVzYyI+UmV2b2NhdGlvbiBibG9ja3MgZnV0dXJlIGF1dGhvcml6YXRpb247IGl0IGNhbm5vdCByZWNhbGwgYnl0ZXMgYWxyZWFkeSBzZW50LiBOZXZlciByZXRyeSBibGluZGx5LjwvZGVzYz48cmVjdCB3aWR0aD0iMTQ0MCIgaGVpZ2h0PSI2MjAiIHJ4PSIyNCIgZmlsbD0iIzA5MTYyYiIvPjxnIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSxBcmlhbCxzYW5zLXNlcmlmIj48dGV4dCB4PSI2MCIgeT0iNjgiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiM1MGM4ZGQiIGxldHRlci1zcGFjaW5nPSIzIj5IQVJCT1JDQVJFIMK3IFNZTlRIRVRJQyBMRUFSTklORyBDQVNFPC90ZXh0Pjx0ZXh0IHg9IjYwIiB5PSIxMzAiIGZvbnQtc2l6ZT0iNDMiIGZpbGw9IndoaXRlIiBmb250LXdlaWdodD0iNzAwIj5BcHByb3ZhbCBpcyBub3QgZGVsaXZlcnk8L3RleHQ+PHJlY3QgeD0iNjAiIHk9IjE5MCIgd2lkdGg9IjMxMCIgaGVpZ2h0PSIyNjAiIHJ4PSIxNiIgZmlsbD0iIzExMmU0ZCIgc3Ryb2tlPSIjMzE1NTcyIi8+PHRleHQgeD0iODAiIHk9IjIzMiIgZmlsbD0iIzc3ZTJjYyIgZm9udC1zaXplPSIyMCIgZm9udC13ZWlnaHQ9IjcwMCI+UFJFVklFVzwvdGV4dD48dGV4dCB4PSI4MCIgeT0iMjg2IiBmb250LXNpemU9IjE4IiBmaWxsPSIjZWRmNWZmIj5DcmVhdGUgYWxsb3dsaXN0ZWQgcGFja2V0PC90ZXh0Pjx0ZXh0IHg9IjgwIiB5PSIzNDAiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNlZGY1ZmYiPkNhbGN1bGF0ZSBzdGFibGUgZGlnZXN0PC90ZXh0Pjx0ZXh0IHg9IjgwIiB5PSIzOTQiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNlZGY1ZmYiPk5vIHRyYW5zbWlzc2lvbiB5ZXQ8L3RleHQ+PHBhdGggZD0iTSAzNzQgMzIwIGggMTggbSAtNyAtNyBsIDcgNyAtNyA3IiBmaWxsPSJub25lIiBzdHJva2U9IiM1MGM4ZGQiIHN0cm9rZS13aWR0aD0iMyIvPjxyZWN0IHg9IjQwMCIgeT0iMTkwIiB3aWR0aD0iMzEwIiBoZWlnaHQ9IjI2MCIgcng9IjE2IiBmaWxsPSIjMTEyZTRkIiBzdHJva2U9IiMzMTU1NzIiLz48dGV4dCB4PSI0MjAiIHk9IjIzMiIgZmlsbD0iIzc3ZTJjYyIgZm9udC1zaXplPSIyMCIgZm9udC13ZWlnaHQ9IjcwMCI+QVBQUk9WRUQgLyBRVUVVRUQ8L3RleHQ+PHRleHQgeD0iNDIwIiB5PSIyODYiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNlZGY1ZmYiPlJldmlldyBleGFjdCByZWNpcGllbnQgKyBmaWVsZHM8L3RleHQ+PHRleHQgeD0iNDIwIiB5PSIzNDAiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNlZGY1ZmYiPlN0b3JlIHJlbGVhc2UgYW5kIG91dGJveDwvdGV4dD48dGV4dCB4PSI0MjAiIHk9IjM5NCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2VkZjVmZiI+Q2hhbmdlcyByZXF1aXJlIG5ldyByZXZpZXc8L3RleHQ+PHBhdGggZD0iTSA3MTQgMzIwIGggMTggbSAtNyAtNyBsIDcgNyAtNyA3IiBmaWxsPSJub25lIiBzdHJva2U9IiM1MGM4ZGQiIHN0cm9rZS13aWR0aD0iMyIvPjxyZWN0IHg9Ijc0MCIgeT0iMTkwIiB3aWR0aD0iMzEwIiBoZWlnaHQ9IjI2MCIgcng9IjE2IiBmaWxsPSIjMTEyZTRkIiBzdHJva2U9IiMzMTU1NzIiLz48dGV4dCB4PSI3NjAiIHk9IjIzMiIgZmlsbD0iIzc3ZTJjYyIgZm9udC1zaXplPSIyMCIgZm9udC13ZWlnaHQ9IjcwMCI+SU4gRkxJR0hUPC90ZXh0Pjx0ZXh0IHg9Ijc2MCIgeT0iMjg2IiBmb250LXNpemU9IjE4IiBmaWxsPSIjZWRmNWZmIj5Mb2NrIGFuZCBjaGVjayBjdXJyZW50IHBvbGljeTwvdGV4dD48dGV4dCB4PSI3NjAiIHk9IjM0MCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2VkZjVmZiI+TWFyayBkaXNwYXRjaCBhdHRlbXB0PC90ZXh0Pjx0ZXh0IHg9Ijc2MCIgeT0iMzk0IiBmb250LXNpemU9IjE4IiBmaWxsPSIjZWRmNWZmIj5OZXR3b3JrIGlzIGEgc2VwYXJhdGUgYm91bmRhcnk8L3RleHQ+PHBhdGggZD0iTSAxMDU0IDMyMCBoIDE4IG0gLTcgLTcgbCA3IDcgLTcgNyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNTBjOGRkIiBzdHJva2Utd2lkdGg9IjMiLz48cmVjdCB4PSIxMDgwIiB5PSIxOTAiIHdpZHRoPSIzMTAiIGhlaWdodD0iMjYwIiByeD0iMTYiIGZpbGw9IiMxMTJlNGQiIHN0cm9rZT0iIzMxNTU3MiIvPjx0ZXh0IHg9IjExMDAiIHk9IjIzMiIgZmlsbD0iIzc3ZTJjYyIgZm9udC1zaXplPSIyMCIgZm9udC13ZWlnaHQ9IjcwMCI+UkVDT05DSUxFPC90ZXh0Pjx0ZXh0IHg9IjExMDAiIHk9IjI4NiIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2VkZjVmZiI+UmVjZWlwdDogZGVsaXZlcmVkPC90ZXh0Pjx0ZXh0IHg9IjExMDAiIHk9IjM0MCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2VkZjVmZiI+Tm8gcmVjZWlwdDogc3RhdHVzIHVua25vd248L3RleHQ+PHRleHQgeD0iMTEwMCIgeT0iMzk0IiBmb250LXNpemU9IjE4IiBmaWxsPSIjZWRmNWZmIj5RdWVyeSBzdGF0dXMgYmVmb3JlIGFueSByZXRyeTwvdGV4dD48cmVjdCB4PSI2MCIgeT0iNDkyIiB3aWR0aD0iMTMyMCIgaGVpZ2h0PSI3NiIgcng9IjEyIiBmaWxsPSIjMTkzODRhIi8+PHRleHQgeD0iODQiIHk9IjUzNyIgZm9udC1zaXplPSIyMCIgZmlsbD0iI2U4ZmNmZiI+UmV2b2NhdGlvbiBibG9ja3MgZnV0dXJlIGF1dGhvcml6YXRpb247IGl0IGNhbm5vdCByZWNhbGwgYnl0ZXMgYWxyZWFkeSBzZW50LiBOZXZlciByZXRyeSBibGluZGx5LjwvdGV4dD48L2c+PC9zdmc+Cg==" alt="The final delivery checkpoint and reconciliation remain necessary after deployment." /></p>
+<h2 id="1-define-the-deployment-units">1. Define the deployment
+units</h2>
+<p>Keep one Python/hybrid application repository with a web application,
+backend API, workers, test receiver and shared contracts. They may run
+as separate processes or deployment services. A separate process is not
+automatically a separate Git repository.</p>
+<p>Create <code>ops/environment-matrix.md</code>,
+<code>ops/runbook.md</code>, <code>ops/restore-checklist.md</code> and
+CI workflow files. Record which component owns migrations, which worker
+sends packets, and which operator can pause it. Never run two
+independent release systems against the same live outbox
+accidentally.</p>
+<h2 id="2-separate-environments-before-deploying">2. Separate
+environments before deploying</h2>
+<p>Use local, test and portfolio-demo environments with separate
+databases, credentials and recipient registries. Preview deployments get
+only generated fixtures and simulator destinations. Do not share
+writable production resources with a branch preview.</p>
+<p>Store secrets in the chosen platform&#39;s secret mechanism, not Git or
+screenshots. Give the web application only the service access it needs.
+Give the worker only the release and receiver permissions it needs.
+Document rotation and revocation procedures and test that expired
+credentials fail safely.</p>
+<h2 id="3-create-the-ci-gates">3. Create the CI gates</h2>
+<p>Run formatting, type checks, unit tests, schema tests, authorization
+integration tests and the frontend build. Add secret scanning and
+dependency review. Run the negative privacy cases against the deployed
+test services, including searches for canaries in captured model inputs
+and browser responses.</p>
+<p>Require schema migrations to succeed in a disposable test database.
+For incompatible changes, plan an expand-and-contract migration rather
+than assuming old workers instantly disappear. Prevent deployment if the
+policy contract version or receiver contract is incompatible with the
+running services.</p>
+<h2 id="4-deploy-in-a-controlled-order">4. Deploy in a controlled
+order</h2>
+<p>Provision isolated storage and identity configuration. Apply
+compatible migrations. Deploy the API with outbound delivery disabled.
+Deploy the receiver simulator and verify its authenticated receipt
+behavior. Deploy workers paused, then the workspace. Run a synthetic
+smoke test, inspect evidence, and only then enable the demo
+dispatcher.</p>
+<p>Verify the selected hosting products support the actual worker
+lifetime, networking and persistence you need. A web request handler
+should not be assumed to keep running indefinitely after returning a
+response. Choose a durable job/workflow service or appropriate worker
+host and test restart behavior there.</p>
+<h2 id="5-monitor-decisions-not-patient-payloads">5. Monitor decisions,
+not patient payloads</h2>
+<p>Track counts and latency for authorization denials, stale reviews,
+queue age, delivery unknown states and receiver conflicts. Record
+correlation identifiers under protected access. Keep ordinary telemetry
+separate from the more restricted audit store. Do not send raw prompts,
+chart excerpts or packet bodies to a general analytics tool.</p>
+<p>Define alerts with an operator action. “Delivery unknown” should lead
+to receipt reconciliation, not a script that retries every packet.
+“Policy store unavailable” should pause protected operations, not
+activate a permissive fallback.</p>
+<h2 id="6-rehearse-rollback-and-restore">6. Rehearse rollback and
+restore</h2>
+<p>A code rollback cannot undo a disclosed packet. Pause dispatch first
+when investigating a possible privacy failure. Preserve relevant
+protected evidence, identify affected synthetic releases and determine
+whether the receiver accepted them. Follow the organization&#39;s incident
+process before ever considering real-data operation.</p>
+<p>Restore a backup into an isolated environment with outbound delivery
+disabled before workers start. An old backup can contain queued releases
+whose real-world status changed after the backup. Reconcile them against
+receiver receipts and current authorization before enabling any new
+attempt. Test this explicitly; merely restoring database rows is not
+successful recovery.</p>
+<h2 id="7-graduation-evidence">7. Graduation evidence</h2>
+<p>Save a build identifier, dependency lockfiles, test report,
+architecture version, environment inventory, synthetic demo script and
+restore rehearsal result. Label unimplemented features honestly. The
+final demonstration should show the correct transport projection,
+wrong-agency denial, wrong-patient retrieval exclusion, revoked queued
+release, and lost-acknowledgment recovery.</p>
+<p>Before any real patient information is considered, obtain
+organization-specific legal, security, clinical and vendor review,
+including appropriate agreements and operational controls. These
+workbooks are engineering education, not a compliance certification or
+medical workflow approval.</p>
+</main>
+<dialog id="diagram-dialog" aria-label="Enlarged diagram">
+<div class="zoom-toolbar"><span>Diagram detail</span><button type="button" id="diagram-close">Close</button></div>
+<div class="zoom-body"><img id="diagram-large" alt></div>
+</dialog>
+<script>
+const diagramDialog = document.getElementById('diagram-dialog');
+const diagramLarge = document.getElementById('diagram-large');
+document.querySelectorAll('main img').forEach((picture) => {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'diagram-button';
+  button.textContent = 'Enlarge diagram';
+  button.addEventListener('click', () => {
+    diagramLarge.src = picture.src;
+    diagramLarge.alt = picture.alt;
+    diagramDialog.showModal();
+  });
+  picture.insertAdjacentElement('afterend', button);
+});
+document.getElementById('diagram-close').addEventListener('click', () => diagramDialog.close());
+</script>
+</body>
+</html>

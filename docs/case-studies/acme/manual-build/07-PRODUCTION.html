@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>07-PRODUCTION - Manual Build Workbook</title>
+<style type="text/css">:root{color-scheme:light;--ink:#19283c;--muted:#56667a;--blue:#145bd8;--navy:#081a33;--line:#dce5ef;--paper:#fff;--bg:#edf2f7}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:30px}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.75 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:#145ac0;text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:3px solid #d58b00;outline-offset:4px}
+.skip{position:fixed;top:-100px;left:16px;z-index:10;background:white;padding:10px}
+.skip:focus{top:10px}
+aside{position:fixed;inset:0 auto 0 0;width:284px;overflow:auto;padding:30px 22px;background:var(--navy);color:#e9f0fa;border-right:1px solid #244363}
+.brand{font-size:12px;letter-spacing:.17em;text-transform:uppercase;color:#76dcf3;font-weight:700}
+aside h2{font-size:22px;line-height:1.3;margin:12px 0 22px;color:white;border:0;padding:0}
+aside ul{list-style:none;margin:0;padding:0}
+aside li{margin:0 0 5px}
+aside li ul{margin-left:0}
+aside a{display:block;padding:7px 10px;border-radius:6px;color:#d2deed;text-decoration:none;font-size:13px;line-height:1.45}
+aside a:hover{background:#193554;color:white}
+.rail-footer{margin-top:22px;border-top:1px solid #2c4260;padding-top:20px;color:#9db0c9;font-size:12px}
+main{margin-left:284px;padding:42px clamp(24px,4vw,72px) 90px;max-width:1550px}
+.toolbar{display:flex;align-items:center;gap:15px;justify-content:space-between;margin-bottom:30px;font-size:12px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+button{font:600 13px system-ui;border:1px solid #c9d7e8;background:#fff;color:#164176;padding:10px 15px;border-radius:8px;cursor:pointer}
+button:hover{background:#e6f0ff}
+h1{font-size:clamp(40px,4.4vw,66px);line-height:1.1;letter-spacing:-.045em;background:linear-gradient(120deg,#07172e,#124481);color:white;border-radius:20px;padding:40px;margin:0 0 34px;box-shadow:0 18px 45px #0b254025}
+h2{font-size:30px;line-height:1.3;color:#103e7c;letter-spacing:-.025em;margin:58px 0 22px;padding-top:23px;border-top:3px solid #2367c9}
+h3{font-size:23px;line-height:1.35;color:#075e76;letter-spacing:-.02em;margin:34px 0 15px}
+p{margin:16px 0;max-width:90ch}
+li{margin:7px 0}
+strong{color:#113862}
+blockquote{background:#e1f1f7;border-left:5px solid #068caf;border-radius:0 12px 12px 0;margin:28px 0;padding:12px 25px;color:#184050}
+figure{margin:28px 0 32px}
+figure img{display:block;width:100%;height:auto;border-radius:14px;background:#07172d;box-shadow:0 12px 28px #0a254025}
+figcaption{font-size:14px;line-height:1.6;color:var(--muted);padding:13px 2px}
+.diagram-button{margin-top:9px;font-size:12px}
+img{max-width:100%;height:auto}
+pre{padding:23px 25px;overflow:auto;background:#091b32;color:#dfedff;border:1px solid #203a56;border-radius:12px;line-height:1.6;tab-size:4}
+code{font-family:"Cascadia Code",Consolas,monospace;font-size:.85em}
+:not(pre)>code{background:#e3eaf3;color:#98305b;padding:.12em .32em;border-radius:4px;overflow-wrap:anywhere}
+pre code{white-space:pre;color:inherit}
+table{border-collapse:separate;border-spacing:0;display:block;overflow-x:auto;max-width:100%;margin:24px 0 30px;border:1px solid var(--line);border-radius:10px;background:white;font-size:15px;line-height:1.6}
+th,td{text-align:left;vertical-align:top;padding:13px 16px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-width:130px}
+th{background:#103c78;color:white;font-weight:650}
+tr:nth-child(even) td{background:#f4f7fb}
+tr:last-child td{border-bottom:0}
+th:last-child,td:last-child{border-right:0}
+hr{border:0;border-top:1px solid var(--line);margin:40px 0}
+dialog{border:1px solid #375679;border-radius:15px;padding:0;background:#07172e;color:white;width:96vw;max-width:1900px;max-height:96vh;overflow:hidden}
+dialog::backdrop{background:#030b17dd}
+.zoom-toolbar{display:flex;gap:10px;align-items:center;justify-content:flex-end;padding:12px 18px;background:#102943}
+.zoom-toolbar span{margin-right:auto;font-size:14px}
+.zoom-body{overflow:auto;max-height:82vh;padding:12px}
+.zoom-body img{display:block;width:100%;max-width:none;margin:auto;height:auto}
+footer{margin-top:60px;border-top:1px solid var(--line);padding-top:20px;font-size:13px;color:var(--muted)}
+@media(max-width:1000px){aside{position:relative;width:auto;padding:24px}aside nav ul{columns:2}aside li{break-inside:avoid}.rail-footer{display:none}main{margin-left:0;padding:28px 24px 60px}}
+@media(max-width:600px){body{font-size:16px}aside nav ul{columns:1}aside{max-height:330px}main{padding:22px 16px 50px}h1{font-size:38px;padding:27px}h2{font-size:26px}h3{font-size:21px}.toolbar{font-size:10px}pre{padding:17px;font-size:14px}.zoom-toolbar{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{aside,.toolbar,.diagram-button,dialog{display:none!important}body{background:white;font-size:11pt}main{margin:0;max-width:none;padding:0}h1{color:#12345a;background:none;padding:0;box-shadow:none;font-size:32pt}h2,h3{break-after:avoid}figure,blockquote{break-inside:avoid}pre{background:#f3f5f9;color:#152f4e;white-space:pre-wrap}pre code{white-space:pre-wrap}table{display:table;font-size:9pt}th,td{min-width:0;padding:7px}figure img{box-shadow:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#reading">Skip to lesson</a>
+<aside aria-label="Workbook navigation">
+<div class="brand">Build It Yourself</div>
+<h2>Manual Build<br>Workbooks</h2>
+<nav aria-label="Series"><a href="00-START-HERE.html">Start here · Series map</a></nav>
+<nav aria-label="This workbook"><ul>
+<li><a href="#workbook-7--from-local-success-to-a-production-demo" id="toc-workbook-7--from-local-success-to-a-production-demo">Workbook 7
+— From Local Success to a Production Demo</a>
+<ul>
+<li><a href="#release-the-complete-system-and-learn-to-operate-it" id="toc-release-the-complete-system-and-learn-to-operate-it">Release the
+complete system and learn to operate it</a></li>
+<li><a href="#1-at-a-glance" id="toc-1-at-a-glance">1. At a
+glance</a></li>
+<li><a href="#2-make-a-release-inventory" id="toc-2-make-a-release-inventory">2. Make a release inventory</a></li>
+<li><a href="#3-create-the-deployment-files-one-at-a-time" id="toc-3-create-the-deployment-files-one-at-a-time">3. Create the
+deployment files one at a time</a></li>
+<li><a href="#4-build-a-reproducible-artifact" id="toc-4-build-a-reproducible-artifact">4. Build a reproducible
+artifact</a></li>
+<li><a href="#5-provision-isolated-environments" id="toc-5-provision-isolated-environments">5. Provision isolated
+environments</a></li>
+<li><a href="#6-authentication-and-network-gate" id="toc-6-authentication-and-network-gate">6. Authentication and network
+gate</a></li>
+<li><a href="#7-database-migration-and-release-order" id="toc-7-database-migration-and-release-order">7. Database migration
+and release order</a></li>
+<li><a href="#8-write-a-useful-smoke-test" id="toc-8-write-a-useful-smoke-test">8. Write a useful smoke
+test</a></li>
+<li><a href="#9-backups-are-incomplete-until-restored" id="toc-9-backups-are-incomplete-until-restored">9. Backups are
+incomplete until restored</a></li>
+<li><a href="#10-monitoring-that-tells-you-what-to-do" id="toc-10-monitoring-that-tells-you-what-to-do">10. Monitoring that
+tells you what to do</a></li>
+<li><a href="#11-rehearse-an-incident" id="toc-11-rehearse-an-incident">11. Rehearse an incident</a></li>
+<li><a href="#12-final-release-gate-for-all-five-projects" id="toc-12-final-release-gate-for-all-five-projects">12. Final release
+gate for all five projects</a></li>
+</ul></li>
+</ul></nav>
+<div class="rail-footer">Python / Next.js primary path<br>TypeScript translation notes<br>Learn · Build · Test · Explain</div>
+</aside>
+<main id="reading">
+<div class="toolbar"><span>From an empty folder to a production demo</span><button id="print-button" type="button">Print / Save PDF</button></div>
+<h1 id="workbook-7--from-local-success-to-a-production-demo">Workbook 7
+— From Local Success to a Production Demo</h1>
+<h2 id="release-the-complete-system-and-learn-to-operate-it">Release the
+complete system and learn to operate it</h2>
+<p><strong>Outcome:</strong> a repeatable, monitored release of the five
+projects using fictional data, separate environment credentials, tested
+backups, and a recovery runbook. A live payment integration is not part
+of this series.</p>
+<p>Prerequisite: all project completion gates. Do not deploy unfinished
+safety boundaries to a public endpoint merely to obtain a portfolio
+URL.</p>
+<h2 id="1-at-a-glance">1. At a glance</h2>
+<p><img role="img" aria-label="Release gates: reproducible build, isolated integration test, controlled production release, smoke checks, and continuing operational monitoring with a recovery plan." src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDQwIiBoZWlnaHQ9IjY2MCIgdmlld0JveD0iMCAwIDE0NDAgNjYwIiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUgZGVzYyI+PHRpdGxlIGlkPSJ0aXRsZSI+RlJPTSBZT1VSIENPTVBVVEVSIFRPIEEgU0FGRSBERU1PPC90aXRsZT48ZGVzYyBpZD0iZGVzYyI+RG8gbm90IHNraXAgYSBnYXRlIGJlY2F1c2UgdGhlIGhvbWUgcGFnZSBsb2Fkcy4gMSAgTE9DSywgMiAgQlVJTEQsIDMgIElOVEVHUkFURSwgNCAgSVNPTEFURSwgNSAgUkVMRUFTRSwgNiAgVkVSSUZZLCA3ICBPUEVSQVRFLjwvZGVzYz48cmVjdCB3aWR0aD0iMTQ0MCIgaGVpZ2h0PSI2NjAiIHJ4PSIyNCIgZmlsbD0iIzA5MTYyYiIvPjxnIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiI+PHRleHQgeD0iNTUiIHk9Ijc1IiBmaWxsPSIjZjJmN2ZmIiBmb250LXNpemU9IjM3IiBmb250LXdlaWdodD0iYm9sZCI+RlJPTSBZT1VSIENPTVBVVEVSIFRPIEEgU0FGRSBERU1PPC90ZXh0Pjx0ZXh0IHg9IjU1IiB5PSIxMjAiIGZpbGw9IiM5ZGJhZDkiIGZvbnQtc2l6ZT0iMjQiPkRvIG5vdCBza2lwIGEgZ2F0ZSBiZWNhdXNlIHRoZSBob21lIHBhZ2UgbG9hZHMuPC90ZXh0PjxyZWN0IHg9IjU1IiB5PSIxODUiIHdpZHRoPSIzMTAiIGhlaWdodD0iMTM1IiByeD0iMTYiIGZpbGw9IiMxMTJlNGQiIHN0cm9rZT0iIzRkYzhkZCIgc3Ryb2tlLXdpZHRoPSIyIi8+PHRleHQgeD0iNzUiIHk9IjIzMyIgZm9udC1zaXplPSIyNiIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiNmZmYiPjEgIExPQ0s8L3RleHQ+PHRleHQgeD0iNzUiIHk9IjI3NyIgZm9udC1zaXplPSIyMyIgZmlsbD0iIzcyZTBjYiI+VmVyc2lvbnMgKyBmaXh0dXJlczwvdGV4dD48dGV4dCB4PSIzNzAiIHk9IjI2NSIgZm9udC1zaXplPSIyOCIgZmlsbD0iIzU0ZDhlOSI+4oaSPC90ZXh0PjxyZWN0IHg9IjQwMCIgeT0iMTg1IiB3aWR0aD0iMzEwIiBoZWlnaHQ9IjEzNSIgcng9IjE2IiBmaWxsPSIjMTEyZTRkIiBzdHJva2U9IiM0ZGM4ZGQiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9IjQyMCIgeT0iMjMzIiBmb250LXNpemU9IjI2IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iI2ZmZiI+MiAgQlVJTEQ8L3RleHQ+PHRleHQgeD0iNDIwIiB5PSIyNzciIGZvbnQtc2l6ZT0iMjMiIGZpbGw9IiM3MmUwY2IiPlRlc3RzICsgYXJ0aWZhY3RzPC90ZXh0Pjx0ZXh0IHg9IjcxNSIgeT0iMjY1IiBmb250LXNpemU9IjI4IiBmaWxsPSIjNTRkOGU5Ij7ihpI8L3RleHQ+PHJlY3QgeD0iNzQ1IiB5PSIxODUiIHdpZHRoPSIzMTAiIGhlaWdodD0iMTM1IiByeD0iMTYiIGZpbGw9IiMxMTJlNGQiIHN0cm9rZT0iIzRkYzhkZCIgc3Ryb2tlLXdpZHRoPSIyIi8+PHRleHQgeD0iNzY1IiB5PSIyMzMiIGZvbnQtc2l6ZT0iMjYiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjZmZmIj4zICBJTlRFR1JBVEU8L3RleHQ+PHRleHQgeD0iNzY1IiB5PSIyNzciIGZvbnQtc2l6ZT0iMjMiIGZpbGw9IiM3MmUwY2IiPkNvbXBsZXRlIGNhc2U8L3RleHQ+PHRleHQgeD0iMTA2MCIgeT0iMjY1IiBmb250LXNpemU9IjI4IiBmaWxsPSIjNTRkOGU5Ij7ihpI8L3RleHQ+PHJlY3QgeD0iMTA5MCIgeT0iMTg1IiB3aWR0aD0iMzEwIiBoZWlnaHQ9IjEzNSIgcng9IjE2IiBmaWxsPSIjMTEyZTRkIiBzdHJva2U9IiM0ZGM4ZGQiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9IjExMTAiIHk9IjIzMyIgZm9udC1zaXplPSIyNiIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiNmZmYiPjQgIElTT0xBVEU8L3RleHQ+PHRleHQgeD0iMTExMCIgeT0iMjc3IiBmb250LXNpemU9IjIzIiBmaWxsPSIjNzJlMGNiIj5TZWNyZXRzICsgZGF0YTwvdGV4dD48cmVjdCB4PSI1NSIgeT0iMzk1IiB3aWR0aD0iMzEwIiBoZWlnaHQ9IjEzNSIgcng9IjE2IiBmaWxsPSIjMTEyZTRkIiBzdHJva2U9IiM0ZGM4ZGQiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9Ijc1IiB5PSI0NDMiIGZvbnQtc2l6ZT0iMjYiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjZmZmIj41ICBSRUxFQVNFPC90ZXh0Pjx0ZXh0IHg9Ijc1IiB5PSI0ODciIGZvbnQtc2l6ZT0iMjMiIGZpbGw9IiM3MmUwY2IiPkNvbXBhdGlibGUgc2VydmljZXM8L3RleHQ+PHRleHQgeD0iMzcwIiB5PSI0NzUiIGZvbnQtc2l6ZT0iMjgiIGZpbGw9IiM1NGQ4ZTkiPuKGkjwvdGV4dD48cmVjdCB4PSI0MDAiIHk9IjM5NSIgd2lkdGg9IjMxMCIgaGVpZ2h0PSIxMzUiIHJ4PSIxNiIgZmlsbD0iIzExMmU0ZCIgc3Ryb2tlPSIjNGRjOGRkIiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSI0MjAiIHk9IjQ0MyIgZm9udC1zaXplPSIyNiIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiNmZmYiPjYgIFZFUklGWTwvdGV4dD48dGV4dCB4PSI0MjAiIHk9IjQ4NyIgZm9udC1zaXplPSIyMyIgZmlsbD0iIzcyZTBjYiI+UmVjZWlwdCArIHJlY292ZXJ5PC90ZXh0Pjx0ZXh0IHg9IjcxNSIgeT0iNDc1IiBmb250LXNpemU9IjI4IiBmaWxsPSIjNTRkOGU5Ij7ihpI8L3RleHQ+PHJlY3QgeD0iNzQ1IiB5PSIzOTUiIHdpZHRoPSIzMTAiIGhlaWdodD0iMTM1IiByeD0iMTYiIGZpbGw9IiMxMTJlNGQiIHN0cm9rZT0iIzRkYzhkZCIgc3Ryb2tlLXdpZHRoPSIyIi8+PHRleHQgeD0iNzY1IiB5PSI0NDMiIGZvbnQtc2l6ZT0iMjYiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjZmZmIj43ICBPUEVSQVRFPC90ZXh0Pjx0ZXh0IHg9Ijc2NSIgeT0iNDg3IiBmb250LXNpemU9IjIzIiBmaWxsPSIjNzJlMGNiIj5BbGVydHMgKyByZXN0b3JlPC90ZXh0Pjx0ZXh0IHg9IjExMTAiIHk9IjQyNSIgZm9udC1zaXplPSIyMyIgZmlsbD0iIzlkYmFkOSI+UmVhZCAx4oCTNCwgdGhlbiA14oCTNy48L3RleHQ+PHRleHQgeD0iNTUiIHk9IjYwNSIgZm9udC1zaXplPSIyNSIgZmlsbD0iI2YyZjdmZiI+QSBwYXNzaW5nIGNoZWNrcG9pbnQgaXMgZXZpZGVuY2UsIG5vdCBqdXN0IGEgY29tcGxldGVkIGZpbGUuPC90ZXh0PjwvZz48L3N2Zz4K" alt="Release gates: reproducible build, isolated integration test, controlled production release, smoke checks, and continuing operational monitoring with a recovery plan." /></p>
+<p>Production is an operating responsibility, not a command that ends
+development. You must know what is running, which data it uses, how to
+detect failure, and how to restore service without duplicating business
+actions.</p>
+<h2 id="2-make-a-release-inventory">2. Make a release inventory</h2>
+<p>Create <code>docs/operations/release-inventory.md</code>. List each
+service, source folder, start command, health endpoint or worker
+heartbeat, required secrets, database role, external dependencies, and
+rollback target.</p>
+<p>For the hybrid version, the web app runs on Vercel and Python
+APIs/workers run on a container-capable host. For TypeScript, the web
+and protocol service entry points can deploy separately from the same
+repository, subject to transport/runtime compatibility tests. A
+deployment is not a Git repository.</p>
+<table>
+<thead>
+<tr>
+<th>Project</th>
+<th>Release-specific check</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1 MCP</td>
+<td>Only execution identity writes; receipt lookup protected; concurrent
+retries safe</td>
+</tr>
+<tr>
+<td>P2 RAG</td>
+<td>Sources private; ingestion bounded; evidence version retained;
+deletion policy defined</td>
+</tr>
+<tr>
+<td>P3 A2A</td>
+<td>Task state durable; trusted agent URLs; deadline and cancellation
+behavior tested</td>
+</tr>
+<tr>
+<td>P4 Workflow</td>
+<td>Jobs recover; queue-age alert; unknown operations reconcile; old
+runs remain compatible</td>
+</tr>
+<tr>
+<td>P5 Web</td>
+<td>Real authentication; no leaked secrets; correct backend environment;
+usable errors</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3-create-the-deployment-files-one-at-a-time">3. Create the
+deployment files one at a time</h2>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>What you write</th>
+<th>How you verify it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>backend/Dockerfile</code></td>
+<td>Pinned runtime, dependency install, source copy, non-root user,
+explicit entry point</td>
+<td>Build and run with development secrets supplied at runtime</td>
+</tr>
+<tr>
+<td><code>.dockerignore</code></td>
+<td>Exclude secrets, VCS metadata, caches, local volumes</td>
+<td>Inspect build context and image contents</td>
+</tr>
+<tr>
+<td><code>infra/compose.yaml</code></td>
+<td>Local service names, dependencies, ports, volumes, health
+checks</td>
+<td>Clean local startup without manual hidden steps</td>
+</tr>
+<tr>
+<td><code>.env.example</code></td>
+<td>Document variable names and safe placeholders</td>
+<td>No usable credential committed</td>
+</tr>
+<tr>
+<td><code>.github/workflows/ci.yml</code></td>
+<td>Install from locks, lint/type checks, unit/integration tests,
+build</td>
+<td>Pull request cannot pass when a safety test fails</td>
+</tr>
+<tr>
+<td><code>scripts/smoke.py</code></td>
+<td><code>check_readiness</code>, <code>run_synthetic_case</code>,
+<code>verify_receipt</code></td>
+<td>Fails on wrong tenant or duplicate credit</td>
+</tr>
+<tr>
+<td><code>scripts/reconcile.py</code></td>
+<td><code>list_uncertain_operations</code>,
+<code>reconcile_one</code></td>
+<td>Read-only/dry-run first; controlled state changes</td>
+</tr>
+<tr>
+<td><code>docs/operations/runbook.md</code></td>
+<td>Diagnose, restore, reconcile, escalate</td>
+<td>Another person can follow it</td>
+</tr>
+<tr>
+<td><code>docs/operations/release-manifest.json</code></td>
+<td>Commit, artifacts, migration/contract versions</td>
+<td>Running services match recorded release</td>
+</tr>
+</tbody>
+</table>
+<p>These are files to implement in the future application repository. Do
+not paste a production deployment token into the course guide or commit
+it as an example.</p>
+<h2 id="4-build-a-reproducible-artifact">4. Build a reproducible
+artifact</h2>
+<p>Pin supported runtime and dependency versions. Install from the lock
+file in CI. Run the same tests in CI that you ran locally. Build the
+production web application rather than assuming the development server
+proves it will build.</p>
+<p>For Python, build one backend image when practical and run separate
+service/worker entry points from it. Give each process only its required
+credentials. A shared image is not a reason to give every service the
+migration-owner password.</p>
+<p>Never bake secrets into image layers or browser bundles. Supply
+runtime secrets through the host&#39;s protected configuration. Scan tracked
+files and artifacts for accidental credentials. If a secret was
+committed, rotate it; deleting the file from the latest commit does not
+remove the exposure.</p>
+<h2 id="5-provision-isolated-environments">5. Provision isolated
+environments</h2>
+<p>Create development, integration/preview, and production-demo
+configurations. Use different database credentials and private storage
+locations. Preview deployments must not call the production MCP
+writer.</p>
+<p>Vercel can connect multiple projects to one repo with different
+application roots, and Git integration can create preview deployments.
+Your service URLs and databases still need explicit environment
+isolation. <a href="https://vercel.com/docs/monorepos">Vercel
+monorepos</a>, <a href="https://vercel.com/docs/git">Git
+deployments</a>.</p>
+<p>For a small first release, a controlled shared integration
+environment is acceptable if data is isolated and incompatible schema
+changes are not tested concurrently against it. Create dedicated
+environments for changes that cannot safely share the backend.</p>
+<p>Choose cloud resources and budgets deliberately. This document does
+not provision them. Configure quotas and spending alerts before enabling
+live model calls. Use fixture mode for public demonstrations unless live
+behavior adds a clear, budgeted benefit.</p>
+<h2 id="6-authentication-and-network-gate">6. Authentication and network
+gate</h2>
+<p>Replace local fixture identity with a supported authentication
+integration. Verify issuer, audience, signature, expiry, and relevant
+claims. Map identity to tenant membership using trusted records. Test
+ordinary users, reviewers, administrators, and machine callers
+separately.</p>
+<p>Next.js should forward narrowly scoped delegation to the Python
+backend, which verifies it independently. Internal dispatch and
+reconciliation endpoints require machine authentication. Do not rely on
+an obscure URL for protection.</p>
+<p>Use HTTPS, restricted ingress, private database access where
+possible, and short-lived credentials where supported. Only expose
+services that need incoming connections. Workers polling a queue
+generally do not need public ports.</p>
+<p>Test cross-tenant reads, writes, source access, task status, event
+cursors, receipt lookup, and uploads. Check that logs redact tokens and
+private source text. If any boundary is untested, it is not ready for
+public release.</p>
+<h2 id="7-database-migration-and-release-order">7. Database migration
+and release order</h2>
+<p>Use one migration executor. First apply additive changes that both
+old and new code can tolerate. Then deploy compatible providers, then
+consumers. Test the integrated journey before removing old fields or
+handlers.</p>
+<p>Do not run migrations from every service startup. Two instances
+racing to alter the same schema complicate failure recovery. Keep a
+migration journal with checksums and review destructive changes
+separately.</p>
+<p>Persisted workflows may resume after a code release. Record
+workflow-definition versions and retain compatible handlers or drain old
+runs before removing them. A new deployment does not automatically
+migrate every paused execution safely.</p>
+<p>For Vercel, do not blindly promote a preview artifact configured with
+preview-only URLs into production. Build or stage the production-target
+artifact with correct configuration, validate it, then release it
+through one controlled pipeline.</p>
+<h2 id="8-write-a-useful-smoke-test">8. Write a useful smoke test</h2>
+<p><code>check_readiness</code> verifies required dependencies, not just
+that a process returns HTTP 200. For workers, check a recent heartbeat
+and bounded queue age. Readiness checks must not reveal secrets or
+mutate business data.</p>
+<p><code>run_synthetic_case</code> creates a uniquely identified case
+under a dedicated smoke-test tenant. It follows the complete fixture
+path, records all IDs, and waits with a deadline. It never uses real
+customer accounts.</p>
+<p><code>verify_receipt</code> reads the final receipt and checks
+tenant, case, amount, operation key, and uniqueness. Run a repeated
+command and verify the same receipt. A successful home-page response is
+not a sufficient smoke test for this platform.</p>
+<p>Record cleanup and retention rules for smoke-test data. Cleanup
+should target only those explicit synthetic records, never broad
+database resets.</p>
+<h2 id="9-backups-are-incomplete-until-restored">9. Backups are
+incomplete until restored</h2>
+<p>Configure database backups and source-object retention appropriate to
+the demo. Record recovery-point and recovery-time targets as targets,
+not measured achievements.</p>
+<p>Restore into a separate isolated environment. Verify row counts,
+source-version references, task artifacts, pending approvals, and
+receipts. Start workers with outbound effects disabled until the
+restored state is reviewed. Otherwise replaying restored jobs can
+unintentionally contact live services.</p>
+<p>Test whether the restored database and object storage form a
+consistent set. A receipt without its referenced source evidence may
+undermine auditability even if the web app starts.</p>
+<p>Document who can restore, where backups live, how encryption keys are
+accessed, and when the last successful restore test occurred. A backup
+checkbox is not evidence of recoverability.</p>
+<h2 id="10-monitoring-that-tells-you-what-to-do">10. Monitoring that
+tells you what to do</h2>
+<table>
+<thead>
+<tr>
+<th>Signal</th>
+<th>What it may mean</th>
+<th>First diagnostic action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Oldest pending outbox age rising</td>
+<td>Delivery stopped</td>
+<td>Inspect relay heartbeat and authentication</td>
+</tr>
+<tr>
+<td>Job lease churn</td>
+<td>Workers failing or timeouts too short</td>
+<td>Compare attempts and execution durations</td>
+</tr>
+<tr>
+<td>Many cases reconciling</td>
+<td>Uncertain execution responses</td>
+<td>Query operation receipts; do not create new keys</td>
+</tr>
+<tr>
+<td>Ingestion failures</td>
+<td>Parser/provider/format problem</td>
+<td>Inspect safe error code and source metadata</td>
+</tr>
+<tr>
+<td>Agent tasks past deadline</td>
+<td>Executor or dependency stalled</td>
+<td>Inspect persisted task state and worker health</td>
+</tr>
+<tr>
+<td>Authorization denials rising</td>
+<td>Misconfiguration or misuse</td>
+<td>Check caller/audience/scope without exposing tokens</td>
+</tr>
+<tr>
+<td>Model spend rising</td>
+<td>Retry loop or uncontrolled prompts</td>
+<td>Enforce per-case limits and inspect call counts</td>
+</tr>
+</tbody>
+</table>
+<p>Use structured logs with case, task, operation, and trace IDs as
+distinct fields. Capture metrics and alerts that lead to an operator
+action. Avoid dumping full documents or hidden model reasoning into
+logs.</p>
+<h2 id="11-rehearse-an-incident">11. Rehearse an incident</h2>
+<p>Simulate a deployment in which the workflow worker loses connectivity
+after the ledger commits. The operator should identify the affected
+case, confirm the operation key, query the authoritative receipt, and
+resume or reconcile the workflow without minting another credit.</p>
+<p>Then simulate a bad UI release. Roll back the web artifact while
+preserving compatible backend and database state. A code rollback does
+not reverse a credit, undo a migration, or erase accepted tasks.</p>
+<p>Write the incident steps in plain language: symptoms, safe checks,
+permitted repair, verification, and escalation. A repair script should
+default to listing intended changes before applying them, and require
+explicit scope.</p>
+<h2 id="12-final-release-gate-for-all-five-projects">12. Final release
+gate for all five projects</h2>
+<p>Before calling the platform production-demo ready, verify a clean
+checkout/build, passing security tests, complete fixture journey,
+concurrent-write safety, crash recovery, tested restore, environment
+isolation, monitored queues, and an operator runbook.</p>
+<p>Document remaining limitations honestly: supported document formats,
+model evaluation coverage, traffic tested, recovery behavior tested, and
+unavailable features. Do not advertise invented latency, accuracy, or
+reliability numbers.</p>
+<p>Release a tagged version and record its manifest. The five project
+READMEs should each contain its purpose, local start instructions,
+tests, demo scenario, and link to the integrated case experience. The
+public portfolio can show one coherent platform with five independently
+explainable engineering achievements.</p>
+<p>Explain it aloud: <strong>“I can build it, prove its behavior,
+release it safely, detect failure, and recover its recorded
+work.”</strong></p>
+<footer>Manual construction workbook · Fictional data and simulated credits only. Application integration and production readiness must be verified in the future implementation.</footer>
+</main>
+<dialog id="diagram-dialog" aria-label="Enlarged lesson diagram">
+<div class="zoom-toolbar"><span>Lesson diagram</span><button id="fit-button" type="button">Fit</button><button id="zoom-button" type="button">Zoom 150%</button><button id="close-button" type="button">Close</button></div>
+<div class="zoom-body"><img id="zoom-image" alt></div>
+</dialog>
+<script>
+const dialog = document.getElementById('diagram-dialog');
+const enlarged = document.getElementById('zoom-image');
+document.getElementById('print-button').onclick = () => window.print();
+document.querySelectorAll('main img').forEach((img, index) => {
+  let figure = img.closest('figure');
+  if (!figure) {
+    figure = document.createElement('figure');
+    const parent = img.parentElement;
+    if (parent.tagName === 'P' && parent.childElementCount === 1) parent.replaceWith(figure);
+    else img.parentNode.insertBefore(figure, img);
+    figure.appendChild(img);
+    const caption = document.createElement('figcaption');
+    caption.textContent = img.alt;
+    figure.appendChild(caption);
+  }
+  const button = document.createElement('button');
+  button.type = 'button'; button.className = 'diagram-button';
+  button.textContent = 'Enlarge diagram ' + (index + 1);
+  button.onclick = () => { enlarged.src = img.src; enlarged.alt = img.alt; enlarged.style.width = '100%'; dialog.showModal(); };
+  figure.appendChild(button);
+});
+document.getElementById('fit-button').onclick = () => enlarged.style.width = '100%';
+document.getElementById('zoom-button').onclick = () => enlarged.style.width = '150%';
+document.getElementById('close-button').onclick = () => dialog.close();
+dialog.onclick = event => { if (event.target === dialog) dialog.close(); };
+</script>
+</body>
+</html>

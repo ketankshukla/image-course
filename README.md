@@ -35,7 +35,7 @@ Each lesson is built around a single **visual diagram** and includes:
 - `Case study`, `Lab and checkpoint`
 - `Glossary`, `Sources`, and `Related lessons`
 
-The site renders them in a searchable, sidebar-navigated course reader.
+The site renders them alongside 14 Acme guides, 16 HarborCare guides and two library guides. Navigation is grouped into Courses, Case Studies and Library Guides; search spans all 276 published articles.
 
 ---
 
@@ -44,21 +44,24 @@ The site renders them in a searchable, sidebar-navigated course reader.
 ```
 ├── app/                  # Next.js App Router pages and components
 ├── lib/                  # Shared types and utilities
-├── scripts/              # build_content.py: Markdown → JSON + WebP
+├── scripts/              # build_library.mjs: Node-only Markdown → JSON + WebP
 ├── data/                 # Lightweight navigation manifest
 ├── public/               # Generated courses, search index, and images
-│   ├── courses/01.json   # Full course payload for volume 1
-│   ├── images/*.webp     # Compressed diagrams
-│   └── search-index.json # Full-text search index
-├── Visual Course 01/     # Source Markdown, diagrams, and JSON specs
-├── ...
-└── Visual Course 10/
+│   └── library/          # Hashed collections, flattened WebP images and search
+├── courses/             # Ten source volumes, each with its own assets
+│   ├── Visual Course 01/
+│   └── ... Visual Course 10/
+└── docs/                # Case studies, general planning, folder guide
+    ├── case-studies/acme/
+    ├── case-studies/hospital/
+    └── general/
 ```
 
-- **Source content** lives in `Visual Course NN/diagram-docs/` as Markdown.
-- **Original diagrams** live in `Visual Course NN/diagrams/` as PNG.
-- `npm run build:content` converts the PNGs to WebP and produces the JSON payloads used by the site.
-- The client fetches `data/manifest.json` for navigation and lazy-loads each course's JSON when selected.
+- **Source content** lives in `courses/Visual Course NN/diagram-docs/` as Markdown.
+- **Original diagrams** live in `courses/Visual Course NN/diagrams/` as PNG.
+- `npm run build:content` prepares PNG/SVG images as standalone flattened WebP files and renders all published Markdown. Originals are preserved.
+- The page receives `data/manifest.json` at build time and lazy-loads collection JSON through content-hashed URLs.
+- Case-study folders with `collection.json` are discovered automatically. Only explicitly listed documents are published.
 
 ---
 
@@ -94,11 +97,23 @@ This runs `build:content` followed by `next build`.
 1. Push this repo to GitHub.
 2. Import the repo in [Vercel](https://vercel.com/new).
 3. Keep the default Next.js settings:
-   - **Build Command:** `npm run build` (or `npx next build` if you want to skip content regeneration)
-   - **Output Directory:** `dist` or default
-   - **Install Command:** `npm install`
+   - **Build Command:** `npm run build` (do not skip content generation)
+   - **Output Directory:** Next.js default; do not set `dist`
+   - **Install Command:** `npm ci`
 
-> **Note:** The course directories (`Visual Course NN/`) are **build inputs**, not deployable pages. Only the contents of `public/` (generated JSON + WebP images) and the Next.js app output are served by Vercel.
+The same Node-only build runs locally and on Vercel. No Python or Pandoc installation is required for the website. `.vercelignore` excludes standalone HTML and legacy generated assets from uploads, but retains source Markdown, manifests and original diagrams. Hashed library assets receive immutable cache headers. No live deployment is performed by running a local build.
+
+> **Note:** The course directories (`courses/Visual Course NN/`) are **build inputs**, not deployable pages. Only the contents of `public/` (generated JSON + WebP images) and the Next.js app output are served by Vercel.
+
+## Reading documents
+
+- [Folder organization and document map](docs/FOLDER-STRUCTURE.md) · [HTML](docs/FOLDER-STRUCTURE.html)
+- [Publishing future case studies](docs/PUBLISHING-CASE-STUDIES.md) · [HTML](docs/PUBLISHING-CASE-STUDIES.html)
+- [Hospital privacy case study](docs/case-studies/hospital/00-START-HERE.html)
+- [Acme manual-build series](docs/case-studies/acme/manual-build/00-START-HERE.html)
+- [Acme beginner guide](docs/case-studies/acme/THE-WHOLE-PROJECT-IN-PLAIN-ENGLISH.html)
+
+These local reading editions remain available. Their published Markdown counterparts are now integrated into the website reader through explicit collection manifests; `docs/` itself is not exposed as a static directory. Original Word/PDF/ZIP files remain local under the existing Git ignore policy.
 
 ### About the large source assets
 
@@ -111,7 +126,8 @@ The original `*.docx`, `*.pdf`, and `*.zip` bundles in the course folders are **
 - 📚 **10 courses, 244 lessons** with rich visual explanations
 - 🖼️ **Diagram-first learning** — every lesson centers on a visual diagram
 - 🔎 **Full-text search** across all courses and chapters
-- 🌙 **Dark UI** designed for readability
+- 🗂️ **Three library shelves** with case-study reading paths and build workbooks
+- 🔍 **Diagram enlargement** and in-page contents for long guides
 - 📱 **Responsive layout** for desktop and tablet
 - ⚡ **Lazy-loaded course data** for fast first load
 
@@ -139,7 +155,7 @@ Each lesson is a Markdown file following this structure:
 ## Related lessons
 ```
 
-The build script extracts these sections, compresses the diagrams, and writes a `public/courses/NN.json` file per course.
+Course files also retain their existing metadata block and separator after the first diagram. The build extracts that metadata, preserves lesson/module numbering, and writes a hashed collection file under `public/library/collections`. See existing lessons for the complete source format.
 
 ---
 
@@ -149,6 +165,8 @@ The build script extracts these sections, compresses the diagrams, and writes a 
 |---------|-------------|
 | `npm run dev` | Start the local dev server |
 | `npm run build:content` | Parse Markdown, convert PNG → WebP, regenerate JSON |
+| `npm run verify:content` | Check all published content, image flattening, links and search |
+| `npm run lint` | Check React and TypeScript source |
 | `npm run build` | Build content + create an optimized Next.js production build |
 | `npm run start` | Serve the production build locally |
 

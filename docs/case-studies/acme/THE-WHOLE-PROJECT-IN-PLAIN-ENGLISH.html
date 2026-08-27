@@ -1,0 +1,1441 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Whole Project in Plain English</title>
+<style type="text/css">:root{color-scheme:light;--ink:#19283c;--muted:#56667a;--blue:#145bd8;--navy:#081a33;--line:#dce5ef;--paper:#fff;--bg:#edf2f7}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:30px}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.75 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:#145ac0;text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:3px solid #d58b00;outline-offset:4px}
+.skip{position:fixed;top:-100px;left:16px;z-index:10;background:white;padding:10px}
+.skip:focus{top:10px}
+aside{position:fixed;inset:0 auto 0 0;width:284px;overflow:auto;padding:30px 22px;background:var(--navy);color:#e9f0fa;border-right:1px solid #244363}
+.brand{font-size:12px;letter-spacing:.17em;text-transform:uppercase;color:#76dcf3;font-weight:700}
+aside h2{font-size:22px;line-height:1.3;margin:12px 0 22px;color:white;border:0;padding:0}
+aside ul{list-style:none;margin:0;padding:0}
+aside li{margin:0 0 5px}
+aside li ul{margin-left:0}
+aside a{display:block;padding:7px 10px;border-radius:6px;color:#d2deed;text-decoration:none;font-size:13px;line-height:1.45}
+aside a:hover{background:#193554;color:white}
+.rail-footer{margin-top:22px;border-top:1px solid #2c4260;padding-top:20px;color:#9db0c9;font-size:12px}
+main{margin-left:284px;padding:42px clamp(24px,4vw,72px) 90px;max-width:1550px}
+.toolbar{display:flex;align-items:center;gap:15px;justify-content:space-between;margin-bottom:30px;font-size:12px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+button{font:600 13px system-ui;border:1px solid #c9d7e8;background:#fff;color:#164176;padding:10px 15px;border-radius:8px;cursor:pointer}
+button:hover{background:#e6f0ff}
+h1{font-size:clamp(40px,4.4vw,66px);line-height:1.1;letter-spacing:-.045em;background:linear-gradient(120deg,#07172e,#124481);color:white;border-radius:20px;padding:40px;margin:0 0 34px;box-shadow:0 18px 45px #0b254025}
+h2{font-size:30px;line-height:1.3;color:#103e7c;letter-spacing:-.025em;margin:58px 0 22px;padding-top:23px;border-top:3px solid #2367c9}
+h3{font-size:23px;line-height:1.35;color:#075e76;letter-spacing:-.02em;margin:34px 0 15px}
+p{margin:16px 0;max-width:90ch}
+li{margin:7px 0}
+strong{color:#113862}
+blockquote{background:#e1f1f7;border-left:5px solid #068caf;border-radius:0 12px 12px 0;margin:28px 0;padding:12px 25px;color:#184050}
+figure{margin:28px 0 32px}
+figure img{display:block;width:100%;height:auto;border-radius:14px;background:#07172d;box-shadow:0 12px 28px #0a254025}
+figcaption{font-size:14px;line-height:1.6;color:var(--muted);padding:13px 2px}
+.diagram-button{margin-top:9px;font-size:12px}
+img{max-width:100%;height:auto}
+pre{padding:23px 25px;overflow:auto;background:#091b32;color:#dfedff;border:1px solid #203a56;border-radius:12px;line-height:1.6;tab-size:4}
+code{font-family:"Cascadia Code",Consolas,monospace;font-size:.85em}
+:not(pre)>code{background:#e3eaf3;color:#98305b;padding:.12em .32em;border-radius:4px;overflow-wrap:anywhere}
+pre code{white-space:pre;color:inherit}
+table{border-collapse:separate;border-spacing:0;display:block;overflow-x:auto;max-width:100%;margin:24px 0 30px;border:1px solid var(--line);border-radius:10px;background:white;font-size:15px;line-height:1.6}
+th,td{text-align:left;vertical-align:top;padding:13px 16px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-width:130px}
+th{background:#103c78;color:white;font-weight:650}
+tr:nth-child(even) td{background:#f4f7fb}
+tr:last-child td{border-bottom:0}
+th:last-child,td:last-child{border-right:0}
+hr{border:0;border-top:1px solid var(--line);margin:40px 0}
+dialog{border:1px solid #375679;border-radius:15px;padding:0;background:#07172e;color:white;width:96vw;max-width:1900px;max-height:96vh;overflow:hidden}
+dialog::backdrop{background:#030b17dd}
+.zoom-toolbar{display:flex;gap:10px;align-items:center;justify-content:flex-end;padding:12px 18px;background:#102943}
+.zoom-toolbar span{margin-right:auto;font-size:14px}
+.zoom-body{overflow:auto;max-height:82vh;padding:12px}
+.zoom-body img{display:block;width:100%;max-width:none;margin:auto;height:auto}
+footer{margin-top:60px;border-top:1px solid var(--line);padding-top:20px;font-size:13px;color:var(--muted)}
+@media(max-width:1000px){aside{position:relative;width:auto;padding:24px}aside nav ul{columns:2}aside li{break-inside:avoid}.rail-footer{display:none}main{margin-left:0;padding:28px 24px 60px}}
+@media(max-width:600px){body{font-size:16px}aside nav ul{columns:1}aside{max-height:330px}main{padding:22px 16px 50px}h1{font-size:38px;padding:27px}h2{font-size:26px}h3{font-size:21px}.toolbar{font-size:10px}pre{padding:17px;font-size:14px}.zoom-toolbar{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{aside,.toolbar,.diagram-button,dialog{display:none!important}body{background:white;font-size:11pt}main{margin:0;max-width:none;padding:0}h1{color:#12345a;background:none;padding:0;box-shadow:none;font-size:32pt}h2,h3{break-after:avoid}figure,blockquote{break-inside:avoid}pre{background:#f3f5f9;color:#152f4e;white-space:pre-wrap}pre code{white-space:pre-wrap}table{display:table;font-size:9pt}th,td{min-width:0;padding:7px}figure img{box-shadow:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#reading">Skip to document</a>
+<aside aria-label="Document navigation">
+<div class="brand">Visual Agent Course</div>
+<h2>Beginner Guide<br>Architecture</h2>
+<nav aria-label="Contents"><ul>
+<li><a href="#the-whole-project-in-plain-english" id="toc-the-whole-project-in-plain-english">The Whole Project in Plain
+English</a>
+<ul>
+<li><a href="#follow-one-customer-requestand-understand-every-part-along-the-way" id="toc-follow-one-customer-requestand-understand-every-part-along-the-way">Follow
+one customer request—and understand every part along the way</a></li>
+<li><a href="#1-the-entire-idea-in-one-minute" id="toc-1-the-entire-idea-in-one-minute">1. The entire idea in one
+minute</a></li>
+<li><a href="#2-meet-the-office-staff" id="toc-2-meet-the-office-staff">2. Meet the office staff</a></li>
+<li><a href="#3-mcp-rag-and-a2awithout-the-jargon" id="toc-3-mcp-rag-and-a2awithout-the-jargon">3. MCP, RAG, and
+A2A—without the jargon</a></li>
+<li><a href="#4-before-a-customer-asks-preparing-the-policy-library" id="toc-4-before-a-customer-asks-preparing-the-policy-library">4. Before
+a customer asks: preparing the policy library</a></li>
+<li><a href="#5-follow-mayas-case-from-start-to-finish" id="toc-5-follow-mayas-case-from-start-to-finish">5. Follow Maya&#39;s case
+from start to finish</a></li>
+<li><a href="#6-the-important-extra-step-what-if-something-breaks" id="toc-6-the-important-extra-step-what-if-something-breaks">6. The
+important extra step: what if something breaks?</a></li>
+<li><a href="#7-how-the-five-projects-fit-into-this-one-story" id="toc-7-how-the-five-projects-fit-into-this-one-story">7. How the five
+projects fit into this one story</a></li>
+<li><a href="#8-read-this-legend-correctly" id="toc-8-read-this-legend-correctly">8. Read this legend
+correctly</a></li>
+<li><a href="#9-technology-legend-the-screen-and-the-application-code" id="toc-9-technology-legend-the-screen-and-the-application-code">9.
+Technology legend: the screen and the application code</a></li>
+<li><a href="#10-technology-legend-communication-and-identity" id="toc-10-technology-legend-communication-and-identity">10. Technology
+legend: communication and identity</a></li>
+<li><a href="#11-technology-legend-ai-and-evidence" id="toc-11-technology-legend-ai-and-evidence">11. Technology legend: AI
+and evidence</a></li>
+<li><a href="#12-technology-legend-storage-and-remembering-work" id="toc-12-technology-legend-storage-and-remembering-work">12.
+Technology legend: storage and remembering work</a></li>
+<li><a href="#13-technology-legend-workflow-and-safety" id="toc-13-technology-legend-workflow-and-safety">13. Technology legend:
+workflow and safety</a></li>
+<li><a href="#14-technology-legend-building-testing-and-hosting" id="toc-14-technology-legend-building-testing-and-hosting">14.
+Technology legend: building, testing, and hosting</a></li>
+<li><a href="#15-which-pieces-change-between-the-two-versions" id="toc-15-which-pieces-change-between-the-two-versions">15. Which
+pieces change between the two versions?</a></li>
+<li><a href="#16-what-to-learn-firstand-what-can-wait" id="toc-16-what-to-learn-firstand-what-can-wait">16. What to learn
+first—and what can wait</a></li>
+<li><a href="#17-common-beginner-misunderstandings" id="toc-17-common-beginner-misunderstandings">17. Common beginner
+misunderstandings</a></li>
+<li><a href="#18-how-to-explain-the-project-to-someone-else" id="toc-18-how-to-explain-the-project-to-someone-else">18. How to
+explain the project to someone else</a></li>
+</ul></li>
+</ul></nav>
+<div class="rail-footer">Five portfolio projects<br>Two embedded diagrams<br>Proposed implementation blueprint</div>
+</aside>
+<main id="reading">
+<div class="toolbar"><span>From strategy to implementation</span><button type="button" id="print-button">Print / Save PDF</button></div>
+<h1 id="the-whole-project-in-plain-english">The Whole Project in Plain
+English</h1>
+<h2 id="follow-one-customer-requestand-understand-every-part-along-the-way">Follow
+one customer request—and understand every part along the way</h2>
+<p>You do not need to know how to code to read this guide. Think of the
+project as a small, well-organized customer-service office. Different
+people have different jobs, they keep written records, and nobody is
+allowed to move money just because they sound confident.</p>
+<p>Our software follows the same idea. Some parts find information, some
+analyze it, some ask for approval, and one carefully controlled part
+records the final action.</p>
+<p><strong>This describes the system we plan to build. It is not a claim
+that the applications are already running.</strong> Our example company
+and documents are fictional, and the credit is written to a simulated
+account book. No real payment is sent.</p>
+<h2 id="1-the-entire-idea-in-one-minute">1. The entire idea in one
+minute</h2>
+<p>A customer disputes a <strong>$120 charge</strong>. A support
+employee named Maya enters the problem into our application.</p>
+<p>The system looks up the account, finds the relevant policy, and asks
+two specialists to examine the case. They recommend a <strong>$75
+credit</strong>. Maya reads the evidence and approves that exact amount.
+The system records the credit and gives her a receipt. The remaining
+charge is <strong>$45</strong>.</p>
+<p>If the computer handling the job crashes, the system should remember
+what happened and continue safely. It must not accidentally give the
+customer another $75 simply because a reply was lost.</p>
+<p>That is the project. MCP, RAG, A2A, databases, and the other
+technologies are the pieces we use to make that story work.</p>
+<p><img role="img" aria-label="The whole case in nine steps: submit, record, look up facts, find policy evidence, ask specialists, prepare a proposal, obtain human approval, record the credit, and show the receipt." src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDQwIiBoZWlnaHQ9Ijk0MCIgdmlld0JveD0iMCAwIDE0NDAgOTQwIiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUgZGVzYyI+PHRpdGxlIGlkPSJ0aXRsZSI+T25lIGN1c3RvbWVyIGNhc2UsIGZyb20gcmVxdWVzdCB0byByZWNlaXB0PC90aXRsZT48ZGVzYyBpZD0iZGVzYyI+UmVhZCB0aGUgbmluZSBudW1iZXJlZCBzdGVwcyBsZWZ0IHRvIHJpZ2h0IGFjcm9zcyBlYWNoIHJvdy4gUGVyc2lzdGVkIHByb2dyZXNzIGFuZCBkdXBsaWNhdGUgcHJvdGVjdGlvbiBzdXBwb3J0IHRoZSB3aG9sZSBqb3VybmV5LjwvZGVzYz48cmVjdCB3aWR0aD0iMTQ0MCIgaGVpZ2h0PSI5NDAiIHJ4PSIyNCIgZmlsbD0iIzA5MTYyYiIvPjxnIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiI+PHRleHQgeD0iNTUiIHk9IjczIiBmb250LXNpemU9IjM4IiBmaWxsPSIjZmZmIiBmb250LXdlaWdodD0iYm9sZCI+T05FIENBU0UsIEZST00gUkVRVUVTVCBUTyBSRUNFSVBUPC90ZXh0Pjx0ZXh0IHg9IjU1IiB5PSIxMjEiIGZvbnQtc2l6ZT0iMjMiIGZpbGw9IiNhOGMxZGMiPkEgJDEyMCBkaXNwdXRlIOKGkiBldmlkZW5jZSBhbmQgcmV2aWV3IOKGkiBhbiBhcHByb3ZlZCAkNzUgc2ltdWxhdGVkIGNyZWRpdDwvdGV4dD48cmVjdCB4PSI1NSIgeT0iMTc1IiB3aWR0aD0iNDEwIiBoZWlnaHQ9IjE1NSIgcng9IjE2IiBmaWxsPSIjMTEyZTRkIiBzdHJva2U9IiM1MGM4ZGQiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9Ijc3IiB5PSIyMTMiIGZvbnQtc2l6ZT0iMjAiIGZpbGw9IiM3NmRmY2IiPjAxPC90ZXh0Pjx0ZXh0IHg9Ijc3IiB5PSIyNTciIGZvbnQtc2l6ZT0iMjciIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjZmZmIj5NYXlhIHN1Ym1pdHM8L3RleHQ+PHRleHQgeD0iNzciIHk9IjI5OCIgZm9udC1zaXplPSIyMiIgZmlsbD0iI2JhZDBlNSI+QSBwZXJzb24gYXNrcyBmb3IgaGVscC48L3RleHQ+PHRleHQgeD0iNDcxIiB5PSIyNjciIGZvbnQtc2l6ZT0iMzIiIGZpbGw9IiM2MGQyZTYiPuKGkjwvdGV4dD48cmVjdCB4PSI1MTUiIHk9IjE3NSIgd2lkdGg9IjQxMCIgaGVpZ2h0PSIxNTUiIHJ4PSIxNiIgZmlsbD0iIzExMmU0ZCIgc3Ryb2tlPSIjNTBjOGRkIiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSI1MzciIHk9IjIxMyIgZm9udC1zaXplPSIyMCIgZmlsbD0iIzc2ZGZjYiI+MDI8L3RleHQ+PHRleHQgeD0iNTM3IiB5PSIyNTciIGZvbnQtc2l6ZT0iMjciIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjZmZmIj5SZWNvcmQgdGhlIGNhc2U8L3RleHQ+PHRleHQgeD0iNTM3IiB5PSIyOTgiIGZvbnQtc2l6ZT0iMjIiIGZpbGw9IiNiYWQwZTUiPlNhdmUgdGhlIHJlcXVlc3QgYW5kIG5leHQgam9iLjwvdGV4dD48dGV4dCB4PSI5MzEiIHk9IjI2NyIgZm9udC1zaXplPSIzMiIgZmlsbD0iIzYwZDJlNiI+4oaSPC90ZXh0PjxyZWN0IHg9Ijk3NSIgeT0iMTc1IiB3aWR0aD0iNDEwIiBoZWlnaHQ9IjE1NSIgcng9IjE2IiBmaWxsPSIjMTEyZTRkIiBzdHJva2U9IiM1MGM4ZGQiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9Ijk5NyIgeT0iMjEzIiBmb250LXNpemU9IjIwIiBmaWxsPSIjNzZkZmNiIj4wMzwvdGV4dD48dGV4dCB4PSI5OTciIHk9IjI1NyIgZm9udC1zaXplPSIyNyIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiNmZmYiPkxvb2sgdXAgdGhlIGZhY3RzPC90ZXh0Pjx0ZXh0IHg9Ijk5NyIgeT0iMjk4IiBmb250LXNpemU9IjIyIiBmaWxsPSIjYmFkMGU1Ij5NQ1AgYWNjb3VudC1yZWFkIHRvb2wuPC90ZXh0PjxyZWN0IHg9IjU1IiB5PSIzODAiIHdpZHRoPSI0MTAiIGhlaWdodD0iMTU1IiByeD0iMTYiIGZpbGw9IiMxMTJlNGQiIHN0cm9rZT0iIzUwYzhkZCIgc3Ryb2tlLXdpZHRoPSIyIi8+PHRleHQgeD0iNzciIHk9IjQxOCIgZm9udC1zaXplPSIyMCIgZmlsbD0iIzc2ZGZjYiI+MDQ8L3RleHQ+PHRleHQgeD0iNzciIHk9IjQ2MiIgZm9udC1zaXplPSIyNyIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiNmZmYiPkZpbmQgdGhlIHBvbGljeTwvdGV4dD48dGV4dCB4PSI3NyIgeT0iNTAzIiBmb250LXNpemU9IjIyIiBmaWxsPSIjYmFkMGU1Ij5SQUcgcmV0dXJucyBzb3VyY2UgZXZpZGVuY2UuPC90ZXh0Pjx0ZXh0IHg9IjQ3MSIgeT0iNDcyIiBmb250LXNpemU9IjMyIiBmaWxsPSIjNjBkMmU2Ij7ihpI8L3RleHQ+PHJlY3QgeD0iNTE1IiB5PSIzODAiIHdpZHRoPSI0MTAiIGhlaWdodD0iMTU1IiByeD0iMTYiIGZpbGw9IiMxMTJlNGQiIHN0cm9rZT0iIzUwYzhkZCIgc3Ryb2tlLXdpZHRoPSIyIi8+PHRleHQgeD0iNTM3IiB5PSI0MTgiIGZvbnQtc2l6ZT0iMjAiIGZpbGw9IiM3NmRmY2IiPjA1PC90ZXh0Pjx0ZXh0IHg9IjUzNyIgeT0iNDYyIiBmb250LXNpemU9IjI3IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iI2ZmZiI+QXNrIHRoZSBzcGVjaWFsaXN0czwvdGV4dD48dGV4dCB4PSI1MzciIHk9IjUwMyIgZm9udC1zaXplPSIyMiIgZmlsbD0iI2JhZDBlNSI+QTJBIHRhc2tzOiBQb2xpY3kgYW5kIEZpbmFuY2UuPC90ZXh0Pjx0ZXh0IHg9IjkzMSIgeT0iNDcyIiBmb250LXNpemU9IjMyIiBmaWxsPSIjNjBkMmU2Ij7ihpI8L3RleHQ+PHJlY3QgeD0iOTc1IiB5PSIzODAiIHdpZHRoPSI0MTAiIGhlaWdodD0iMTU1IiByeD0iMTYiIGZpbGw9IiMxMTJlNGQiIHN0cm9rZT0iIzUwYzhkZCIgc3Ryb2tlLXdpZHRoPSIyIi8+PHRleHQgeD0iOTk3IiB5PSI0MTgiIGZvbnQtc2l6ZT0iMjAiIGZpbGw9IiM3NmRmY2IiPjA2PC90ZXh0Pjx0ZXh0IHg9Ijk5NyIgeT0iNDYyIiBmb250LXNpemU9IjI3IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iI2ZmZiI+UHJlcGFyZSB0aGUgcHJvcG9zYWw8L3RleHQ+PHRleHQgeD0iOTk3IiB5PSI1MDMiIGZvbnQtc2l6ZT0iMjIiIGZpbGw9IiNiYWQwZTUiPlJlY29tbWVuZCBhbiBleGFjdCAkNzUgY3JlZGl0LjwvdGV4dD48cmVjdCB4PSI1NSIgeT0iNTg1IiB3aWR0aD0iNDEwIiBoZWlnaHQ9IjE1NSIgcng9IjE2IiBmaWxsPSIjMTEyZTRkIiBzdHJva2U9IiNmMmJjNzMiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9Ijc3IiB5PSI2MjMiIGZvbnQtc2l6ZT0iMjAiIGZpbGw9IiM3NmRmY2IiPjA3PC90ZXh0Pjx0ZXh0IHg9Ijc3IiB5PSI2NjciIGZvbnQtc2l6ZT0iMjciIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjZmZmIj5HZXQgaHVtYW4gYXBwcm92YWw8L3RleHQ+PHRleHQgeD0iNzciIHk9IjcwOCIgZm9udC1zaXplPSIyMiIgZmlsbD0iI2JhZDBlNSI+TWF5YSBhcHByb3ZlcyB0aGlzIHZlcnNpb24uPC90ZXh0Pjx0ZXh0IHg9IjQ3MSIgeT0iNjc3IiBmb250LXNpemU9IjMyIiBmaWxsPSIjNjBkMmU2Ij7ihpI8L3RleHQ+PHJlY3QgeD0iNTE1IiB5PSI1ODUiIHdpZHRoPSI0MTAiIGhlaWdodD0iMTU1IiByeD0iMTYiIGZpbGw9IiMxMTJlNGQiIHN0cm9rZT0iIzUwYzhkZCIgc3Ryb2tlLXdpZHRoPSIyIi8+PHRleHQgeD0iNTM3IiB5PSI2MjMiIGZvbnQtc2l6ZT0iMjAiIGZpbGw9IiM3NmRmY2IiPjA4PC90ZXh0Pjx0ZXh0IHg9IjUzNyIgeT0iNjY3IiBmb250LXNpemU9IjI3IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iI2ZmZiI+UmVjb3JkIHRoZSBjcmVkaXQ8L3RleHQ+PHRleHQgeD0iNTM3IiB5PSI3MDgiIGZvbnQtc2l6ZT0iMjIiIGZpbGw9IiNiYWQwZTUiPk1DUCDihpIgY2hlY2tlZCB0cmFuc2FjdGlvbi48L3RleHQ+PHRleHQgeD0iOTMxIiB5PSI2NzciIGZvbnQtc2l6ZT0iMzIiIGZpbGw9IiM2MGQyZTYiPuKGkjwvdGV4dD48cmVjdCB4PSI5NzUiIHk9IjU4NSIgd2lkdGg9IjQxMCIgaGVpZ2h0PSIxNTUiIHJ4PSIxNiIgZmlsbD0iIzExMmU0ZCIgc3Ryb2tlPSIjNTBjOGRkIiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSI5OTciIHk9IjYyMyIgZm9udC1zaXplPSIyMCIgZmlsbD0iIzc2ZGZjYiI+MDk8L3RleHQ+PHRleHQgeD0iOTk3IiB5PSI2NjciIGZvbnQtc2l6ZT0iMjciIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjZmZmIj5TaG93IHRoZSByZWNlaXB0PC90ZXh0Pjx0ZXh0IHg9Ijk5NyIgeT0iNzA4IiBmb250LXNpemU9IjIyIiBmaWxsPSIjYmFkMGU1Ij5Db25maXJtICQ3NSBjcmVkaXQ7ICQ0NSByZW1haW5zLjwvdGV4dD48dGV4dCB4PSI1NSIgeT0iODM2IiBmb250LXNpemU9IjI0IiBmaWxsPSIjZmZmIj5SZWFkIDAx4oCTMDMsIHRoZW4gMDTigJMwNiwgdGhlbiAwN+KAkzA5LiBQcm9ibGVtcyBjYW4gcGF1c2UgdGhlIHByb2Nlc3MuPC90ZXh0Pjx0ZXh0IHg9IjU1IiB5PSI4ODkiIGZvbnQtc2l6ZT0iMjMiIGZpbGw9IiM3OWRmZDIiPkJlaGluZCBldmVyeSBzdGVwOiBwZXJtaXNzaW9uIGNoZWNrcywgc2F2ZWQgcHJvZ3Jlc3MsIGFuZCBzYWZlIHJlY292ZXJ5LjwvdGV4dD48L2c+PC9zdmc+Cg==" alt="The whole case in nine steps: submit, record, look up facts, find policy evidence, ask specialists, prepare a proposal, obtain human approval, record the credit, and show the receipt." /></p>
+<p>The diagram shows the main successful path. If information is
+missing, specialists disagree, or approval is refused, the case pauses
+or takes another path. It does not blindly continue to a credit.</p>
+<h2 id="2-meet-the-office-staff">2. Meet the office staff</h2>
+<table>
+<thead>
+<tr>
+<th>Part of the system</th>
+<th>Imagine it as…</th>
+<th>Its actual job</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The web page</td>
+<td>Maya&#39;s desk</td>
+<td>Let her enter a case and understand its progress</td>
+</tr>
+<tr>
+<td>The Case API</td>
+<td>The reception desk</td>
+<td>Accept valid requests and return information</td>
+</tr>
+<tr>
+<td>The workflow</td>
+<td>The case manager with a checklist</td>
+<td>Remember what has happened and what must happen next</td>
+</tr>
+<tr>
+<td>RAG</td>
+<td>A librarian finding the right pages</td>
+<td>Retrieve relevant, permitted evidence for an answer</td>
+</tr>
+<tr>
+<td>The Policy agent</td>
+<td>A policy specialist</td>
+<td>Examine whether the policy allows the exception</td>
+</tr>
+<tr>
+<td>The Finance agent</td>
+<td>A calculation specialist</td>
+<td>Work out the proposed amount</td>
+</tr>
+<tr>
+<td>A2A</td>
+<td>A shared way to send assignments between specialists</td>
+<td>Let independent agents exchange tasks and results</td>
+</tr>
+<tr>
+<td>MCP</td>
+<td>A standard way to request use of the office&#39;s tools</td>
+<td>Let software discover and call controlled capabilities</td>
+</tr>
+<tr>
+<td>The business-rule service</td>
+<td>The authorized clerk at the account book</td>
+<td>Enforce the rules and record the actual credit</td>
+</tr>
+<tr>
+<td>The database</td>
+<td>The office&#39;s organized records</td>
+<td>Keep cases, decisions, tasks, and receipts after programs stop</td>
+</tr>
+</tbody>
+</table>
+<p>These are analogies, not claims that every component thinks like a
+person. The workflow can be ordinary programmed rules. Finance can
+perform ordinary arithmetic. We do not need AI for every step.</p>
+<h2 id="3-mcp-rag-and-a2awithout-the-jargon">3. MCP, RAG, and
+A2A—without the jargon</h2>
+<p><img role="img" aria-label="Four different responsibilities: RAG supplies evidence, A2A delegates specialist tasks, MCP exposes capabilities, and the workflow coordinates the overall job." src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDQwIiBoZWlnaHQ9IjgwMCIgdmlld0JveD0iMCAwIDE0NDAgODAwIiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUgZGVzYyI+PHRpdGxlIGlkPSJ0aXRsZSI+Rm91ciBkaWZmZXJlbnQgam9icywgbm90IGZvdXIgbmFtZXMgZm9yIHRoZSBzYW1lIHRoaW5nPC90aXRsZT48ZGVzYyBpZD0iZGVzYyI+UkFHIGZpbmRzIGV2aWRlbmNlLiBBMkEgZGVsZWdhdGVzIHRhc2tzLiBNQ1AgZXhwb3NlcyB0b29scy4gVGhlIHdvcmtmbG93IGNvb3JkaW5hdGVzIHRoZSB3aG9sZSBjYXNlLjwvZGVzYz48cmVjdCB3aWR0aD0iMTQ0MCIgaGVpZ2h0PSI4MDAiIHJ4PSIyNCIgZmlsbD0iIzA5MTYyYiIvPjxnIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiI+PHRleHQgeD0iNTUiIHk9Ijc2IiBmb250LXNpemU9IjM3IiBmaWxsPSIjZmZmIiBmb250LXdlaWdodD0iYm9sZCI+Rk9VUiBESUZGRVJFTlQgSk9CUzwvdGV4dD48dGV4dCB4PSI1NSIgeT0iMTIzIiBmb250LXNpemU9IjI0IiBmaWxsPSIjYThjMWRjIj5UaGUgbGlicmFyaWFuLCB0aGUgYXNzaWdubWVudCBzeXN0ZW0sIHRoZSB0b29sYm94LCBhbmQgdGhlIGNhc2UgbWFuYWdlci48L3RleHQ+PHJlY3QgeD0iNTUiIHk9IjE4MCIgd2lkdGg9IjYzNSIgaGVpZ2h0PSIyMTAiIHJ4PSIxOCIgZmlsbD0iIzExMmU0ZCIgc3Ryb2tlPSIjNTBjOGRkIiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSI4MCIgeT0iMjM1IiBmb250LXNpemU9IjM2IiBmaWxsPSIjNzdlMmNjIiBmb250LXdlaWdodD0iYm9sZCI+UkFHPC90ZXh0Pjx0ZXh0IHg9IjgwIiB5PSIyODgiIGZvbnQtc2l6ZT0iMjYiIGZpbGw9IiNmZmYiPkZpbmQgdGhlIHN1cHBvcnRpbmcgaW5mb3JtYXRpb24uPC90ZXh0Pjx0ZXh0IHg9IjgwIiB5PSIzNDAiIGZvbnQtc2l6ZT0iMjMiIGZpbGw9IiNiYWQwZTUiPldoaWNoIHBvbGljeSBwYXNzYWdlIGFwcGxpZXM/PC90ZXh0PjxyZWN0IHg9Ijc0NSIgeT0iMTgwIiB3aWR0aD0iNjM1IiBoZWlnaHQ9IjIxMCIgcng9IjE4IiBmaWxsPSIjMTEyZTRkIiBzdHJva2U9IiM1MGM4ZGQiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9Ijc3MCIgeT0iMjM1IiBmb250LXNpemU9IjM2IiBmaWxsPSIjNzdlMmNjIiBmb250LXdlaWdodD0iYm9sZCI+QTJBPC90ZXh0Pjx0ZXh0IHg9Ijc3MCIgeT0iMjg4IiBmb250LXNpemU9IjI2IiBmaWxsPSIjZmZmIj5QYXNzIGJvdW5kZWQgd29yayB0byBzcGVjaWFsaXN0cy48L3RleHQ+PHRleHQgeD0iNzcwIiB5PSIzNDAiIGZvbnQtc2l6ZT0iMjMiIGZpbGw9IiNiYWQwZTUiPlBvbGljeSBhbmQgRmluYW5jZTogZXhhbWluZSB0aGlzIGNhc2UuPC90ZXh0PjxyZWN0IHg9IjU1IiB5PSI0MzUiIHdpZHRoPSI2MzUiIGhlaWdodD0iMjEwIiByeD0iMTgiIGZpbGw9IiMxMTJlNGQiIHN0cm9rZT0iIzUwYzhkZCIgc3Ryb2tlLXdpZHRoPSIyIi8+PHRleHQgeD0iODAiIHk9IjQ5MCIgZm9udC1zaXplPSIzNiIgZmlsbD0iIzc3ZTJjYyIgZm9udC13ZWlnaHQ9ImJvbGQiPk1DUDwvdGV4dD48dGV4dCB4PSI4MCIgeT0iNTQzIiBmb250LXNpemU9IjI2IiBmaWxsPSIjZmZmIj5PZmZlciBhIHN0YW5kYXJkIHdheSB0byBjYWxsIHRvb2xzLjwvdGV4dD48dGV4dCB4PSI4MCIgeT0iNTk1IiBmb250LXNpemU9IjIzIiBmaWxsPSIjYmFkMGU1Ij5Mb29rIHVwIGFuIGFjY291bnQ7IHJlcXVlc3QgYW4gYXBwcm92ZWQgY3JlZGl0LjwvdGV4dD48cmVjdCB4PSI3NDUiIHk9IjQzNSIgd2lkdGg9IjYzNSIgaGVpZ2h0PSIyMTAiIHJ4PSIxOCIgZmlsbD0iIzExMmU0ZCIgc3Ryb2tlPSIjNTBjOGRkIiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSI3NzAiIHk9IjQ5MCIgZm9udC1zaXplPSIzNiIgZmlsbD0iIzc3ZTJjYyIgZm9udC13ZWlnaHQ9ImJvbGQiPldPUktGTE9XPC90ZXh0Pjx0ZXh0IHg9Ijc3MCIgeT0iNTQzIiBmb250LXNpemU9IjI2IiBmaWxsPSIjZmZmIj5SZW1lbWJlciBhbmQgY29vcmRpbmF0ZSB0aGUgd2hvbGUgam9iLjwvdGV4dD48dGV4dCB4PSI3NzAiIHk9IjU5NSIgZm9udC1zaXplPSIyMyIgZmlsbD0iI2JhZDBlNSI+V2hhdCBpcyBkb25lPyBXaGF0IHNob3VsZCBoYXBwZW4gbmV4dD88L3RleHQ+PHRleHQgeD0iNTUiIHk9IjczMyIgZm9udC1zaXplPSIyNSIgZmlsbD0iI2ZmZiI+QnVzaW5lc3MgcnVsZXMgYW5kIHRoZSBkYXRhYmFzZSBkZWNpZGUgd2hldGhlciBhbiBhY3Rpb24gYWN0dWFsbHkgY29tbWl0cy48L3RleHQ+PC9nPjwvc3ZnPgo=" alt="Four different responsibilities: RAG supplies evidence, A2A delegates specialist tasks, MCP exposes capabilities, and the workflow coordinates the overall job." /></p>
+<h3 id="rag-find-the-information-before-answering">RAG: “Find the
+information before answering”</h3>
+<p>RAG stands for <strong>retrieval-augmented generation</strong>. The
+name sounds complicated; the basic idea is not. Instead of asking an AI
+to answer only from what it learned during training, we first find
+relevant information and give it that information to work with.</p>
+<p>For this case, we find the policy passage explaining when a partial
+credit is allowed. The answer should point back to that passage so Maya
+can check it.</p>
+<p>RAG does not mean the AI has memorized our documents. It usually
+means the application searches stored material and supplies selected
+passages at the time of the question. It also does not guarantee a
+correct answer: we still need the right policy version, permission
+checks, and evidence validation.</p>
+<h3 id="a2a-ask-another-specialist-to-handle-this-assignment">A2A: “Ask
+another specialist to handle this assignment”</h3>
+<p>A2A stands for <strong>Agent2Agent</strong>. It provides a shared way
+for independent agent services to receive work, report progress, and
+return results.</p>
+<p>The case manager can ask Policy, “Does this exception apply?” and
+Finance, “What amount does this rule permit?” Each service can keep its
+own task record and return a structured result.</p>
+<p>This is different from simply having two functions in one file. We
+use A2A because the specialists are independently running services, and
+we want their communication to be explicit and testable.</p>
+<h3 id="mcp-what-tools-can-i-use-and-how-do-i-call-them">MCP: “What
+tools can I use, and how do I call them?”</h3>
+<p>MCP stands for <strong>Model Context Protocol</strong>. It defines a
+shared way for a client to interact with capabilities exposed by an MCP
+server. In our project, the most visible capabilities are tools: look up
+an account, request an approved credit, and retrieve a receipt.</p>
+<p>MCP standardizes the conversation. <strong>Our application still has
+to enforce permission and business rules.</strong> Using MCP does not
+automatically make a dangerous action safe.</p>
+<p>Other MCP features can expose resources or reusable prompts, but this
+first project focuses on controlled tools. You do not need to implement
+every protocol feature to build a useful demonstration.</p>
+<h3 id="the-workflow-keep-the-whole-job-moving-safely">The workflow:
+“Keep the whole job moving safely”</h3>
+<p>The workflow is not another name for MCP, RAG, or A2A. It coordinates
+them. It knows that evidence must be gathered before a proposal is
+approved, and that the final result must be checked before the case is
+marked complete.</p>
+<p>Remember this sentence: <strong>RAG finds evidence. A2A delegates
+work. MCP provides tool access. The workflow manages the whole
+case.</strong></p>
+<h2 id="4-before-a-customer-asks-preparing-the-policy-library">4. Before
+a customer asks: preparing the policy library</h2>
+<p>RAG has preparation work that happens before the main case
+journey.</p>
+<p>First, someone uploads an authorized policy document. The system
+stores the original privately and extracts its readable text. It divides
+the text into smaller pieces called <strong>chunks</strong>, like
+separating a long handbook into useful passages.</p>
+<p>Each passage keeps its source name, document version, location, and
+access rules. We need those details because a policy can change over
+time, and one customer group should not be allowed to read another
+group&#39;s private material.</p>
+<p>The system creates a search index—an organized way to find passages
+quickly. It may also create <strong>embeddings</strong>, which are lists
+of numbers used to compare meaning. For example, “reverse the fee” might
+be related to “credit the charge” even though the wording differs.</p>
+<p>The numbers are not a judgment that the policy applies. They help
+locate possible evidence. The application must still select the right
+version and check the actual words.</p>
+<p>An uploaded document is not automatically ready. Extraction or
+indexing can fail. The system should show “Processing” or “Failed”
+rather than pretending the source is searchable.</p>
+<h2 id="5-follow-mayas-case-from-start-to-finish">5. Follow Maya&#39;s case
+from start to finish</h2>
+<h3 id="step-1--maya-enters-the-dispute">Step 1 — Maya enters the
+dispute</h3>
+<p>She opens the web application and enters the account and problem. The
+page checks for obvious missing information, such as an empty account
+field.</p>
+<p>The server also checks the request. A person can bypass a page and
+call an endpoint directly, so a pretty form cannot be the only place
+enforcing rules.</p>
+<h3 id="step-2--the-system-records-the-request">Step 2 — The system
+records the request</h3>
+<p>The Case API checks who Maya is, which customer group she belongs to,
+and whether she may open this case. It saves case <code>CASE-1042</code>
+and a record saying the case needs processing.</p>
+<p>It replies, “Your case was received.” That does <strong>not</strong>
+mean the credit is complete. It means the system has accepted
+responsibility for the work.</p>
+<p>If Maya accidentally resubmits after a lost reply, the application
+uses the same submission reference to find the existing case instead of
+creating another one.</p>
+<h3 id="step-3--the-workflow-looks-up-the-account-facts">Step 3 — The
+workflow looks up the account facts</h3>
+<p>The workflow starts its checklist. It requests an allowed account
+lookup through an MCP tool.</p>
+<p>The result is a limited set of relevant facts, not unrestricted
+access to the account database. A caller allowed to read an account is
+not automatically allowed to change it.</p>
+<h3 id="step-4--rag-finds-the-policy-evidence">Step 4 — RAG finds the
+policy evidence</h3>
+<p>The retrieval service searches only material this case may use. It
+looks for the policy that applied when the charge happened—not merely
+the newest document with similar words.</p>
+<p>It returns an <strong>evidence pack</strong>: the selected passages
+plus their source and version information. Maya will later be able to
+read these passages inside the case page.</p>
+<p>If the system cannot find enough reliable evidence, it should say so.
+“We need more information” is a valid outcome.</p>
+<h3 id="step-5--the-specialists-examine-the-case">Step 5 — The
+specialists examine the case</h3>
+<p>The coordinator sends a bounded assignment to the Policy agent
+through A2A. Policy examines eligibility and returns its finding with
+evidence references.</p>
+<p>Finance checks the calculation using the permitted inputs. In this
+fictional example, the rule permits a $75 credit against the $120
+charge. Finance can calculate that with normal code; we do not need a
+language model to subtract numbers.</p>
+<p>The specialists return <strong>artifacts</strong>, meaning recorded
+work products. An artifact can contain a result, reason, evidence
+references, and version. It is more dependable than an unexplained line
+in a chat window.</p>
+<p>If one specialist is still working, the case manager remembers that.
+It does not forget the other&#39;s completed work or assume both
+succeeded.</p>
+<h3 id="step-6--the-workflow-prepares-a-proposal">Step 6 — The workflow
+prepares a proposal</h3>
+<p>The system combines the findings into a proposal: credit $75 USD to
+this account for this reason, using these policy passages.</p>
+<p>The proposal gets a version number. If the amount or evidence
+changes, a new version is created. This matters because Maya must
+approve what she actually saw—not a different proposal silently
+substituted afterward.</p>
+<h3 id="step-7--maya-approves-the-exact-action">Step 7 — Maya approves
+the exact action</h3>
+<p>Maya reads the amount, explanation, and evidence. She approves the
+current proposal.</p>
+<p>The server checks her reviewer permission and confirms the proposal
+is still current and has not expired. It records the decision. If her
+page showed an old version, it asks her to review the new version
+instead.</p>
+<p>The workflow can wait here while Maya is away. Closing the browser
+should not erase the proposal or the case.</p>
+<h3 id="step-8--the-authorized-service-records-the-credit">Step 8 — The
+authorized service records the credit</h3>
+<p>The workflow requests the approved action through MCP using a
+narrowly scoped <strong>execution grant</strong>. Think of the grant as
+a permission slip for this particular action, not a master key.</p>
+<p>The business-rule service checks the account, amount, approval
+binding, and duplicate protection. It records the simulated credit and
+receipt together in a database transaction.</p>
+<p>A <strong>transaction</strong> means the related database changes
+succeed together or are rolled back together. We do not want a consumed
+permission slip with no recorded credit, or a recorded credit with no
+receipt.</p>
+<p>The model does not directly write the account book. The controlled
+business service does.</p>
+<h3 id="step-9--maya-sees-the-receipt">Step 9 — Maya sees the
+receipt</h3>
+<p>The workflow confirms the receipt and updates the case. The page
+displays “Completed,” the $75 credit, and the remaining $45 charge.</p>
+<p>The receipt is the evidence of the recorded action. A model saying “I
+have credited the account” is not enough.</p>
+<h2 id="6-the-important-extra-step-what-if-something-breaks">6. The
+important extra step: what if something breaks?</h2>
+<p>Imagine the credit was recorded successfully, but the reply was lost
+before the workflow received it.</p>
+<p>The workflow must not conclude, “There is no reply, so I should
+create another credit.” Instead, it uses the same <strong>operation
+key</strong>, which is the reference for this exact action.</p>
+<p>The business service looks up that reference and returns the original
+receipt. This behavior is called <strong>idempotency</strong>: repeating
+the same intended operation does not create another effect.</p>
+<p>When the workflow investigates an uncertain result and compares it
+with the authoritative record, that is <strong>reconciliation</strong>.
+In plain English: check what really happened before doing anything
+else.</p>
+<p>The system also checks the identity of the business adjustment, so
+changing the request key cannot be used to repeat the same approved
+credit. Duplicate protection is a business rule, not just a convenient
+button setting.</p>
+<p>These protections make retries safe within this design. They are not
+a promise that every message on the internet is delivered exactly
+once.</p>
+<h2 id="7-how-the-five-projects-fit-into-this-one-story">7. How the five
+projects fit into this one story</h2>
+<table>
+<thead>
+<tr>
+<th>Project</th>
+<th>The beginner&#39;s question it answers</th>
+<th>Where you saw it in Maya&#39;s story</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1 — MCP Operations Gateway</td>
+<td>How can software use business tools safely?</td>
+<td>Account lookup, approved credit, receipt lookup</td>
+</tr>
+<tr>
+<td>P2 — Evidence RAG Workbench</td>
+<td>How do we find and show supporting information?</td>
+<td>Policy preparation and evidence retrieval</td>
+</tr>
+<tr>
+<td>P3 — A2A Specialist Network</td>
+<td>How do independent specialists work together?</td>
+<td>Policy and Finance assignments</td>
+</tr>
+<tr>
+<td>P4 — Durable Workflow and Reliability Lab</td>
+<td>How do we remember progress and recover?</td>
+<td>The checklist, approval wait, retries, reconciliation</td>
+</tr>
+<tr>
+<td>P5 — Case Resolution Platform</td>
+<td>How does a person use all this?</td>
+<td>Maya&#39;s complete case page</td>
+</tr>
+</tbody>
+</table>
+<p>They are five learning projects within one coherent application. They
+are not five unrelated chatbots, and they do not require five separate
+copies of every supporting tool.</p>
+<h2 id="8-read-this-legend-correctly">8. Read this legend correctly</h2>
+<p>The following legend covers the named technologies and major concepts
+in our proposed architecture and learning guides. It is
+<strong>not</strong> a claim that all of them are installed, or that
+every optional product must be added.</p>
+<p>Some entries are software products, such as PostgreSQL. Others are
+techniques, such as retries. Others are ordinary programming terms, such
+as function. Keeping those categories separate makes the system much
+less intimidating.</p>
+<p><strong>Both</strong> means the idea applies to either
+implementation. <strong>Python path</strong> means our main Python
+backend with a Next.js interface. <strong>TypeScript path</strong> means
+the later all-TypeScript application. <strong>Optional/example</strong>
+means the choice is not mandatory or not yet fixed.</p>
+<h2 id="9-technology-legend-the-screen-and-the-application-code">9.
+Technology legend: the screen and the application code</h2>
+<table>
+<thead>
+<tr>
+<th>Technology or term</th>
+<th>Plain-English meaning</th>
+<th>Where it fits</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Python</td>
+<td>A programming language for writing instructions</td>
+<td>Main backend rules, retrieval, agents, and worker code</td>
+<td>Python path</td>
+</tr>
+<tr>
+<td>JavaScript</td>
+<td>A language browsers run, also used on servers</td>
+<td>Underlies the React/Next.js application</td>
+<td>Web layer in both</td>
+</tr>
+<tr>
+<td>TypeScript</td>
+<td>JavaScript with extra checks to catch many mistakes while
+developing</td>
+<td>Web code, and all application services in the alternative
+version</td>
+<td>Web in both; full TypeScript path</td>
+</tr>
+<tr>
+<td>React</td>
+<td>A library for building a screen from reusable pieces</td>
+<td>Forms, evidence cards, approval panels, timelines</td>
+<td>Web layer in both</td>
+</tr>
+<tr>
+<td>Next.js</td>
+<td>A framework that organizes React pages and server-side web
+behavior</td>
+<td>The web application, page loading, and browser-facing endpoints</td>
+<td>Web layer in both</td>
+</tr>
+<tr>
+<td>Node.js</td>
+<td>Software that runs JavaScript outside the browser</td>
+<td>Runs Next.js server code and TypeScript-built services</td>
+<td>Web in both; TypeScript services</td>
+</tr>
+<tr>
+<td>HTML</td>
+<td>The structure of a page: headings, paragraphs, forms</td>
+<td>What the browser displays; also these readable guides</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>CSS</td>
+<td>Rules controlling page appearance</td>
+<td>Fonts, spacing, colors, responsive layout</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>Tailwind CSS</td>
+<td>A way to style pages using small reusable CSS utility classes</td>
+<td>Used by the existing course site; an optional styling choice for the
+apps</td>
+<td>Course site; optional app choice</td>
+</tr>
+<tr>
+<td>FastAPI</td>
+<td>A Python framework for receiving web requests and returning
+responses</td>
+<td>Python Case API and retrieval endpoints</td>
+<td>Python path</td>
+</tr>
+<tr>
+<td>Pydantic</td>
+<td>A Python library for checking and describing data shapes</td>
+<td>Validate incoming commands and structured results</td>
+<td>Python path</td>
+</tr>
+<tr>
+<td>Runtime schema validator</td>
+<td>A tool that checks the actual data received while a program is
+running</td>
+<td>Reject malformed JSON even when code has TypeScript types</td>
+<td>Both; library choice varies</td>
+</tr>
+<tr>
+<td>Zod</td>
+<td>One TypeScript library for runtime schemas</td>
+<td>Possible TypeScript contract validation tool</td>
+<td>Optional/example</td>
+</tr>
+<tr>
+<td>Function</td>
+<td>A named piece of code that does one job</td>
+<td>Calculate an amount, validate a request, or load a case</td>
+<td>Both; programming concept</td>
+</tr>
+<tr>
+<td>Module/package</td>
+<td>A group of related code that can be reused</td>
+<td>Contracts, business rules, retrieval helpers</td>
+<td>Both; code organization</td>
+</tr>
+<tr>
+<td>Frontend</td>
+<td>The part a person interacts with</td>
+<td>Maya&#39;s case workspace</td>
+<td>Both; architecture term</td>
+</tr>
+<tr>
+<td>Backend</td>
+<td>The server-side parts doing and recording the work</td>
+<td>APIs, agents, workflow, and business services</td>
+<td>Both; architecture term</td>
+</tr>
+<tr>
+<td>Server Component</td>
+<td>A React component whose work runs on the server</td>
+<td>Load the first authorized case view</td>
+<td>Next.js web layer</td>
+</tr>
+<tr>
+<td>Client Component</td>
+<td>A component that supports browser interaction</td>
+<td>Buttons, input, selected tabs, progress updates</td>
+<td>Next.js web layer</td>
+</tr>
+<tr>
+<td>BFF</td>
+<td>“Backend for frontend”: a server layer tailored to the screen</td>
+<td>Next.js forwards safe requests to Python in the hybrid version</td>
+<td>Mainly hybrid design</td>
+</tr>
+</tbody>
+</table>
+<p>TypeScript&#39;s checks are helpful while writing code, but they do not
+prove an internet request is valid. That is why runtime validation still
+exists.</p>
+<h2 id="10-technology-legend-communication-and-identity">10. Technology
+legend: communication and identity</h2>
+<table>
+<thead>
+<tr>
+<th>Technology or term</th>
+<th>Plain-English meaning</th>
+<th>Where it fits</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>API</td>
+<td>A defined way to ask another software component to do something or
+return information</td>
+<td>The page asks for a case; the coordinator asks for evidence</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>Endpoint</td>
+<td>A particular network address serving one part of an API</td>
+<td>Submit a case or read its progress</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>HTTP</td>
+<td>The request/response rules used by web clients and servers</td>
+<td>Ordinary application calls and supported protocol transports</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>HTTPS/TLS</td>
+<td>An encrypted, authenticated connection to a server</td>
+<td>Protect data while it travels over the network</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>JSON</td>
+<td>A common text format for named values and lists</td>
+<td>Commands, task results, evidence references</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>SDK</td>
+<td>A software development kit: code supplied to help use a system
+correctly</td>
+<td>Official MCP and A2A clients and servers</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>Protocol</td>
+<td>Shared rules for how messages are exchanged</td>
+<td>MCP and A2A define different conversations</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>MCP client/server</td>
+<td>The caller and provider of MCP capabilities</td>
+<td>Workflow client asks the gateway server to use a tool</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>A2A client/server</td>
+<td>The sender and receiver of specialist work</td>
+<td>Coordinator sends assignments to agent services</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>Authentication</td>
+<td>Checking “Who are you?”</td>
+<td>Verify Maya&#39;s login or a service&#39;s identity</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>Authorization</td>
+<td>Checking “What may you do?”</td>
+<td>Determine whether Maya may approve this case</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>Tenant</td>
+<td>A customer organization or group whose data must stay separate</td>
+<td>Prevent one company&#39;s users from seeing another company&#39;s cases</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>Role/scope</td>
+<td>A named set or limit of permissions</td>
+<td>Reviewer can approve; Finance cannot issue credits</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>Session</td>
+<td>The application&#39;s record of a continuing interaction or login</td>
+<td>Keep Maya signed in, subject to expiry and checks</td>
+<td>Both; exact meaning depends on context</td>
+</tr>
+<tr>
+<td>Access token</td>
+<td>A credential presented to a service</td>
+<td>Prove permitted service access; keep it secret</td>
+<td>Both; design-dependent</td>
+</tr>
+<tr>
+<td>OAuth / OIDC</td>
+<td>Standards often used for delegated access and sign-in</td>
+<td>Possible foundations for the chosen authentication integration</td>
+<td>Integration choice; not additional agents</td>
+</tr>
+<tr>
+<td>JWT</td>
+<td>One format for carrying signed claims</td>
+<td>May be used by an identity provider; must be verified</td>
+<td>Optional format, not a permission system by itself</td>
+</tr>
+<tr>
+<td>Service identity</td>
+<td>Credentials identifying a program rather than a person</td>
+<td>Identify the worker requesting execution</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>Execution grant</td>
+<td>Permission bound to one exact business action</td>
+<td>Allow the approved $75 credit, not arbitrary spending</td>
+<td>Both; application design</td>
+</tr>
+<tr>
+<td>Secret/environment variable</td>
+<td>Protected configuration such as a password or service URL</td>
+<td>Configure programs without putting credentials in browser code</td>
+<td>Both</td>
+</tr>
+</tbody>
+</table>
+<p>An encrypted connection does not tell you whether the caller is
+allowed to approve a credit. A valid login does not grant every
+permission. Each protection answers a different question.</p>
+<h2 id="11-technology-legend-ai-and-evidence">11. Technology legend: AI
+and evidence</h2>
+<table>
+<thead>
+<tr>
+<th>Technology or term</th>
+<th>Plain-English meaning</th>
+<th>Where it fits</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LLM</td>
+<td>Large language model: software that can generate and interpret
+language</td>
+<td>Explain evidence or help produce specialist findings</td>
+<td>Optional live-model layer</td>
+</tr>
+<tr>
+<td>Model provider</td>
+<td>A service that runs a model for you</td>
+<td>Receives bounded model requests through our adapter</td>
+<td>Provider not yet fixed</td>
+</tr>
+<tr>
+<td>Prompt</td>
+<td>Instructions and context sent to a model</td>
+<td>Define the specialist&#39;s task and supply evidence</td>
+<td>Model-assisted steps</td>
+</tr>
+<tr>
+<td>Context</td>
+<td>Information available to the model for a particular request</td>
+<td>Case facts and selected policy passages</td>
+<td>Model-assisted steps</td>
+</tr>
+<tr>
+<td>Model token</td>
+<td>A small text unit used by model systems</td>
+<td>Helps measure request size, limits, and cost</td>
+<td>Not the same as an access token</td>
+</tr>
+<tr>
+<td>Agent</td>
+<td>A software component assigned a goal with defined capabilities</td>
+<td>Policy or Finance specialist</td>
+<td>Both; may combine rules and model calls</td>
+</tr>
+<tr>
+<td>Model adapter</td>
+<td>A boundary hiding provider-specific code</td>
+<td>Swap predictable fixture behavior for live model calls</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>Fixture mode</td>
+<td>Predetermined synthetic inputs and results</td>
+<td>Learn and test without unpredictable model behavior or spend</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>Ingestion</td>
+<td>Preparing uploaded information for use</td>
+<td>Store, extract, split, and index policies</td>
+<td>RAG</td>
+</tr>
+<tr>
+<td>Chunk</td>
+<td>A manageable passage cut from a larger document</td>
+<td>A search result with source references</td>
+<td>RAG</td>
+</tr>
+<tr>
+<td>Embedding</td>
+<td>A list of numbers used to compare meaning</td>
+<td>Find semantically related passages</td>
+<td>RAG</td>
+</tr>
+<tr>
+<td>Vector search</td>
+<td>Search by closeness of those numeric representations</td>
+<td>Find related ideas, not only matching words</td>
+<td>RAG</td>
+</tr>
+<tr>
+<td>Full-text search</td>
+<td>Search based on text terms and their relevance</td>
+<td>Find explicit phrases or policy wording</td>
+<td>RAG</td>
+</tr>
+<tr>
+<td>Hybrid search</td>
+<td>Combine more than one retrieval approach</td>
+<td>Use both lexical and vector candidates</td>
+<td>RAG; unrelated to “hybrid Python app”</td>
+</tr>
+<tr>
+<td>Reranking / rank fusion</td>
+<td>Reorder or combine candidate results</td>
+<td>Improve the final shortlist of passages</td>
+<td>RAG technique; details selected during implementation</td>
+</tr>
+<tr>
+<td>Evidence pack</td>
+<td>A saved group of passages and source references</td>
+<td>Support and reproduce a proposal</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>Citation / provenance</td>
+<td>Where a statement came from and its history</td>
+<td>Identify document version and passage</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>OCR</td>
+<td>Optical character recognition: extracting text from an image</td>
+<td>Read scanned documents when supported</td>
+<td>Optional document-processing extension</td>
+</tr>
+<tr>
+<td>Prompt injection</td>
+<td>Untrusted text trying to redirect the model or application</td>
+<td>A malicious document says “ignore approval”</td>
+<td>Threat to defend against, not a feature</td>
+</tr>
+</tbody>
+</table>
+<p>Embeddings help retrieve possible evidence; they do not establish
+truth. A citation shows a source reference; you still need to check that
+the source supports the claim.</p>
+<h2 id="12-technology-legend-storage-and-remembering-work">12.
+Technology legend: storage and remembering work</h2>
+<table>
+<thead>
+<tr>
+<th>Technology or term</th>
+<th>Plain-English meaning</th>
+<th>Where it fits</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PostgreSQL</td>
+<td>A database for organized, durable records</td>
+<td>Cases, tasks, approvals, credit ledger, receipts</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>SQL</td>
+<td>The language used to query and change relational databases</td>
+<td>Read records and perform controlled updates</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>pgvector</td>
+<td>A PostgreSQL extension for vector data and search</td>
+<td>Store/search evidence embeddings</td>
+<td>Proposed retrieval stack</td>
+</tr>
+<tr>
+<td>Table / row</td>
+<td>A collection of similarly shaped records / one such record</td>
+<td>A cases table contains individual cases</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>Database schema</td>
+<td>A named grouping of database objects</td>
+<td>Separate operations, evidence, and workflow areas</td>
+<td>Both; differs from a validation schema</td>
+</tr>
+<tr>
+<td>Database role</td>
+<td>A database identity with specific permissions</td>
+<td>Prevent an agent from writing the ledger</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>Object storage</td>
+<td>Storage designed for whole files or objects</td>
+<td>Original documents and large intermediate outputs</td>
+<td>Both; provider not fixed</td>
+</tr>
+<tr>
+<td>Transaction</td>
+<td>Related database changes that succeed or fail together</td>
+<td>Record credit, receipt, grant use, and outgoing event together</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>Ledger</td>
+<td>The authoritative account book of recorded adjustments</td>
+<td>Determine which simulated credits exist</td>
+<td>Both; application data</td>
+</tr>
+<tr>
+<td>Receipt</td>
+<td>A stored confirmation of a committed action</td>
+<td>Prove the specific credit was recorded</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>Version/revision</td>
+<td>A number identifying a particular saved form of something</td>
+<td>Keep track of policy, proposal, and artifact changes</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>Migration</td>
+<td>A controlled change to database structure</td>
+<td>Add tables or fields as code evolves</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>Cache</td>
+<td>A temporary copy kept for quicker access</td>
+<td>May speed permitted reads; not authoritative state</td>
+<td>Optional optimization</td>
+</tr>
+<tr>
+<td>Backup / restore</td>
+<td>Save a recoverable copy / rebuild from it</td>
+<td>Recover after data loss or serious failure</td>
+<td>Both</td>
+</tr>
+</tbody>
+</table>
+<p>The database and object storage have different jobs. A case row can
+point to a policy file; that does not mean the file itself belongs
+inside the case row or the Git repository.</p>
+<h2 id="13-technology-legend-workflow-and-safety">13. Technology legend:
+workflow and safety</h2>
+<table>
+<thead>
+<tr>
+<th>Technology or term</th>
+<th>Plain-English meaning</th>
+<th>Where it fits</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Coordinator</td>
+<td>The code deciding which component to ask next</td>
+<td>Calls retrieval, specialists, and controlled tools</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>State machine</td>
+<td>A list of allowed stages and moves between them</td>
+<td>Received → Gathering → Approval → Execution → Completed</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>Durable workflow</td>
+<td>A process whose progress survives interruption</td>
+<td>Continue the case after restart or human delay</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>Python workflow runtime</td>
+<td>Our educational scheduler and recovery code</td>
+<td>Run persisted jobs and transitions</td>
+<td>Python path</td>
+</tr>
+<tr>
+<td>Workflow DevKit</td>
+<td>A durable-execution framework</td>
+<td>Organize TypeScript steps, waits, and retries</td>
+<td>TypeScript alternative, not an extra Python coordinator</td>
+</tr>
+<tr>
+<td>Worker</td>
+<td>A program doing background jobs</td>
+<td>Ingestion, specialist work, case progression</td>
+<td>Both; hosting differs</td>
+</tr>
+<tr>
+<td>Job queue</td>
+<td>A recorded list of work waiting to be done</td>
+<td>Decide which job a worker should pick up</td>
+<td>Python baseline uses PostgreSQL</td>
+</tr>
+<tr>
+<td>Outbox</td>
+<td>A saved list of messages that must be delivered</td>
+<td>Avoid losing work between a database commit and a message send</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>Inbox</td>
+<td>A record of messages already accepted</td>
+<td>Avoid processing repeated delivery as new work</td>
+<td>Both where needed</td>
+</tr>
+<tr>
+<td>Event</td>
+<td>A record that something happened</td>
+<td>Case received, approval recorded, credit committed</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>Checkpoint</td>
+<td>Saved progress</td>
+<td>Remember completed steps before continuing</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>Lease</td>
+<td>Temporary ownership of a job</td>
+<td>Let another worker recover abandoned work after expiry</td>
+<td>Python scheduler; analogous ownership needs elsewhere</td>
+</tr>
+<tr>
+<td>Fencing/version check</td>
+<td>A check preventing an old worker from changing newer state</td>
+<td>Stop stale workers overwriting progress</td>
+<td>Both where application ownership is required</td>
+</tr>
+<tr>
+<td>Retry/backoff</td>
+<td>Try again, with controlled waits</td>
+<td>Recover temporary failures without hammering a service</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>Timeout/deadline</td>
+<td>A limit on how long to wait</td>
+<td>Escalate stalled work instead of waiting forever</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>Idempotency</td>
+<td>Repeating one intended operation does not repeat its effect</td>
+<td>Return the original credit receipt on retry</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>Operation key</td>
+<td>Stable reference for one intended action</td>
+<td>Recognize a repeated execution request</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>Reconciliation</td>
+<td>Check authoritative records to resolve uncertainty</td>
+<td>Find out whether a credit actually committed</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>Human-in-the-loop</td>
+<td>A person is required at a decision point</td>
+<td>Maya approves the exact current proposal</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>Hook/callback</td>
+<td>A way for an outside event to notify waiting work</td>
+<td>Wake a TypeScript workflow after a recorded approval</td>
+<td>Runtime-specific mechanism; not authority</td>
+</tr>
+<tr>
+<td>Polling</td>
+<td>Ask periodically for updates</td>
+<td>Refresh the case timeline</td>
+<td>Simple first web implementation</td>
+</tr>
+<tr>
+<td>SSE</td>
+<td>Server-sent events: a server sends a stream of updates</td>
+<td>Optional live progress display</td>
+<td>Web option</td>
+</tr>
+<tr>
+<td>Cursor</td>
+<td>A marker of the last update read</td>
+<td>Resume the timeline after a connection breaks</td>
+<td>Both</td>
+</tr>
+</tbody>
+</table>
+<p>“Background” and “durable” are not synonyms. Work can run in the
+background and still disappear when its process stops. We need
+persistent records and recovery rules to make it durable.</p>
+<h2 id="14-technology-legend-building-testing-and-hosting">14.
+Technology legend: building, testing, and hosting</h2>
+<table>
+<thead>
+<tr>
+<th>Technology or term</th>
+<th>Plain-English meaning</th>
+<th>Where it fits</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Git</td>
+<td>A tool recording source-code changes</td>
+<td>Track and review our implementation</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>GitHub</td>
+<td>A service hosting Git repositories and collaboration tools</td>
+<td>Share code and run review/automation workflows</td>
+<td>Proposed repository host</td>
+</tr>
+<tr>
+<td>Repository / monorepo</td>
+<td>One code history / one repo containing several related apps or
+packages</td>
+<td>Keep P1–P5 together per implementation</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>Branch / pull request</td>
+<td>A separate line of changes / a request to review them</td>
+<td>Test changes before merging</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>Dependency</td>
+<td>Another library your code uses</td>
+<td>FastAPI, React, protocol SDKs</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>pip / venv</td>
+<td>Python package installer / isolated Python environment</td>
+<td>First local Python lessons</td>
+<td>Python path</td>
+</tr>
+<tr>
+<td>uv</td>
+<td>A Python dependency and environment tool</td>
+<td>Reproducible Python project setup in the architecture plan</td>
+<td>Python tooling choice</td>
+</tr>
+<tr>
+<td>npm / pnpm</td>
+<td>JavaScript package-management tools</td>
+<td>Install and organize web/TypeScript dependencies</td>
+<td>Choose a consistent tool per repo</td>
+</tr>
+<tr>
+<td>Lock file</td>
+<td>A record of exact dependency versions</td>
+<td>Repeat the same install in CI and deployment</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>Docker</td>
+<td>Tooling for packaging and running applications in containers</td>
+<td>Reproducible local/backend environments</td>
+<td>Proposed operational tooling</td>
+</tr>
+<tr>
+<td>Container</td>
+<td>A packaged application process with its dependencies</td>
+<td>Run a backend service consistently</td>
+<td>Both where useful</td>
+</tr>
+<tr>
+<td>Docker Compose</td>
+<td>A way to describe and start several local containers together</td>
+<td>Start database and services for development</td>
+<td>Local tooling option</td>
+</tr>
+<tr>
+<td>Vercel</td>
+<td>A hosting platform</td>
+<td>Host the Next.js app and compatible TypeScript services</td>
+<td>Proposed hosting</td>
+</tr>
+<tr>
+<td>Container host</td>
+<td>A place that runs containerized services and workers</td>
+<td>Host the Python backend baseline</td>
+<td>Provider not fixed</td>
+</tr>
+<tr>
+<td>Deployment</td>
+<td>A running, published version of software</td>
+<td>Make a particular service release available</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>CI/CD</td>
+<td>Automated checks and controlled delivery of changes</td>
+<td>Test, build, and release code</td>
+<td>Both; pipeline design</td>
+</tr>
+<tr>
+<td>GitHub Actions</td>
+<td>GitHub&#39;s workflow automation service</td>
+<td>A possible CI/release runner</td>
+<td>Proposed/example CI tooling</td>
+</tr>
+<tr>
+<td>pytest</td>
+<td>A Python test runner</td>
+<td>Check functions, APIs, and integration behavior</td>
+<td>Python path</td>
+</tr>
+<tr>
+<td>Vitest</td>
+<td>A JavaScript/TypeScript test runner</td>
+<td>Check TypeScript rules and supported workflow tests</td>
+<td>TypeScript testing option</td>
+</tr>
+<tr>
+<td>Playwright</td>
+<td>A browser automation/testing tool</td>
+<td>Exercise the complete user journey</td>
+<td>Browser-test option, not yet a required installed dependency</td>
+</tr>
+<tr>
+<td>Unit / integration / end-to-end tests</td>
+<td>Test one piece / connected pieces / a full journey</td>
+<td>Build confidence at different levels</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>Logs / metrics / traces</td>
+<td>Recorded events / measurements / connected request journeys</td>
+<td>Diagnose problems and observe behavior</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>OpenTelemetry</td>
+<td>A standard tooling ecosystem for collecting telemetry</td>
+<td>Trace calls across services</td>
+<td>Proposed diagnostics approach</td>
+</tr>
+<tr>
+<td>Alert / runbook</td>
+<td>A warning / instructions for responding</td>
+<td>Help an operator recover a stalled system</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>Preview / production</td>
+<td>A test deployment / the stable released environment</td>
+<td>Try changes without affecting the public demo</td>
+<td>Both</td>
+</tr>
+</tbody>
+</table>
+<p>Redis, Kafka, Kubernetes, a separate vector-database product, and a
+particular cloud database vendor are <strong>not required by this
+baseline</strong>. We can evaluate additional infrastructure later if a
+measured need appears. You do not need to learn every popular technology
+before building this project.</p>
+<h2 id="15-which-pieces-change-between-the-two-versions">15. Which
+pieces change between the two versions?</h2>
+<table>
+<thead>
+<tr>
+<th>Responsibility</th>
+<th>Python with a Next.js interface</th>
+<th>Full TypeScript counterpart</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Web page</td>
+<td>React and Next.js</td>
+<td>React and Next.js</td>
+</tr>
+<tr>
+<td>Backend application code</td>
+<td>Python, with FastAPI where HTTP is needed</td>
+<td>TypeScript server code</td>
+</tr>
+<tr>
+<td>Data validation</td>
+<td>Pydantic and domain checks</td>
+<td>Runtime schemas and domain checks</td>
+</tr>
+<tr>
+<td>Case workflow</td>
+<td>Educational Python persistent-job runtime</td>
+<td>Workflow DevKit plus application safeguards</td>
+</tr>
+<tr>
+<td>Specialist services</td>
+<td>Python A2A services</td>
+<td>TypeScript A2A services</td>
+</tr>
+<tr>
+<td>Controlled tools</td>
+<td>Python MCP service</td>
+<td>TypeScript MCP service</td>
+</tr>
+<tr>
+<td>Evidence storage and search</td>
+<td>PostgreSQL, pgvector, private object storage</td>
+<td>Same basic responsibilities</td>
+</tr>
+<tr>
+<td>Approval, duplicate protection, receipts</td>
+<td>Required</td>
+<td>Still required</td>
+</tr>
+</tbody>
+</table>
+<p>You do <strong>not</strong> put both case managers in charge of the
+same case. These are alternative implementations of the same story, not
+two systems racing to issue the same credit.</p>
+<p>The existing <code>image-course</code> website is the learning
+library. The future application repositories are the working
+demonstrations. Git stores their code; databases store their changing
+business records; hosting runs the programs.</p>
+<h2 id="16-what-to-learn-firstand-what-can-wait">16. What to learn
+first—and what can wait</h2>
+<p>First understand the story: request, evidence, specialists, approval,
+action, receipt. Then learn basic functions, data structures, tests, and
+simple database records. After that, MCP, RAG, and A2A have concrete
+jobs rather than mysterious names.</p>
+<p>Next learn durable work: what gets saved, how a retry is recognized,
+and how the system handles a missing reply. Add the interface once the
+underlying results are understandable. Finally learn deployment,
+secrets, monitoring, and restore procedures.</p>
+<p>Do not start by memorizing every row of the legend. Use it as a
+reference whenever a word interrupts your understanding. You can build
+the first useful pieces without OCR, advanced caching, extra brokers, or
+live model calls.</p>
+<h2 id="17-common-beginner-misunderstandings">17. Common beginner
+misunderstandings</h2>
+<p><strong>“The AI does everything.”</strong> No. Ordinary code
+validates input, calculates amounts, checks permissions, saves records,
+and enforces many decisions. AI can help with language and analysis.</p>
+<p><strong>“If it uses MCP, the tools are safe.”</strong> No. MCP
+defines communication; our application enforces permission and
+transaction rules.</p>
+<p><strong>“RAG means the answer must be correct.”</strong> No. Search
+can retrieve the wrong material and a model can misinterpret good
+material. We need evidence checks and evaluation.</p>
+<p><strong>“Two agents agreeing means no human is needed.”</strong> Not
+in this design. Sensitive credits still require the exact human
+approval.</p>
+<p><strong>“The page says Completed, so it happened.”</strong> The page
+should say Completed only after the authoritative receipt has been
+confirmed.</p>
+<p><strong>“No reply means nothing happened.”</strong> No. The action
+may have committed. Check the existing operation before attempting
+anything new.</p>
+<p><strong>“One Git repository means one deployment.”</strong> No.
+Several services can deploy from different parts of one repository.</p>
+<h2 id="18-how-to-explain-the-project-to-someone-else">18. How to
+explain the project to someone else</h2>
+<p>“We are building a customer-service application that investigates a
+disputed charge. It looks up facts, finds the relevant policy, and asks
+specialist services to examine the case. A person approves the exact
+proposed adjustment. A controlled business service records it and
+returns a receipt. The system remembers its progress, so a crash or lost
+reply does not cause it to repeat the credit.”</p>
+<p>Then add the technology names only when useful:</p>
+<p>“RAG supplies the evidence, A2A connects the specialists, MCP exposes
+the tools, and a durable workflow coordinates the job. React and Next.js
+provide the screen. The backend and database enforce the rules and
+remember what happened.”</p>
+<p>If that explanation makes sense to you, you already understand the
+most important part of the architecture.</p>
+<footer>Acme Agent Platform · All case data and amounts are illustrative. This is a proposed architecture, not an implemented or deployed application.</footer>
+</main>
+<dialog id="diagram-dialog" aria-label="Enlarged architecture diagram">
+<div class="zoom-toolbar"><span>Architecture diagram</span><button type="button" id="fit-button">Fit</button><button type="button" id="zoom-button">Zoom 150%</button><button type="button" id="close-button">Close</button></div>
+<div class="zoom-body"><img id="zoom-image" alt></div>
+</dialog>
+<script>
+const dialog = document.getElementById('diagram-dialog');
+const zoomImage = document.getElementById('zoom-image');
+document.getElementById('print-button').addEventListener('click', () => window.print());
+document.querySelectorAll('main img').forEach((img, index) => {
+  let figure = img.closest('figure');
+  if (!figure) {
+    figure = document.createElement('figure');
+    const parent = img.parentElement;
+    if (parent.tagName === 'P' && parent.childElementCount === 1) parent.replaceWith(figure);
+    else img.parentNode.insertBefore(figure, img);
+    figure.appendChild(img);
+    const caption = document.createElement('figcaption');
+    caption.textContent = img.alt;
+    figure.appendChild(caption);
+  }
+  const button = document.createElement('button');
+  button.type = 'button'; button.className = 'diagram-button';
+  button.textContent = 'Enlarge diagram ' + (index + 1);
+  button.addEventListener('click', () => {
+    zoomImage.src = img.src; zoomImage.alt = img.alt;
+    zoomImage.style.width = '100%'; dialog.showModal();
+  });
+  figure.appendChild(button);
+});
+document.getElementById('close-button').addEventListener('click', () => dialog.close());
+document.getElementById('fit-button').addEventListener('click', () => zoomImage.style.width = '100%');
+document.getElementById('zoom-button').addEventListener('click', () => zoomImage.style.width = '150%');
+dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
+</script>
+</body>
+</html>

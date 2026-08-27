@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HarborCare — Project Strategy</title>
+<style type="text/css">:root{color-scheme:light;--ink:#19283c;--muted:#56667a;--blue:#145bd8;--navy:#081a33;--line:#dce5ef;--paper:#fff;--bg:#edf2f7}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:30px}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.75 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:#145ac0;text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:3px solid #d58b00;outline-offset:4px}
+.skip{position:fixed;top:-100px;left:16px;z-index:10;background:white;padding:10px}
+.skip:focus{top:10px}
+aside{position:fixed;inset:0 auto 0 0;width:284px;overflow:auto;padding:30px 22px;background:var(--navy);color:#e9f0fa;border-right:1px solid #244363}
+.brand{font-size:12px;letter-spacing:.17em;text-transform:uppercase;color:#76dcf3;font-weight:700}
+aside h2{font-size:22px;line-height:1.3;margin:12px 0 22px;color:white;border:0;padding:0}
+aside ul{list-style:none;margin:0;padding:0}
+aside li{margin:0 0 5px}
+aside li ul{margin-left:0}
+aside a{display:block;padding:7px 10px;border-radius:6px;color:#d2deed;text-decoration:none;font-size:13px;line-height:1.45}
+aside a:hover{background:#193554;color:white}
+.rail-footer{margin-top:22px;border-top:1px solid #2c4260;padding-top:20px;color:#9db0c9;font-size:12px}
+main{margin-left:284px;padding:42px clamp(24px,4vw,72px) 90px;max-width:1550px}
+.toolbar{display:flex;align-items:center;gap:15px;justify-content:space-between;margin-bottom:30px;font-size:12px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+button{font:600 13px system-ui;border:1px solid #c9d7e8;background:#fff;color:#164176;padding:10px 15px;border-radius:8px;cursor:pointer}
+button:hover{background:#e6f0ff}
+h1{font-size:clamp(40px,4.4vw,66px);line-height:1.1;letter-spacing:-.045em;background:linear-gradient(120deg,#07172e,#124481);color:white;border-radius:20px;padding:40px;margin:0 0 34px;box-shadow:0 18px 45px #0b254025}
+h2{font-size:30px;line-height:1.3;color:#103e7c;letter-spacing:-.025em;margin:58px 0 22px;padding-top:23px;border-top:3px solid #2367c9}
+h3{font-size:23px;line-height:1.35;color:#075e76;letter-spacing:-.02em;margin:34px 0 15px}
+p{margin:16px 0;max-width:90ch}
+li{margin:7px 0}
+strong{color:#113862}
+blockquote{background:#e1f1f7;border-left:5px solid #068caf;border-radius:0 12px 12px 0;margin:28px 0;padding:12px 25px;color:#184050}
+figure{margin:28px 0 32px}
+figure img{display:block;width:100%;height:auto;border-radius:14px;background:#07172d;box-shadow:0 12px 28px #0a254025}
+figcaption{font-size:14px;line-height:1.6;color:var(--muted);padding:13px 2px}
+.diagram-button{margin-top:9px;font-size:12px}
+img{max-width:100%;height:auto}
+pre{padding:23px 25px;overflow:auto;background:#091b32;color:#dfedff;border:1px solid #203a56;border-radius:12px;line-height:1.6;tab-size:4}
+code{font-family:"Cascadia Code",Consolas,monospace;font-size:.85em}
+:not(pre)>code{background:#e3eaf3;color:#98305b;padding:.12em .32em;border-radius:4px;overflow-wrap:anywhere}
+pre code{white-space:pre;color:inherit}
+table{border-collapse:separate;border-spacing:0;display:block;overflow-x:auto;max-width:100%;margin:24px 0 30px;border:1px solid var(--line);border-radius:10px;background:white;font-size:15px;line-height:1.6}
+th,td{text-align:left;vertical-align:top;padding:13px 16px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-width:130px}
+th{background:#103c78;color:white;font-weight:650}
+tr:nth-child(even) td{background:#f4f7fb}
+tr:last-child td{border-bottom:0}
+th:last-child,td:last-child{border-right:0}
+hr{border:0;border-top:1px solid var(--line);margin:40px 0}
+dialog{border:1px solid #375679;border-radius:15px;padding:0;background:#07172e;color:white;width:96vw;max-width:1900px;max-height:96vh;overflow:hidden}
+dialog::backdrop{background:#030b17dd}
+.zoom-toolbar{display:flex;gap:10px;align-items:center;justify-content:flex-end;padding:12px 18px;background:#102943}
+.zoom-toolbar span{margin-right:auto;font-size:14px}
+.zoom-body{overflow:auto;max-height:82vh;padding:12px}
+.zoom-body img{display:block;width:100%;max-width:none;margin:auto;height:auto}
+footer{margin-top:60px;border-top:1px solid var(--line);padding-top:20px;font-size:13px;color:var(--muted)}
+@media(max-width:1000px){aside{position:relative;width:auto;padding:24px}aside nav ul{columns:2}aside li{break-inside:avoid}.rail-footer{display:none}main{margin-left:0;padding:28px 24px 60px}}
+@media(max-width:600px){body{font-size:16px}aside nav ul{columns:1}aside{max-height:330px}main{padding:22px 16px 50px}h1{font-size:38px;padding:27px}h2{font-size:26px}h3{font-size:21px}.toolbar{font-size:10px}pre{padding:17px;font-size:14px}.zoom-toolbar{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{aside,.toolbar,.diagram-button,dialog{display:none!important}body{background:white;font-size:11pt}main{margin:0;max-width:none;padding:0}h1{color:#12345a;background:none;padding:0;box-shadow:none;font-size:32pt}h2,h3{break-after:avoid}figure,blockquote{break-inside:avoid}pre{background:#f3f5f9;color:#152f4e;white-space:pre-wrap}pre code{white-space:pre-wrap}table{display:table;font-size:9pt}th,td{min-width:0;padding:7px}figure img{box-shadow:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#content">Skip to document</a>
+<aside aria-label="Document contents">
+<div class="brand">Visual learning library</div>
+<h2>HarborCare</h2>
+<ul>
+<li><a href="#harborcare--project-strategy" id="toc-harborcare--project-strategy">HarborCare — Project Strategy</a>
+<ul>
+<li><a href="#build-a-privacy-system-you-can-explain-not-five-disconnected-medical-chatbots" id="toc-build-a-privacy-system-you-can-explain-not-five-disconnected-medical-chatbots">Build
+a privacy system you can explain, not five disconnected medical
+chatbots</a></li>
+<li><a href="#1-at-a-glance" id="toc-1-at-a-glance">1. At a
+glance</a></li>
+<li><a href="#2-the-running-case" id="toc-2-the-running-case">2. The
+running case</a></li>
+<li><a href="#3-what-success-looks-like" id="toc-3-what-success-looks-like">3. What success looks like</a></li>
+<li><a href="#4-divide-the-work-into-five-projects" id="toc-4-divide-the-work-into-five-projects">4. Divide the work into
+five projects</a></li>
+<li><a href="#5-build-the-smallest-convincing-vertical-slice" id="toc-5-build-the-smallest-convincing-vertical-slice">5. Build the
+smallest convincing vertical slice</a></li>
+<li><a href="#6-three-demonstration-modes" id="toc-6-three-demonstration-modes">6. Three demonstration
+modes</a></li>
+<li><a href="#7-what-not-to-build-in-release-one" id="toc-7-what-not-to-build-in-release-one">7. What not to build in
+release one</a></li>
+<li><a href="#8-portfolio-evidence" id="toc-8-portfolio-evidence">8.
+Portfolio evidence</a></li>
+</ul></li>
+</ul>
+<div class="rail-footer">Self-contained reading edition<br>Diagrams and styles embedded</div>
+</aside>
+<main id="content">
+<div class="toolbar"><span>Illustrated reference guide</span><button type="button" onclick="window.print()">Print / Save PDF</button></div>
+<h1 id="harborcare--project-strategy">HarborCare — Project Strategy</h1>
+<h2 id="build-a-privacy-system-you-can-explain-not-five-disconnected-medical-chatbots">Build
+a privacy system you can explain, not five disconnected medical
+chatbots</h2>
+<p>The proposed platform helps a hospital coordinate a discharge without
+giving every participant the patient&#39;s complete record. The data is
+synthetic. Its purpose is to demonstrate permission enforcement,
+evidence handling, agent boundaries, and accountable disclosure—not to
+diagnose, prescribe, or decide care.</p>
+<h2 id="1-at-a-glance">1. At a glance</h2>
+<p><img role="img" aria-label="Five stages enforce privacy around a discharge: identify the requester, constrain retrieval, delegate narrowly, approve the exact packet, and verify the recipient at dispatch." src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDQwIiBoZWlnaHQ9IjYyMCIgdmlld0JveD0iMCAwIDE0NDAgNjIwIiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUgZGVzYyI+PHRpdGxlIGlkPSJ0aXRsZSI+T25lIGRpc2NoYXJnZSwgZGlmZmVyZW50IGluZm9ybWF0aW9uPC90aXRsZT48ZGVzYyBpZD0iZGVzYyI+UHJpdmF0ZSBpbmZvcm1hdGlvbiBkb2VzIG5vdCBiZWNvbWUgcHVibGljIGp1c3QgYmVjYXVzZSBvbmUgcmVjaXBpZW50IG1heSByZWNlaXZlIGl0LjwvZGVzYz48cmVjdCB3aWR0aD0iMTQ0MCIgaGVpZ2h0PSI2MjAiIHJ4PSIyNCIgZmlsbD0iIzA5MTYyYiIvPjxnIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSxBcmlhbCxzYW5zLXNlcmlmIj48dGV4dCB4PSI2MCIgeT0iNjgiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiM1MGM4ZGQiIGxldHRlci1zcGFjaW5nPSIzIj5IQVJCT1JDQVJFIMK3IFNZTlRIRVRJQyBMRUFSTklORyBDQVNFPC90ZXh0Pjx0ZXh0IHg9IjYwIiB5PSIxMzAiIGZvbnQtc2l6ZT0iNDMiIGZpbGw9IndoaXRlIiBmb250LXdlaWdodD0iNzAwIj5PbmUgZGlzY2hhcmdlLCBkaWZmZXJlbnQgaW5mb3JtYXRpb248L3RleHQ+PHJlY3QgeD0iNjAiIHk9IjE5MCIgd2lkdGg9IjMxMCIgaGVpZ2h0PSIyNjAiIHJ4PSIxNiIgZmlsbD0iIzExMmU0ZCIgc3Ryb2tlPSIjMzE1NTcyIi8+PHRleHQgeD0iODAiIHk9IjIzMiIgZmlsbD0iIzc3ZTJjYyIgZm9udC1zaXplPSIyMCIgZm9udC13ZWlnaHQ9IjcwMCI+MSAgVkVSSUZZPC90ZXh0Pjx0ZXh0IHg9IjgwIiB5PSIyODYiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNlZGY1ZmYiPkF1dGhlbnRpY2F0ZSB0aGUgcmVxdWVzdGVyPC90ZXh0Pjx0ZXh0IHg9IjgwIiB5PSIzNDAiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNlZGY1ZmYiPkNvbmZpcm0gcGF0aWVudCArIGVuY291bnRlcjwvdGV4dD48dGV4dCB4PSI4MCIgeT0iMzk0IiBmb250LXNpemU9IjE4IiBmaWxsPSIjZWRmNWZmIj5DaGVjayBjdXJyZW50IGFzc2lnbm1lbnQ8L3RleHQ+PHBhdGggZD0iTSAzNzQgMzIwIGggMTggbSAtNyAtNyBsIDcgNyAtNyA3IiBmaWxsPSJub25lIiBzdHJva2U9IiM1MGM4ZGQiIHN0cm9rZS13aWR0aD0iMyIvPjxyZWN0IHg9IjQwMCIgeT0iMTkwIiB3aWR0aD0iMzEwIiBoZWlnaHQ9IjI2MCIgcng9IjE2IiBmaWxsPSIjMTEyZTRkIiBzdHJva2U9IiMzMTU1NzIiLz48dGV4dCB4PSI0MjAiIHk9IjIzMiIgZmlsbD0iIzc3ZTJjYyIgZm9udC1zaXplPSIyMCIgZm9udC13ZWlnaHQ9IjcwMCI+MiAgUFJFUEFSRTwvdGV4dD48dGV4dCB4PSI0MjAiIHk9IjI4NiIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2VkZjVmZiI+UmVhZCBvbmx5IHBlcm1pdHRlZCBldmlkZW5jZTwvdGV4dD48dGV4dCB4PSI0MjAiIHk9IjM0MCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2VkZjVmZiI+U2VwYXJhdGUgcHVibGljIGluZm9ybWF0aW9uPC90ZXh0Pjx0ZXh0IHg9IjQyMCIgeT0iMzk0IiBmb250LXNpemU9IjE4IiBmaWxsPSIjZWRmNWZmIj5CdWlsZCByZWNpcGllbnQtc3BlY2lmaWMgcGFja2V0PC90ZXh0PjxwYXRoIGQ9Ik0gNzE0IDMyMCBoIDE4IG0gLTcgLTcgbCA3IDcgLTcgNyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNTBjOGRkIiBzdHJva2Utd2lkdGg9IjMiLz48cmVjdCB4PSI3NDAiIHk9IjE5MCIgd2lkdGg9IjMxMCIgaGVpZ2h0PSIyNjAiIHJ4PSIxNiIgZmlsbD0iIzExMmU0ZCIgc3Ryb2tlPSIjMzE1NTcyIi8+PHRleHQgeD0iNzYwIiB5PSIyMzIiIGZpbGw9IiM3N2UyY2MiIGZvbnQtc2l6ZT0iMjAiIGZvbnQtd2VpZ2h0PSI3MDAiPjMgIFJFVklFVzwvdGV4dD48dGV4dCB4PSI3NjAiIHk9IjI4NiIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2VkZjVmZiI+U2hvdyBleGFjdCBmaWVsZHMgKyByZWNpcGllbnQ8L3RleHQ+PHRleHQgeD0iNzYwIiB5PSIzNDAiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNlZGY1ZmYiPkJpbmQgYXBwcm92YWwgdG8gcGFja2V0IGRpZ2VzdDwvdGV4dD48dGV4dCB4PSI3NjAiIHk9IjM5NCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2VkZjVmZiI+UmVjb3JkIHB1cnBvc2UgYW5kIGV4cGlyeTwvdGV4dD48cGF0aCBkPSJNIDEwNTQgMzIwIGggMTggbSAtNyAtNyBsIDcgNyAtNyA3IiBmaWxsPSJub25lIiBzdHJva2U9IiM1MGM4ZGQiIHN0cm9rZS13aWR0aD0iMyIvPjxyZWN0IHg9IjEwODAiIHk9IjE5MCIgd2lkdGg9IjMxMCIgaGVpZ2h0PSIyNjAiIHJ4PSIxNiIgZmlsbD0iIzExMmU0ZCIgc3Ryb2tlPSIjMzE1NTcyIi8+PHRleHQgeD0iMTEwMCIgeT0iMjMyIiBmaWxsPSIjNzdlMmNjIiBmb250LXNpemU9IjIwIiBmb250LXdlaWdodD0iNzAwIj40ICBSRUxFQVNFPC90ZXh0Pjx0ZXh0IHg9IjExMDAiIHk9IjI4NiIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2VkZjVmZiI+UmVjaGVjayBjdXJyZW50IGF1dGhvcml6YXRpb248L3RleHQ+PHRleHQgeD0iMTEwMCIgeT0iMzQwIiBmb250LXNpemU9IjE4IiBmaWxsPSIjZWRmNWZmIj5TZW5kIHRvIHRlc3QgcmVjZWl2ZXIgb25seTwvdGV4dD48dGV4dCB4PSIxMTAwIiB5PSIzOTQiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiNlZGY1ZmYiPlJlY29yZCByZWNlaXB0IG9yIHVuY2VydGFpbnR5PC90ZXh0PjxyZWN0IHg9IjYwIiB5PSI0OTIiIHdpZHRoPSIxMzIwIiBoZWlnaHQ9Ijc2IiByeD0iMTIiIGZpbGw9IiMxOTM4NGEiLz48dGV4dCB4PSI4NCIgeT0iNTM3IiBmb250LXNpemU9IjIwIiBmaWxsPSIjZThmY2ZmIj5Qcml2YXRlIGluZm9ybWF0aW9uIGRvZXMgbm90IGJlY29tZSBwdWJsaWMganVzdCBiZWNhdXNlIG9uZSByZWNpcGllbnQgbWF5IHJlY2VpdmUgaXQuPC90ZXh0PjwvZz48L3N2Zz4K" alt="Five stages enforce privacy around a discharge: identify the requester, constrain retrieval, delegate narrowly, approve the exact packet, and verify the recipient at dispatch." /></p>
+<p>Build one long case study with five independently demonstrable
+projects. Each project should have its own tests and README, but they
+share contracts and a fictional patient story. This gives the portfolio
+depth without duplicating login, storage, and policy code across five
+repositories.</p>
+<h2 id="2-the-running-case">2. The running case</h2>
+<p>Patient <code>SYN-P001</code> has a synthetic discharge encounter
+<code>ENC-100</code> at hospital <code>HOSP-A</code>. The assigned
+clinician coordinates follow-up care. The insurer <code>ORG-I01</code>
+requests a claim packet. The transport provider <code>ORG-T01</code>
+receives an assignment to collect the patient. A similarly named
+organization <code>ORG-T99</code> is not assigned and must be
+denied.</p>
+<p>The transport packet contains a synthetic pickup alias, pickup point,
+destination, time window, and necessary assistance instructions. It
+omits diagnosis, medications, test results, insurance identifiers, and
+the full discharge summary. Those omitted fields do not become safe
+because an agent says they would be helpful.</p>
+<p>A second patient, <code>SYN-P002</code>, provides the wrong-patient
+test. A public visitor can read visiting hours but cannot discover
+whether either patient is admitted. General hospital information and
+patient-linked information are separate collections.</p>
+<h2 id="3-what-success-looks-like">3. What success looks like</h2>
+<p>The reviewer sees the intended recipient, purpose, included fields,
+excluded fields, evidence used for the policy decision, and expiry. They
+approve a specific packet revision. The dispatcher checks current
+authority and recipient binding before sending the packet to the test
+receiver. The audit trail records the decision and outcome without
+copying clinical text into logs.</p>
+<p>Success includes correct denials. A useful demonstration shows an
+authorized request succeed, a lookalike agency fail, an expired
+authorization fail, and a queued release stop after revocation. It also
+shows that the receiver deduplicates the same release when an
+acknowledgement is lost.</p>
+<h2 id="4-divide-the-work-into-five-projects">4. Divide the work into
+five projects</h2>
+<table>
+<thead>
+<tr>
+<th>Project</th>
+<th>Build first</th>
+<th>Extend later</th>
+<th>Do not give it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1 MCP</td>
+<td>Recipient-scoped patient view and packet preview</td>
+<td>Approved release command and receipt lookup</td>
+<td>A generic full-record export tool</td>
+</tr>
+<tr>
+<td>P2 RAG</td>
+<td>Separate policy/public/patient indexes and access filters</td>
+<td>Ranked evidence and safe summaries</td>
+<td>Authority to invent disclosure policy</td>
+</tr>
+<tr>
+<td>P3 A2A</td>
+<td>Scheduling and transport fixture agents</td>
+<td>Claims specialist and validated artifacts</td>
+<td>Raw chart access for every agent</td>
+</tr>
+<tr>
+<td>P4 Workflow</td>
+<td>Persisted request, policy decision, approval, outbox</td>
+<td>Revocation races and acknowledgement recovery</td>
+<td>An assumption that a sent packet can be unsent</td>
+</tr>
+<tr>
+<td>P5 Workspace</td>
+<td>Recipient-specific preview with clear exclusions</td>
+<td>Audit views and operator reconciliation</td>
+<td>Browser-controlled permissions</td>
+</tr>
+</tbody>
+</table>
+<p>P1 owns disclosure enforcement and packet records. P2 owns evidence
+versions. Each specialist owns its task and artifact records. P4 owns
+coordination and approval state. P5 presents authorized views and sends
+commands. These boundaries remain the same across languages.</p>
+<h2 id="5-build-the-smallest-convincing-vertical-slice">5. Build the
+smallest convincing vertical slice</h2>
+<p>Start with a deterministic field policy and a unit test: an assigned
+transport provider can receive the approved transport fields, but cannot
+receive <code>diagnosis</code>. Then persist the policy decision and
+packet. Add the authenticated MCP boundary. Add policy retrieval, then
+A2A tasks, then a durable review-and-release workflow, then the web
+interface.</p>
+<p>Do not begin with a hospital-wide electronic health record
+integration. A small synthetic record store makes the safety behavior
+observable. Introduce a real interoperability adapter only after its
+mappings, authorization, and vendor requirements have been independently
+reviewed.</p>
+<p>Use deterministic fixture responses first. A live language model is
+an interchangeable helper for explanations and classification proposals.
+It is not the security perimeter or the final policy decision-maker.</p>
+<h2 id="6-three-demonstration-modes">6. Three demonstration modes</h2>
+<p><strong>Learning mode:</strong> all services run locally; documents
+and patients are synthetic; delivery ends at a local receiver. The
+learner can inspect packet fields and safe audit metadata.</p>
+<p><strong>Portfolio mode:</strong> a hosted demo uses the same
+synthetic fixtures and restricted accounts. Public visitors can explore
+general information, while sensitive controls require demo reviewer
+access and quotas. No arbitrary uploads or arbitrary external
+destinations.</p>
+<p><strong>Evaluation mode:</strong> automated tests inject wrong
+recipients, patient substitutions, prompt injections, revoked
+permissions, and response loss. Record actual outcomes and failures.
+Never label a target success rate as a measured result.</p>
+<h2 id="7-what-not-to-build-in-release-one">7. What not to build in
+release one</h2>
+<p>Exclude clinical advice, automated care prioritization, real claims
+submission, real messaging, broad chart downloads, emergency override,
+automatic publication of de-identified records, and real patient consent
+collection. These features materially expand risk and validation
+needs.</p>
+<p>“Break glass” emergency access is not a shortcut around permissions
+for a tutorial. A real emergency-access design needs a defined
+legal/clinical basis, restricted identities, monitoring, and
+retrospective review. This demo instead denies out-of-scope emergency
+claims and directs them to a human process.</p>
+<h2 id="8-portfolio-evidence">8. Portfolio evidence</h2>
+<p>Save test reports showing exact permitted fields, denied fields,
+policy versions, recipient IDs, and synthetic release receipts. Capture
+screenshots using fictional names. Publish a threat-model summary and
+limitations. Keep sensitive-looking fixture labels obviously synthetic
+to reduce confusion.</p>
+<p>Explain the project like this: <strong>“We built an agent-assisted
+discharge workflow that checks who may receive which fields, prevents
+unauthorized data from reaching retrieval and agents, and records each
+permitted disclosure.”</strong></p>
+</main>
+<dialog id="diagram-dialog" aria-label="Enlarged diagram">
+<div class="zoom-toolbar"><span>Diagram detail</span><button type="button" id="diagram-close">Close</button></div>
+<div class="zoom-body"><img id="diagram-large" alt></div>
+</dialog>
+<script>
+const diagramDialog = document.getElementById('diagram-dialog');
+const diagramLarge = document.getElementById('diagram-large');
+document.querySelectorAll('main img').forEach((picture) => {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'diagram-button';
+  button.textContent = 'Enlarge diagram';
+  button.addEventListener('click', () => {
+    diagramLarge.src = picture.src;
+    diagramLarge.alt = picture.alt;
+    diagramDialog.showModal();
+  });
+  picture.insertAdjacentElement('afterend', button);
+});
+document.getElementById('diagram-close').addEventListener('click', () => diagramDialog.close());
+</script>
+</body>
+</html>

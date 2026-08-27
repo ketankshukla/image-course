@@ -1,196 +1,60 @@
 "use client";
 
 import { CourseData, CourseSummary, SiteManifest } from "@/lib/types";
-import { cn } from "@/lib/utils";
 
-interface SiteWelcomeProps {
-  manifest: SiteManifest;
-  completedByCourse: Record<string, number[]>;
-  completedTotal: number;
-  totalChapters: number;
+const labels = { course: "Courses", "case-study": "Case Studies", guide: "Library Guides" };
+const descriptions = {
+  course: "Understand the concepts through 244 diagrams across ten visual courses.",
+  "case-study": "Follow one complete project from plain-English explanation to architecture, tests and build workbooks.",
+  guide: "Understand the workspace and learn how to add the next case study."
+};
+
+export function SiteWelcome({ manifest, shelf, allCollections, onShelfChange, completedByCourse, completedTotal, totalChapters, onSelectCourse }: {
+  manifest: SiteManifest; shelf: CourseSummary["kind"]; allCollections: CourseSummary[];
+  onShelfChange: (kind: CourseSummary["kind"]) => void;
+  completedByCourse: Record<string, number[]>; completedTotal: number; totalChapters: number;
   onSelectCourse: (id: string) => void;
-}
-
-export function SiteWelcome({
-  manifest,
-  completedByCourse,
-  completedTotal,
-  totalChapters,
-  onSelectCourse,
-}: SiteWelcomeProps) {
-  const overallProgress = totalChapters > 0 ? Math.round((completedTotal / totalChapters) * 100) : 0;
-
-  return (
-    <div className="welcome-screen text-center py-12">
-      <div className="welcome-icon text-6xl mb-5">🎓</div>
-      <h1 className="text-3xl md:text-4xl font-serif text-primary mb-4">
-        {manifest.siteTitle}
-      </h1>
-      <p className="subtitle text-lg text-gray-500 mb-6 max-w-2xl mx-auto">
-        {manifest.siteSubtitle}
-      </p>
-
-      <div className="course-stats flex justify-center gap-6 mb-8 flex-wrap">
-        <div className="stat-box text-center px-8 py-5 bg-gray-100 rounded-xl">
-          <span className="number block text-3xl font-bold text-primary">
-            {manifest.courses.length}
-          </span>
-          <span className="label text-sm text-gray-500">Courses</span>
-        </div>
-        <div className="stat-box text-center px-8 py-5 bg-gray-100 rounded-xl">
-          <span className="number block text-3xl font-bold text-primary">
-            {totalChapters}
-          </span>
-          <span className="label text-sm text-gray-500">Diagrams</span>
-        </div>
-      </div>
-
-      <div className="w-full max-w-xl mx-auto mb-10">
-        <div className="flex items-center justify-between text-sm text-gray-500 mb-2">
-          <span>Overall progress</span>
-          <span>{overallProgress}%</span>
-        </div>
-        <div className="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
-          <div
-            className="h-full bg-secondary rounded-full transition-all duration-300"
-            style={{ width: `${overallProgress}%` }}
-          />
-        </div>
-        <p className="text-sm text-gray-400 mt-2">
-          {completedTotal} of {totalChapters} completed
-        </p>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto text-left">
-        {manifest.courses.map((course) => (
-          <CourseCard
-            key={course.id}
-            course={course}
-            completed={(completedByCourse[course.id] || []).length}
-            onStart={() => onSelectCourse(course.id)}
-          />
-        ))}
-      </div>
+}) {
+  return <div className="py-4 md:py-8">
+    <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">Your agent engineering bookshelf</p>
+    <h1 className="text-3xl md:text-4xl font-serif mb-4">{manifest.siteTitle}</h1>
+    <p className="text-gray-500 text-lg max-w-3xl mb-8">{manifest.siteSubtitle}</p>
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-10">
+      {(Object.keys(labels) as CourseSummary["kind"][]).map((kind, i) => <button key={kind} onClick={() => onShelfChange(kind)} aria-pressed={kind === shelf}
+        className={`text-left rounded-xl border p-5 transition-colors ${kind === shelf ? "border-primary bg-primary/10" : "border-gray-200 hover:bg-gray-50"}`}>
+        <span className="text-xs uppercase tracking-wide text-primary">{i === 0 ? "01 · Learn" : i === 1 ? "02 · Apply" : "03 · Extend"}</span>
+        <span className="block text-lg font-semibold mt-1">{labels[kind]}</span>
+        <span className="block text-sm text-gray-500 mt-1">{allCollections.filter(c => c.kind === kind).length} {kind === "guide" ? "collection" : "collections"}</span>
+      </button>)}
     </div>
-  );
-}
-
-interface CourseCardProps {
-  course: CourseSummary;
-  completed: number;
-  onStart: () => void;
-}
-
-function CourseCard({ course, completed, onStart }: CourseCardProps) {
-  const progress = course.chaptersCount > 0 ? Math.round((completed / course.chaptersCount) * 100) : 0;
-
-  return (
-    <div className="bg-white rounded-2xl shadow p-6 border border-gray-100 hover:shadow-lg transition-shadow">
-      <div className="flex items-start gap-4 mb-4">
-        <span className="text-3xl">{course.icon}</span>
-        <div className="flex-1">
-          <h3 className="text-xl font-serif font-bold text-gray-900 mb-1">
-            {course.title}
-          </h3>
-          <p className="text-sm text-gray-500">{course.modules.length} modules • {course.chaptersCount} diagrams</p>
-        </div>
-      </div>
-      <p className="text-gray-600 text-sm mb-4 line-clamp-3">{course.subtitle}</p>
-      <div className="mb-4">
-        <div className="flex items-center justify-between text-xs text-gray-500 mb-1">
-          <span>Progress</span>
-          <span>{progress}%</span>
-        </div>
-        <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
-          <div
-            className="h-full bg-primary rounded-full transition-all duration-300"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
-      </div>
-      <button
-        onClick={onStart}
-        className="w-full py-2.5 bg-secondary hover:bg-secondary-dark text-white rounded-lg font-semibold transition-colors"
-      >
-        Start Course
-      </button>
+    <div className="flex flex-wrap items-end justify-between gap-3 mb-6">
+      <div><h2 className="text-2xl font-serif mb-2">{labels[shelf]}</h2><p className="text-gray-500 max-w-2xl">{descriptions[shelf]}</p></div>
+      <p className="text-xs text-gray-500">{completedTotal} / {totalChapters} articles read</p>
     </div>
-  );
-}
-
-interface CourseWelcomeProps {
-  course: CourseData;
-  completed: number[];
-  onStart: () => void;
-}
-
-export function CourseWelcome({ course, completed, onStart }: CourseWelcomeProps) {
-  const progress = course.chaptersCount > 0 ? Math.round((completed.length / course.chaptersCount) * 100) : 0;
-
-  return (
-    <div className="welcome-screen text-center py-12">
-      <div className="welcome-icon text-5xl mb-4">{course.icon || "📚"}</div>
-      <h1 className="text-3xl md:text-4xl font-serif text-primary mb-4">
-        {course.title}
-      </h1>
-      <p className="subtitle text-lg text-gray-500 mb-8 max-w-2xl mx-auto">
-        {course.subtitle}
-      </p>
-      <div className="course-stats flex justify-center gap-6 mb-8 flex-wrap">
-        <div className="stat-box text-center px-8 py-5 bg-gray-100 rounded-xl">
-          <span className="number block text-3xl font-bold text-primary">
-            {course.modules.length}
-          </span>
-          <span className="label text-sm text-gray-500">Modules</span>
-        </div>
-        <div className="stat-box text-center px-8 py-5 bg-gray-100 rounded-xl">
-          <span className="number block text-3xl font-bold text-primary">
-            {course.chaptersCount}
-          </span>
-          <span className="label text-sm text-gray-500">Diagrams</span>
-        </div>
-      </div>
-
-      <div className="w-full max-w-xl mx-auto mb-10">
-        <div className="flex items-center justify-between text-sm text-gray-500 mb-2">
-          <span>Course progress</span>
-          <span>{progress}%</span>
-        </div>
-        <div className="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
-          <div
-            className="h-full bg-secondary rounded-full transition-all duration-300"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
-        <p className="text-sm text-gray-400 mt-2">
-          {completed.length} of {course.chaptersCount} completed
-        </p>
-      </div>
-
-      <button
-        onClick={onStart}
-        className="start-btn inline-flex items-center gap-2 px-8 py-4 bg-secondary hover:bg-secondary-dark text-white rounded-xl font-semibold text-lg transition-all hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
-      >
-        Start Learning →
-      </button>
-
-      <div className="mt-12 max-w-3xl mx-auto text-left">
-        <h2 className="text-xl font-serif font-bold text-gray-900 mb-4 text-center">Modules</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {course.modules.map((m) => (
-            <div
-              key={m.number}
-              className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl"
-            >
-              <span className="text-2xl">{m.icon}</span>
-              <div>
-                <p className="font-semibold text-gray-900 text-sm">{m.title}</p>
-                <p className="text-xs text-gray-500">{m.chapters.length} diagrams</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+    <div className="grid grid-cols-1 xl:grid-cols-2 gap-5">
+      {manifest.courses.map(course => <div key={course.id} className="rounded-xl border border-gray-200 p-6 hover:border-primary transition-colors">
+        <div className="flex gap-3 items-start mb-3"><span className="text-3xl">{course.icon}</span><h3 className="font-serif text-xl">{course.title}</h3></div>
+        <p className="text-gray-500 mb-4">{course.subtitle}</p>
+        <p className="text-xs text-gray-500 mb-4">{course.modules.length} {course.kind === "course" ? "modules" : "sections"} · {course.chaptersCount} {course.kind === "course" ? "lessons" : "guides"} · {(completedByCourse[course.id] || []).length} read</p>
+        <button className="rounded-lg bg-primary text-white font-semibold px-5 py-3 hover:bg-primary-dark" onClick={() => onSelectCourse(course.id)}>Explore {course.kind === "course" ? "course" : "collection"} →</button>
+      </div>)}
     </div>
-  );
+  </div>;
+}
+
+export function CourseWelcome({ course, completed, onStart }: { course: CourseData; completed: number[]; onStart: () => void }) {
+  return <div className="py-6">
+    <p className="uppercase tracking-widest text-xs text-primary mb-3">{labels[course.kind]}</p>
+    <h1 className="text-3xl md:text-4xl font-serif mb-4">{course.icon} {course.title}</h1>
+    <p className="text-lg text-gray-500 max-w-3xl mb-5">{course.subtitle}</p>
+    <p className="text-sm text-gray-500 mb-7">{course.chaptersCount} articles · {completed.length} completed</p>
+    {course.id === "hospital" && <p className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6 text-sm">Synthetic learning case only. These guides do not describe a deployed clinical system or certify compliance.</p>}
+    <button onClick={onStart} className="bg-primary text-white px-6 py-3 rounded-lg font-semibold mb-10">Start reading →</button>
+    <div className="space-y-6">{course.modules.map(module => <section key={module.number}>
+      <h2 className="font-serif text-xl mb-3">{module.icon} {module.title}</h2>
+      <ul className="divide-y border rounded-xl">{module.chapters.map(chapter => <li key={chapter.number}>
+        <a className="block p-4 hover:bg-gray-50 text-primary" href={`#course=${course.id}&chapter=${chapter.number}`}>{chapter.title} <span className="text-gray-400 text-xs ml-2">{chapter.readTime} min</span></a>
+      </li>)}</ul>
+    </section>)}</div>
+  </div>;
 }

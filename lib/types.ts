@@ -5,6 +5,9 @@ export interface ChapterSummary {
 }
 
 export interface Chapter extends ChapterSummary {
+  toc?: { id: string; title: string }[];
+  imageWidth?: number;
+  imageHeight?: number;
   fullTitle: string;
   image: string;
   imageAlt: string;
@@ -30,6 +33,8 @@ export interface Module extends ModuleSummary {
 }
 
 export interface CourseSummary {
+  kind: "course" | "case-study" | "guide";
+  dataUrl: string;
   id: string;
   slug: string;
   title: string;
@@ -40,6 +45,7 @@ export interface CourseSummary {
 }
 
 export interface CourseData {
+  kind: "course" | "case-study" | "guide";
   id: string;
   slug: string;
   title: string;
@@ -50,6 +56,7 @@ export interface CourseData {
 }
 
 export interface SiteManifest {
+  searchUrl: string;
   siteTitle: string;
   siteSubtitle: string;
   courses: CourseSummary[];

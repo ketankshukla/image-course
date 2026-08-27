@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="820" viewBox="0 0 1400 820" role="img" aria-labelledby="title desc">
+<title id="title">One application repository produces multiple deployments</title>
+<desc id="desc">The hybrid repository produces a Vercel web deployment and Python container services. The TypeScript repository produces separate web, MCP, Policy, and Finance deployments. Both use external persistent storage with separate roles and isolated environments.</desc>
+<rect width="1400" height="820" rx="24" fill="#09162b"/>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10Z" fill="#55d4ed"/></marker></defs>
+<g font-family="Arial, sans-serif" fill="#f1f7ff">
+<text x="55" y="65" font-size="35" font-weight="bold">DEPLOYMENTS: WHERE THE SOFTWARE RUNS</text>
+<text x="55" y="108" font-size="22" fill="#8db6dd">Arrows show build-to-deployment mapping, not runtime API calls.</text>
+<g fill="#102944" stroke="#3c91ce" stroke-width="2">
+<rect x="50" y="155" width="380" height="215" rx="18"/><rect x="510" y="155" width="830" height="85" rx="15"/><rect x="510" y="275" width="830" height="95" rx="15"/>
+<rect x="50" y="415" width="380" height="210" rx="18"/><rect x="510" y="415" width="830" height="85" rx="15"/><rect x="510" y="535" width="830" height="90" rx="15"/>
+<rect x="50" y="675" width="1290" height="105" rx="18"/>
+</g>
+<g font-size="26" font-weight="bold"><text x="75" y="210">PYTHON / HYBRID REPO</text><text x="75" y="470">TYPESCRIPT REPO</text></g>
+<g font-size="23"><text x="75" y="265">apps/web</text><text x="75" y="315">backend</text><text x="75" y="520">apps/web</text><text x="75" y="570">apps/mcp-service + agents</text></g>
+<g stroke="#55d4ed" stroke-width="3" fill="none" marker-end="url(#arrow)"><path d="M430 210 L495 198"/><path d="M430 315 L495 322"/><path d="M430 470 L495 458"/><path d="M430 565 L495 580"/></g>
+<g font-size="24"><text x="535" y="190" fill="#66ddd3">VERCEL</text><text x="535" y="222">Next.js web application and browser-facing API</text>
+<text x="535" y="310" fill="#66ddd3">CONTAINER HOST • SEPARATE SERVICE ENTRIES</text><text x="535" y="345">Case API · MCP · RAG · agents · workflow / ingestion workers</text>
+<text x="535" y="450" fill="#66ddd3">VERCEL WEB PROJECT</text><text x="535" y="483">Next.js case UI / API + durable workflow entry points</text>
+<text x="535" y="570" fill="#66ddd3">SEPARATE PROTOCOL SERVICE DEPLOYMENTS</text><text x="535" y="607">MCP service · Policy agent · Finance agent</text>
+<text x="75" y="715" font-weight="bold">EXTERNAL STORAGE • NOT THE GIT REPOSITORY</text><text x="75" y="755">PostgreSQL + private objects • separate credentials • isolated preview and production data</text></g>
+</g></svg>
