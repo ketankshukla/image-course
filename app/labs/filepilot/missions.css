@@ -1,0 +1,18 @@
+.fp-mission-nav {
+  background: #fff;
+  border-bottom: 1px solid #bfd5e8;
+  color: #164d7a;
+  padding: 24px;
+}
+.fp-mission-nav > div { max-width: 1192px; margin: auto; }
+.fp-mission-nav strong { font-size: 23px; }
+.fp-mission-nav p { font-size: 15px; margin: 6px 0 16px; }
+.fp-mission-links { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+.fp-mission-links a { background: #edf5fc; border: 1px solid #c6dced; border-radius: 9px; padding: 12px; font-size: 14px; line-height: 1.45; }
+.fp-mission-links a:hover { background: #dcecf9; }
+.fp-mission-links a[aria-current] { color: white; background: #1c649b; border-color: #1c649b; }
+.fp-mission-links a:focus-visible { outline: 3px solid #197abe; outline-offset: 3px; }
+.fp-evidence { padding-left: 22px; font-size: 18px; overflow-wrap: anywhere; }
+.fp-evidence li { padding: 8px 0; }
+@media (max-width: 900px) { .fp-mission-links { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 420px) { .fp-mission-nav { padding: 16px; } .fp-mission-links a { font-size: 13px; } }
