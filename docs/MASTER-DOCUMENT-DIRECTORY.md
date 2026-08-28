@@ -4,7 +4,7 @@ Your blue-and-white map of the learning workspace: what each document explains, 
 
 ## At a glance
 
-369 documents: 244 individual course lessons and 125 guides, planning documents and maintenance references. Matching HTML and Markdown files count as one document.
+373 documents: 244 individual course lessons and 129 guides, planning documents and maintenance references. Matching HTML and Markdown files count as one document.
 
 Coverage: all Markdown documents under docs and courses; HTML reading editions paired with their Markdown sources; standalone HTML templates and Word/PDF files under docs; root README and AGENTS instructions. Course export bundles, images, code, JSON configuration and generated website files are not individual catalogue entries. This directory is local-only because it also links unpublished authoring notes. It does not publish those notes to the website.
 
@@ -21,6 +21,7 @@ Locations below are relative to the image-course repository root. Links are rela
 
 - [Start here — workspace guides](#orientation) — 6 documents
 - [Hands-on engineering workshops](#training) — 18 documents
+- [Presentation and narration reviews](#presentations) — 4 documents
 - [Acme — business operations](#acme) — 15 documents
 - [HarborCare — privacy-first coordination](#hospital) — 16 documents
 - [FilePilot — safe file automation](#filepilot) — 16 documents
@@ -384,6 +385,62 @@ This eight-lesson workshop teaches you to write tests that protect meaningful be
 [Read HTML](training/testing/TESTING-THAT-CATCHES-REAL-PROBLEMS.html) · [Markdown source](training/testing/TESTING-THAT-CATCHES-REAL-PROBLEMS.md) · [Website reader](https://course.ketanshukla.dev/#course=library-guides&chapter=5)
 
 **Inside:** Lesson 1 — Turn a promise into observable evidence · Our deliberately small contract · Lesson 2 — Run the misleading green test
+
+<a id="presentations"></a>
+
+## Presentation and narration reviews
+
+Review slide decks and matching spoken scripts before producing narrated videos.
+
+### Agent Architecture — Editable Slides
+
+Fifteen blue-and-white slides with original course diagrams, a fictional shipment-credit case, and narration in speaker notes.
+
+**Use it for:** Review and edit the presentation before adding a voice or presenter.
+
+**Location:** `docs/presentations/course-01/lesson-01/AGENT-ARCHITECTURE.pptx`
+
+**Availability:** Local reference — not in website allowlist
+
+[PowerPoint](presentations/course-01/lesson-01/AGENT-ARCHITECTURE.pptx)
+
+### Agent Architecture — Narration Script
+
+Course 1 · Lesson 1. Review draft: slides and spoken script only; no audio or presenter has been generated.
+
+**Use it for:** Trace components, folders, ownership and calls before building the application.
+
+**Location:** `docs/presentations/course-01/lesson-01/NARRATION-SCRIPT.md`
+
+**Availability:** Local reference — not in website allowlist
+
+[Markdown source](presentations/course-01/lesson-01/NARRATION-SCRIPT.md)
+
+**Inside:** Slide 01 — An agent needs more than a model · Narration · Visual cue — not spoken
+
+### Agent Architecture — Presentation Review Package
+
+Course 1, Lesson 1 adapted into 15 slides with 1,795 spoken words. Estimated narration time is 13–15 minutes at a calm pace, plus learner pauses. This package contains no generated audio, video or presenter.
+
+**Use it for:** Find the project overview and normal development commands.
+
+**Location:** `docs/presentations/course-01/lesson-01/README.md`
+
+**Availability:** Local reference — not in website allowlist
+
+[Markdown source](presentations/course-01/lesson-01/README.md)
+
+### Agent Architecture — Slides and Narration
+
+A browser-readable review edition showing each of fifteen slides with its matching narration and optional visual cue.
+
+**Use it for:** Review the teaching sequence, wording and slide design together.
+
+**Location:** `docs/presentations/course-01/lesson-01/SLIDES-AND-NARRATION.html`
+
+**Availability:** Local reference — not in website allowlist
+
+[Read HTML](presentations/course-01/lesson-01/SLIDES-AND-NARRATION.html)
 
 <a id="acme"></a>
 

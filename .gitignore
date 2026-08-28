@@ -5,6 +5,7 @@
 
 # Next.js
 /.next
+/.slide-build/
 /public/library/
 /out
 

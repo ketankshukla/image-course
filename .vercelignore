@@ -1,5 +1,6 @@
 # Keep Markdown, collection manifests and source diagrams available to Node builds.
 **/*.html
+!public/presentations/*.html
 **/*.docx
 **/*.pdf
 **/*.zip

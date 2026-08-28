@@ -36,6 +36,7 @@ const courseConfig = JSON.parse(await read(path.join(root, 'data/courses.config.
 const groups = [
   ['orientation', 'Start here — workspace guides', 'Understand the repository and how documents become website articles.'],
   ['training', 'Hands-on engineering workshops', 'Practice team workflows, acceptance testing, GitHub Actions, staging and controlled releases.'],
+  ['presentations', 'Presentation and narration reviews', 'Review slide decks and matching spoken scripts before producing narrated videos.'],
   ['acme', 'Acme — business operations', 'A coherent customer-service case: evidence, specialist agents, approvals and controlled actions.'],
   ['hospital', 'HarborCare — privacy-first coordination', 'A synthetic hospital discharge scenario with recipient-specific information sharing.'],
   ['filepilot', 'FilePilot — safe file automation', 'A proposed local assistant for finding and organizing files through approved, recoverable operations.'],
@@ -47,6 +48,8 @@ const groups = [
 ].map(([id,title,description]) => ({id,title,description,items:[]}));
 const groupMap = new Map(groups.map(g => [g.id,g]));
 const overrides = {
+  'AGENT-ARCHITECTURE.pptx': ['Agent Architecture — Editable Slides', 'Fifteen blue-and-white slides with original course diagrams, a fictional shipment-credit case, and narration in speaker notes.', 'Review and edit the presentation before adding a voice or presenter.'],
+  'SLIDES-AND-NARRATION.html': ['Agent Architecture — Slides and Narration', 'A browser-readable review edition showing each of fifteen slides with its matching narration and optional visual cue.', 'Review the teaching sequence, wording and slide design together.'],
   'Video Course Production Strategy.docx': ['Video Course Production Strategy', 'Plans a pilot-led route from visual teaching documents to video lessons, narration scripts, storyboards and presenter options. This is a historical planning document, not proof that videos were generated.', 'Plan a video-course pilot and distinguish production options from finished outputs.'],
   'Visual Agent Course - Volumes 1 to 10 Roadmap.docx': ['Volumes 1–10 — Complete Learning Roadmap', 'Maps the ten-volume learning progression from foundations through protocols, retrieval, security, operations and the final project blueprint. Its original completed/planned labels predate the current ten-course library.', 'Understand the curriculum sequence; use current course files for completion status.'],
   'Visual Agent Course - Volumes 4 to 10 Roadmap.docx': ['Volumes 4–10 — Future Learning Roadmap', 'The earlier proposal for seven continuation volumes covering protocols, knowledge, workflows, security, operations, product design and architecture.', 'Review the original continuation plan, not current delivery status.']
@@ -101,7 +104,7 @@ function describe(text) {
   return {title, summary:summary || 'Reference material supporting the document collection.', topics};
 }
 const candidates = [
-  ...(await walk(docs)).filter(p => /\.(md|html|docx|pdf)$/i.test(p) && !/MASTER-DOCUMENT-DIRECTORY\.(md|html)$/.test(p) && !/\/training\/[^/]+\/exercises\//.test(slash(p))),
+  ...(await walk(docs)).filter(p => /\.(md|html|docx|pdf|pptx)$/i.test(p) && !/MASTER-DOCUMENT-DIRECTORY\.(md|html)$/.test(p) && !/\/training\/[^/]+\/exercises\//.test(slash(p))),
   ...(await walk(path.join(root,'courses'))).filter(p => p.endsWith('.md')),
   path.join(root,'README.md'), path.join(root,'AGENTS.md')
 ];
@@ -115,6 +118,7 @@ for (const p of candidates) {
   else if (/\/[^/]*assets\//.test(rel) || /\/assets\//.test(rel)) g='maintenance';
   else if (rel.includes('/case-studies/')) g = rel.split('/')[2];
   else if (rel.startsWith('docs/training/')) g = 'training';
+  else if (rel.startsWith('docs/presentations/')) g = 'presentations';
   else if (/docs\/(general|design-samples)\//.test(rel)) g='planning';
   const item = p.endsWith('.md') ? describe(await read(p)) : {title:name,summary:'Reusable HTML layout containing placeholders and shared document structure.',topics:[]};
   item.title ||= name;
@@ -122,7 +126,7 @@ for (const p of candidates) {
   if (overrides[name]) [item.title,item.summary,item.purpose] = overrides[name];
   item.location=rel;
   item.kind=course?(g==='course-support'?'maintenance':'course'):g==='maintenance'?'maintenance':'guide';
-  item.links=[{label:p.endsWith('.md')?'Markdown source':p.endsWith('.docx')?'Word document':p.endsWith('.html')?'HTML template':'PDF',url:href(p),file:p}];
+  item.links=[{label:p.endsWith('.md')?'Markdown source':p.endsWith('.docx')?'Word document':p.endsWith('.pptx')?'PowerPoint':p.endsWith('.html')?(g==='presentations'?'Read HTML':'HTML template'):'PDF',url:href(p),file:p}];
   if(p.endsWith('.md') && await exists(p.slice(0,-3)+'.html')) item.links.unshift({label:'Read HTML',url:href(p.slice(0,-3)+'.html'),file:p.slice(0,-3)+'.html'});
   const pub=published.get(p);
   item.status=pub?'Published in website':course&&g!=='course-support'?'Published course lesson':'Local reference — not in website allowlist';
