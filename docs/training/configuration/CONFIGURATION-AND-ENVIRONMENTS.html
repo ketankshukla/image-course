@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Configuration and Environments — Know What You Are Running</title>
+<style type="text/css">:root{color-scheme:light;--ink:#19283c;--muted:#56667a;--blue:#145bd8;--navy:#081a33;--line:#dce5ef;--paper:#fff;--bg:#edf2f7}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:30px}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.75 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:#145ac0;text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:3px solid #d58b00;outline-offset:4px}
+.skip{position:fixed;top:-100px;left:16px;z-index:10;background:white;padding:10px}
+.skip:focus{top:10px}
+aside{position:fixed;inset:0 auto 0 0;width:284px;overflow:auto;padding:30px 22px;background:var(--navy);color:#e9f0fa;border-right:1px solid #244363}
+.brand{font-size:12px;letter-spacing:.17em;text-transform:uppercase;color:#76dcf3;font-weight:700}
+aside h2{font-size:22px;line-height:1.3;margin:12px 0 22px;color:white;border:0;padding:0}
+aside ul{list-style:none;margin:0;padding:0}
+aside li{margin:0 0 5px}
+aside li ul{margin-left:0}
+aside a{display:block;padding:7px 10px;border-radius:6px;color:#d2deed;text-decoration:none;font-size:13px;line-height:1.45}
+aside a:hover{background:#193554;color:white}
+.rail-footer{margin-top:22px;border-top:1px solid #2c4260;padding-top:20px;color:#9db0c9;font-size:12px}
+main{margin-left:284px;padding:42px clamp(24px,4vw,72px) 90px;max-width:1550px}
+.toolbar{display:flex;align-items:center;gap:15px;justify-content:space-between;margin-bottom:30px;font-size:12px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+button{font:600 13px system-ui;border:1px solid #c9d7e8;background:#fff;color:#164176;padding:10px 15px;border-radius:8px;cursor:pointer}
+button:hover{background:#e6f0ff}
+h1{font-size:clamp(40px,4.4vw,66px);line-height:1.1;letter-spacing:-.045em;background:linear-gradient(120deg,#07172e,#124481);color:white;border-radius:20px;padding:40px;margin:0 0 34px;box-shadow:0 18px 45px #0b254025}
+h2{font-size:30px;line-height:1.3;color:#103e7c;letter-spacing:-.025em;margin:58px 0 22px;padding-top:23px;border-top:3px solid #2367c9}
+h3{font-size:23px;line-height:1.35;color:#075e76;letter-spacing:-.02em;margin:34px 0 15px}
+p{margin:16px 0;max-width:90ch}
+li{margin:7px 0}
+strong{color:#113862}
+blockquote{background:#e1f1f7;border-left:5px solid #068caf;border-radius:0 12px 12px 0;margin:28px 0;padding:12px 25px;color:#184050}
+figure{margin:28px 0 32px}
+figure img{display:block;width:100%;height:auto;border-radius:14px;background:#07172d;box-shadow:0 12px 28px #0a254025}
+figcaption{font-size:14px;line-height:1.6;color:var(--muted);padding:13px 2px}
+.diagram-button{margin-top:9px;font-size:12px}
+img{max-width:100%;height:auto}
+pre{padding:23px 25px;overflow:auto;background:#091b32;color:#dfedff;border:1px solid #203a56;border-radius:12px;line-height:1.6;tab-size:4}
+code{font-family:"Cascadia Code",Consolas,monospace;font-size:.85em}
+:not(pre)>code{background:#e3eaf3;color:#98305b;padding:.12em .32em;border-radius:4px;overflow-wrap:anywhere}
+pre code{white-space:pre;color:inherit}
+table{border-collapse:separate;border-spacing:0;display:block;overflow-x:auto;max-width:100%;margin:24px 0 30px;border:1px solid var(--line);border-radius:10px;background:white;font-size:15px;line-height:1.6}
+th,td{text-align:left;vertical-align:top;padding:13px 16px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-width:130px}
+th{background:#103c78;color:white;font-weight:650}
+tr:nth-child(even) td{background:#f4f7fb}
+tr:last-child td{border-bottom:0}
+th:last-child,td:last-child{border-right:0}
+hr{border:0;border-top:1px solid var(--line);margin:40px 0}
+dialog{border:1px solid #375679;border-radius:15px;padding:0;background:#07172e;color:white;width:96vw;max-width:1900px;max-height:96vh;overflow:hidden}
+dialog::backdrop{background:#030b17dd}
+.zoom-toolbar{display:flex;gap:10px;align-items:center;justify-content:flex-end;padding:12px 18px;background:#102943}
+.zoom-toolbar span{margin-right:auto;font-size:14px}
+.zoom-body{overflow:auto;max-height:82vh;padding:12px}
+.zoom-body img{display:block;width:100%;max-width:none;margin:auto;height:auto}
+footer{margin-top:60px;border-top:1px solid var(--line);padding-top:20px;font-size:13px;color:var(--muted)}
+@media(max-width:1000px){aside{position:relative;width:auto;padding:24px}aside nav ul{columns:2}aside li{break-inside:avoid}.rail-footer{display:none}main{margin-left:0;padding:28px 24px 60px}}
+@media(max-width:600px){body{font-size:16px}aside nav ul{columns:1}aside{max-height:330px}main{padding:22px 16px 50px}h1{font-size:38px;padding:27px}h2{font-size:26px}h3{font-size:21px}.toolbar{font-size:10px}pre{padding:17px;font-size:14px}.zoom-toolbar{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{aside,.toolbar,.diagram-button,dialog{display:none!important}body{background:white;font-size:11pt}main{margin:0;max-width:none;padding:0}h1{color:#12345a;background:none;padding:0;box-shadow:none;font-size:32pt}h2,h3{break-after:avoid}figure,blockquote{break-inside:avoid}pre{background:#f3f5f9;color:#152f4e;white-space:pre-wrap}pre code{white-space:pre-wrap}table{display:table;font-size:9pt}th,td{min-width:0;padding:7px}figure img{box-shadow:none}}
+</style><style type="text/css">
+body{font-size:24px;line-height:1.7}
+main{max-width:1500px}
+p{max-width:65ch}
+h2{font-size:36px}
+h3{font-size:28px;color:#17478a}
+blockquote{background:#edf4ff;border-left-color:#245ac4;color:#19283c}
+table{font-size:21px}
+figcaption{font-size:20px}
+pre{font-size:20px}
+:not(pre)>code{background:#edf4ff;color:#17478a}
+button{min-height:44px;font-size:16px}
+aside a{font-size:15px}
+.brand{color:#c4d8fa}
+a:focus-visible,button:focus-visible{outline-color:#245ac4}
+@media(max-width:600px){body{font-size:24px}h2{font-size:32px}h3{font-size:27px}pre{font-size:18px}aside a{font-size:15px}}
+@media print{body{font-size:12pt}h2{font-size:22pt}h3{font-size:17pt}table{font-size:10pt}pre{font-size:10pt}}
+</style>
+</head>
+<body>
+<a class="skip" href="#content">Skip to document</a>
+<aside aria-label="Document contents">
+<div class="brand">Visual learning library</div>
+<h2>Configuration Workshop</h2>
+<ul>
+<li><a href="#configuration-and-environments--know-what-you-are-running" id="toc-configuration-and-environments--know-what-you-are-running">Configuration
+and Environments — Know What You Are Running</a>
+<ul>
+<li><a href="#at-a-glance" id="toc-at-a-glance">At a glance</a></li>
+<li><a href="#lesson-1--same-source-does-not-mean-same-behavior" id="toc-lesson-1--same-source-does-not-mean-same-behavior">Lesson 1 —
+Same source does not mean same behavior</a></li>
+<li><a href="#lesson-2--parse-strings-into-meaning" id="toc-lesson-2--parse-strings-into-meaning">Lesson 2 — Parse strings
+into meaning</a></li>
+<li><a href="#lesson-3--validate-combinations-not-only-fields" id="toc-lesson-3--validate-combinations-not-only-fields">Lesson 3 —
+Validate combinations, not only fields</a></li>
+<li><a href="#lesson-4--separate-build-time-and-runtime-settings" id="toc-lesson-4--separate-build-time-and-runtime-settings">Lesson 4 —
+Separate build-time and runtime settings</a></li>
+<li><a href="#lesson-5--rehearse-a-bad-deployment-without-deploying" id="toc-lesson-5--rehearse-a-bad-deployment-without-deploying">Lesson 5
+— Rehearse a bad deployment without deploying</a></li>
+<li><a href="#lesson-6--your-independent-challenge-and-handoff" id="toc-lesson-6--your-independent-challenge-and-handoff">Lesson 6 —
+Your independent challenge and handoff</a></li>
+</ul></li>
+</ul>
+<div class="rail-footer">Self-contained reading edition<br>Diagrams and styles embedded</div>
+</aside>
+<main id="content">
+<div class="toolbar"><span>Illustrated reference guide</span><button type="button" onclick="window.print()">Print / Save PDF</button></div>
+<h1 id="configuration-and-environments--know-what-you-are-running">Configuration
+and Environments — Know What You Are Running</h1>
+<h2 id="at-a-glance">At a glance</h2>
+<p>This workshop teaches you to separate code from deployment settings
+and to reject dangerous configuration before serving requests. The lab
+parses synthetic settings for development, staging, and production. It
+catches a misspelled environment, an invalid boolean, and unsafe
+production combinations without reading your real environment or
+contacting a service.</p>
+<p>Use Python 3.10 or newer. Run <code>python lab.py</code> from
+<code>exercises</code>. The assertions demonstrate configuration
+behavior; they do not create or configure cloud environments.</p>
+<p><img role="img" aria-label="Configuration is parsed and validated before a service starts." src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9Ijc5MCIgdmlld0JveD0iMCAwIDEyMDAgNzkwIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IkNvbmZpZ3VyYXRpb24gYW5kIEVudmlyb25tZW50cyBmbG93Ij48cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI3OTAiIHJ4PSIyNCIgZmlsbD0iI2VkZjRmZiIvPjxnIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSxBcmlhbCxzYW5zLXNlcmlmIiBmaWxsPSIjMTczOTY0Ij48dGV4dCB4PSI1MCIgeT0iNjAiIGZvbnQtc2l6ZT0iMzIiIGZvbnQtd2VpZ2h0PSI3MDAiPkNvbmZpZ3VyYXRpb24gYW5kIEVudmlyb25tZW50czwvdGV4dD48cmVjdCB4PSI1MCIgeT0iMTU1IiB3aWR0aD0iNTIwIiBoZWlnaHQ9IjE5NSIgcng9IjE4IiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSIjYjhjZmVkIiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSI3NSIgeT0iMTk3IiBmb250LXNpemU9IjI1IiBmb250LXdlaWdodD0iNzAwIj4xIMK3IFJhdyBjb25maWd1cmF0aW9uPC90ZXh0Pjx0ZXh0IHg9Ijc1IiB5PSIyNjgiIGZvbnQtc2l6ZT0iMjMiPlRleHQgdmFsdWVzIGFyZSBub3QgeWV0IHZhbGlkYXRlZDwvdGV4dD48dGV4dCB4PSI3NSIgeT0iMzAwIiBmb250LXNpemU9IjIzIj5zZXR0aW5nczwvdGV4dD48cmVjdCB4PSI2MzAiIHk9IjE1NSIgd2lkdGg9IjUyMCIgaGVpZ2h0PSIxOTUiIHJ4PSIxOCIgZmlsbD0id2hpdGUiIHN0cm9rZT0iI2I4Y2ZlZCIgc3Ryb2tlLXdpZHRoPSIyIi8+PHRleHQgeD0iNjU1IiB5PSIxOTciIGZvbnQtc2l6ZT0iMjUiIGZvbnQtd2VpZ2h0PSI3MDAiPjIgwrcgUGFyc2UgZXhwbGljaXQgdHlwZXM8L3RleHQ+PHRleHQgeD0iNjU1IiB5PSIyNjgiIGZvbnQtc2l6ZT0iMjMiPlJlY29nbml6ZSBib29sZWFucywgZW52aXJvbm1lbnQgbmFtZXMsPC90ZXh0Pjx0ZXh0IHg9IjY1NSIgeT0iMzAwIiBmb250LXNpemU9IjIzIj5hbmQgVVJMczwvdGV4dD48cmVjdCB4PSI1MCIgeT0iNDE1IiB3aWR0aD0iNTIwIiBoZWlnaHQ9IjE5NSIgcng9IjE4IiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSIjYjhjZmVkIiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSI3NSIgeT0iNDU3IiBmb250LXNpemU9IjI1IiBmb250LXdlaWdodD0iNzAwIj4zIMK3IENoZWNrIGNvbWJpbmF0aW9uczwvdGV4dD48dGV4dCB4PSI3NSIgeT0iNTI4IiBmb250LXNpemU9IjIzIj5SZWplY3QgdW5zYWZlIHByb2R1Y3Rpb24gc2V0dGluZ3M8L3RleHQ+PHRleHQgeD0iNzUiIHk9IjU2MCIgZm9udC1zaXplPSIyMyI+YmVmb3JlIHN0YXJ0dXA8L3RleHQ+PHJlY3QgeD0iNjMwIiB5PSI0MTUiIHdpZHRoPSI1MjAiIGhlaWdodD0iMTk1IiByeD0iMTgiIGZpbGw9IndoaXRlIiBzdHJva2U9IiNiOGNmZWQiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9IjY1NSIgeT0iNDU3IiBmb250LXNpemU9IjI1IiBmb250LXdlaWdodD0iNzAwIj40IMK3IFZlcmlmeSBlZmZlY3RpdmUgYmVoYXZpb3I8L3RleHQ+PHRleHQgeD0iNjU1IiB5PSI1MjgiIGZvbnQtc2l6ZT0iMjMiPlRlc3QgdGhlIGNvbmZpZ3VyYXRpb24gd2l0aG91dCByZWFkaW5nPC90ZXh0Pjx0ZXh0IHg9IjY1NSIgeT0iNTYwIiBmb250LXNpemU9IjIzIj5yZWFsIHNlY3JldHM8L3RleHQ+PHJlY3QgeD0iNTAiIHk9IjY2MCIgd2lkdGg9IjExMDAiIGhlaWdodD0iOTUiIHJ4PSIxNSIgZmlsbD0iI2RhZThmZiIvPjx0ZXh0IHg9Ijc1IiB5PSI2OTYiIGZvbnQtc2l6ZT0iMjMiPlN5bnRoZXRpYyBzZXR0aW5nczsgbm8gY2xvdWQgZW52aXJvbm1lbnQgY2hhbmdlcyBvciBuZXR3b3JrIGNvbm5lY3Rpdml0eSBjaGVja3MuPC90ZXh0PjwvZz48ZyBmaWxsPSJub25lIiBzdHJva2U9IiMyNDVhYzQiIHN0cm9rZS13aWR0aD0iMyI+PHBhdGggZD0iTTU3NSAyNTBoNDBtLTEyIC05bDEyIDkgLTEyIDlNODkwIDM1NXYyNUgzMTB2MjVtLTkgLTEybDkgMTIgOSAtMTJNNTc1IDUxMGg0MG0tMTIgLTlsMTIgOSAtMTIgOSIvPjwvZz48L3N2Zz4=" alt="Configuration is parsed and validated before a service starts." /></p>
+<h2 id="lesson-1--same-source-does-not-mean-same-behavior">Lesson 1 —
+Same source does not mean same behavior</h2>
+<p>Imagine the same application commit runs correctly on your laptop but
+connects to the wrong API in staging. The code may be identical while
+the effective configuration differs. An environment is more than a
+branch name: it includes settings, credentials, data, dependencies, and
+infrastructure.</p>
+<p>Development is your local working setup. Staging is a controlled
+rehearsal. Production serves real users. These should have deliberately
+chosen boundaries. A staging URL pointing at a production database is
+not isolated just because the browser address contains “staging.”</p>
+<p>Record the source version, dependency versions, configuration names,
+and service destinations when investigating differences. Never print
+credential values to make that inventory convenient.</p>
+<p><strong>Checkpoint:</strong> Name three things that can differ
+between two deployments of the same commit.</p>
+<h2 id="lesson-2--parse-strings-into-meaning">Lesson 2 — Parse strings
+into meaning</h2>
+<p>Environment values normally arrive as text. The string
+<code>false</code> is not the boolean false in many languages. In
+Python, <code>bool(&quot;false&quot;)</code> is true because the string is not
+empty. JavaScript has the same trap with a truthy nonempty string.</p>
+<p>Read the lab&#39;s <code>load()</code> function. It accepts a mapping
+rather than reading global environment state, which makes tests
+deterministic. It recognizes only <code>true</code> or
+<code>false</code>, converts deliberately, and rejects other spellings.
+The application environment also has an allowlist, so
+<code>prodution</code> does not silently become development.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>raw <span class="op">=</span> values.get(<span class="st">&quot;DEBUG&quot;</span>, <span class="st">&quot;false&quot;</span>).lower()</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> raw <span class="kw">not</span> <span class="kw">in</span> {<span class="st">&quot;true&quot;</span>, <span class="st">&quot;false&quot;</span>}:</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">&quot;DEBUG&quot;</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>debug <span class="op">=</span> raw <span class="op">==</span> <span class="st">&quot;true&quot;</span></span></code></pre></div>
+<p>A default is a policy decision. A harmless local port may have a
+default; a production database destination often should not. Ask whether
+missing configuration should stop startup rather than cause a surprising
+fallback.</p>
+<h2 id="lesson-3--validate-combinations-not-only-fields">Lesson 3 —
+Validate combinations, not only fields</h2>
+<p>An individually valid setting can become unsafe in combination with
+another. Our lab permits HTTP locally but requires HTTPS in production
+and refuses production debug mode. That models a startup gate, not a
+complete security policy.</p>
+<p>The URL parser checks that a supported scheme and hostname exist. It
+does not prove the destination is trustworthy, that TLS is configured
+correctly, or that the destination belongs to the intended organization.
+A production system may need explicit destination allowlists and
+infrastructure controls.</p>
+<p>Run the lab, then add a setting for a request timeout. Define units
+and a sensible range before parsing it. Test zero, a negative value, a
+huge value, and nonnumeric input. Avoid a configuration that technically
+parses but causes every request to hang for hours.</p>
+<p><strong>Checkpoint:</strong> Explain why failing startup can be safer
+than starting with a silently substituted production destination.</p>
+<h2 id="lesson-4--separate-build-time-and-runtime-settings">Lesson 4 —
+Separate build-time and runtime settings</h2>
+<p>Some frameworks replace public variables during the build. Changing a
+server environment variable afterward may not change JavaScript already
+shipped to browsers. Other settings are read when a process starts or on
+each request. Know which category applies before diagnosing a stale
+value.</p>
+<p>A frontend API base URL is not necessarily secret. A service
+credential is. Public configuration must not contain private
+credentials, regardless of its variable name. Inspect the actual
+boundary: does this value become part of a browser-delivered asset?</p>
+<p>Keep a documented configuration schema listing name, purpose,
+required environments, default policy, secrecy, and when it is read. An
+example file should contain placeholders or harmless synthetic values,
+never a working token.</p>
+<p>Dependency lockfiles are another part of reproducibility. They record
+resolved package versions, while the runtime version and operating
+system still influence behavior. “It is in Git” alone does not describe
+a reproducible environment.</p>
+<h2 id="lesson-5--rehearse-a-bad-deployment-without-deploying">Lesson 5
+— Rehearse a bad deployment without deploying</h2>
+<p>Create a synthetic production mapping with <code>DEBUG=true</code>.
+The loader must reject it. Now set <code>DEBUG=false</code> but leave
+the default HTTP address. It must still reject it. Finally supply the
+harmless HTTPS example destination used in the test; parsing should
+succeed without making a network request.</p>
+<p>These experiments demonstrate configuration validation only. The
+example.invalid domain is intentionally not a real application endpoint.
+Successful parsing does not mean a service is reachable.</p>
+<p>For a real deployment, add a separate health check for connectivity
+and dependencies. Do not conflate “the configuration is well formed”
+with “the dependency is healthy.” Keep startup checks bounded so a
+failed dependency does not create an endless boot loop with no useful
+error.</p>
+<h2 id="lesson-6--your-independent-challenge-and-handoff">Lesson 6 —
+Your independent challenge and handoff</h2>
+<p>Add a synthetic <code>DATASET</code> setting with separate allowed
+names for staging and production. Test that staging cannot select the
+production dataset. Explain why this application-level check
+complements, rather than replaces, separate credentials and
+infrastructure permissions.</p>
+<p>Write a handoff table for your real website: Node version, build
+command, public settings, server-only settings, storage destination, and
+verification method. Record names and purposes, not secret values.</p>
+<p>The lab verifies explicit boolean parsing, environment names, basic
+URL structure, and production combination rules. It does not alter
+Vercel settings or inspect actual secrets. You are finished when you can
+explain the effective configuration before you run or deploy a
+project.</p>
+</main>
+<dialog id="diagram-dialog" aria-label="Enlarged diagram">
+<div class="zoom-toolbar"><span>Diagram detail</span><button type="button" id="diagram-close">Close</button></div>
+<div class="zoom-body"><img id="diagram-large" alt></div>
+</dialog>
+<script>
+const diagramDialog = document.getElementById('diagram-dialog');
+const diagramLarge = document.getElementById('diagram-large');
+document.querySelectorAll('main img').forEach((picture) => {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'diagram-button';
+  button.textContent = 'Enlarge diagram';
+  button.addEventListener('click', () => {
+    diagramLarge.src = picture.src;
+    diagramLarge.alt = picture.alt;
+    diagramDialog.showModal();
+  });
+  picture.insertAdjacentElement('afterend', button);
+});
+document.getElementById('diagram-close').addEventListener('click', () => diagramDialog.close());
+</script>
+</body>
+</html>

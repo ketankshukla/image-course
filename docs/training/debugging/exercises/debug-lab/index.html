@@ -1,0 +1,25 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Debug Lab — Learning Library</title><style>body{font:24px/1.6 system-ui;background:#eff6ff;color:#173964;padding:4vw}main{max-width:850px;margin:auto;background:white;padding:32px;border-radius:18px}input,button{font:inherit;max-width:100%;box-sizing:border-box;padding:8px}label{display:block;margin-top:16px}button{margin-top:20px;background:#17478a;color:white;border:0;border-radius:8px}#status{overflow-wrap:anywhere;font-size:18px}</style></head><body><main><h1>Debug Lab</h1><p>Search the synthetic learning library. Compare <code>filepilot</code> and <code>FilePilot</code>.</p><form id="search"><label for="query">Lesson title</label><input id="query" value="filepilot"><label for="limit">Maximum results (0–10)</label><input id="limit" type="number" min="0" max="10" value="10"><br><button>Search</button></form><p id="status" role="status"></p><ul id="results"></ul></main><script>
+const form = document.querySelector('#search');
+const status = document.querySelector('#status');
+const list = document.querySelector('#results');
+form.addEventListener('submit', async event => {
+  event.preventDefault();
+  const button = form.querySelector('button');
+  button.disabled = true;
+  status.textContent = 'Searching…';
+  list.replaceChildren();
+  try {
+    const params = new URLSearchParams({ q: document.querySelector('#query').value, limit: document.querySelector('#limit').value });
+    const response = await fetch('/api/search?' + params);
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error);
+    status.textContent = `${data.results.length} results · Request ${data.requestId}`;
+    list.replaceChildren(...data.results.map(result => {
+      const item = document.createElement('li');
+      item.textContent = result.title;
+      return item;
+    }));
+  } catch (error) { status.textContent = 'Search failed: ' + error.message; }
+  finally { button.disabled = false; }
+});
+</script></body></html>

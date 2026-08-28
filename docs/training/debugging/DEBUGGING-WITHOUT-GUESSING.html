@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Debugging Without Guessing</title>
+<style type="text/css">:root{color-scheme:light;--ink:#19283c;--muted:#56667a;--blue:#145bd8;--navy:#081a33;--line:#dce5ef;--paper:#fff;--bg:#edf2f7}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:30px}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.75 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:#145ac0;text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:3px solid #d58b00;outline-offset:4px}
+.skip{position:fixed;top:-100px;left:16px;z-index:10;background:white;padding:10px}
+.skip:focus{top:10px}
+aside{position:fixed;inset:0 auto 0 0;width:284px;overflow:auto;padding:30px 22px;background:var(--navy);color:#e9f0fa;border-right:1px solid #244363}
+.brand{font-size:12px;letter-spacing:.17em;text-transform:uppercase;color:#76dcf3;font-weight:700}
+aside h2{font-size:22px;line-height:1.3;margin:12px 0 22px;color:white;border:0;padding:0}
+aside ul{list-style:none;margin:0;padding:0}
+aside li{margin:0 0 5px}
+aside li ul{margin-left:0}
+aside a{display:block;padding:7px 10px;border-radius:6px;color:#d2deed;text-decoration:none;font-size:13px;line-height:1.45}
+aside a:hover{background:#193554;color:white}
+.rail-footer{margin-top:22px;border-top:1px solid #2c4260;padding-top:20px;color:#9db0c9;font-size:12px}
+main{margin-left:284px;padding:42px clamp(24px,4vw,72px) 90px;max-width:1550px}
+.toolbar{display:flex;align-items:center;gap:15px;justify-content:space-between;margin-bottom:30px;font-size:12px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+button{font:600 13px system-ui;border:1px solid #c9d7e8;background:#fff;color:#164176;padding:10px 15px;border-radius:8px;cursor:pointer}
+button:hover{background:#e6f0ff}
+h1{font-size:clamp(40px,4.4vw,66px);line-height:1.1;letter-spacing:-.045em;background:linear-gradient(120deg,#07172e,#124481);color:white;border-radius:20px;padding:40px;margin:0 0 34px;box-shadow:0 18px 45px #0b254025}
+h2{font-size:30px;line-height:1.3;color:#103e7c;letter-spacing:-.025em;margin:58px 0 22px;padding-top:23px;border-top:3px solid #2367c9}
+h3{font-size:23px;line-height:1.35;color:#075e76;letter-spacing:-.02em;margin:34px 0 15px}
+p{margin:16px 0;max-width:90ch}
+li{margin:7px 0}
+strong{color:#113862}
+blockquote{background:#e1f1f7;border-left:5px solid #068caf;border-radius:0 12px 12px 0;margin:28px 0;padding:12px 25px;color:#184050}
+figure{margin:28px 0 32px}
+figure img{display:block;width:100%;height:auto;border-radius:14px;background:#07172d;box-shadow:0 12px 28px #0a254025}
+figcaption{font-size:14px;line-height:1.6;color:var(--muted);padding:13px 2px}
+.diagram-button{margin-top:9px;font-size:12px}
+img{max-width:100%;height:auto}
+pre{padding:23px 25px;overflow:auto;background:#091b32;color:#dfedff;border:1px solid #203a56;border-radius:12px;line-height:1.6;tab-size:4}
+code{font-family:"Cascadia Code",Consolas,monospace;font-size:.85em}
+:not(pre)>code{background:#e3eaf3;color:#98305b;padding:.12em .32em;border-radius:4px;overflow-wrap:anywhere}
+pre code{white-space:pre;color:inherit}
+table{border-collapse:separate;border-spacing:0;display:block;overflow-x:auto;max-width:100%;margin:24px 0 30px;border:1px solid var(--line);border-radius:10px;background:white;font-size:15px;line-height:1.6}
+th,td{text-align:left;vertical-align:top;padding:13px 16px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-width:130px}
+th{background:#103c78;color:white;font-weight:650}
+tr:nth-child(even) td{background:#f4f7fb}
+tr:last-child td{border-bottom:0}
+th:last-child,td:last-child{border-right:0}
+hr{border:0;border-top:1px solid var(--line);margin:40px 0}
+dialog{border:1px solid #375679;border-radius:15px;padding:0;background:#07172e;color:white;width:96vw;max-width:1900px;max-height:96vh;overflow:hidden}
+dialog::backdrop{background:#030b17dd}
+.zoom-toolbar{display:flex;gap:10px;align-items:center;justify-content:flex-end;padding:12px 18px;background:#102943}
+.zoom-toolbar span{margin-right:auto;font-size:14px}
+.zoom-body{overflow:auto;max-height:82vh;padding:12px}
+.zoom-body img{display:block;width:100%;max-width:none;margin:auto;height:auto}
+footer{margin-top:60px;border-top:1px solid var(--line);padding-top:20px;font-size:13px;color:var(--muted)}
+@media(max-width:1000px){aside{position:relative;width:auto;padding:24px}aside nav ul{columns:2}aside li{break-inside:avoid}.rail-footer{display:none}main{margin-left:0;padding:28px 24px 60px}}
+@media(max-width:600px){body{font-size:16px}aside nav ul{columns:1}aside{max-height:330px}main{padding:22px 16px 50px}h1{font-size:38px;padding:27px}h2{font-size:26px}h3{font-size:21px}.toolbar{font-size:10px}pre{padding:17px;font-size:14px}.zoom-toolbar{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{aside,.toolbar,.diagram-button,dialog{display:none!important}body{background:white;font-size:11pt}main{margin:0;max-width:none;padding:0}h1{color:#12345a;background:none;padding:0;box-shadow:none;font-size:32pt}h2,h3{break-after:avoid}figure,blockquote{break-inside:avoid}pre{background:#f3f5f9;color:#152f4e;white-space:pre-wrap}pre code{white-space:pre-wrap}table{display:table;font-size:9pt}th,td{min-width:0;padding:7px}figure img{box-shadow:none}}
+</style><style type="text/css">
+body{font-size:24px;line-height:1.7}
+main{max-width:1500px}
+p{max-width:65ch}
+h2{font-size:36px}
+h3{font-size:28px;color:#17478a}
+blockquote{background:#edf4ff;border-left-color:#245ac4;color:#19283c}
+table{font-size:21px}
+figcaption{font-size:20px}
+pre{font-size:20px}
+:not(pre)>code{background:#edf4ff;color:#17478a}
+button{min-height:44px;font-size:16px}
+aside a{font-size:15px}
+.brand{color:#c4d8fa}
+a:focus-visible,button:focus-visible{outline-color:#245ac4}
+@media(max-width:600px){body{font-size:24px}h2{font-size:32px}h3{font-size:27px}pre{font-size:18px}aside a{font-size:15px}}
+@media print{body{font-size:12pt}h2{font-size:22pt}h3{font-size:17pt}table{font-size:10pt}pre{font-size:10pt}}
+</style>
+</head>
+<body>
+<a class="skip" href="#content">Skip to document</a>
+<aside aria-label="Document contents">
+<div class="brand">Visual learning library</div>
+<h2>Debugging Workshop</h2>
+<ul>
+<li><a href="#debugging-without-guessing" id="toc-debugging-without-guessing">Debugging Without Guessing</a>
+<ul>
+<li><a href="#at-a-glance" id="toc-at-a-glance">At a glance</a></li>
+<li><a href="#lesson-1--think-like-an-investigator" id="toc-lesson-1--think-like-an-investigator">Lesson 1 — Think like an
+investigator</a></li>
+<li><a href="#lesson-2--run-the-app-and-reproduce-the-failure" id="toc-lesson-2--run-the-app-and-reproduce-the-failure">Lesson 2 — Run
+the app and reproduce the failure</a></li>
+<li><a href="#lesson-3--follow-the-request-across-boundaries" id="toc-lesson-3--follow-the-request-across-boundaries">Lesson 3 —
+Follow the request across boundaries</a></li>
+<li><a href="#lesson-4--pause-execution-and-inspect-the-evidence" id="toc-lesson-4--pause-execution-and-inspect-the-evidence">Lesson 4 —
+Pause execution and inspect the evidence</a></li>
+<li><a href="#lesson-5--investigate-the-zero-that-disappeared" id="toc-lesson-5--investigate-the-zero-that-disappeared">Lesson 5 —
+Investigate the zero that disappeared</a></li>
+<li><a href="#lesson-6--logs-errors-and-misleading-clues" id="toc-lesson-6--logs-errors-and-misleading-clues">Lesson 6 — Logs,
+errors, and misleading clues</a></li>
+<li><a href="#lesson-7--prove-the-fix-and-connect-it-to-ci" id="toc-lesson-7--prove-the-fix-and-connect-it-to-ci">Lesson 7 — Prove
+the fix and connect it to CI</a></li>
+<li><a href="#lesson-8--your-independent-debugging-challenge" id="toc-lesson-8--your-independent-debugging-challenge">Lesson 8 — Your
+independent debugging challenge</a></li>
+<li><a href="#pocket-legend-and-completion-checklist" id="toc-pocket-legend-and-completion-checklist">Pocket legend and
+completion checklist</a></li>
+</ul></li>
+</ul>
+<div class="rail-footer">Self-contained reading edition<br>Diagrams and styles embedded</div>
+</aside>
+<main id="content">
+<div class="toolbar"><span>Illustrated reference guide</span><button type="button" onclick="window.print()">Print / Save PDF</button></div>
+<h1 id="debugging-without-guessing">Debugging Without Guessing</h1>
+<h2 id="at-a-glance">At a glance</h2>
+<p>This eight-lesson workshop teaches you to investigate broken software
+calmly and systematically. You will run a small Learning Library app,
+reproduce two bugs, inspect an HTTP request, pause server execution,
+compare actual values with expected values, and write evidence that your
+fixes work. It follows naturally from the CI/CD workshop: that course
+taught you how to stop a bad change; this one teaches you how to
+understand and repair it.</p>
+<p>Use Node.js 22 or newer, PowerShell, and a desktop browser such as
+Chrome with developer tools. The lab uses only Node&#39;s built-in modules.
+No package installation, database, account, cloud service, secret, or
+deployment is needed. All data is synthetic. Allow several short
+sessions rather than rushing through the solution.</p>
+<blockquote>
+<p><strong>The key idea:</strong> A bug is not a reason to start
+changing random lines. It is a difference between what you expected and
+what you observed. Your job is to find the earliest point where those
+two things diverge.</p>
+</blockquote>
+<p>The supplied starter intentionally contains two bugs. Keep a clean
+copy so you can repeat the investigation. This course does not modify or
+deploy your real learning website.</p>
+<h2 id="lesson-1--think-like-an-investigator">Lesson 1 — Think like an
+investigator</h2>
+<p><img role="img" aria-label="The debugging loop: reproduce, locate, predict, test, fix, and verify." src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYxMCIgdmlld0JveD0iMCAwIDEyMDAgNjEwIj48cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MTAiIHJ4PSIyNCIgZmlsbD0iI2VkZjRmZiIvPjxnIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSxBcmlhbCxzYW5zLXNlcmlmIiBmaWxsPSIjMTczOTY0Ij48dGV4dCB4PSI0NSIgeT0iNjUiIGZvbnQtc2l6ZT0iMzYiIGZvbnQtd2VpZ2h0PSI3MDAiPkRlYnVnZ2luZyBpcyBhIHNlcXVlbmNlIG9mIHNtYWxsIGV4cGVyaW1lbnRzLjwvdGV4dD48ZyBmb250LXNpemU9IjI2Ij48dGV4dCB4PSI1MCIgeT0iMTQ1Ij4xIMK3IFJlcHJvZHVjZTwvdGV4dD48dGV4dCB4PSI0NDUiIHk9IjE0NSI+MiDCtyBMb2NhdGUgdGhlIGJvdW5kYXJ5PC90ZXh0Pjx0ZXh0IHg9Ijg1NSIgeT0iMTQ1Ij4zIMK3IFByZWRpY3QgYSBjYXVzZTwvdGV4dD48dGV4dCB4PSI1MCIgeT0iMzY1Ij40IMK3IFRlc3Qgb25lIHByZWRpY3Rpb248L3RleHQ+PHRleHQgeD0iNDQ1IiB5PSIzNjUiPjUgwrcgTWFrZSBhIHNtYWxsIGZpeDwvdGV4dD48dGV4dCB4PSI4NTUiIHk9IjM2NSI+NiDCtyBQcm92ZSBpdCBzdGF5cyBmaXhlZDwvdGV4dD48L2c+PGcgZm9udC1zaXplPSIyMyI+PHRleHQgeD0iNTAiIHk9IjE5NSI+U2FtZSBpbnB1dCwgc2FtZSBmYWlsdXJlLjwvdGV4dD48dGV4dCB4PSI0NDUiIHk9IjE5NSI+V2hlcmUgZG9lcyBjb3JyZWN0IGRhdGE8L3RleHQ+PHRleHQgeD0iNDQ1IiB5PSIyMzAiPmZpcnN0IGJlY29tZSBpbmNvcnJlY3Q/PC90ZXh0Pjx0ZXh0IHg9Ijg1NSIgeT0iMTk1Ij5Xcml0ZSBkb3duIHdoYXQgeW91PC90ZXh0Pjx0ZXh0IHg9Ijg1NSIgeT0iMjMwIj5leHBlY3QgdG8gb2JzZXJ2ZS48L3RleHQ+PHRleHQgeD0iNTAiIHk9IjQxNSI+Q2hhbmdlIG9uZSB2YXJpYWJsZS48L3RleHQ+PHRleHQgeD0iNDQ1IiB5PSI0MTUiPlJlcGFpciB0aGUgY2F1c2UsIG5vdDwvdGV4dD48dGV4dCB4PSI0NDUiIHk9IjQ1MCI+anVzdCB0aGUgdmlzaWJsZSBzeW1wdG9tLjwvdGV4dD48dGV4dCB4PSI4NTUiIHk9IjQxNSI+UmVwZWF0IHRoZSByZXByb2R1Y3Rpb248L3RleHQ+PHRleHQgeD0iODU1IiB5PSI0NTAiPmFuZCBhZGQgYSByZWdyZXNzaW9uIHRlc3QuPC90ZXh0PjwvZz48dGV4dCB4PSI1MCIgeT0iNTU1IiBmb250LXNpemU9IjI2Ij5QcmVkaWN0aW9uIHdyb25nPyBLZWVwIHRoZSBldmlkZW5jZSwgZGlzY2FyZCB0aGUgaHlwb3RoZXNpcywgYW5kIHRyeSBhZ2Fpbi48L3RleHQ+PC9nPjxnIHN0cm9rZT0iIzI0NWFjNCIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIj48cGF0aCBkPSJNMzQ1IDE2NWg3MG0tMTUgLTEwbDE1IDEwIC0xNSAxME03NjAgMTY1aDY1bS0xNSAtMTBsMTUgMTAgLTE1IDEwTTEwMDAgMjUwdjM1SDE3MHY0MG0tMTAgLTE1bDEwIDE1IDEwIC0xNU0zNDUgMzkwaDcwbS0xNSAtMTBsMTUgMTAgLTE1IDEwTTc2MCAzOTBoNjVtLTE1IC0xMGwxNSAxMCAtMTUgMTAiLz48L2c+PC9zdmc+Cg==" alt="The debugging loop: reproduce, locate, predict, test, fix, and verify." /></p>
+<h3 id="what-the-diagram-teaches">What the diagram teaches</h3>
+<p>Imagine a learner reports: “I searched for FilePilot, but it isn&#39;t
+there.” You know the lesson exists. Your first instinct might be to
+rebuild the search index, clear the browser cache, or change the search
+component. Each could be relevant in some application, but none is
+justified yet.</p>
+<p>First ask for the exact input and the exact outcome. Did they enter
+<code>FilePilot</code>, <code>filepilot</code>, or a phrase containing
+extra spaces? Did the page show an error, show no results, or never stop
+loading? These are different failures with different likely causes.</p>
+<p>Now reproduce the report. Reproduction means a repeatable sequence,
+not “it happened once.” Write down the starting state, input, action,
+expected result, and actual result. If you cannot reproduce it, record
+differences between your environment and the user&#39;s environment instead
+of declaring it fixed.</p>
+<p>A <strong>hypothesis</strong> is a proposed explanation that makes a
+testable prediction. “The code is broken” is not a useful hypothesis.
+“Only one side of the comparison is converted to lowercase” is useful:
+it predicts that changing only the input&#39;s letter case will change the
+result.</p>
+<p>An <strong>experiment</strong> tests that prediction. A small fix
+follows only after the evidence supports the cause. A <strong>regression
+test</strong> preserves the discovery so the same mistake is caught if
+someone introduces it again.</p>
+<h3 id="keep-a-debugging-notebook">Keep a debugging notebook</h3>
+<p>Use this template for every exercise:</p>
+<pre class="text"><code>Problem:
+Exact reproduction:
+Expected:
+Actual:
+Hypothesis:
+Prediction if my hypothesis is true:
+Experiment:
+Observed evidence:
+Conclusion:
+Fix and regression test:
+Remaining uncertainty:</code></pre>
+<p>Do not erase a rejected hypothesis. “Cache was suspected, but two
+fresh requests produce different results solely by changing case” is
+useful evidence. It explains why you stopped looking in that
+direction.</p>
+<p><strong>Checkpoint:</strong> Describe the difference between an
+observation and an explanation. “The response contains an empty list” is
+an observation. “The database lost the record” is an explanation that
+still needs evidence.</p>
+<h2 id="lesson-2--run-the-app-and-reproduce-the-failure">Lesson 2 — Run
+the app and reproduce the failure</h2>
+<h3 id="set-up-a-separate-practice-folder">Set up a separate practice
+folder</h3>
+<p>The starter is inside this repository at
+<code>docs/training/debugging/exercises/debug-lab</code>. Copy it to a
+fresh folder outside the learning repository. These PowerShell commands
+refuse to overwrite an existing practice directory:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span><span class="fu">Test-Path</span> <span class="op">-</span>LiteralPath E<span class="op">:</span>\debug-lab<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">throw</span> <span class="st">&#39;Choose a new practice folder first.&#39;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">Copy-Item</span> <span class="op">-</span>LiteralPath E<span class="op">:</span>\image-course\docs\training\debugging\exercises\debug-lab <span class="op">-</span>Destination E<span class="op">:</span>\debug-lab <span class="op">-</span>Recurse</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">Set-Location</span> E<span class="op">:</span>\debug-lab</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>npm <span class="fu">start</span></span></code></pre></div>
+<p>Open <code>http://127.0.0.1:4174</code> in your browser. Leave the
+terminal running; Ctrl+C stops the server. If you get
+<code>EADDRINUSE</code>, another process is using that port. Stop your
+own earlier lab server, not an unfamiliar process. If the browser says
+connection refused, confirm the server actually started before
+inspecting application logic.</p>
+<h3 id="understand-the-files-before-editing">Understand the files before
+editing</h3>
+<pre class="text"><code>debug-lab/
+├── package.json    Names the start, test, and debug commands
+├── index.html      Form, browser fetch call, result list, and error message
+├── server.mjs      HTTP routing, query parsing, response, and request logs
+├── search.mjs      Sample lessons, matching behavior, and limit parsing
+└── tests.mjs       Small behavior tests and a real local HTTP test</code></pre>
+<p>There is no build step here. JavaScript runs directly, reducing
+distractions while you learn the investigation. A syntax check can still
+pass while the behavior is wrong, just as compilation could pass in the
+CI/CD course.</p>
+<h3 id="reproduce-bug-a">Reproduce Bug A</h3>
+<p>Leave the limit at 10. Search for <code>filepilot</code>, then
+<code>FilePilot</code>. Change only the capitalization, not the limit or
+code.</p>
+<table>
+<thead>
+<tr>
+<th>Input</th>
+<th>Expected</th>
+<th>Initial actual result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>filepilot</code></td>
+<td>FilePilot</td>
+<td>FilePilot</td>
+</tr>
+<tr>
+<td><code>FilePilot</code></td>
+<td>FilePilot</td>
+<td>No results</td>
+</tr>
+<tr>
+<td><code>filepilot</code></td>
+<td>FilePilot</td>
+<td>FilePilot</td>
+</tr>
+<tr>
+<td><code>not-a-lesson</code></td>
+<td>No results</td>
+<td>No results</td>
+</tr>
+</tbody>
+</table>
+<p>The requirement is case-insensitive search with surrounding
+whitespace ignored. Empty search is defined to show all lessons, subject
+to the limit. These are product decisions, not universal rules for all
+search engines.</p>
+<p>Notice how much this tiny matrix tells you. The lesson exists, at
+least one search reaches it, and trimming already works for lowercase
+input. A missing record is now less likely than a comparison
+problem.</p>
+<h3 id="observe-the-failing-tests">Observe the failing tests</h3>
+<p>In a second PowerShell terminal, enter the practice folder and
+run:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>node <span class="op">--</span>check search<span class="op">.</span><span class="fu">mjs</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>npm test</span></code></pre></div>
+<p>Initially, syntax checking passes. Five tests pass and three fail:
+the mixed-case search check, the zero-limit check, and the combined HTTP
+check. The HTTP test stops at its first failed assertion, so it does not
+yet tell you whether its later assertions would pass.</p>
+<p><strong>Checkpoint:</strong> Reproduce Bug A twice and write a report
+that someone else can follow without speaking to you.</p>
+<h2 id="lesson-3--follow-the-request-across-boundaries">Lesson 3 —
+Follow the request across boundaries</h2>
+<p><img role="img" aria-label="The query travels from browser to HTTP handler to search function; the first wrong decision happens in matching, not in rendering." src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjcwMCIgdmlld0JveD0iMCAwIDEyMDAgNzAwIj48cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI3MDAiIHJ4PSIyNCIgZmlsbD0iI2VkZjRmZiIvPjxnIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSxBcmlhbCxzYW5zLXNlcmlmIiBmaWxsPSIjMTczOTY0Ij48dGV4dCB4PSI1MCIgeT0iNjUiIGZvbnQtc2l6ZT0iMzYiIGZvbnQtd2VpZ2h0PSI3MDAiPkZvbGxvdyB0aGUgcmVxdWVzdC4gRmluZCB0aGUgZmlyc3Qgd3JvbmcgdmFsdWUuPC90ZXh0PjwvZz48ZyBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSIjYjhjZmVkIiBzdHJva2Utd2lkdGg9IjIiPjxyZWN0IHg9IjUwIiB5PSIxMTUiIHdpZHRoPSIxMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjE1Ii8+PHJlY3QgeD0iNTAiIHk9IjI1NSIgd2lkdGg9IjExMDAiIGhlaWdodD0iMTAwIiByeD0iMTUiLz48cmVjdCB4PSI1MCIgeT0iMzk1IiB3aWR0aD0iMTEwMCIgaGVpZ2h0PSIxMDAiIHJ4PSIxNSIvPjxyZWN0IHg9IjUwIiB5PSI1MzUiIHdpZHRoPSIxMTAwIiBoZWlnaHQ9IjExMCIgcng9IjE1Ii8+PC9nPjxnIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSxBcmlhbCxzYW5zLXNlcmlmIiBmaWxsPSIjMTczOTY0IiBmb250LXNpemU9IjI1Ij48dGV4dCB4PSI4MCIgeT0iMTU1IiBmb250LXdlaWdodD0iNzAwIj5Ccm93c2VyOiB1c2VyIHR5cGVzIEZpbGVQaWxvdDwvdGV4dD48dGV4dCB4PSI4MCIgeT0iMTkyIj5UaGUgcmVxdWVzdCBjb3JyZWN0bHkgaW5jbHVkZXMgcT1GaWxlUGlsb3QgYW5kIGxpbWl0PTEwLjwvdGV4dD48dGV4dCB4PSI4MCIgeT0iMjk1IiBmb250LXdlaWdodD0iNzAwIj5IVFRQIGhhbmRsZXI6IHJlYWRzIHRoZSBxdWVyeTwvdGV4dD48dGV4dCB4PSI4MCIgeT0iMzMyIj5UaGUgaW5wdXQgaXMgc3RpbGwgRmlsZVBpbG90LiBUaGUgbmV0d29yayBkaWQgbm90IGxvc2UgaXQuPC90ZXh0Pjx0ZXh0IHg9IjgwIiB5PSI0MzUiIGZvbnQtd2VpZ2h0PSI3MDAiPlNlYXJjaCBmdW5jdGlvbjogY29tcGFyZXMgZGlmZmVyZW50IGxldHRlciBjYXNlczwvdGV4dD48dGV4dCB4PSI4MCIgeT0iNDcyIj5maWxlcGlsb3QuaW5jbHVkZXMoRmlsZVBpbG90KSBpcyBmYWxzZS4gVGhpcyBpcyB0aGUgZmlyc3QgaW5jb3JyZWN0IGRlY2lzaW9uLjwvdGV4dD48dGV4dCB4PSI4MCIgeT0iNTc1IiBmb250LXdlaWdodD0iNzAwIj5SZXNwb25zZSBhbmQgc2NyZWVuOiBmYWl0aGZ1bGx5IGRpc3BsYXkgYW4gZW1wdHkgbGlzdDwvdGV4dD48dGV4dCB4PSI4MCIgeT0iNjEyIj5IVFRQIDIwMCBtZWFucyB0aGUgcmVxdWVzdCBzdWNjZWVkZWTigJRub3QgdGhhdCB0aGUgYW5zd2VyIGlzIGNvcnJlY3QuPC90ZXh0PjwvZz48ZyBzdHJva2U9IiMyNDVhYzQiIHN0cm9rZS13aWR0aD0iNCI+PHBhdGggZD0iTTYwMCAyMjB2MzBtLTEwIC0xMmwxMCAxMiAxMCAtMTJNNjAwIDM2MHYzMG0tMTAgLTEybDEwIDEyIDEwIC0xMk02MDAgNTAwdjMwbS0xMCAtMTJsMTAgMTIgMTAgLTEyIi8+PC9nPjwvc3ZnPgo=" alt="The query travels from browser to HTTP handler to search function; the first wrong decision happens in matching, not in rendering." /></p>
+<h3 id="what-the-diagram-teaches-1">What the diagram teaches</h3>
+<p>The browser collects input and sends a request. The server extracts
+parameters and calls the search function. The function returns matches.
+The server serializes them into JSON. The browser displays the returned
+titles.</p>
+<p>Each boundary is an opportunity to compare expected and actual
+values. If the outgoing query is already wrong, investigate the form. If
+the request is correct but the response is wrong, move toward the
+server. If the response is correct but the display is wrong, focus on
+browser rendering.</p>
+<h3 id="inspect-the-browsers-network-panel">Inspect the browser&#39;s
+Network panel</h3>
+<p>Open the lab in desktop Chrome. Right-click the page and choose
+<strong>Inspect</strong>, then select <strong>Network</strong>. Keep the
+panel open and submit <code>FilePilot</code>. Select the request whose
+path starts with <code>/api/search</code>. Examine its URL, status,
+response headers, and JSON response. The Network panel records requests
+while open. <a href="https://developer.chrome.com/docs/devtools/network/overview">Chrome&#39;s
+Network panel guide</a></p>
+<p>You should see <code>q=FilePilot</code>, <code>limit=10</code>, HTTP
+status 200, and an empty <code>results</code> array. The input reached
+the server correctly. The server successfully handled the request but
+returned a logically wrong answer. <strong>HTTP 200 is not a certificate
+of feature correctness.</strong></p>
+<p>The response contains a request ID. The <code>X-Request-ID</code>
+header contains the same ID. Find it in the terminal&#39;s JSON log line.
+This connects one browser request to one server event without relying on
+approximate timestamps.</p>
+<h3 id="bypass-the-browser-to-narrow-the-problem">Bypass the browser to
+narrow the problem</h3>
+<p>With the server still running:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Invoke-RestMethod</span> <span class="st">&#39;http://127.0.0.1:4174/api/search?q=FilePilot&amp;limit=10&#39;</span> <span class="op">|</span> <span class="fu">ConvertTo-Json</span> <span class="op">-</span>Depth <span class="dv">5</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="dt">Invoke</span><span class="op">-</span>RestMethod <span class="st">&#39;http://127.0.0.1:4174/api/search?q=filepilot&amp;limit=10&#39;</span> <span class="op">|</span> <span class="fu">ConvertTo-Json</span> <span class="op">-</span>Depth <span class="dv">5</span></span></code></pre></div>
+<p>These requests reproduce the difference without the form. That is
+evidence against a form-only bug, not proof that the whole browser is
+flawless.</p>
+<p>Next call the function directly:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>node <span class="op">--</span>input-type<span class="op">=</span>module <span class="op">-</span>e <span class="st">&quot;import {searchLessons} from &#39;./search.mjs&#39;; console.log(searchLessons(&#39;FilePilot&#39;));&quot;</span></span></code></pre></div>
+<p>The function returns an empty list even without HTTP. You have
+narrowed the investigation from “the website is broken” to one small
+function. This is a <strong>minimal reproduction</strong>: remove
+unnecessary layers while keeping the failure.</p>
+<p><strong>Checkpoint:</strong> Explain why an empty API response means
+you should not begin by changing the list&#39;s CSS.</p>
+<h2 id="lesson-4--pause-execution-and-inspect-the-evidence">Lesson 4 —
+Pause execution and inspect the evidence</h2>
+<h3 id="browser-code-and-server-code-are-different-processes">Browser
+code and server code are different processes</h3>
+<p>The page&#39;s developer tools can pause code running in that page. They
+cannot automatically pause <code>search.mjs</code>, which runs in Node.
+To inspect server variables, start Node with its debugger enabled.</p>
+<p>Stop the normal lab server. Run:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>npm run debug</span></code></pre></div>
+<p>The command uses <code>--inspect-brk=127.0.0.1:9229</code>. It opens
+a local inspector and pauses before user code begins. In desktop Chrome,
+open <code>chrome://inspect</code>, find the Node target, and choose
+<strong>inspect</strong>. Resume execution so the server begins
+listening. Never expose the inspector on a public network; debugger
+access can control the process. <a href="https://nodejs.org/en/learn/getting-started/debugging">Node&#39;s
+debugging guide</a></p>
+<p>In the Node debugger&#39;s Sources panel, open <code>search.mjs</code>.
+Put a line breakpoint on the <code>const matches</code> statement.
+Submit <code>FilePilot</code> in the lab page. Execution should stop
+before the comparison is evaluated. A line breakpoint pauses at a chosen
+statement; the debugger exposes local values and the call stack. <a href="https://developer.chrome.com/docs/devtools/javascript/breakpoints">Chrome&#39;s
+breakpoint guide</a></p>
+<h3 id="what-to-inspect">What to inspect</h3>
+<p>Look at <code>query</code>, <code>needle</code>, and
+<code>limit</code>. With this request, the values should be
+<code>FilePilot</code>, <code>FilePilot</code>, and <code>10</code>.
+Inspect the FilePilot lesson&#39;s title. The predicate converts that title
+to <code>filepilot</code>, but leaves the needle as
+<code>FilePilot</code>.</p>
+<p>Evaluate these read-only expressions while paused:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;filepilot&#39;</span><span class="op">.</span><span class="fu">includes</span>(<span class="st">&#39;FilePilot&#39;</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;filepilot&#39;</span><span class="op">.</span><span class="fu">includes</span>(<span class="st">&#39;filepilot&#39;</span>)</span></code></pre></div>
+<p>The first is false; the second is true. You have observed the precise
+incorrect decision. The underlying string operation is doing what it was
+asked to do. Our implementation failed to express the intended
+case-insensitive comparison.</p>
+<p><strong>Step over</strong> advances one statement without following
+every nested call. <strong>Step into</strong> enters a called function.
+<strong>Resume</strong> continues to the next breakpoint or completion.
+The <strong>call stack</strong> shows the chain of calls that brought
+execution here. Use these deliberately; repeatedly clicking controls
+without a question is another form of guessing.</p>
+<p>If the browser keeps waiting while you inspect variables, that is
+expected: you paused the server before it could answer. Resume it before
+diagnosing a “slow request.” Debuggers change timing.</p>
+<h3 id="fix-a-only-after-writing-the-prediction">Fix A only after
+writing the prediction</h3>
+<p>Prediction: normalizing the query as well as the title should make
+both letter cases return the same result without breaking the existing
+whitespace behavior.</p>
+<p>Replace this line:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> needle <span class="op">=</span> query<span class="op">.</span><span class="fu">trim</span>()<span class="op">;</span></span></code></pre></div>
+<p>with:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> needle <span class="op">=</span> query<span class="op">.</span><span class="fu">trim</span>()<span class="op">.</span><span class="fu">toLowerCase</span>()<span class="op">;</span></span></code></pre></div>
+<p>Restart Node after saving; this app does not automatically reload
+server modules. Run the tests. You should now see <strong>six passing
+and two failing tests</strong>: zero-limit parsing and the HTTP test,
+which now reaches its zero-limit assertion. This distinction is worth
+noticing: fixing the first assertion reveals the next failure in the
+same test.</p>
+<p>Repeat the browser searches. A passing function test alone does not
+prove that the running server has loaded your edited file.</p>
+<p><strong>Checkpoint:</strong> Explain the cause without saying only “I
+added lowercase.” Explain why one-sided normalization violated the
+agreed behavior.</p>
+<h2 id="lesson-5--investigate-the-zero-that-disappeared">Lesson 5 —
+Investigate the zero that disappeared</h2>
+<p>Now enter lowercase <code>filepilot</code> and a limit of
+<code>0</code>. The requirement says a zero limit returns zero records.
+Initially, the app still returns FilePilot.</p>
+<p>Inspect the Network request. It includes <code>limit=0</code>, so the
+browser sent the value. Inspect the server log for the same request ID:
+it records a parsed limit of 10. The wrong value appeared between
+receiving the parameter and calling the search function.</p>
+<p>Open <code>parseLimit</code> in <code>search.mjs</code>. It converts
+the incoming string to a number and validates it. Zero passes validation
+because it is an integer in the allowed range. But the last line
+says:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="cf">return</span> value <span class="op">||</span> <span class="dv">10</span><span class="op">;</span></span></code></pre></div>
+<p><code>||</code> chooses the right-hand value when the left-hand value
+is falsy. Zero is falsy. “Falsy” is a JavaScript classification; it does
+not mean “missing according to our product requirements.” The code has
+confused a valid value with absence.</p>
+<p>The function already handles absence explicitly:
+<code>raw === null</code> returns 10. After validation, simply return
+the value:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="cf">return</span> value<span class="op">;</span></span></code></pre></div>
+<p>Do not mechanically replace every <code>||</code> with
+<code>??</code> in the repository. That might be appropriate elsewhere,
+but first establish the types and requirements at each location. Here
+the simplest fix is to remove the unnecessary fallback.</p>
+<p>Restart the server. Repeat the zero-limit request and run
+<code>npm test</code>. All eight tests should pass. Also try a missing
+limit: the API should still default to 10. Try <code>-1</code>: the API
+should return status 400. The browser&#39;s numeric input helps ordinary
+users, but direct API callers can bypass it, so the server must validate
+too.</p>
+<p><strong>Checkpoint:</strong> Show the raw value, converted value,
+faulty fallback result, and corrected result. Identify exactly where the
+valid zero was lost.</p>
+<h2 id="lesson-6--logs-errors-and-misleading-clues">Lesson 6 — Logs,
+errors, and misleading clues</h2>
+<h3 id="log-what-helps-you-make-a-decision">Log what helps you make a
+decision</h3>
+<p>The starter logs request ID, route, parsed limit, result count, and
+status. It deliberately does not log the raw search query. A real query
+might contain a person&#39;s name, patient information, or confidential
+text. More logs are not always better logs.</p>
+<p>For synthetic local data, temporary diagnostics can be useful. Before
+adding one, ask what hypothesis it will distinguish. Remove unnecessary
+diagnostics afterward. Do not print credentials, whole request headers,
+private documents, or database connection strings.</p>
+<h3 id="read-a-stack-trace-from-the-relevant-frame">Read a stack trace
+from the relevant frame</h3>
+<p>A stack trace lists the calls involved when an error occurred. Begin
+with the first frame in code you own, then inspect its caller and input.
+A library name in the trace does not prove that the library is
+defective; your code may have supplied an invalid argument.</p>
+<p>Our server catches validation errors and returns a controlled 400
+response. That is different from an unexpected server crash. In a
+production app, separate known input errors from unexpected exceptions,
+record sanitized internal diagnostics, and do not expose arbitrary
+exception messages to clients. This lab is a small local teaching
+server, not a production-ready error-handling template.</p>
+<h3 id="works-on-my-machine-is-an-environment-question">“Works on my
+machine” is an environment question</h3>
+<p>Compare source commit, Node version, configuration, data, and exact
+request. This lab&#39;s case bug can appear environment-specific simply
+because one person types lowercase and another uses capitals. Reproduce
+the same input before blaming deployment.</p>
+<p>For a genuine deployment-only failure, record
+<code>git rev-parse HEAD</code> and <code>node --version</code>, verify
+the intended build and environment, and examine the response. Check for
+stale assets only when the evidence points there. Clearing everything at
+once destroys information about which difference mattered.</p>
+<p><strong>Checkpoint:</strong> Write a useful log event for FilePilot
+that identifies a failed operation without exposing a private filename
+or file contents.</p>
+<h2 id="lesson-7--prove-the-fix-and-connect-it-to-ci">Lesson 7 — Prove
+the fix and connect it to CI</h2>
+<p>The lab includes unit-level checks for individual functions and an
+integration check that starts a real HTTP server on a temporary free
+port. The HTTP check uses the actual routing and JSON response. It still
+does not exercise the DOM, keyboard navigation, or visual layout. Those
+need browser checks.</p>
+<p>The provided tests make this workshop repeatable, but on your own
+project you often have to write the failing test. First add an assertion
+that reproduces the report. Confirm it fails for the intended reason.
+Apply the smallest justified fix. Confirm it passes, then run related
+tests and the original manual reproduction.</p>
+<p>For this dependency-free lab, a CI job can run <code>npm test</code>
+after checkout and Node setup. Do not copy <code>npm ci</code> from
+another project without a lockfile and dependency setup. For your real
+website, preserve its existing build, content verification, and
+installation steps, then add the relevant regression tests.</p>
+<h3 id="a-concise-review-note">A concise review note</h3>
+<pre class="text"><code>Symptom: FilePilot search returned no result for mixed-case input.
+Cause: Titles were normalized to lowercase; the query was not.
+Change: Normalize the trimmed query before matching.
+Evidence: Mixed-case regression test, HTTP test, and browser reproduction.
+Separate fix: Preserve an explicit zero limit after validation.
+Limitations: This does not implement language-aware Unicode search.</code></pre>
+<p>Keep fixes separate from unrelated refactoring. A reviewer can reason
+about a one-line normalization change much more easily than a rewritten
+search system mixed with styling changes.</p>
+<p><strong>Checkpoint:</strong> Explain what the tests prove, what the
+browser check proves, and what neither proves.</p>
+<h2 id="lesson-8--your-independent-debugging-challenge">Lesson 8 — Your
+independent debugging challenge</h2>
+<p>Before looking at any solution, investigate a third edge case: a
+direct request with <code>limit=</code>—an empty value, not an absent
+parameter. Define a new requirement that this must be rejected with
+status 400.</p>
+<p>The current parser converts an empty string to zero. That means the
+existing validation accepts it. You have discovered a gap in the input
+contract, not a regression in the two fixes you already made.</p>
+<p>Write a failing parser test and an HTTP assertion. Inspect
+<code>raw</code> before numeric conversion. Decide how whitespace-only
+input should behave and test that too. Make a small validation change,
+keep missing-limit default behavior, and rerun the full suite. This
+challenge is intentionally not solved in the starter or automatic
+verification.</p>
+<h3 id="use-ai-as-an-investigation-partner">Use AI as an investigation
+partner</h3>
+<p>A good prompt is: “Here is the exact reproduction, response, relevant
+function, and failing assertion. Give me two hypotheses and a small
+experiment to distinguish them.” A weaker prompt is: “Fix everything.”
+Ask the AI to explain evidence before accepting a patch. Never share
+private logs or secrets just to get a diagnosis.</p>
+<h3 id="apply-the-method-to-your-bigger-projects">Apply the method to
+your bigger projects</h3>
+<table>
+<thead>
+<tr>
+<th>Project</th>
+<th>Boundary to trace</th>
+<th>Useful deterministic check</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Learning website</td>
+<td>Search input → index query → article navigation</td>
+<td>The expected article ID appears for the known query</td>
+</tr>
+<tr>
+<td>MCP tool server</td>
+<td>Caller → authorization → tool handler</td>
+<td>A denied caller never reaches the restricted handler</td>
+</tr>
+<tr>
+<td>RAG assistant</td>
+<td>Identity → allowed documents → retrieved chunks</td>
+<td>Restricted chunks are absent before generation</td>
+</tr>
+<tr>
+<td>A2A workflow</td>
+<td>Incoming task → task ID → action record</td>
+<td>A repeated task does not repeat the side effect</td>
+</tr>
+<tr>
+<td>FilePilot</td>
+<td>Approved proposal → resolved path → operation</td>
+<td>The operation stays within the authorized sandbox</td>
+</tr>
+</tbody>
+</table>
+<p>In AI systems, isolate deterministic code from variable model output.
+Do not debug an access-control failure by repeatedly changing the prompt
+until one response looks safe. Locate and test the actual permission
+boundary.</p>
+<h2 id="pocket-legend-and-completion-checklist">Pocket legend and
+completion checklist</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Plain-English meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reproduction</td>
+<td>A repeatable sequence that reveals the problem</td>
+</tr>
+<tr>
+<td>Hypothesis</td>
+<td>An explanation with a prediction you can test</td>
+</tr>
+<tr>
+<td>Breakpoint</td>
+<td>A place where execution pauses for inspection</td>
+</tr>
+<tr>
+<td>Call stack</td>
+<td>The chain of function calls that led here</td>
+</tr>
+<tr>
+<td>Boundary</td>
+<td>Where one component passes information to another</td>
+</tr>
+<tr>
+<td>Request ID</td>
+<td>An identifier connecting a request with its logs</td>
+</tr>
+<tr>
+<td>Regression test</td>
+<td>A check protecting against a known bug returning</td>
+</tr>
+<tr>
+<td>Root cause</td>
+<td>The underlying decision or condition producing the failure</td>
+</tr>
+<tr>
+<td>Falsy</td>
+<td>A language rule, not proof that a value is absent</td>
+</tr>
+</tbody>
+</table>
+<p>You are ready to move on when you can reproduce both bugs, narrow
+each to a function, inspect runtime values, explain each fix, and
+demonstrate the regression checks. Save your investigation notes
+alongside your practice work. The useful outcome is not merely a fixed
+app—it is a method you can repeat on an unfamiliar one.</p>
+<p>The HTML edition embeds both diagrams and uses the library&#39;s large
+blue reading style. The starter remains deliberately broken. Cloud
+deployment and live website settings are unchanged. Tool references were
+checked on 27 August 2026; browser interface labels can change.</p>
+</main>
+<dialog id="diagram-dialog" aria-label="Enlarged diagram">
+<div class="zoom-toolbar"><span>Diagram detail</span><button type="button" id="diagram-close">Close</button></div>
+<div class="zoom-body"><img id="diagram-large" alt></div>
+</dialog>
+<script>
+const diagramDialog = document.getElementById('diagram-dialog');
+const diagramLarge = document.getElementById('diagram-large');
+document.querySelectorAll('main img').forEach((picture) => {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'diagram-button';
+  button.textContent = 'Enlarge diagram';
+  button.addEventListener('click', () => {
+    diagramLarge.src = picture.src;
+    diagramLarge.alt = picture.alt;
+    diagramDialog.showModal();
+  });
+  picture.insertAdjacentElement('afterend', button);
+});
+document.getElementById('diagram-close').addEventListener('click', () => diagramDialog.close());
+</script>
+</body>
+</html>

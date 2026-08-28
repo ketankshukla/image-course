@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Git Collaboration and Code Review</title>
+<style type="text/css">:root{color-scheme:light;--ink:#19283c;--muted:#56667a;--blue:#145bd8;--navy:#081a33;--line:#dce5ef;--paper:#fff;--bg:#edf2f7}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:30px}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.75 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:#145ac0;text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:3px solid #d58b00;outline-offset:4px}
+.skip{position:fixed;top:-100px;left:16px;z-index:10;background:white;padding:10px}
+.skip:focus{top:10px}
+aside{position:fixed;inset:0 auto 0 0;width:284px;overflow:auto;padding:30px 22px;background:var(--navy);color:#e9f0fa;border-right:1px solid #244363}
+.brand{font-size:12px;letter-spacing:.17em;text-transform:uppercase;color:#76dcf3;font-weight:700}
+aside h2{font-size:22px;line-height:1.3;margin:12px 0 22px;color:white;border:0;padding:0}
+aside ul{list-style:none;margin:0;padding:0}
+aside li{margin:0 0 5px}
+aside li ul{margin-left:0}
+aside a{display:block;padding:7px 10px;border-radius:6px;color:#d2deed;text-decoration:none;font-size:13px;line-height:1.45}
+aside a:hover{background:#193554;color:white}
+.rail-footer{margin-top:22px;border-top:1px solid #2c4260;padding-top:20px;color:#9db0c9;font-size:12px}
+main{margin-left:284px;padding:42px clamp(24px,4vw,72px) 90px;max-width:1550px}
+.toolbar{display:flex;align-items:center;gap:15px;justify-content:space-between;margin-bottom:30px;font-size:12px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+button{font:600 13px system-ui;border:1px solid #c9d7e8;background:#fff;color:#164176;padding:10px 15px;border-radius:8px;cursor:pointer}
+button:hover{background:#e6f0ff}
+h1{font-size:clamp(40px,4.4vw,66px);line-height:1.1;letter-spacing:-.045em;background:linear-gradient(120deg,#07172e,#124481);color:white;border-radius:20px;padding:40px;margin:0 0 34px;box-shadow:0 18px 45px #0b254025}
+h2{font-size:30px;line-height:1.3;color:#103e7c;letter-spacing:-.025em;margin:58px 0 22px;padding-top:23px;border-top:3px solid #2367c9}
+h3{font-size:23px;line-height:1.35;color:#075e76;letter-spacing:-.02em;margin:34px 0 15px}
+p{margin:16px 0;max-width:90ch}
+li{margin:7px 0}
+strong{color:#113862}
+blockquote{background:#e1f1f7;border-left:5px solid #068caf;border-radius:0 12px 12px 0;margin:28px 0;padding:12px 25px;color:#184050}
+figure{margin:28px 0 32px}
+figure img{display:block;width:100%;height:auto;border-radius:14px;background:#07172d;box-shadow:0 12px 28px #0a254025}
+figcaption{font-size:14px;line-height:1.6;color:var(--muted);padding:13px 2px}
+.diagram-button{margin-top:9px;font-size:12px}
+img{max-width:100%;height:auto}
+pre{padding:23px 25px;overflow:auto;background:#091b32;color:#dfedff;border:1px solid #203a56;border-radius:12px;line-height:1.6;tab-size:4}
+code{font-family:"Cascadia Code",Consolas,monospace;font-size:.85em}
+:not(pre)>code{background:#e3eaf3;color:#98305b;padding:.12em .32em;border-radius:4px;overflow-wrap:anywhere}
+pre code{white-space:pre;color:inherit}
+table{border-collapse:separate;border-spacing:0;display:block;overflow-x:auto;max-width:100%;margin:24px 0 30px;border:1px solid var(--line);border-radius:10px;background:white;font-size:15px;line-height:1.6}
+th,td{text-align:left;vertical-align:top;padding:13px 16px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-width:130px}
+th{background:#103c78;color:white;font-weight:650}
+tr:nth-child(even) td{background:#f4f7fb}
+tr:last-child td{border-bottom:0}
+th:last-child,td:last-child{border-right:0}
+hr{border:0;border-top:1px solid var(--line);margin:40px 0}
+dialog{border:1px solid #375679;border-radius:15px;padding:0;background:#07172e;color:white;width:96vw;max-width:1900px;max-height:96vh;overflow:hidden}
+dialog::backdrop{background:#030b17dd}
+.zoom-toolbar{display:flex;gap:10px;align-items:center;justify-content:flex-end;padding:12px 18px;background:#102943}
+.zoom-toolbar span{margin-right:auto;font-size:14px}
+.zoom-body{overflow:auto;max-height:82vh;padding:12px}
+.zoom-body img{display:block;width:100%;max-width:none;margin:auto;height:auto}
+footer{margin-top:60px;border-top:1px solid var(--line);padding-top:20px;font-size:13px;color:var(--muted)}
+@media(max-width:1000px){aside{position:relative;width:auto;padding:24px}aside nav ul{columns:2}aside li{break-inside:avoid}.rail-footer{display:none}main{margin-left:0;padding:28px 24px 60px}}
+@media(max-width:600px){body{font-size:16px}aside nav ul{columns:1}aside{max-height:330px}main{padding:22px 16px 50px}h1{font-size:38px;padding:27px}h2{font-size:26px}h3{font-size:21px}.toolbar{font-size:10px}pre{padding:17px;font-size:14px}.zoom-toolbar{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{aside,.toolbar,.diagram-button,dialog{display:none!important}body{background:white;font-size:11pt}main{margin:0;max-width:none;padding:0}h1{color:#12345a;background:none;padding:0;box-shadow:none;font-size:32pt}h2,h3{break-after:avoid}figure,blockquote{break-inside:avoid}pre{background:#f3f5f9;color:#152f4e;white-space:pre-wrap}pre code{white-space:pre-wrap}table{display:table;font-size:9pt}th,td{min-width:0;padding:7px}figure img{box-shadow:none}}
+</style><style type="text/css">
+body{font-size:24px;line-height:1.7}
+main{max-width:1500px}
+p{max-width:65ch}
+h2{font-size:36px}
+h3{font-size:28px;color:#17478a}
+blockquote{background:#edf4ff;border-left-color:#245ac4;color:#19283c}
+table{font-size:21px}
+figcaption{font-size:20px}
+pre{font-size:20px}
+:not(pre)>code{background:#edf4ff;color:#17478a}
+button{min-height:44px;font-size:16px}
+aside a{font-size:15px}
+.brand{color:#c4d8fa}
+a:focus-visible,button:focus-visible{outline-color:#245ac4}
+@media(max-width:600px){body{font-size:24px}h2{font-size:32px}h3{font-size:27px}pre{font-size:18px}aside a{font-size:15px}}
+@media print{body{font-size:12pt}h2{font-size:22pt}h3{font-size:17pt}table{font-size:10pt}pre{font-size:10pt}}
+</style>
+</head>
+<body>
+<a class="skip" href="#content">Skip to document</a>
+<aside aria-label="Document contents">
+<div class="brand">Visual learning library</div>
+<h2>Git Team Workshop</h2>
+<ul>
+<li><a href="#git-collaboration-and-code-review" id="toc-git-collaboration-and-code-review">Git Collaboration and Code
+Review</a>
+<ul>
+<li><a href="#at-a-glance" id="toc-at-a-glance">At a glance</a></li>
+<li><a href="#lesson-1--understand-the-shared-record" id="toc-lesson-1--understand-the-shared-record">Lesson 1 — Understand
+the shared record</a></li>
+<li><a href="#lesson-2--rehearse-a-conflict-safely" id="toc-lesson-2--rehearse-a-conflict-safely">Lesson 2 — Rehearse a
+conflict safely</a></li>
+<li><a href="#lesson-3--resolve-meaning-not-just-markers" id="toc-lesson-3--resolve-meaning-not-just-markers">Lesson 3 — Resolve
+meaning, not just markers</a></li>
+<li><a href="#lesson-4--undo-without-rewriting-everyone-elses-history" id="toc-lesson-4--undo-without-rewriting-everyone-elses-history">Lesson
+4 — Undo without rewriting everyone else&#39;s history</a></li>
+<li><a href="#lesson-5--review-like-a-teammate" id="toc-lesson-5--review-like-a-teammate">Lesson 5 — Review like a
+teammate</a></li>
+<li><a href="#lesson-6--your-independent-challenge" id="toc-lesson-6--your-independent-challenge">Lesson 6 — Your
+independent challenge</a></li>
+</ul></li>
+</ul>
+<div class="rail-footer">Self-contained reading edition<br>Diagrams and styles embedded</div>
+</aside>
+<main id="content">
+<div class="toolbar"><span>Illustrated reference guide</span><button type="button" onclick="window.print()">Print / Save PDF</button></div>
+<h1 id="git-collaboration-and-code-review">Git Collaboration and Code
+Review</h1>
+<h2 id="at-a-glance">At a glance</h2>
+<p>This workshop teaches you to work on shared history without treating
+every disagreement as an emergency. You will create a branch, make
+focused commits, reproduce a real merge conflict, preserve both
+contributors&#39; requirements, and undo a bad change using a new commit. A
+disposable local Git lab verifies the mechanics without pushing anything
+to GitHub or changing your real repository.</p>
+<p>You need Git and Python 3.10 or newer. The supplied script creates
+its own temporary repository, sets a synthetic identity only for its
+subprocesses, and removes that temporary repository afterward. It does
+not use your remote repository. The manual exercise is for a separate
+empty practice folder.</p>
+<p><img role="img" aria-label="Two contributions converge through review and an explicit merge resolution." src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9Ijc5MCIgdmlld0JveD0iMCAwIDEyMDAgNzkwIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IkdpdCBDb2xsYWJvcmF0aW9uIGFuZCBDb2RlIFJldmlldyBmbG93Ij48cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI3OTAiIHJ4PSIyNCIgZmlsbD0iI2VkZjRmZiIvPjxnIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSxBcmlhbCxzYW5zLXNlcmlmIiBmaWxsPSIjMTczOTY0Ij48dGV4dCB4PSI1MCIgeT0iNjAiIGZvbnQtc2l6ZT0iMzIiIGZvbnQtd2VpZ2h0PSI3MDAiPkdpdCBDb2xsYWJvcmF0aW9uIGFuZCBDb2RlIFJldmlldzwvdGV4dD48cmVjdCB4PSI1MCIgeT0iMTU1IiB3aWR0aD0iNTIwIiBoZWlnaHQ9IjE5NSIgcng9IjE4IiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSIjYjhjZmVkIiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSI3NSIgeT0iMTk3IiBmb250LXNpemU9IjI1IiBmb250LXdlaWdodD0iNzAwIj4xIMK3IFNlcGFyYXRlIGNvbnRyaWJ1dGlvbnM8L3RleHQ+PHRleHQgeD0iNzUiIHk9IjI2OCIgZm9udC1zaXplPSIyMyI+UmV2aWV3ZXIgcmVxdWlyZW1lbnQgYW5kIGV2aWRlbmNlPC90ZXh0Pjx0ZXh0IHg9Ijc1IiB5PSIzMDAiIGZvbnQtc2l6ZT0iMjMiPnJlcXVpcmVtZW50PC90ZXh0PjxyZWN0IHg9IjYzMCIgeT0iMTU1IiB3aWR0aD0iNTIwIiBoZWlnaHQ9IjE5NSIgcng9IjE4IiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSIjYjhjZmVkIiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSI2NTUiIHk9IjE5NyIgZm9udC1zaXplPSIyNSIgZm9udC13ZWlnaHQ9IjcwMCI+MiDCtyBJbnNwZWN0IHRoZSBjb25mbGljdDwvdGV4dD48dGV4dCB4PSI2NTUiIHk9IjI2OCIgZm9udC1zaXplPSIyMyI+UmVhZCBib3RoIGNoYW5nZXMgYW5kIHRoZWlyIGludGVuZGVkPC90ZXh0Pjx0ZXh0IHg9IjY1NSIgeT0iMzAwIiBmb250LXNpemU9IjIzIj5tZWFuaW5nPC90ZXh0PjxyZWN0IHg9IjUwIiB5PSI0MTUiIHdpZHRoPSI1MjAiIGhlaWdodD0iMTk1IiByeD0iMTgiIGZpbGw9IndoaXRlIiBzdHJva2U9IiNiOGNmZWQiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9Ijc1IiB5PSI0NTciIGZvbnQtc2l6ZT0iMjUiIGZvbnQtd2VpZ2h0PSI3MDAiPjMgwrcgQ29tYmluZSByZXF1aXJlbWVudHM8L3RleHQ+PHRleHQgeD0iNzUiIHk9IjUyOCIgZm9udC1zaXplPSIyMyI+UmVzb2x2ZSBkZWxpYmVyYXRlbHk7IGluc3BlY3QgdGhlPC90ZXh0Pjx0ZXh0IHg9Ijc1IiB5PSI1NjAiIGZvbnQtc2l6ZT0iMjMiPnN0YWdlZCBkaWZmPC90ZXh0PjxyZWN0IHg9IjYzMCIgeT0iNDE1IiB3aWR0aD0iNTIwIiBoZWlnaHQ9IjE5NSIgcng9IjE4IiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSIjYjhjZmVkIiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSI2NTUiIHk9IjQ1NyIgZm9udC1zaXplPSIyNSIgZm9udC13ZWlnaHQ9IjcwMCI+NCDCtyBSZXZpZXcgYW5kIHJlY292ZXI8L3RleHQ+PHRleHQgeD0iNjU1IiB5PSI1MjgiIGZvbnQtc2l6ZT0iMjMiPlZlcmlmeSBoaXN0b3J5IGFuZCByZWhlYXJzZSBhIG5ldzwvdGV4dD48dGV4dCB4PSI2NTUiIHk9IjU2MCIgZm9udC1zaXplPSIyMyI+cmV2ZXJ0IGNvbW1pdDwvdGV4dD48cmVjdCB4PSI1MCIgeT0iNjYwIiB3aWR0aD0iMTEwMCIgaGVpZ2h0PSI5NSIgcng9IjE1IiBmaWxsPSIjZGFlOGZmIi8+PHRleHQgeD0iNzUiIHk9IjY5NiIgZm9udC1zaXplPSIyMyI+RGlzcG9zYWJsZSBsb2NhbCByZXBvc2l0b3J5OyBubyByZWFsIFBSLCByZXZpZXdlciwgcmVtb3RlLCBvciBwdXNoLjwvdGV4dD48L2c+PGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMjQ1YWM0IiBzdHJva2Utd2lkdGg9IjMiPjxwYXRoIGQ9Ik01NzUgMjUwaDQwbS0xMiAtOWwxMiA5IC0xMiA5TTg5MCAzNTV2MjVIMzEwdjI1bS05IC0xMmw5IDEyIDkgLTEyTTU3NSA1MTBoNDBtLTEyIC05bDEyIDkgLTEyIDkiLz48L2c+PC9zdmc+" alt="Two contributions converge through review and an explicit merge resolution." /></p>
+<h2 id="lesson-1--understand-the-shared-record">Lesson 1 — Understand
+the shared record</h2>
+<p>A commit is a recorded snapshot with history information. A branch is
+a movable name pointing into that history. Your working tree is the
+editable checkout; the staging area selects changes for the next commit.
+Neither is a backup of every file on your computer.</p>
+<p>Imagine one colleague changes the release policy to require a
+reviewer while another requires test evidence. Both edits touch the same
+line. Git can identify the overlap, but it cannot decide the product
+meaning: should the final policy require both, only one, or something
+else? That decision belongs to the contributors.</p>
+<p>A pull request adds a review conversation around the proposed change.
+Keep it small enough that a reviewer can understand its intent and
+evidence. A change mixing a feature, formatting, dependency upgrades,
+and unrelated refactoring makes failures harder to isolate.</p>
+<p>Before editing a shared project, run <code>git status</code> and
+inspect the current branch. Never assume uncommitted changes are yours
+to discard. If you find another person&#39;s work, preserve it and establish
+the boundary before proceeding.</p>
+<p><strong>Checkpoint:</strong> Explain the difference between editing a
+file, staging it, committing it, and pushing it.</p>
+<h2 id="lesson-2--rehearse-a-conflict-safely">Lesson 2 — Rehearse a
+conflict safely</h2>
+<p>Run the automated rehearsal from this workshop&#39;s
+<code>exercises</code> folder:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>python lab<span class="op">.</span><span class="fu">py</span></span></code></pre></div>
+<p>The script creates a real repository, creates divergent changes,
+asserts that Git reports a conflict, resolves it, and checks that the
+resulting merge commit has two parents. Its printed graph is the
+evidence. The temporary history disappears on exit; this is a
+demonstration, not your long-term practice repository.</p>
+<p>For a manual rehearsal, create a new empty directory outside the
+learning repository and initialize it with
+<code>git init -b main</code>. Configure a suitable identity locally
+with <code>git config user.name</code> and
+<code>git config user.email</code>; do not change global identity for a
+training exercise. Create <code>policy.txt</code> containing
+<code>Review: optional</code>, add it, and commit the baseline.</p>
+<p>Create <code>feature/reviewer</code>, change the line to
+<code>Review: one colleague</code>, and commit. Switch to main, change
+the same line to <code>Review: test evidence</code>, and commit. Now run
+<code>git merge feature/reviewer</code>. The expected result is a
+conflict—not lost work.</p>
+<h2 id="lesson-3--resolve-meaning-not-just-markers">Lesson 3 — Resolve
+meaning, not just markers</h2>
+<p>Open the conflicted file. Git&#39;s markers separate the competing
+versions. Read both contributions and their commits. For this scenario,
+the intended policy is
+<code>Review: one colleague plus test evidence</code>.</p>
+<p>Replace the conflict block with that sentence, inspect the full file,
+then run:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>git <span class="fu">diff</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>git add policy<span class="op">.</span><span class="fu">txt</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>git <span class="fu">diff</span> <span class="op">--</span>cached</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>git commit <span class="op">-</span>m <span class="st">&quot;Combine reviewer and evidence requirements&quot;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>git log <span class="op">--</span>oneline <span class="op">--</span>graph <span class="op">--</span>all</span></code></pre></div>
+<p>The staged diff is your final chance to inspect what the resolution
+actually commits. Removing markers is not sufficient if you silently
+discarded one requirement. If this were code, run the relevant tests
+before committing.</p>
+<p>If you decide not to proceed with a merge,
+<code>git merge --abort</code> attempts to return to the pre-merge
+state. Start merge exercises from a clean tree; combining a merge with
+unrelated uncommitted changes complicates recovery. <a href="https://git-scm.com/docs/user-manual">Git&#39;s user manual</a></p>
+<p><strong>Checkpoint:</strong> Explain why blindly choosing “ours” or
+“theirs” could produce a valid file with the wrong behavior.</p>
+<h2 id="lesson-4--undo-without-rewriting-everyone-elses-history">Lesson
+4 — Undo without rewriting everyone else&#39;s history</h2>
+<p>Make a new, deliberately bad commit changing the sentence to
+<code>Review: unnecessary</code>. Undo that specific latest commit
+with:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>git revert <span class="op">--</span>no-edit HEAD</span></code></pre></div>
+<p>Git creates another commit reversing the change. The shared story
+remains visible: what changed, when it was found unsuitable, and how it
+was reversed. A revert may itself conflict if later work overlaps it. <a href="https://git-scm.com/docs/git-revert.html">Git revert
+reference</a></p>
+<p>Reset and rebase solve different problems by moving references or
+rewriting commit sequences. They are not interchangeable with a revert.
+Do not use hard reset or force push as routine fixes for a shared
+branch. Before rewriting published history, establish who depends on it
+and obtain agreement.</p>
+<p>Cherry-pick copies a selected change onto another branch; it does not
+merge the whole branch. It is useful for carefully chosen fixes, but
+duplicate application and missing dependencies are risks. Practice it
+only after you can explain which change and dependencies you are
+carrying over.</p>
+<h2 id="lesson-5--review-like-a-teammate">Lesson 5 — Review like a
+teammate</h2>
+<p>Read the PR&#39;s purpose first, then the code, then its evidence. Ask
+whether tests exercise the promised behavior, whether permissions remain
+enforced, and whether error paths are handled. Distinguish blocking
+correctness concerns from optional style preferences.</p>
+<p>A useful comment names the consequence: “This permits an expired
+approval at the boundary; can we add an exact-expiry test?” An unhelpful
+comment says only “This looks wrong.” Suggest a way to verify the
+concern without demanding unnecessary rewrites.</p>
+<p>For your own PR, include a short summary, risk, test commands and
+results, screenshots where relevant, and known limitations. Do not claim
+tests ran when you only read them. After pushing a revision, check
+whether earlier approvals and CI results still apply to the latest
+commit.</p>
+<h2 id="lesson-6--your-independent-challenge">Lesson 6 — Your
+independent challenge</h2>
+<p>Repeat the conflict exercise with two nonconflicting edits, then with
+conflicting behavior in a small function. Notice that Git may merge text
+automatically even when the combined behavior is wrong. Passing the text
+merge is not passing the product contract.</p>
+<p>Create a review checklist for your FilePilot work: permission checks,
+sandbox boundary, recovery, and forbidden side effects. Ask another
+person to review a small synthetic PR when ready; the local lab does not
+simulate an independent human approval.</p>
+<p>Your evidence should include a history graph, a resolved policy
+containing both requirements, and a revert that restored the intended
+policy. Nothing in this workshop changes branch protection, creates a
+PR, or pushes a commit on your behalf.</p>
+</main>
+<dialog id="diagram-dialog" aria-label="Enlarged diagram">
+<div class="zoom-toolbar"><span>Diagram detail</span><button type="button" id="diagram-close">Close</button></div>
+<div class="zoom-body"><img id="diagram-large" alt></div>
+</dialog>
+<script>
+const diagramDialog = document.getElementById('diagram-dialog');
+const diagramLarge = document.getElementById('diagram-large');
+document.querySelectorAll('main img').forEach((picture) => {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'diagram-button';
+  button.textContent = 'Enlarge diagram';
+  button.addEventListener('click', () => {
+    diagramLarge.src = picture.src;
+    diagramLarge.alt = picture.alt;
+    diagramDialog.showModal();
+  });
+  picture.insertAdjacentElement('afterend', button);
+});
+document.getElementById('diagram-close').addEventListener('click', () => diagramDialog.close());
+</script>
+</body>
+</html>

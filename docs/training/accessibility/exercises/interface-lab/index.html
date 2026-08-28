@@ -1,0 +1,13 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Accessible Approval Lab</title><style>body{font:24px/1.6 system-ui;background:#edf4ff;color:#173964;padding:4vw}main{max-width:760px;margin:auto;background:white;padding:30px;border-radius:16px}button,input{font:inherit}button{padding:12px 24px;background:#17478a;color:white;border:0;border-radius:8px}button:disabled{opacity:.65}button:focus-visible,input:focus-visible{outline:3px solid #1769c2;outline-offset:4px}label{display:block;margin:20px 0}#status{min-height:4em}</style></head><body><main><h1>Review a synthetic plan</h1><p>Move demo.txt from the simulated inbox to the simulated archive. No real file operation will occur.</p><label><input id="failure" type="checkbox"> Simulate a failed response</label><button id="approve" type="button">Approve simulated plan</button><p id="status" role="status" aria-live="polite">Ready for review.</p><p id="count">Completed simulated operations: 0</p></main><script>
+const button=document.querySelector('#approve'),status=document.querySelector('#status');
+let busy=false,done=false,count=0;
+button.addEventListener('click',async()=>{
+  if(busy||done)return;
+  busy=true;button.disabled=true;status.textContent='Processing simulated approval…';
+  const fail=document.querySelector('#failure').checked;
+  await new Promise(resolve=>setTimeout(resolve,500));
+  if(fail){status.textContent='Simulation failed. Clear the failure checkbox, then retry.';button.textContent='Retry simulated approval';button.disabled=false;}
+  else{done=true;count++;status.textContent='Simulation completed. No real file was moved.';document.querySelector('#count').textContent='Completed simulated operations: '+count;}
+  busy=false;
+});
+</script></body></html>

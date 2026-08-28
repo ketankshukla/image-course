@@ -1,0 +1,1 @@
+{"name":"testing-lab","private":true,"type":"module","engines":{"node":">=22"},"scripts":{"test":"node --test tests/policy.test.mjs","test:weak":"node --test tests/weak.example.mjs"}}

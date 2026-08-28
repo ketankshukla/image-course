@@ -1,0 +1,1 @@
+{"name":"debug-lab","private":true,"type":"module","engines":{"node":">=22"},"scripts":{"start":"node server.mjs","test":"node --test tests.mjs","debug":"node --inspect-brk=127.0.0.1:9229 server.mjs"}}

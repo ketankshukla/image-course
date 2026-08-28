@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>From Solo Pushes to Confident Team Releases</title>
+<style type="text/css">:root{color-scheme:light;--ink:#19283c;--muted:#56667a;--blue:#145bd8;--navy:#081a33;--line:#dce5ef;--paper:#fff;--bg:#edf2f7}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:30px}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.75 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:#145ac0;text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:3px solid #d58b00;outline-offset:4px}
+.skip{position:fixed;top:-100px;left:16px;z-index:10;background:white;padding:10px}
+.skip:focus{top:10px}
+aside{position:fixed;inset:0 auto 0 0;width:284px;overflow:auto;padding:30px 22px;background:var(--navy);color:#e9f0fa;border-right:1px solid #244363}
+.brand{font-size:12px;letter-spacing:.17em;text-transform:uppercase;color:#76dcf3;font-weight:700}
+aside h2{font-size:22px;line-height:1.3;margin:12px 0 22px;color:white;border:0;padding:0}
+aside ul{list-style:none;margin:0;padding:0}
+aside li{margin:0 0 5px}
+aside li ul{margin-left:0}
+aside a{display:block;padding:7px 10px;border-radius:6px;color:#d2deed;text-decoration:none;font-size:13px;line-height:1.45}
+aside a:hover{background:#193554;color:white}
+.rail-footer{margin-top:22px;border-top:1px solid #2c4260;padding-top:20px;color:#9db0c9;font-size:12px}
+main{margin-left:284px;padding:42px clamp(24px,4vw,72px) 90px;max-width:1550px}
+.toolbar{display:flex;align-items:center;gap:15px;justify-content:space-between;margin-bottom:30px;font-size:12px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+button{font:600 13px system-ui;border:1px solid #c9d7e8;background:#fff;color:#164176;padding:10px 15px;border-radius:8px;cursor:pointer}
+button:hover{background:#e6f0ff}
+h1{font-size:clamp(40px,4.4vw,66px);line-height:1.1;letter-spacing:-.045em;background:linear-gradient(120deg,#07172e,#124481);color:white;border-radius:20px;padding:40px;margin:0 0 34px;box-shadow:0 18px 45px #0b254025}
+h2{font-size:30px;line-height:1.3;color:#103e7c;letter-spacing:-.025em;margin:58px 0 22px;padding-top:23px;border-top:3px solid #2367c9}
+h3{font-size:23px;line-height:1.35;color:#075e76;letter-spacing:-.02em;margin:34px 0 15px}
+p{margin:16px 0;max-width:90ch}
+li{margin:7px 0}
+strong{color:#113862}
+blockquote{background:#e1f1f7;border-left:5px solid #068caf;border-radius:0 12px 12px 0;margin:28px 0;padding:12px 25px;color:#184050}
+figure{margin:28px 0 32px}
+figure img{display:block;width:100%;height:auto;border-radius:14px;background:#07172d;box-shadow:0 12px 28px #0a254025}
+figcaption{font-size:14px;line-height:1.6;color:var(--muted);padding:13px 2px}
+.diagram-button{margin-top:9px;font-size:12px}
+img{max-width:100%;height:auto}
+pre{padding:23px 25px;overflow:auto;background:#091b32;color:#dfedff;border:1px solid #203a56;border-radius:12px;line-height:1.6;tab-size:4}
+code{font-family:"Cascadia Code",Consolas,monospace;font-size:.85em}
+:not(pre)>code{background:#e3eaf3;color:#98305b;padding:.12em .32em;border-radius:4px;overflow-wrap:anywhere}
+pre code{white-space:pre;color:inherit}
+table{border-collapse:separate;border-spacing:0;display:block;overflow-x:auto;max-width:100%;margin:24px 0 30px;border:1px solid var(--line);border-radius:10px;background:white;font-size:15px;line-height:1.6}
+th,td{text-align:left;vertical-align:top;padding:13px 16px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-width:130px}
+th{background:#103c78;color:white;font-weight:650}
+tr:nth-child(even) td{background:#f4f7fb}
+tr:last-child td{border-bottom:0}
+th:last-child,td:last-child{border-right:0}
+hr{border:0;border-top:1px solid var(--line);margin:40px 0}
+dialog{border:1px solid #375679;border-radius:15px;padding:0;background:#07172e;color:white;width:96vw;max-width:1900px;max-height:96vh;overflow:hidden}
+dialog::backdrop{background:#030b17dd}
+.zoom-toolbar{display:flex;gap:10px;align-items:center;justify-content:flex-end;padding:12px 18px;background:#102943}
+.zoom-toolbar span{margin-right:auto;font-size:14px}
+.zoom-body{overflow:auto;max-height:82vh;padding:12px}
+.zoom-body img{display:block;width:100%;max-width:none;margin:auto;height:auto}
+footer{margin-top:60px;border-top:1px solid var(--line);padding-top:20px;font-size:13px;color:var(--muted)}
+@media(max-width:1000px){aside{position:relative;width:auto;padding:24px}aside nav ul{columns:2}aside li{break-inside:avoid}.rail-footer{display:none}main{margin-left:0;padding:28px 24px 60px}}
+@media(max-width:600px){body{font-size:16px}aside nav ul{columns:1}aside{max-height:330px}main{padding:22px 16px 50px}h1{font-size:38px;padding:27px}h2{font-size:26px}h3{font-size:21px}.toolbar{font-size:10px}pre{padding:17px;font-size:14px}.zoom-toolbar{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{aside,.toolbar,.diagram-button,dialog{display:none!important}body{background:white;font-size:11pt}main{margin:0;max-width:none;padding:0}h1{color:#12345a;background:none;padding:0;box-shadow:none;font-size:32pt}h2,h3{break-after:avoid}figure,blockquote{break-inside:avoid}pre{background:#f3f5f9;color:#152f4e;white-space:pre-wrap}pre code{white-space:pre-wrap}table{display:table;font-size:9pt}th,td{min-width:0;padding:7px}figure img{box-shadow:none}}
+</style><style type="text/css">
+body{font-size:24px;line-height:1.7}
+main{max-width:1500px}
+p{max-width:65ch}
+h2{font-size:36px}
+h3{font-size:28px;color:#17478a}
+blockquote{background:#edf4ff;border-left-color:#245ac4;color:#19283c}
+table{font-size:21px}
+figcaption{font-size:20px}
+pre{font-size:20px}
+:not(pre)>code{background:#edf4ff;color:#17478a}
+button{min-height:44px;font-size:16px}
+aside a{font-size:15px}
+.brand{color:#c4d8fa}
+a:focus-visible,button:focus-visible{outline-color:#245ac4}
+@media(max-width:600px){body{font-size:24px}h2{font-size:32px}h3{font-size:27px}pre{font-size:18px}aside a{font-size:15px}}
+@media print{body{font-size:12pt}h2{font-size:22pt}h3{font-size:17pt}table{font-size:10pt}pre{font-size:10pt}}
+</style>
+</head>
+<body>
+<a class="skip" href="#content">Skip to document</a>
+<aside aria-label="Document contents">
+<div class="brand">Visual learning library</div>
+<h2>CI/CD Workshop</h2>
+<ul>
+<li><a href="#from-solo-pushes-to-confident-team-releases" id="toc-from-solo-pushes-to-confident-team-releases">From Solo Pushes to
+Confident Team Releases</a>
+<ul>
+<li><a href="#at-a-glance" id="toc-at-a-glance">At a glance</a></li>
+<li><a href="#lesson-1--understand-the-journey-before-the-commands" id="toc-lesson-1--understand-the-journey-before-the-commands">Lesson 1 —
+Understand the journey before the commands</a></li>
+<li><a href="#lesson-2--write-down-what-finished-means" id="toc-lesson-2--write-down-what-finished-means">Lesson 2 — Write down
+what finished means</a></li>
+<li><a href="#lesson-3--build-the-deliberately-incomplete-app" id="toc-lesson-3--build-the-deliberately-incomplete-app">Lesson 3 —
+Build the deliberately incomplete app</a></li>
+<li><a href="#lesson-4--create-the-repository-and-your-first-real-pr" id="toc-lesson-4--create-the-repository-and-your-first-real-pr">Lesson 4
+— Create the repository and your first real PR</a></li>
+<li><a href="#lesson-5--understand-github-actions-line-by-line" id="toc-lesson-5--understand-github-actions-line-by-line">Lesson 5 —
+Understand GitHub Actions line by line</a></li>
+<li><a href="#lesson-6--make-a-failed-check-actually-block-merging" id="toc-lesson-6--make-a-failed-check-actually-block-merging">Lesson 6 —
+Make a failed check actually block merging</a></li>
+<li><a href="#lesson-7--set-up-staging-without-a-hidden-bypass" id="toc-lesson-7--set-up-staging-without-a-hidden-bypass">Lesson 7 — Set
+up staging without a hidden bypass</a></li>
+<li><a href="#lesson-8--release-through-staging-then-approve-production" id="toc-lesson-8--release-through-staging-then-approve-production">Lesson
+8 — Release through staging, then approve production</a></li>
+<li><a href="#lesson-9--recover-investigate-and-keep-credentials-safe" id="toc-lesson-9--recover-investigate-and-keep-credentials-safe">Lesson
+9 — Recover, investigate, and keep credentials safe</a></li>
+<li><a href="#lesson-10--apply-this-to-your-website-and-agent-projects" id="toc-lesson-10--apply-this-to-your-website-and-agent-projects">Lesson
+10 — Apply this to your website and agent projects</a></li>
+<li><a href="#quick-reference-legend" id="toc-quick-reference-legend">Quick-reference legend</a></li>
+<li><a href="#what-hasand-has-notbeen-done-for-you" id="toc-what-hasand-has-notbeen-done-for-you">What has—and has not—been
+done for you</a></li>
+<li><a href="#appendix--complete-staging-and-production-workflow" id="toc-appendix--complete-staging-and-production-workflow">Appendix —
+Complete staging and production workflow</a></li>
+</ul></li>
+</ul>
+<div class="rail-footer">Self-contained reading edition<br>Diagrams and styles embedded</div>
+</aside>
+<main id="content">
+<div class="toolbar"><span>Illustrated reference guide</span><button type="button" onclick="window.print()">Print / Save PDF</button></div>
+<h1 id="from-solo-pushes-to-confident-team-releases">From Solo Pushes to
+Confident Team Releases</h1>
+<h2 id="at-a-glance">At a glance</h2>
+<p>This is a hands-on CI/CD course for someone who can build a project
+but has not recently worked with a team&#39;s release process. You will
+practice with a tiny Learning Library website, deliberately break a
+feature without breaking compilation, watch a test reject it, introduce
+pull-request protection, and release through staging and an approval
+gate. The destination is not a complicated pipeline. It is understanding
+exactly who checks what before a change reaches users.</p>
+<p>The course has ten lessons. Take one or two per session. Each lesson
+ends with something you can demonstrate, not just something to remember.
+You need Git, Node.js 22 or newer, a GitHub account, and—only for the
+deployment lessons—a Vercel account. A second person is needed to
+practice genuinely independent review. The local exercises work without
+either cloud account.</p>
+<blockquote>
+<p><strong>The answer to your main question:</strong> A compiler checks
+whether the program can be built. It does not check whether you finished
+the feature. You teach your pipeline what “finished” means through
+acceptance tests, and you ask a reviewer to check the things those tests
+do not cover. GitHub can then block merging or deployment when those
+checks fail.</p>
+</blockquote>
+<p>This course includes a working exercise folder and two workflow
+examples. They are intentionally outside this repository&#39;s active GitHub
+Actions folder. Nothing in this course has changed your live website&#39;s
+deployment rules or deployed a practice project.</p>
+<h2 id="lesson-1--understand-the-journey-before-the-commands">Lesson 1 —
+Understand the journey before the commands</h2>
+<p><img role="img" aria-label="A feature travels from a branch through tests and review, then staging and release approval, before reaching production." src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9Ijc4MCIgdmlld0JveD0iMCAwIDEyMDAgNzgwIiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUgZGVzYyI+Cjx0aXRsZSBpZD0idGl0bGUiPkZyb20gYSBmZWF0dXJlIGlkZWEgdG8gYSBjb250cm9sbGVkIHJlbGVhc2U8L3RpdGxlPjxkZXNjIGlkPSJkZXNjIj5SZXF1aXJlbWVudHMgYmVjb21lIGNvZGUgb24gYSBicmFuY2guIFRlc3RzIGFuZCBwZWVyIHJldmlldyBnYXRlIG1lcmdpbmcuIFN0YWdpbmcgYW5kIGFwcHJvdmFsIGdhdGUgcHJvZHVjdGlvbi4gQSByZWplY3RlZCBjYW5kaWRhdGUgc3RheXMgb3V0IG9mIHByb2R1Y3Rpb24uPC9kZXNjPgo8ZGVmcz48bWFya2VyIGlkPSJhcnJvdyIgbWFya2VyV2lkdGg9IjEwIiBtYXJrZXJIZWlnaHQ9IjEwIiByZWZYPSI4IiByZWZZPSI1IiBvcmllbnQ9ImF1dG8iPjxwYXRoIGQ9Ik0wIDBMMTAgNUwwIDEwIiBmaWxsPSIjMjQ1YWM0Ii8+PC9tYXJrZXI+PC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI3ODAiIHJ4PSIyNCIgZmlsbD0iI2YwZjZmZiIvPgo8ZyBmb250LWZhbWlseT0iU2Vnb2UgVUksQXJpYWwsc2Fucy1zZXJpZiIgZmlsbD0iIzE3Mzk2NCI+PHRleHQgeD0iNTUiIHk9IjY1IiBmb250LXNpemU9IjM2IiBmb250LXdlaWdodD0iNzAwIj5FdmVyeSBnYXRlIGFza3MgYSBkaWZmZXJlbnQgcXVlc3Rpb24uPC90ZXh0Pjx0ZXh0IHg9IjU1IiB5PSIxMDciIGZvbnQtc2l6ZT0iMjQiPkEgd29ya2luZyBidWlsZCBpcyB0aGUgYmVnaW5uaW5nIG9mIHRoZSBldmlkZW5jZSwgbm90IHRoZSBlbmQuPC90ZXh0PjwvZz4KPGcgZmlsbD0id2hpdGUiIHN0cm9rZT0iI2JhZDBmMCIgc3Ryb2tlLXdpZHRoPSIyIj48cmVjdCB4PSI1NSIgeT0iMTUwIiB3aWR0aD0iMzE1IiBoZWlnaHQ9IjE3MCIgcng9IjE2Ii8+PHJlY3QgeD0iNDQwIiB5PSIxNTAiIHdpZHRoPSIzMTUiIGhlaWdodD0iMTcwIiByeD0iMTYiLz48cmVjdCB4PSI4MjUiIHk9IjE1MCIgd2lkdGg9IjMyMCIgaGVpZ2h0PSIxNzAiIHJ4PSIxNiIvPjxyZWN0IHg9IjU1IiB5PSI0MzAiIHdpZHRoPSIzMTUiIGhlaWdodD0iMTcwIiByeD0iMTYiLz48cmVjdCB4PSI0NDAiIHk9IjQzMCIgd2lkdGg9IjMxNSIgaGVpZ2h0PSIxNzAiIHJ4PSIxNiIvPjxyZWN0IHg9IjgyNSIgeT0iNDMwIiB3aWR0aD0iMzIwIiBoZWlnaHQ9IjE3MCIgcng9IjE2Ii8+PC9nPgo8ZyBmb250LWZhbWlseT0iU2Vnb2UgVUksQXJpYWwsc2Fucy1zZXJpZiIgZmlsbD0iIzE3Mzk2NCIgZm9udC1zaXplPSIyNSI+PGcgZm9udC13ZWlnaHQ9IjcwMCI+PHRleHQgeD0iODAiIHk9IjE5MyI+MSDCtyBEZWZpbmUgdGhlIGZlYXR1cmU8L3RleHQ+PHRleHQgeD0iNDY1IiB5PSIxOTMiPjIgwrcgQnJhbmNoICsgUFI8L3RleHQ+PHRleHQgeD0iODUwIiB5PSIxOTMiPjMgwrcgVGVzdCArIHJldmlldzwvdGV4dD48dGV4dCB4PSI4MCIgeT0iNDczIj40IMK3IE1lcmdlICsgc3RhZ2luZzwvdGV4dD48dGV4dCB4PSI0NjUiIHk9IjQ3MyI+NSDCtyBSZWxlYXNlIGFwcHJvdmFsPC90ZXh0Pjx0ZXh0IHg9Ijg1MCIgeT0iNDczIj42IMK3IFByb2R1Y3Rpb248L3RleHQ+PC9nPjxnIGZvbnQtc2l6ZT0iMjMiPjx0ZXh0IHg9IjgwIiB5PSIyNDAiPldoYXQgbXVzdCB0aGUgbGVhcm5lcjwvdGV4dD48dGV4dCB4PSI4MCIgeT0iMjc0Ij5iZSBhYmxlIHRvIGRvPzwvdGV4dD48dGV4dCB4PSI0NjUiIHk9IjI0MCI+V2hhdCBjaGFuZ2VkLCBhbmQ8L3RleHQ+PHRleHQgeD0iNDY1IiB5PSIyNzQiPndoeSBzaG91bGQgd2UgYWNjZXB0IGl0PzwvdGV4dD48dGV4dCB4PSI4NTAiIHk9IjI0MCI+RG9lcyB0aGUgaW1wbGVtZW50YXRpb248L3RleHQ+PHRleHQgeD0iODUwIiB5PSIyNzQiPm1lZXQgdGhlIHByb21pc2U/PC90ZXh0Pjx0ZXh0IHg9IjgwIiB5PSI1MjAiPkRvZXMgdGhpcyBleGFjdCBjYW5kaWRhdGU8L3RleHQ+PHRleHQgeD0iODAiIHk9IjU1NCI+d29yayBpbiByZWhlYXJzYWw/PC90ZXh0Pjx0ZXh0IHg9IjQ2NSIgeT0iNTIwIj5JcyB0aGUgZXZpZGVuY2Ugc3VmZmljaWVudDwvdGV4dD48dGV4dCB4PSI0NjUiIHk9IjU1NCI+dG8gcmVsZWFzZSB0aGlzIG5vdz88L3RleHQ+PHRleHQgeD0iODUwIiB5PSI1MjAiPkFyZSByZWFsIHVzZXJzIGdldHRpbmc8L3RleHQ+PHRleHQgeD0iODUwIiB5PSI1NTQiPnRoZSBleHBlY3RlZCByZXN1bHQ/PC90ZXh0PjwvZz48L2c+CjxnIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzI0NWFjNCIgc3Ryb2tlLXdpZHRoPSIzIiBtYXJrZXItZW5kPSJ1cmwoI2Fycm93KSI+PHBhdGggZD0iTTM3NSAyMzVINDI2Ii8+PHBhdGggZD0iTTc2MCAyMzVIODExIi8+PHBhdGggZD0iTTk4NSAzMzBWMzcwSDIxMlY0MTUiLz48cGF0aCBkPSJNMzc1IDUxNUg0MjYiLz48cGF0aCBkPSJNNzYwIDUxNUg4MTEiLz48L2c+CjxyZWN0IHg9IjU1IiB5PSI2NTAiIHdpZHRoPSIxMDkwIiBoZWlnaHQ9IjgyIiByeD0iMTQiIGZpbGw9IiNkY2VhZmYiLz48dGV4dCB4PSI4MCIgeT0iNjk5IiBmb250LWZhbWlseT0iU2Vnb2UgVUksQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyNSIgZmlsbD0iIzE3Mzk2NCI+RmFpbGVkIHRlc3Qgb3IgcmVqZWN0ZWQgYXBwcm92YWwg4oaSIGZpeCB0aGUgY2FuZGlkYXRlOyBkbyBub3QgYnlwYXNzIHRoZSBnYXRlLjwvdGV4dD4KPC9zdmc+Cg==" alt="A feature travels from a branch through tests and review, then staging and release approval, before reaching production." /></p>
+<h3 id="what-the-diagram-teaches">What the diagram teaches</h3>
+<p>Imagine you add a “Case studies only” filter to your learning
+website. The dropdown appears. The page loads. The build is green. But
+selecting the option still shows everything. Technically valid code has
+produced an unfinished experience.</p>
+<p>In your old workflow, you might push this to the main branch and
+Vercel would publish it. In the practice workflow, there are several
+doors between your laptop and your visitors. Each door asks a different
+question.</p>
+<p>Your <strong>feature branch</strong> is a separate line of work. It
+lets you make changes without immediately changing the shared main
+branch. A <strong>pull request</strong>, usually shortened to PR, is a
+request to bring that work into main. It is also a discussion space
+containing the change, test results, comments, and review decisions.</p>
+<p><strong>Continuous integration</strong>, or CI, means frequently
+combining work and checking that it still works together. In this
+course, GitHub Actions runs the build and tests whenever you update a
+PR. <strong>Continuous delivery</strong> means preparing a releasable
+change while retaining a deliberate release decision. <strong>Continuous
+deployment</strong> takes that further: qualifying changes go live
+automatically. Neither is inherently more professional. The right choice
+depends on risk and the quality of your checks.</p>
+<p>Our course uses continuous delivery. After merging, you deliberately
+start a release. It goes to a rehearsal website called
+<strong>staging</strong>, someone tests the actual experience, and an
+authorized reviewer approves or rejects production deployment. Only then
+does it reach <strong>production</strong>, the website your real
+visitors use.</p>
+<h3 id="two-different-meanings-of-staging">Two different meanings of
+staging</h3>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Plain-English meaning</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Git staging area</td>
+<td>The changes selected for your next commit</td>
+<td><code>git add src/filter.ts</code></td>
+</tr>
+<tr>
+<td>Staging environment</td>
+<td>A running rehearsal copy of the application</td>
+<td>A separate Vercel practice project</td>
+</tr>
+<tr>
+<td>PR preview</td>
+<td>A temporary deployment for one proposed change</td>
+<td>A preview of a feature branch</td>
+</tr>
+<tr>
+<td>Production</td>
+<td>The real service users rely on</td>
+<td>Your public course website</td>
+</tr>
+</tbody>
+</table>
+<p>Putting a file in Git&#39;s staging area does not deploy it to a staging
+website. They are unrelated uses of the same word.</p>
+<h3 id="your-team-even-if-you-are-practicing-alone">Your team, even if
+you are practicing alone</h3>
+<p>The developer implements the change. The reviewer checks the
+implementation and tests. The product owner or tester checks whether it
+solves the original problem. The release approver decides whether this
+particular candidate should go live now. An operations owner watches for
+problems afterward. Small teams combine roles, but separating the
+responsibilities makes missing checks visible.</p>
+<p><strong>Checkpoint:</strong> Explain why “the build is green” answers
+only one of several release questions.</p>
+<h2 id="lesson-2--write-down-what-finished-means">Lesson 2 — Write down
+what finished means</h2>
+<p>The practice feature is deliberately small: filter three lessons by
+category. This lets you concentrate on the release process instead of
+learning a large application at the same time. The app is TypeScript
+compiled to browser JavaScript, not Next.js. In Lesson 10 you will map
+the same process onto your real Next.js website and agent projects.</p>
+<h3 id="the-feature-ticket">The feature ticket</h3>
+<p><strong>Title:</strong> As a learner, show only the category I
+selected.</p>
+<p><strong>Why:</strong> Someone looking for a practical project should
+not have to search through all the theory lessons.</p>
+<p><strong>Acceptance criteria:</strong></p>
+<ol type="1">
+<li>“All lessons” shows MCP foundations, FilePilot, and HarborCare.</li>
+<li>“Case studies only” shows FilePilot and HarborCare, but not MCP
+foundations.</li>
+<li>“Courses only” shows MCP foundations, but neither case study.</li>
+<li>An empty collection returns an empty list without an error.</li>
+<li>Filtering does not change the original collection.</li>
+<li>The dropdown can be operated with a keyboard, its label is
+understandable, and the visible list updates when the choice
+changes.</li>
+</ol>
+<p>The first five criteria can be tested directly against the filtering
+function. The sixth concerns the browser experience. Our supplied unit
+tests do not prove it. You will test it manually in staging; later you
+can add a browser test with Playwright. This distinction matters:
+testing the function does not prove that the dropdown actually calls
+that function.</p>
+<p><img role="img" aria-label="Three independent checks: compilation checks valid code; acceptance tests check expected behavior; human review checks the actual user experience." src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjcwMCIgdmlld0JveD0iMCAwIDEyMDAgNzAwIiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUgZGVzYyI+Cjx0aXRsZSBpZD0idGl0bGUiPldoeSB1bmZpbmlzaGVkIGNvZGUgY2FuIHN0aWxsIGNvbXBpbGU8L3RpdGxlPjxkZXNjIGlkPSJkZXNjIj5Db21waWxhdGlvbiBwYXNzZXMgZm9yIHJldHVybmluZyBldmVyeSBsZXNzb24uIEFjY2VwdGFuY2UgdGVzdHMgZmFpbCBiZWNhdXNlIHRoZSBzZWxlY3RlZCBjYXRlZ29yeSBpcyBpZ25vcmVkLiBIdW1hbiByZXZpZXcgYWxzbyBjaGVja3Mga2V5Ym9hcmQgYWNjZXNzIGFuZCBhY3R1YWwgYnJvd3NlciBiZWhhdmlvci48L2Rlc2M+CjxyZWN0IHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjcwMCIgcng9IjI0IiBmaWxsPSIjZWZmNmZmIi8+CjxnIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSxBcmlhbCxzYW5zLXNlcmlmIiBmaWxsPSIjMTczOTY0Ij48dGV4dCB4PSI1MCIgeT0iNjUiIGZvbnQtc2l6ZT0iMzYiIGZvbnQtd2VpZ2h0PSI3MDAiPlRocmVlIGNoZWNrcy4gVGhyZWUgZGlmZmVyZW50IHByb21pc2VzLjwvdGV4dD48dGV4dCB4PSI1MCIgeT0iMTA4IiBmb250LXNpemU9IjI0Ij5FeGFtcGxlOiDigJxDYXNlIHN0dWRpZXMgb25seeKAnSBzdGlsbCBzaG93cyBldmVyeSBsZXNzb24uPC90ZXh0PjwvZz4KPGcgZmlsbD0id2hpdGUiIHN0cm9rZT0iI2JhZDBmMCIgc3Ryb2tlLXdpZHRoPSIyIj48cmVjdCB4PSI1MCIgeT0iMTU1IiB3aWR0aD0iMzUwIiBoZWlnaHQ9IjM4MCIgcng9IjE4Ii8+PHJlY3QgeD0iNDI1IiB5PSIxNTUiIHdpZHRoPSIzNTAiIGhlaWdodD0iMzgwIiByeD0iMTgiLz48cmVjdCB4PSI4MDAiIHk9IjE1NSIgd2lkdGg9IjM1MCIgaGVpZ2h0PSIzODAiIHJ4PSIxOCIvPjwvZz4KPGcgZm9udC1mYW1pbHk9IlNlZ29lIFVJLEFyaWFsLHNhbnMtc2VyaWYiIGZpbGw9IiMxNzM5NjQiIGZvbnQtc2l6ZT0iMjQiPjxnIGZvbnQtc2l6ZT0iMjkiIGZvbnQtd2VpZ2h0PSI3MDAiPjx0ZXh0IHg9Ijc1IiB5PSIyMDUiPkNvbXBpbGVyPC90ZXh0Pjx0ZXh0IHg9IjQ1MCIgeT0iMjA1Ij5BY2NlcHRhbmNlIHRlc3RzPC90ZXh0Pjx0ZXh0IHg9IjgyNSIgeT0iMjA1Ij5IdW1hbiByZXZpZXc8L3RleHQ+PC9nPjx0ZXh0IHg9Ijc1IiB5PSIyNTkiPkFyZSB0eXBlcyBhbmQgc3ludGF4IHZhbGlkPzwvdGV4dD48dGV4dCB4PSI3NSIgeT0iMzA5Ij5SZXR1cm5zIGEgbGVzc29uIGFycmF5LjwvdGV4dD48dGV4dCB4PSI3NSIgeT0iMzQ1Ij5UaGUgdHlwZSBwcm9taXNlIGlzIG1ldC48L3RleHQ+PHRleHQgeD0iNDUwIiB5PSIyNTkiPkFyZSB0aGUgcmVzdWx0cyBjb3JyZWN0PzwvdGV4dD48dGV4dCB4PSI0NTAiIHk9IjMwOSI+RXhwZWN0ZWQ6IDIgY2FzZSBzdHVkaWVzLjwvdGV4dD48dGV4dCB4PSI0NTAiIHk9IjM0NSI+QWN0dWFsOiBhbGwgMyBsZXNzb25zLjwvdGV4dD48dGV4dCB4PSI4MjUiIHk9IjI1OSI+RG9lcyB0aGUgZXhwZXJpZW5jZSB3b3JrPzwvdGV4dD48dGV4dCB4PSI4MjUiIHk9IjMwOSI+VXNlIHRoZSByZWFsIGRyb3Bkb3duLjwvdGV4dD48dGV4dCB4PSI4MjUiIHk9IjM0NSI+Q2hlY2sga2V5Ym9hcmQgYWNjZXNzLjwvdGV4dD48ZyBmb250LXdlaWdodD0iNzAwIj48dGV4dCB4PSI3NSIgeT0iNDYwIj5CVUlMRCBQQVNTRVM8L3RleHQ+PHRleHQgeD0iNDUwIiB5PSI0NjAiPlRFU1RTIEZBSUw8L3RleHQ+PHRleHQgeD0iODI1IiB5PSI0NjAiPlJFSkVDVCBJRiBJTkNPTVBMRVRFPC90ZXh0PjwvZz48L2c+CjxyZWN0IHg9IjUwIiB5PSI1ODAiIHdpZHRoPSIxMTAwIiBoZWlnaHQ9IjcyIiByeD0iMTQiIGZpbGw9IiNkY2VhZmYiLz48dGV4dCB4PSI3NiIgeT0iNjI1IiBmb250LWZhbWlseT0iU2Vnb2UgVUksQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyNSIgZmlsbD0iIzE3Mzk2NCI+QXV0b21hdGlvbiBjYW4gZW5mb3JjZSB0aGUgcmVxdWlyZW1lbnRzIHlvdSBlbmNvZGXigJRub3QgdGhlIG9uZXMgeW91IGZvcmdvdC48L3RleHQ+Cjwvc3ZnPgo=" alt="Three independent checks: compilation checks valid code; acceptance tests check expected behavior; human review checks the actual user experience." /></p>
+<h3 id="the-definition-of-done">The definition of done</h3>
+<p>Acceptance criteria describe this feature. A <strong>definition of
+done</strong> is your recurring team agreement: tests pass, a reviewer
+has approved, accessibility has been checked, documentation is updated
+where necessary, staging evidence is recorded, and rollback has been
+considered.</p>
+<p>A checked box is a claim, not an automatic guarantee. A percentage
+coverage number is also not proof of completeness. You can execute every
+line while asserting the wrong thing. Useful tests describe visible
+outcomes: “the result contains only these two case studies,” not merely
+“the function returned an array.”</p>
+<p><strong>Checkpoint:</strong> Write one acceptance criterion for a
+feature you recently shipped. Ask yourself what test would turn red if
+that feature were missing.</p>
+<h2 id="lesson-3--build-the-deliberately-incomplete-app">Lesson 3 —
+Build the deliberately incomplete app</h2>
+<h3 id="keep-this-away-from-your-live-repository">Keep this away from
+your live repository</h3>
+<p>Use a new local folder and a new GitHub repository called
+<code>release-lab</code>. Do not create a nested Git repository inside
+<code>image-course</code>. Do not connect the practice app to your real
+production domain or databases. The app contains synthetic lesson titles
+only.</p>
+<p>The supplied starter lives at
+<code>docs/training/ci-cd/exercises/release-lab</code> inside this
+learning repository. The workflow examples live next to it under
+<code>docs/training/ci-cd/examples</code>. Copying them is a
+convenience; you can also create each file yourself and type its
+contents while following the explanations below.</p>
+<p>PowerShell example, using a destination that must not already
+exist:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span><span class="fu">Test-Path</span> <span class="op">-</span>LiteralPath E<span class="op">:</span>\release-lab<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">throw</span> <span class="st">&#39;Choose a new empty practice location first.&#39;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">Copy-Item</span> <span class="op">-</span>LiteralPath E<span class="op">:</span>\image-course\docs\training\ci-cd\exercises\release-lab <span class="op">-</span>Destination E<span class="op">:</span>\release-lab <span class="op">-</span>Recurse</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">Set-Location</span> E<span class="op">:</span>\release-lab</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>npm install</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>npm run build</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>npm test</span></code></pre></div>
+<p>The initial <code>npm install</code> creates a lockfile if needed.
+Commit that lockfile. Later, <code>npm ci</code> installs exactly the
+dependency versions it records and fails if the package manifest and
+lockfile disagree. This is one way your laptop and the CI runner agree
+on the tools they are using. <a href="https://docs.npmjs.com/cli/v11/commands/npm-ci">npm&#39;s
+clean-install reference</a></p>
+<h3 id="understand-every-file">Understand every file</h3>
+<pre class="text"><code>release-lab/
+├── src/
+│   ├── filter.ts           The behavior we are learning to test
+│   └── app.ts              Connects the dropdown to the list
+├── tests/
+│   └── filter.test.mjs     Five acceptance checks using Node&#39;s test runner
+├── scripts/
+│   ├── copy-page.mjs       Adds the HTML page to the compiled output
+│   └── serve.mjs           Serves only the three allowed local page files
+├── index.html             The visible page, label, dropdown, and blue styling
+├── package.json           Named commands and the TypeScript dependency
+├── package-lock.json      Exact dependency installation record
+├── tsconfig.json          How TypeScript builds the app
+├── vercel.json            Static deployment settings; Git auto-deploy disabled
+├── .gitignore             Keeps dependencies, secrets, and output out of Git
+├── dist/                  Generated by the build; never hand-edit this
+└── .github/workflows/     You add the two workflow examples later</code></pre>
+<p><code>filter.ts</code> contains a type called <code>Category</code>.
+Its allowed choices are <code>all</code>, <code>course</code>, and
+<code>case-study</code>. <code>Lesson</code> describes the two pieces of
+information each lesson carries: a title and its category. The function
+promises to return a list of lessons.</p>
+<p>Its implementation is intentionally unfinished:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="kw">function</span> <span class="fu">filterLessons</span>(lessons<span class="op">:</span> Lesson[]<span class="op">,</span> category<span class="op">:</span> Category)<span class="op">:</span> Lesson[] {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> lessons<span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>That return value satisfies the type promise. It does not satisfy the
+user&#39;s request. TypeScript therefore compiles it successfully. This is
+the exact situation you asked about.</p>
+<p><code>app.ts</code> holds three sample lessons. Its
+<code>render()</code> function reads the dropdown, calls
+<code>filterLessons</code>, creates list items, and replaces the
+displayed results. The change listener runs <code>render()</code>
+whenever you choose another category. It also runs once when the page
+opens.</p>
+<p><code>tsconfig.json</code> turns on strict type checking, writes
+compiled files into <code>dist</code>, and refuses to emit output when
+there are type errors. Those protections still cannot infer our missing
+category behavior. <code>copy-page.mjs</code> copies the HTML into that
+same output folder. <code>serve.mjs</code> is a small local-only web
+server, not a general production server.</p>
+<h3 id="observe-the-red-test">Observe the red test</h3>
+<p>The expected starting result is:</p>
+<pre class="text"><code>npm run build     PASS — valid TypeScript
+npm test          FAIL — 3 passing tests, 2 failing tests</code></pre>
+<p>The case-study test expects two names. It receives three because the
+function returns the whole list. The course test fails for the same
+reason. These failures are deliberate, not a broken installation.</p>
+<p>Run <code>npm start</code>, open <code>http://127.0.0.1:4173</code>,
+and select “Case studies only.” You can now see the bug yourself. Stop
+the local server with Ctrl+C when finished.</p>
+<h3 id="read-one-test-carefully">Read one test carefully</h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">test</span>(<span class="st">&#39;case-study excludes courses&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  assert<span class="op">.</span><span class="fu">deepEqual</span>(</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filterLessons</span>(lessons<span class="op">,</span> <span class="st">&#39;case-study&#39;</span>)<span class="op">.</span><span class="fu">map</span>(x <span class="kw">=&gt;</span> x<span class="op">.</span><span class="at">title</span>)<span class="op">,</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    [<span class="st">&#39;FilePilot&#39;</span><span class="op">,</span> <span class="st">&#39;HarborCare&#39;</span>]</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  )<span class="op">;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+<p><code>test</code> names a check. The fixture called
+<code>lessons</code> is predictable sample input. The function call
+performs the behavior. <code>map</code> extracts the titles.
+<code>assert.deepEqual</code> compares the resulting list with the exact
+list we promised the learner. A mismatch produces a failing process exit
+code. CI understands that exit code as failure.</p>
+<p>The tests import compiled JavaScript from <code>dist</code>, so
+always rebuild after editing TypeScript. <code>npm run check</code> runs
+both commands in the correct order.</p>
+<p><strong>Checkpoint:</strong> Make the build succeed and the tests
+fail. Describe which missing requirement each failure represents. Do not
+fix it yet—we want to see GitHub reject it first.</p>
+<h2 id="lesson-4--create-the-repository-and-your-first-real-pr">Lesson 4
+— Create the repository and your first real PR</h2>
+<h3 id="bootstrap-once-then-protect-main">Bootstrap once, then protect
+main</h3>
+<p>In GitHub, create an empty repository named <code>release-lab</code>.
+A public repository containing only this synthetic demo is the simplest
+way to practice the approval features described later. Never make a real
+private project public just to unlock training features.</p>
+<p>In the practice folder:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>git init <span class="op">-</span>b main</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>git add <span class="op">.</span><span class="fu">gitignore</span> package<span class="op">.</span><span class="fu">json</span> package-lock<span class="op">.</span><span class="fu">json</span> tsconfig<span class="op">.</span><span class="fu">json</span> vercel<span class="op">.</span><span class="fu">json</span> index<span class="op">.</span><span class="fu">html</span> src scripts tests</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>git commit <span class="op">-</span>m <span class="st">&quot;chore: create deliberately incomplete release training app&quot;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>git remote add origin https<span class="op">://</span>github<span class="op">.</span><span class="fu">com</span><span class="op">/</span>YOUR-USERNAME<span class="op">/</span>release-lab<span class="op">.</span><span class="fu">git</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>git push <span class="op">-</span>u origin main</span></code></pre></div>
+<p>Replace <code>YOUR-USERNAME</code> first. This is the one-time
+bootstrap of a disposable repository, not permission to push an
+unfinished feature to your real website. Do not deploy this baseline.
+There is no active deployment workflow yet.</p>
+<p>Create <code>.github/workflows</code> in the practice repository.
+Copy the supplied <code>examples/ci.yml</code> there as
+<code>ci.yml</code>. Commit and push this bootstrap workflow to main so
+GitHub can run it and discover its check name. This initial run will
+fail because the deliberately incomplete app fails two tests. That is
+expected.</p>
+<p>Now configure protection as explained in Lesson 6, and create your
+feature branch:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>git <span class="cf">switch</span> <span class="op">-</span>c feature<span class="op">/</span>category-filter</span></code></pre></div>
+<p>Make a small honest improvement to the dropdown&#39;s help text in
+<code>index.html</code> but leave the broken filter unchanged. Commit
+and push:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>git add index<span class="op">.</span><span class="fu">html</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>git commit <span class="op">-</span>m <span class="st">&quot;feat: introduce category filter experience&quot;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>git push <span class="op">-</span>u origin feature<span class="op">/</span>category-filter</span></code></pre></div>
+<p>On GitHub choose <strong>Compare &amp; pull request</strong>, with
+<code>main</code> as the base. Explain that this is the intentionally
+failing training PR. Include the acceptance criteria, what you changed,
+how you tested it, and the known incomplete behavior. A draft PR is
+useful communication while working; it is not a replacement for required
+checks.</p>
+<h3 id="what-your-reviewer-should-read">What your reviewer should
+read</h3>
+<p>Use this PR description:</p>
+<pre class="text"><code>Purpose: Help learners find practical projects by category.
+Acceptance criteria: all / courses / case studies / empty input / no mutation.
+Evidence: build result, test result, and later the staging candidate URL.
+Manual check: keyboard selection changes the visible list.
+Known gap: category filtering is not implemented yet.
+Risk: the wrong list may appear; no data is written.
+Rollback: restore the previous practice deployment.</code></pre>
+<p><strong>Checkpoint:</strong> You have a PR with a passing compilation
+step and a failing test step. The failure is visible to another person,
+not just in your terminal.</p>
+<h2 id="lesson-5--understand-github-actions-line-by-line">Lesson 5 —
+Understand GitHub Actions line by line</h2>
+<p>GitHub Actions is the service that executes your instructions. A
+<strong>workflow</strong> is the whole recipe; a <strong>job</strong>
+runs on a machine called a <strong>runner</strong>; a
+<strong>step</strong> is one action or shell command within that job.
+YAML is the indentation-sensitive file format used to write the recipe.
+<a href="https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax">GitHub&#39;s
+workflow syntax reference</a></p>
+<p>Here is the complete CI workflow supplied with the course:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> Pull request quality</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">on</span><span class="kw">:</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">pull_request</span><span class="kw">:</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">branches</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">main</span><span class="kw">]</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">push</span><span class="kw">:</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">branches</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">main</span><span class="kw">]</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="fu">permissions</span><span class="kw">:</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">contents</span><span class="kw">:</span><span class="at"> read</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="fu">concurrency</span><span class="kw">:</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">group</span><span class="kw">:</span><span class="at"> ci-${{ github.workflow }}-${{ github.ref }}</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">cancel-in-progress</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="fu">jobs</span><span class="kw">:</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">quality</span><span class="kw">:</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">name</span><span class="kw">:</span><span class="at"> quality</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> ubuntu-latest</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">timeout-minutes</span><span class="kw">:</span><span class="at"> </span><span class="dv">10</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@11d5960a326750d5838078e36cf38b85af677262</span><span class="co"> # v4</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">persist-credentials</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020</span><span class="co"> # v4</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">node-version</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;22&#39;</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">cache</span><span class="kw">:</span><span class="at"> npm</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">run</span><span class="kw">:</span><span class="at"> npm ci</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Compile TypeScript and package the page</span></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">run</span><span class="kw">:</span><span class="at"> npm run build</span></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Test acceptance criteria</span></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">run</span><span class="kw">:</span><span class="at"> npm test</span></span></code></pre></div>
+<p>The two triggers run the recipe for PRs targeting main and for
+commits pushed to main. <code>contents: read</code> avoids asking for
+write access. Concurrency cancels an obsolete CI run when newer work on
+the same ref arrives. That is useful for tests; it is not a policy we
+blindly reuse for a production deployment.</p>
+<p>The job is named <code>quality</code>. Remember that name when
+configuring required checks. Checkout downloads the code; setup-node
+supplies Node. The long values after <code>@</code> pin the actions to
+specific commits, instead of allowing an action tag to change underneath
+you. These pins were resolved from the official v4 tags while authoring
+the course; review and update them as part of maintenance.</p>
+<p><code>npm ci</code> installs dependencies, the build produces the
+app, and the tests check behavior. A failed test stops this job from
+succeeding. There is deliberately no <code>continue-on-error</code>, no
+condition that skips the tests, and no path filter that accidentally
+prevents the required workflow from running.</p>
+<h3 id="read-the-failure-instead-of-rerunning-blindly">Read the failure
+instead of rerunning blindly</h3>
+<p>Open the PR&#39;s <strong>Checks</strong> view or the repository&#39;s
+<strong>Actions</strong> tab. Open the <code>quality</code> job. Expand
+“Test acceptance criteria.” Find the test name and the
+expected-versus-actual list. This is your diagnostic trail: ticket →
+expectation → assertion → failure.</p>
+<p>Do not delete the test to obtain a green badge. Fix the behavior:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="kw">function</span> <span class="fu">filterLessons</span>(lessons<span class="op">:</span> Lesson[]<span class="op">,</span> category<span class="op">:</span> Category)<span class="op">:</span> Lesson[] {</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (category <span class="op">===</span> <span class="st">&#39;all&#39;</span>) <span class="cf">return</span> lessons<span class="op">;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> lessons<span class="op">.</span><span class="fu">filter</span>(lesson <span class="kw">=&gt;</span> lesson<span class="op">.</span><span class="at">category</span> <span class="op">===</span> category)<span class="op">;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>The early return handles “all.” Otherwise <code>filter</code> keeps
+only matching lessons without changing the original array. Replace only
+the function in <code>src/filter.ts</code>; keep its type
+declarations.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>npm run check</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>git add src<span class="op">/</span><span class="kw">filter</span><span class="op">.</span><span class="fu">ts</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>git commit <span class="op">-</span>m <span class="st">&quot;fix: honor the selected lesson category&quot;</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>git push</span></code></pre></div>
+<p>The same PR updates automatically. All five tests should now pass.
+You do not need another PR for each correction to the same feature.</p>
+<p><strong>Checkpoint:</strong> Explain every top-level workflow field
+to someone else, and show the red run followed by the green run.</p>
+<h2 id="lesson-6--make-a-failed-check-actually-block-merging">Lesson 6 —
+Make a failed check actually block merging</h2>
+<blockquote>
+<p>A test reporting failure and a rule preventing release are different
+things. A red check is evidence. A required-check rule turns that
+evidence into a gate.</p>
+</blockquote>
+<p>In the practice repository, open <strong>Settings → Rules →
+Rulesets</strong> and create an active branch ruleset targeting
+<code>main</code>. Where your account exposes classic branch protection
+instead, use <strong>Settings → Branches</strong> and configure the
+equivalent protection. Account and repository visibility affect which
+controls are available.</p>
+<p>Require a pull request before merging. Require the
+<code>quality</code> status check, selecting the check GitHub observed
+from your initial CI run. Require the branch to be up to date before
+merging for this simple training setup. Block force pushes and branch
+deletion. Leave no routine bypass actor. Require one approval when you
+have a real second reviewer, and dismiss stale approvals when new
+changes are pushed. <a href="https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches">GitHub&#39;s
+protected-branch guide</a></p>
+<p>Do this before fixing the PR if you want to witness the original
+failure blocking merge. If you already fixed it, introduce the original
+broken function again on a new practice branch and repeat the
+experiment.</p>
+<p>With the failing PR open, verify that GitHub says a required check
+failed and does not offer an ordinary successful merge. After the fix
+passes, have your reviewer inspect the code and actual behavior. Resolve
+their comments. Merge only when the protected conditions are
+satisfied.</p>
+<h3 id="solo-practice-is-not-independent-review">Solo practice is not
+independent review</h3>
+<p>You can practice test enforcement alone. You cannot honestly
+demonstrate independent PR approval by approving your own work. Invite a
+trusted collaborator to the synthetic training repository. If you
+practice without a required reviewer, label it a solo exercise—not a
+complete team approval system.</p>
+<h3 id="a-subtle-trap-skipped-does-not-always-mean-blocked">A subtle
+trap: skipped does not always mean blocked</h3>
+<p>GitHub can treat skipped or neutral check conclusions as acceptable
+for required status checks. Conversely, a required workflow skipped by a
+path or branch filter can remain pending. Keep this course&#39;s
+<code>quality</code> job unconditional. If you later split jobs, add an
+explicit final gate that fails unless every required upstream result is
+<code>success</code>. If you enable a merge queue later, add its
+<code>merge_group</code> trigger too. <a href="https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/troubleshooting-required-status-checks">GitHub&#39;s
+required-check troubleshooting guide</a></p>
+<h3 id="the-reviewer-checks-the-tests-too">The reviewer checks the tests
+too</h3>
+<p>A developer could weaken an assertion, remove a test, or edit the
+workflow. Branch rules do not understand whether a replacement test is
+meaningful. Review changes to tests and workflow files especially
+carefully. A team can use CODEOWNERS and required code-owner review for
+sensitive files, but the owners must be real authorized people and the
+rule must be enabled; a CODEOWNERS file alone is not enforcement.</p>
+<p><strong>Checkpoint:</strong> Capture one blocked merge and one
+approved merge. State which rule changed the outcome.</p>
+<h2 id="lesson-7--set-up-staging-without-a-hidden-bypass">Lesson 7 — Set
+up staging without a hidden bypass</h2>
+<p><img role="img" aria-label="GitHub controls release jobs, while two separate Vercel projects isolate staging and practice production. The live image-course project is outside the exercise." src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjgwMCIgdmlld0JveD0iMCAwIDEyMDAgODAwIiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUgZGVzYyI+Cjx0aXRsZSBpZD0idGl0bGUiPk9uZSByZWxlYXNlIGNvbnRyb2xsZXIgYW5kIHR3byBpc29sYXRlZCBwcmFjdGljZSBkZXN0aW5hdGlvbnM8L3RpdGxlPjxkZXNjIGlkPSJkZXNjIj5HaXRIdWIgdmVyaWZpZXMgdGhlIHNhbWUgY29tbWl0LCBkZXBsb3lzIHRvIHRoZSBzdGFnaW5nIFZlcmNlbCBwcm9qZWN0LCB0aGVuIHdhaXRzIGZvciBhcHByb3ZhbCBiZWZvcmUgZGVwbG95aW5nIHRvIHRoZSBwcm9kdWN0aW9uIHByYWN0aWNlIHByb2plY3QuIEVhY2ggaGFzIHNlcGFyYXRlIEdpdEh1YiBlbnZpcm9ubWVudCBzZWNyZXRzLiBUaGUgcmVhbCBjb3Vyc2Ugd2Vic2l0ZSBpcyB1bnRvdWNoZWQuPC9kZXNjPgo8ZGVmcz48bWFya2VyIGlkPSJhcnJvdyIgbWFya2VyV2lkdGg9IjEwIiBtYXJrZXJIZWlnaHQ9IjEwIiByZWZYPSI4IiByZWZZPSI1IiBvcmllbnQ9ImF1dG8iPjxwYXRoIGQ9Ik0wIDBMMTAgNUwwIDEwIiBmaWxsPSIjMjQ1YWM0Ii8+PC9tYXJrZXI+PC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI4MDAiIHJ4PSIyNCIgZmlsbD0iI2YwZjZmZiIvPjxnIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSxBcmlhbCxzYW5zLXNlcmlmIiBmaWxsPSIjMTczOTY0Ij48dGV4dCB4PSI1MCIgeT0iNjUiIGZvbnQtc2l6ZT0iMzYiIGZvbnQtd2VpZ2h0PSI3MDAiPk9uZSBjb250cm9sbGVkIHJvdXRlIHRvIGVhY2ggcHJhY3RpY2Ugc2l0ZS48L3RleHQ+PHRleHQgeD0iNTAiIHk9IjEwOCIgZm9udC1zaXplPSIyNCI+U2VwYXJhdGUgcHJvamVjdCBJRHMgwrcgc2VwYXJhdGUgc2VjcmV0cyDCtyBzYW1lIHNvdXJjZSBjb21taXQ8L3RleHQ+PC9nPgo8cmVjdCB4PSI1MCIgeT0iMTUwIiB3aWR0aD0iMTEwMCIgaGVpZ2h0PSIxNDUiIHJ4PSIxOCIgZmlsbD0iIzE3Mzk2NCIvPjxnIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSxBcmlhbCxzYW5zLXNlcmlmIiBmaWxsPSJ3aGl0ZSI+PHRleHQgeD0iODAiIHk9IjE5OCIgZm9udC1zaXplPSIyOSIgZm9udC13ZWlnaHQ9IjcwMCI+R2l0SHViIEFjdGlvbnMgwrcgbWFudWFsIHJlbGVhc2UgZnJvbSBtYWluPC90ZXh0Pjx0ZXh0IHg9IjgwIiB5PSIyNDUiIGZvbnQtc2l6ZT0iMjUiPnZlcmlmeSDihpIgc3RhZ2luZyDihpIgcmVxdWlyZWQgaHVtYW4gYXBwcm92YWwg4oaSIHByb2R1Y3Rpb248L3RleHQ+PC9nPgo8ZyBmaWxsPSJub25lIiBzdHJva2U9IiMyNDVhYzQiIHN0cm9rZS13aWR0aD0iMyIgbWFya2VyLWVuZD0idXJsKCNhcnJvdykiPjxwYXRoIGQ9Ik0zMTAgMzAwVjM2MCIvPjxwYXRoIGQ9Ik04OTAgMzAwVjM2MCIvPjwvZz4KPGcgZmlsbD0id2hpdGUiIHN0cm9rZT0iI2JhZDBmMCIgc3Ryb2tlLXdpZHRoPSIyIj48cmVjdCB4PSI1MCIgeT0iMzc1IiB3aWR0aD0iNTMwIiBoZWlnaHQ9IjI2NSIgcng9IjE4Ii8+PHJlY3QgeD0iNjIwIiB5PSIzNzUiIHdpZHRoPSI1MzAiIGhlaWdodD0iMjY1IiByeD0iMTgiLz48L2c+CjxnIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSxBcmlhbCxzYW5zLXNlcmlmIiBmaWxsPSIjMTczOTY0IiBmb250LXNpemU9IjI1Ij48ZyBmb250LXdlaWdodD0iNzAwIj48dGV4dCB4PSI4MCIgeT0iNDI2Ij5yZWxlYXNlLWxhYi1zdGFnaW5nPC90ZXh0Pjx0ZXh0IHg9IjY1MCIgeT0iNDI2Ij5yZWxlYXNlLWxhYi1wcm9kdWN0aW9uPC90ZXh0PjwvZz48dGV4dCB4PSI4MCIgeT0iNDc1Ij5HaXRIdWIgZW52aXJvbm1lbnQ6IHN0YWdpbmc8L3RleHQ+PHRleHQgeD0iODAiIHk9IjUyMCI+VmVyY2VsIHRhcmdldDogUHJvZHVjdGlvbjwvdGV4dD48dGV4dCB4PSI4MCIgeT0iNTY1Ij5QdXJwb3NlOiByZWhlYXJzYWwsIHN5bnRoZXRpYyBkYXRhPC90ZXh0Pjx0ZXh0IHg9IjgwIiB5PSI2MDgiPk5vIGluZGVwZW5kZW50IEdpdCBhdXRvLWRlcGxveTwvdGV4dD48dGV4dCB4PSI2NTAiIHk9IjQ3NSI+R2l0SHViIGVudmlyb25tZW50OiBwcm9kdWN0aW9uPC90ZXh0Pjx0ZXh0IHg9IjY1MCIgeT0iNTIwIj5WZXJjZWwgdGFyZ2V0OiBQcm9kdWN0aW9uPC90ZXh0Pjx0ZXh0IHg9IjY1MCIgeT0iNTY1Ij5QdXJwb3NlOiBwcmFjdGljZSBwdWJsaWMgcmVsZWFzZTwvdGV4dD48dGV4dCB4PSI2NTAiIHk9IjYwOCI+Tm8gaW5kZXBlbmRlbnQgR2l0IGF1dG8tZGVwbG95PC90ZXh0PjwvZz4KPHJlY3QgeD0iNTAiIHk9IjY4NSIgd2lkdGg9IjExMDAiIGhlaWdodD0iNzIiIHJ4PSIxNCIgZmlsbD0iI2RjZWFmZiIvPjx0ZXh0IHg9IjgwIiB5PSI3MzIiIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSxBcmlhbCxzYW5zLXNlcmlmIiBmaWxsPSIjMTczOTY0IiBmb250LXNpemU9IjI1Ij5Zb3VyIHJlYWwgaW1hZ2UtY291cnNlIHByb2plY3QgYW5kIGl0cyBwcm9kdWN0aW9uIGRvbWFpbiByZW1haW4gb3V0c2lkZSB0aGlzIGxhYi48L3RleHQ+Cjwvc3ZnPgo=" alt="GitHub controls release jobs, while two separate Vercel projects isolate staging and practice production. The live image-course project is outside the exercise." /></p>
+<h3 id="two-practice-projects-one-source-repository">Two practice
+projects, one source repository</h3>
+<p>Create two separate Vercel projects: <code>release-lab-staging</code>
+and <code>release-lab-production</code>. Both use the same small app,
+but neither is your real course website. This course avoids depending on
+a paid custom staging-environment feature. Each project has its own
+deployment address and settings.</p>
+<p>In this design, Vercel&#39;s <strong>Production</strong> target inside
+the staging project is still only our rehearsal website. The word
+describes the target within that project, not the importance of the
+whole system. That is why the staging job below uses
+<code>--prod</code>. Project identity is the safety boundary.</p>
+<p>Use separate sample data and credentials. The demo requires no
+database. When you later adapt it to a real app, staging must not be
+able to send real patient records, charge a real card, or modify your
+real filesystem. A separate URL is not data isolation.</p>
+<h3 id="stop-automatic-deployments-in-the-practice-setup">Stop automatic
+deployments in the practice setup</h3>
+<p>Do not import the practice repository and assume GitHub approval will
+automatically govern Vercel&#39;s own Git deployments. Vercel&#39;s Git
+integration is a separate trigger path. It normally deploys changes from
+Git independently of our release job. <a href="https://vercel.com/docs/git">Vercel&#39;s Git deployment
+overview</a></p>
+<p>The starter&#39;s <code>vercel.json</code> includes:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;git&quot;</span><span class="er">:</span> <span class="fu">{</span> <span class="dt">&quot;deploymentEnabled&quot;</span><span class="fu">:</span> <span class="kw">false</span> <span class="fu">}</span></span></code></pre></div>
+<p>This disables Git-triggered deployments for the configured project.
+For the clearest training boundary, leave both practice projects
+disconnected from Git and deploy them through the CLI. Verify their Git
+settings and confirm a push does not create an independent production
+deployment. Configuration files are editable; do not treat an editable
+flag as your only organizational control. <a href="https://vercel.com/docs/project-configuration/git-configuration">Vercel&#39;s
+Git configuration reference</a></p>
+<h3 id="link-deliberately-and-collect-the-project-ids">Link deliberately
+and collect the project IDs</h3>
+<p>Install the pinned CLI version used in the examples, authenticate,
+and link the practice folder to the staging project:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>npm install <span class="op">--</span>global vercel@<span class="dv">58.4</span><span class="op">.</span><span class="dv">0</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="dt">vercel</span> login</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>vercel whoami</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>vercel link</span></code></pre></div>
+<p>Choose the intended team and staging project in the prompts. Read the
+generated <code>.vercel/project.json</code> to identify its
+<code>orgId</code> and <code>projectId</code>. Repeat
+<code>vercel link</code> and choose the production practice project to
+record that separate ID. Verify the link each time. Do not use the IDs
+from <code>image-course</code>, and do not commit <code>.vercel</code>
+or tokens.</p>
+<p>In each Vercel practice project, set the framework preset to
+<strong>Other</strong>, output directory to <code>dist</code>, install
+command to <code>npm ci</code>, build command to
+<code>npm run build</code>, and Node version to 22.x. The starter
+configuration carries the build/output settings. Check them in the
+dashboard too.</p>
+<h3 id="create-the-github-environments-before-running-the-workflow">Create
+the GitHub environments before running the workflow</h3>
+<p>In the practice GitHub repository, open <strong>Settings →
+Environments</strong>. Create exactly <code>staging</code> and
+<code>production</code>. Restrict deployment branches to
+<code>main</code>. For production, configure a required reviewer,
+prevent self-review for genuine team practice, and disallow
+administrator bypass where available. Merely writing
+<code>environment: production</code> in YAML does not create those
+protections for you.</p>
+<p>Inside <strong>each environment</strong>, add secrets named
+<code>VERCEL_TOKEN</code>, <code>VERCEL_ORG_ID</code>, and
+<code>VERCEL_PROJECT_ID</code>. Use the matching project&#39;s ID. Prefer
+separately scoped credentials where supported; a project ID selects a
+destination but does not itself restrict a broadly authorized token.
+Keep production credentials out of repository-wide secrets and out of PR
+jobs.</p>
+<p>GitHub&#39;s current documentation says public repositories on current
+plans support environments and protection rules. Private/internal
+environments require an appropriate paid plan, and required reviewers on
+Free, Pro, and Team are limited to public repositories. Check your
+account&#39;s actual controls before assuming the gate exists. Do not
+publish private data to work around plan restrictions. <a href="https://docs.github.com/en/actions/how-tos/deploy/configure-and-manage-deployments/manage-environments">GitHub&#39;s
+environment configuration and availability</a></p>
+<p><strong>Checkpoint:</strong> Show two distinct Vercel project IDs, a
+protected GitHub production environment, and no independent Git
+auto-deploy path in either practice project.</p>
+<h2 id="lesson-8--release-through-staging-then-approve-production">Lesson 8
+— Release through staging, then approve production</h2>
+<p>Copy the supplied <code>examples/release.yml</code> into
+<code>.github/workflows/release.yml</code> in the practice repository.
+Introduce it through a PR, review it, and merge it. The file must exist
+on the default branch before the manual workflow trigger is
+available.</p>
+<h3 id="the-release-recipe">The release recipe</h3>
+<pre class="text"><code>Run workflow on main
+        │
+        ▼
+verify: install → compile → acceptance tests
+        │ success only
+        ▼
+staging: build → test → deploy to STAGING PROJECT → smoke check
+        │ success only
+        ▼
+production environment waits for a human decision
+        ├── reject → production job does not run
+        └── approve → build → test → deploy to PRODUCTION PROJECT → smoke check</code></pre>
+<p>The supplied file is complete, not just this diagram. Open it
+alongside this section and read the three jobs: <code>verify</code>,
+<code>staging</code>, and <code>production</code>.</p>
+<p><code>workflow_dispatch</code> gives you the <strong>Run
+workflow</strong> button. The <code>verify</code> job accepts only a run
+from <code>main</code>; choosing a feature branch skips the release
+path. Every checkout uses the same <code>github.sha</code>, the commit
+captured when you started that run. A moving main branch does not
+silently change which source code the later job checks out.</p>
+<p><code>needs: verify</code> makes staging depend on successful
+verification. <code>needs: staging</code> makes production depend on
+staging. The production job references the protected GitHub environment,
+so its configured approval rules apply before the job starts and obtains
+that environment&#39;s secrets. <a href="https://docs.github.com/en/actions/how-tos/deploy/configure-and-manage-deployments/control-deployments">GitHub&#39;s
+deployment-control guide</a></p>
+<h3 id="what-the-deployment-commands-do">What the deployment commands
+do</h3>
+<p>The two deployment jobs use the same sequence, but different
+environment-scoped project IDs:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">vercel</span> pull <span class="at">--yes</span> <span class="at">--environment</span><span class="op">=</span>production <span class="at">--token</span> <span class="st">&quot;</span><span class="va">$VERCEL_TOKEN</span><span class="st">&quot;</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="ex">vercel</span> build <span class="at">--prod</span> <span class="at">--token</span> <span class="st">&quot;</span><span class="va">$VERCEL_TOKEN</span><span class="st">&quot;</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> test</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="ex">vercel</span> deploy <span class="at">--prebuilt</span> <span class="at">--prod</span> <span class="at">--yes</span> <span class="at">--token</span> <span class="st">&quot;</span><span class="va">$VERCEL_TOKEN</span><span class="st">&quot;</span></span></code></pre></div>
+<p>These commands run in Bash on GitHub&#39;s Ubuntu runner, not in your
+local PowerShell session. <code>pull</code> downloads the chosen
+project&#39;s settings. <code>build</code> creates deployable output. The
+tests run again against that build. <code>deploy --prebuilt</code>
+uploads the output rather than asking Vercel to rebuild it remotely. The
+token comes from a secret-backed environment variable, never a literal
+value in your file. Do not echo it or enable shell tracing. <a href="https://vercel.com/docs/git/vercel-for-github">Vercel&#39;s GitHub
+Actions deployment guide</a></p>
+<p>The workflow records the immutable candidate URL and source commit in
+its run summary. Its smoke command uses <code>vercel curl</code> so you
+do not have to disable deployment protection. It requests
+<code>/filter.js</code> with curl&#39;s failure flag. That proves the module
+is reachable; it does <strong>not</strong> prove that the browser
+interaction works. <a href="https://vercel.com/docs/cli/curl">Vercel
+curl reference</a></p>
+<h3 id="actually-perform-the-human-staging-check">Actually perform the
+human staging check</h3>
+<p>Open <strong>Actions → Practice release → Run workflow</strong>,
+choosing <code>main</code>. Wait for staging to finish. Use the
+candidate URL from that run, not a bookmarked staging alias that another
+run could have changed.</p>
+<p>Check all three dropdown choices. Confirm the exact names in each
+result. Navigate with Tab and the keyboard. Reload the page. Confirm
+there is no unexpected browser error. Record the candidate URL, full
+commit SHA, your name, the checks performed, and the result in the PR or
+release record.</p>
+<p>When GitHub shows the waiting production job, choose <strong>Review
+deployments</strong>. In your first practice run, deliberately
+<strong>reject</strong> it with a reason such as “Training exercise:
+acceptance evidence missing.” Confirm that no production deployment was
+created. Then start a new release run, redo the staging checks for that
+run, and have the authorized reviewer approve it.</p>
+<p>This is the second answer to your original question: an incomplete
+feature can be rejected <strong>even when automated tests pass</strong>,
+because the staging reviewer sees the missing experience and declines
+production approval.</p>
+<h3 id="same-source-is-not-always-the-same-artifact">Same source is not
+always the same artifact</h3>
+<p>Both projects build the same commit, but they build separately.
+Environment variables and build-time settings may differ. This course
+therefore makes a <strong>same-source</strong> guarantee, not a
+byte-identical artifact-promotion guarantee. Tests run in both jobs, and
+you must verify production afterward too.</p>
+<p>An advanced pipeline can create a production-configured candidate
+without assigning its public domain, test it, and promote that exact
+deployment. Do not casually promote a staging-configured build: public
+environment variables can be embedded during compilation. Learn the
+simple isolated-project workflow first.</p>
+<h3 id="concurrency-is-not-a-complete-release-order-policy">Concurrency
+is not a complete release-order policy</h3>
+<p><code>cancel-in-progress: false</code> avoids aborting an active
+release just because another is requested. It does not give you an
+unlimited first-in-first-out release queue or prevent every
+stale-release scenario. During practice, allow only one release run at a
+time. Before approval, check that its commit is still the intended
+candidate. Cancel obsolete waiting runs rather than approving them after
+a newer release.</p>
+<p><strong>Checkpoint:</strong> Demonstrate one rejected release and one
+approved release. Explain exactly why the production job did not start
+in the rejected run.</p>
+<h2 id="lesson-9--recover-investigate-and-keep-credentials-safe">Lesson
+9 — Recover, investigate, and keep credentials safe</h2>
+<h3 id="a-green-deployment-can-still-be-a-bad-release">A green
+deployment can still be a bad release</h3>
+<p>After production deployment, open the practice production website and
+repeat the critical interaction. Check the release record against the
+expected commit and candidate URL. If a smoke test fails after
+deployment, the workflow reports a failure, but the deployment may
+already be live. A red badge does not automatically undo it.</p>
+<p>In the Vercel practice production project, identify a previously
+verified deployment before you need it. To rehearse recovery, use the
+dashboard&#39;s rollback action where available, or the CLI&#39;s
+<code>vercel rollback &lt;previous-deployment-url&gt;</code> after
+confirming the correct project link and account. Verify the restored
+site. Record the incident and create a corrective PR. Rollback
+availability and behavior depend on your project/plan; inspect the
+available control before your rehearsal. <a href="https://vercel.com/docs/cli/rollback">Vercel&#39;s rollback
+reference</a></p>
+<p>An application rollback does not undo database writes, sent emails,
+external agent actions, or filesystem moves. Those need separate
+recovery designs. Our tiny demo deliberately has none of those side
+effects.</p>
+<h3 id="troubleshooting-by-symptom">Troubleshooting by symptom</h3>
+<table>
+<thead>
+<tr>
+<th>What you see</th>
+<th>Likely explanation</th>
+<th>What to inspect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Build passes, tests fail</td>
+<td>Valid code does the wrong thing</td>
+<td>Named assertion and acceptance criterion</td>
+</tr>
+<tr>
+<td>Red tests but merge still allowed</td>
+<td>Check is not required, or a bypass exists</td>
+<td>Active ruleset and selected check name</td>
+</tr>
+<tr>
+<td>Checks never appear</td>
+<td>Workflow absent, disabled, filtered, or awaiting fork approval</td>
+<td>Actions settings and trigger</td>
+</tr>
+<tr>
+<td>Merge blocked after a new push</td>
+<td>New commit needs fresh checks or approval</td>
+<td>Latest PR commit and review status</td>
+</tr>
+<tr>
+<td>Production starts without waiting</td>
+<td>Environment lacks reviewer protection, or a different deploy path
+ran</td>
+<td>Exact environment name and Vercel Git settings</td>
+</tr>
+<tr>
+<td>Vercel authentication fails</td>
+<td>Missing, expired, or incorrectly scoped token</td>
+<td>Environment secret names and team access; never print token</td>
+</tr>
+<tr>
+<td>Deployment goes to wrong site</td>
+<td>Wrong project ID or local link</td>
+<td>Environment-scoped IDs and <code>.vercel/project.json</code></td>
+</tr>
+<tr>
+<td>Smoke test fails after deployment</td>
+<td>App is already deployed but its check failed</td>
+<td>Candidate URL, response, logs, and rollback decision</td>
+</tr>
+<tr>
+<td>Tests pass but dropdown does nothing</td>
+<td>Function test misses the browser wiring</td>
+<td>Staging manual check; add a browser regression test</td>
+</tr>
+</tbody>
+</table>
+<h3 id="security-habits-to-learn-now">Security habits to learn now</h3>
+<p>Run PR checks without production secrets. Use
+<code>pull_request</code>, not a privileged
+<code>pull_request_target</code> workflow that checks out and executes
+untrusted PR code. Review workflow changes as code. Pin actions to
+reviewed commit SHAs, keep dependencies maintained, and avoid passing
+user-written PR text directly into shell commands. Never upload
+environment files as build artifacts. GitHub&#39;s log masking is not
+permission to print secrets. <a href="https://docs.github.com/en/actions/reference/security/secure-use">GitHub&#39;s
+Actions security guidance</a></p>
+<p>A GitHub environment protects access through jobs that reference it;
+it cannot stop someone with independent Vercel credentials from
+deploying manually. A real team also controls Vercel roles, deploy
+tokens, administrator bypass, and emergency-release procedures. Policies
+require both technical gates and account governance.</p>
+<p><strong>Checkpoint:</strong> Write a five-line rollback plan
+containing the project, previous known-good deployment, authorized
+operator, verification step, and side effects that rollback would not
+reverse.</p>
+<h2 id="lesson-10--apply-this-to-your-website-and-agent-projects">Lesson
+10 — Apply this to your website and agent projects</h2>
+<h3 id="your-current-nextjs-learning-library">Your current Next.js
+learning library</h3>
+<p>Do not copy the lab&#39;s static <code>vercel.json</code> over the real
+website configuration. Keep the real Next.js build and content pipeline.
+A sensible starting CI job for this repository would run these commands,
+plus meaningful tests you add for real user behavior:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> ci</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> run lint</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> run build</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> run verify:content</span></code></pre></div>
+<p>Here <code>npm run build</code> already regenerates content and
+builds Next.js. <code>verify:content</code> checks the generated library
+contract. Neither proves that a reader can navigate, filter, bookmark,
+or search successfully. Add browser acceptance tests for those
+experiences. Before making a check required, establish its actual
+baseline and fix existing failures; do not label a command as passing
+because it appears in a document.</p>
+<p>For example, “search FilePilot and open its start-here article” is a
+useful acceptance journey. “The search component renders” is much
+weaker. Likewise, a link checker can prove an image URL exists while
+missing that the wrong diagram was attached to the lesson.</p>
+<h3 id="the-same-gates-apply-beyond-a-website">The same gates apply
+beyond a website</h3>
+<table>
+<thead>
+<tr>
+<th>Project</th>
+<th>Example acceptance gate</th>
+<th>Staging boundary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MCP tool server</td>
+<td>Unauthorized caller cannot invoke a restricted tool</td>
+<td>Synthetic tools and restricted test credentials</td>
+</tr>
+<tr>
+<td>RAG assistant</td>
+<td>A user cannot retrieve another user&#39;s restricted documents</td>
+<td>Separate test index with known allowed/denied documents</td>
+</tr>
+<tr>
+<td>A2A agent system</td>
+<td>Repeated task delivery does not execute an action twice</td>
+<td>Test agents, sandbox endpoints, recorded task IDs</td>
+</tr>
+<tr>
+<td>HarborCare</td>
+<td>A recipient receives only its permitted fields</td>
+<td>Synthetic patients only; never real patient data</td>
+</tr>
+<tr>
+<td>FilePilot</td>
+<td>An unapproved move is rejected and approved moves remain within the
+allowed root</td>
+<td>Disposable sandbox folder, never a home directory</td>
+</tr>
+</tbody>
+</table>
+<p>For Python services, replace the TypeScript build/test commands with
+your project&#39;s pinned dependency installation and <code>pytest</code>
+suite. Keep the same branch, review, approval, and evidence concepts. A
+passing model-quality evaluation should not substitute for deterministic
+permission and privacy tests. Model answers may vary; authorization
+rules must not depend on the model being agreeable.</p>
+<h3 id="feature-flags-are-a-separate-tool">Feature flags are a separate
+tool</h3>
+<p>A feature flag can keep finished-but-not-yet-released behavior hidden
+from users while code is merged. It is not a waiver for unsafe code.
+Test both states. A hidden UI button does not protect a backend
+endpoint. Record who owns the flag and when it should be removed.</p>
+<h3 id="your-graduation-exercise">Your graduation exercise</h3>
+<p>Repeat the workflow with a second feature: search lesson titles
+without regard to letter case.</p>
+<ol type="1">
+<li>Write examples before coding: <code>filepilot</code>,
+<code>FILEPILOT</code>, an empty query, and a query with no
+results.</li>
+<li>Add a deliberately incomplete implementation that compiles.</li>
+<li>Write tests that expose its missing behavior.</li>
+<li>Open a PR and observe the required-check rejection.</li>
+<li>Fix the code, obtain review, and merge.</li>
+<li>Start a release; check the exact staging candidate.</li>
+<li>Reject one release on purpose and explain why.</li>
+<li>Approve a fresh verified run and test practice production.</li>
+<li>Rehearse rollback to the previous verified practice release.</li>
+<li>Explain which parts of this process a malicious or overprivileged
+operator could still bypass.</li>
+</ol>
+<p>You have learned the workflow when you can demonstrate those steps
+without asking an AI to hide the mechanics from you. An AI can help
+write a test, but you should be able to explain the requirement that
+test represents and why its failure should stop a release.</p>
+<h2 id="quick-reference-legend">Quick-reference legend</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>What it means here</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Commit / SHA</td>
+<td>A recorded source snapshot and its identifier</td>
+</tr>
+<tr>
+<td>Branch</td>
+<td>A named line of development</td>
+</tr>
+<tr>
+<td>Pull request</td>
+<td>Proposed changes, discussion, checks, and review before merging</td>
+</tr>
+<tr>
+<td>Merge</td>
+<td>Bring the accepted change into another branch</td>
+</tr>
+<tr>
+<td>Workflow / job / step</td>
+<td>Whole automation recipe / runner task / individual instruction</td>
+</tr>
+<tr>
+<td>Runner</td>
+<td>The machine executing a job</td>
+</tr>
+<tr>
+<td>Artifact</td>
+<td>Output of a build, such as deployable JavaScript and HTML</td>
+</tr>
+<tr>
+<td>Unit test</td>
+<td>Checks a small piece of behavior in isolation</td>
+</tr>
+<tr>
+<td>Acceptance test</td>
+<td>Checks a promised outcome; can be automated or manual</td>
+</tr>
+<tr>
+<td>E2E test</td>
+<td>Exercises a user journey across the running system</td>
+</tr>
+<tr>
+<td>Smoke test</td>
+<td>A quick basic health check, not exhaustive validation</td>
+</tr>
+<tr>
+<td>Ruleset</td>
+<td>Repository rules that enforce conditions such as required PR
+checks</td>
+</tr>
+<tr>
+<td>Environment gate</td>
+<td>Conditions before a deployment job may begin</td>
+</tr>
+<tr>
+<td>Secret</td>
+<td>A protected credential, not a value to commit or display</td>
+</tr>
+<tr>
+<td>Rollback</td>
+<td>Restore a previous deployment; not necessarily previous data</td>
+</tr>
+<tr>
+<td>Feature flag</td>
+<td>A controlled switch for exposing behavior</td>
+</tr>
+<tr>
+<td>CI / delivery / deployment</td>
+<td>Check integrated work / prepare a releasable change / publish
+it</td>
+</tr>
+</tbody>
+</table>
+<h2 id="what-hasand-has-notbeen-done-for-you">What has—and has not—been
+done for you</h2>
+<p>The local exercise demonstrates real TypeScript compilation and real
+failing/passing tests. The workflow examples describe the cloud steps
+you will activate in your own practice repository. They do not configure
+branch protection or environment approvals by themselves.</p>
+<p>No GitHub repository, cloud environment, collaborator, secret, or
+Vercel practice deployment has been created by writing this course. Your
+live website&#39;s release behavior remains unchanged. Complete the cloud
+checkpoints yourself before claiming that the full release chain is
+enforced.</p>
+<p>Platform references were checked on 27 August 2026. Interface labels,
+plan availability, and tool versions can change. The enduring lesson is
+the separation of requirements, evidence, enforcement, and
+authorization.</p>
+<h2 id="appendix--complete-staging-and-production-workflow">Appendix —
+Complete staging and production workflow</h2>
+<p>Save this as <code>.github/workflows/release.yml</code> in the
+separate practice repository after completing Lesson 7. This is the same
+content as the supplied example. The names <code>staging</code> and
+<code>production</code> must match your preconfigured GitHub
+environments. Without the production review rule, this file will not
+wait for a human.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> Practice release</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">on</span><span class="kw">:</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">workflow_dispatch</span><span class="kw">:</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">permissions</span><span class="kw">:</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">contents</span><span class="kw">:</span><span class="at"> read</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="fu">concurrency</span><span class="kw">:</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">group</span><span class="kw">:</span><span class="at"> release-lab</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">cancel-in-progress</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="fu">jobs</span><span class="kw">:</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">verify</span><span class="kw">:</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">if</span><span class="kw">:</span><span class="at"> github.ref == &#39;refs/heads/main&#39;</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> ubuntu-latest</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">timeout-minutes</span><span class="kw">:</span><span class="at"> </span><span class="dv">10</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@11d5960a326750d5838078e36cf38b85af677262</span><span class="co"> # v4</span></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">ref</span><span class="kw">:</span><span class="at"> ${{ github.sha }}</span></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">persist-credentials</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020</span><span class="co"> # v4</span></span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">node-version</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;22&#39;</span></span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">cache</span><span class="kw">:</span><span class="at"> npm</span></span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">run</span><span class="kw">:</span><span class="at"> npm ci</span></span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">run</span><span class="kw">:</span><span class="at"> npm run check</span></span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">staging</span><span class="kw">:</span></span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">needs</span><span class="kw">:</span><span class="at"> verify</span></span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> ubuntu-latest</span></span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">timeout-minutes</span><span class="kw">:</span><span class="at"> </span><span class="dv">15</span></span>
+<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">environment</span><span class="kw">:</span></span>
+<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">name</span><span class="kw">:</span><span class="at"> staging</span></span>
+<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">url</span><span class="kw">:</span><span class="at"> ${{ steps.deploy.outputs.url }}</span></span>
+<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">env</span><span class="kw">:</span></span>
+<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">VERCEL_ORG_ID</span><span class="kw">:</span><span class="at"> ${{ secrets.VERCEL_ORG_ID }}</span></span>
+<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">VERCEL_PROJECT_ID</span><span class="kw">:</span><span class="at"> ${{ secrets.VERCEL_PROJECT_ID }}</span></span>
+<span id="cb18-35"><a href="#cb18-35" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">VERCEL_TOKEN</span><span class="kw">:</span><span class="at"> ${{ secrets.VERCEL_TOKEN }}</span></span>
+<span id="cb18-36"><a href="#cb18-36" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">outputs</span><span class="kw">:</span></span>
+<span id="cb18-37"><a href="#cb18-37" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">url</span><span class="kw">:</span><span class="at"> ${{ steps.deploy.outputs.url }}</span></span>
+<span id="cb18-38"><a href="#cb18-38" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span></span>
+<span id="cb18-39"><a href="#cb18-39" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@11d5960a326750d5838078e36cf38b85af677262</span><span class="co"> # v4</span></span>
+<span id="cb18-40"><a href="#cb18-40" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb18-41"><a href="#cb18-41" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">ref</span><span class="kw">:</span><span class="at"> ${{ github.sha }}</span></span>
+<span id="cb18-42"><a href="#cb18-42" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">persist-credentials</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb18-43"><a href="#cb18-43" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020</span><span class="co"> # v4</span></span>
+<span id="cb18-44"><a href="#cb18-44" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb18-45"><a href="#cb18-45" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">node-version</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;22&#39;</span></span>
+<span id="cb18-46"><a href="#cb18-46" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">run</span><span class="kw">:</span><span class="at"> npm install --global vercel@58.4.0</span></span>
+<span id="cb18-47"><a href="#cb18-47" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">run</span><span class="kw">:</span><span class="at"> vercel pull --yes --environment=production --token &quot;$VERCEL_TOKEN&quot;</span></span>
+<span id="cb18-48"><a href="#cb18-48" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">run</span><span class="kw">:</span><span class="at"> vercel build --prod --token &quot;$VERCEL_TOKEN&quot;</span></span>
+<span id="cb18-49"><a href="#cb18-49" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">run</span><span class="kw">:</span><span class="at"> npm test</span></span>
+<span id="cb18-50"><a href="#cb18-50" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">id</span><span class="kw">:</span><span class="at"> deploy</span></span>
+<span id="cb18-51"><a href="#cb18-51" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">shell</span><span class="kw">:</span><span class="at"> bash</span></span>
+<span id="cb18-52"><a href="#cb18-52" aria-hidden="true" tabindex="-1"></a><span class="fu">        run</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb18-53"><a href="#cb18-53" aria-hidden="true" tabindex="-1"></a>          url=$(vercel deploy --prebuilt --prod --yes --token &quot;$VERCEL_TOKEN&quot;)</span>
+<span id="cb18-54"><a href="#cb18-54" aria-hidden="true" tabindex="-1"></a>          echo &quot;url=$url&quot; &gt;&gt; &quot;$GITHUB_OUTPUT&quot;</span>
+<span id="cb18-55"><a href="#cb18-55" aria-hidden="true" tabindex="-1"></a>          echo &quot;Staging candidate: $url | Commit: $GITHUB_SHA&quot; &gt;&gt; &quot;$GITHUB_STEP_SUMMARY&quot;</span>
+<span id="cb18-56"><a href="#cb18-56" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Smoke test the deployed module (supports deployment protection)</span></span>
+<span id="cb18-57"><a href="#cb18-57" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">env</span><span class="kw">:</span></span>
+<span id="cb18-58"><a href="#cb18-58" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">CANDIDATE_URL</span><span class="kw">:</span><span class="at"> ${{ steps.deploy.outputs.url }}</span></span>
+<span id="cb18-59"><a href="#cb18-59" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">run</span><span class="kw">:</span><span class="at"> vercel curl /filter.js --deployment &quot;$CANDIDATE_URL&quot; --token &quot;$VERCEL_TOKEN&quot; -- --fail --silent --show-error</span></span>
+<span id="cb18-60"><a href="#cb18-60" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">production</span><span class="kw">:</span></span>
+<span id="cb18-61"><a href="#cb18-61" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">needs</span><span class="kw">:</span><span class="at"> staging</span></span>
+<span id="cb18-62"><a href="#cb18-62" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> ubuntu-latest</span></span>
+<span id="cb18-63"><a href="#cb18-63" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">timeout-minutes</span><span class="kw">:</span><span class="at"> </span><span class="dv">15</span></span>
+<span id="cb18-64"><a href="#cb18-64" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">environment</span><span class="kw">:</span></span>
+<span id="cb18-65"><a href="#cb18-65" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">name</span><span class="kw">:</span><span class="at"> production</span></span>
+<span id="cb18-66"><a href="#cb18-66" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">url</span><span class="kw">:</span><span class="at"> ${{ steps.deploy.outputs.url }}</span></span>
+<span id="cb18-67"><a href="#cb18-67" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">env</span><span class="kw">:</span></span>
+<span id="cb18-68"><a href="#cb18-68" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">VERCEL_ORG_ID</span><span class="kw">:</span><span class="at"> ${{ secrets.VERCEL_ORG_ID }}</span></span>
+<span id="cb18-69"><a href="#cb18-69" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">VERCEL_PROJECT_ID</span><span class="kw">:</span><span class="at"> ${{ secrets.VERCEL_PROJECT_ID }}</span></span>
+<span id="cb18-70"><a href="#cb18-70" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">VERCEL_TOKEN</span><span class="kw">:</span><span class="at"> ${{ secrets.VERCEL_TOKEN }}</span></span>
+<span id="cb18-71"><a href="#cb18-71" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span></span>
+<span id="cb18-72"><a href="#cb18-72" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@11d5960a326750d5838078e36cf38b85af677262</span><span class="co"> # v4</span></span>
+<span id="cb18-73"><a href="#cb18-73" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb18-74"><a href="#cb18-74" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">ref</span><span class="kw">:</span><span class="at"> ${{ github.sha }}</span></span>
+<span id="cb18-75"><a href="#cb18-75" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">persist-credentials</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb18-76"><a href="#cb18-76" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020</span><span class="co"> # v4</span></span>
+<span id="cb18-77"><a href="#cb18-77" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb18-78"><a href="#cb18-78" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">node-version</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;22&#39;</span></span>
+<span id="cb18-79"><a href="#cb18-79" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">run</span><span class="kw">:</span><span class="at"> npm install --global vercel@58.4.0</span></span>
+<span id="cb18-80"><a href="#cb18-80" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">run</span><span class="kw">:</span><span class="at"> vercel pull --yes --environment=production --token &quot;$VERCEL_TOKEN&quot;</span></span>
+<span id="cb18-81"><a href="#cb18-81" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">run</span><span class="kw">:</span><span class="at"> vercel build --prod --token &quot;$VERCEL_TOKEN&quot;</span></span>
+<span id="cb18-82"><a href="#cb18-82" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">run</span><span class="kw">:</span><span class="at"> npm test</span></span>
+<span id="cb18-83"><a href="#cb18-83" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">id</span><span class="kw">:</span><span class="at"> deploy</span></span>
+<span id="cb18-84"><a href="#cb18-84" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">shell</span><span class="kw">:</span><span class="at"> bash</span></span>
+<span id="cb18-85"><a href="#cb18-85" aria-hidden="true" tabindex="-1"></a><span class="fu">        run</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb18-86"><a href="#cb18-86" aria-hidden="true" tabindex="-1"></a>          url=$(vercel deploy --prebuilt --prod --yes --token &quot;$VERCEL_TOKEN&quot;)</span>
+<span id="cb18-87"><a href="#cb18-87" aria-hidden="true" tabindex="-1"></a>          echo &quot;url=$url&quot; &gt;&gt; &quot;$GITHUB_OUTPUT&quot;</span>
+<span id="cb18-88"><a href="#cb18-88" aria-hidden="true" tabindex="-1"></a>          echo &quot;Production candidate: $url | Commit: $GITHUB_SHA&quot; &gt;&gt; &quot;$GITHUB_STEP_SUMMARY&quot;</span>
+<span id="cb18-89"><a href="#cb18-89" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Smoke test production</span></span>
+<span id="cb18-90"><a href="#cb18-90" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">env</span><span class="kw">:</span></span>
+<span id="cb18-91"><a href="#cb18-91" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">CANDIDATE_URL</span><span class="kw">:</span><span class="at"> ${{ steps.deploy.outputs.url }}</span></span>
+<span id="cb18-92"><a href="#cb18-92" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">run</span><span class="kw">:</span><span class="at"> vercel curl /filter.js --deployment &quot;$CANDIDATE_URL&quot; --token &quot;$VERCEL_TOKEN&quot; -- --fail --silent --show-error</span></span></code></pre></div>
+<p>The external example files are conveniences for copying. This
+embedded listing lets you trace the whole release without leaving the
+reading document.</p>
+</main>
+<dialog id="diagram-dialog" aria-label="Enlarged diagram">
+<div class="zoom-toolbar"><span>Diagram detail</span><button type="button" id="diagram-close">Close</button></div>
+<div class="zoom-body"><img id="diagram-large" alt></div>
+</dialog>
+<script>
+const diagramDialog = document.getElementById('diagram-dialog');
+const diagramLarge = document.getElementById('diagram-large');
+document.querySelectorAll('main img').forEach((picture) => {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'diagram-button';
+  button.textContent = 'Enlarge diagram';
+  button.addEventListener('click', () => {
+    diagramLarge.src = picture.src;
+    diagramLarge.alt = picture.alt;
+    diagramDialog.showModal();
+  });
+  picture.insertAdjacentElement('afterend', button);
+});
+document.getElementById('diagram-close').addEventListener('click', () => diagramDialog.close());
+</script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "name": "release-lab",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "build": "tsc && node scripts/copy-page.mjs",
+    "test": "node --test tests/filter.test.mjs",
+    "check": "npm run build && npm test",
+    "start": "node scripts/serve.mjs"
+  },
+  "devDependencies": { "typescript": "5.9.3" }
+}

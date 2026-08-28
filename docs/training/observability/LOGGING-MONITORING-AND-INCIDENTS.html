@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Logging, Monitoring, and Incident Response</title>
+<style type="text/css">:root{color-scheme:light;--ink:#19283c;--muted:#56667a;--blue:#145bd8;--navy:#081a33;--line:#dce5ef;--paper:#fff;--bg:#edf2f7}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:30px}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.75 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:#145ac0;text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:3px solid #d58b00;outline-offset:4px}
+.skip{position:fixed;top:-100px;left:16px;z-index:10;background:white;padding:10px}
+.skip:focus{top:10px}
+aside{position:fixed;inset:0 auto 0 0;width:284px;overflow:auto;padding:30px 22px;background:var(--navy);color:#e9f0fa;border-right:1px solid #244363}
+.brand{font-size:12px;letter-spacing:.17em;text-transform:uppercase;color:#76dcf3;font-weight:700}
+aside h2{font-size:22px;line-height:1.3;margin:12px 0 22px;color:white;border:0;padding:0}
+aside ul{list-style:none;margin:0;padding:0}
+aside li{margin:0 0 5px}
+aside li ul{margin-left:0}
+aside a{display:block;padding:7px 10px;border-radius:6px;color:#d2deed;text-decoration:none;font-size:13px;line-height:1.45}
+aside a:hover{background:#193554;color:white}
+.rail-footer{margin-top:22px;border-top:1px solid #2c4260;padding-top:20px;color:#9db0c9;font-size:12px}
+main{margin-left:284px;padding:42px clamp(24px,4vw,72px) 90px;max-width:1550px}
+.toolbar{display:flex;align-items:center;gap:15px;justify-content:space-between;margin-bottom:30px;font-size:12px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+button{font:600 13px system-ui;border:1px solid #c9d7e8;background:#fff;color:#164176;padding:10px 15px;border-radius:8px;cursor:pointer}
+button:hover{background:#e6f0ff}
+h1{font-size:clamp(40px,4.4vw,66px);line-height:1.1;letter-spacing:-.045em;background:linear-gradient(120deg,#07172e,#124481);color:white;border-radius:20px;padding:40px;margin:0 0 34px;box-shadow:0 18px 45px #0b254025}
+h2{font-size:30px;line-height:1.3;color:#103e7c;letter-spacing:-.025em;margin:58px 0 22px;padding-top:23px;border-top:3px solid #2367c9}
+h3{font-size:23px;line-height:1.35;color:#075e76;letter-spacing:-.02em;margin:34px 0 15px}
+p{margin:16px 0;max-width:90ch}
+li{margin:7px 0}
+strong{color:#113862}
+blockquote{background:#e1f1f7;border-left:5px solid #068caf;border-radius:0 12px 12px 0;margin:28px 0;padding:12px 25px;color:#184050}
+figure{margin:28px 0 32px}
+figure img{display:block;width:100%;height:auto;border-radius:14px;background:#07172d;box-shadow:0 12px 28px #0a254025}
+figcaption{font-size:14px;line-height:1.6;color:var(--muted);padding:13px 2px}
+.diagram-button{margin-top:9px;font-size:12px}
+img{max-width:100%;height:auto}
+pre{padding:23px 25px;overflow:auto;background:#091b32;color:#dfedff;border:1px solid #203a56;border-radius:12px;line-height:1.6;tab-size:4}
+code{font-family:"Cascadia Code",Consolas,monospace;font-size:.85em}
+:not(pre)>code{background:#e3eaf3;color:#98305b;padding:.12em .32em;border-radius:4px;overflow-wrap:anywhere}
+pre code{white-space:pre;color:inherit}
+table{border-collapse:separate;border-spacing:0;display:block;overflow-x:auto;max-width:100%;margin:24px 0 30px;border:1px solid var(--line);border-radius:10px;background:white;font-size:15px;line-height:1.6}
+th,td{text-align:left;vertical-align:top;padding:13px 16px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-width:130px}
+th{background:#103c78;color:white;font-weight:650}
+tr:nth-child(even) td{background:#f4f7fb}
+tr:last-child td{border-bottom:0}
+th:last-child,td:last-child{border-right:0}
+hr{border:0;border-top:1px solid var(--line);margin:40px 0}
+dialog{border:1px solid #375679;border-radius:15px;padding:0;background:#07172e;color:white;width:96vw;max-width:1900px;max-height:96vh;overflow:hidden}
+dialog::backdrop{background:#030b17dd}
+.zoom-toolbar{display:flex;gap:10px;align-items:center;justify-content:flex-end;padding:12px 18px;background:#102943}
+.zoom-toolbar span{margin-right:auto;font-size:14px}
+.zoom-body{overflow:auto;max-height:82vh;padding:12px}
+.zoom-body img{display:block;width:100%;max-width:none;margin:auto;height:auto}
+footer{margin-top:60px;border-top:1px solid var(--line);padding-top:20px;font-size:13px;color:var(--muted)}
+@media(max-width:1000px){aside{position:relative;width:auto;padding:24px}aside nav ul{columns:2}aside li{break-inside:avoid}.rail-footer{display:none}main{margin-left:0;padding:28px 24px 60px}}
+@media(max-width:600px){body{font-size:16px}aside nav ul{columns:1}aside{max-height:330px}main{padding:22px 16px 50px}h1{font-size:38px;padding:27px}h2{font-size:26px}h3{font-size:21px}.toolbar{font-size:10px}pre{padding:17px;font-size:14px}.zoom-toolbar{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{aside,.toolbar,.diagram-button,dialog{display:none!important}body{background:white;font-size:11pt}main{margin:0;max-width:none;padding:0}h1{color:#12345a;background:none;padding:0;box-shadow:none;font-size:32pt}h2,h3{break-after:avoid}figure,blockquote{break-inside:avoid}pre{background:#f3f5f9;color:#152f4e;white-space:pre-wrap}pre code{white-space:pre-wrap}table{display:table;font-size:9pt}th,td{min-width:0;padding:7px}figure img{box-shadow:none}}
+</style><style type="text/css">
+body{font-size:24px;line-height:1.7}
+main{max-width:1500px}
+p{max-width:65ch}
+h2{font-size:36px}
+h3{font-size:28px;color:#17478a}
+blockquote{background:#edf4ff;border-left-color:#245ac4;color:#19283c}
+table{font-size:21px}
+figcaption{font-size:20px}
+pre{font-size:20px}
+:not(pre)>code{background:#edf4ff;color:#17478a}
+button{min-height:44px;font-size:16px}
+aside a{font-size:15px}
+.brand{color:#c4d8fa}
+a:focus-visible,button:focus-visible{outline-color:#245ac4}
+@media(max-width:600px){body{font-size:24px}h2{font-size:32px}h3{font-size:27px}pre{font-size:18px}aside a{font-size:15px}}
+@media print{body{font-size:12pt}h2{font-size:22pt}h3{font-size:17pt}table{font-size:10pt}pre{font-size:10pt}}
+</style>
+</head>
+<body>
+<a class="skip" href="#content">Skip to document</a>
+<aside aria-label="Document contents">
+<div class="brand">Visual learning library</div>
+<h2>Observability Workshop</h2>
+<ul>
+<li><a href="#logging-monitoring-and-incident-response" id="toc-logging-monitoring-and-incident-response">Logging, Monitoring,
+and Incident Response</a>
+<ul>
+<li><a href="#at-a-glance" id="toc-at-a-glance">At a glance</a></li>
+<li><a href="#lesson-1--ask-a-question-before-collecting-data" id="toc-lesson-1--ask-a-question-before-collecting-data">Lesson 1 — Ask
+a question before collecting data</a></li>
+<li><a href="#lesson-2--follow-a-request-without-exposing-its-contents" id="toc-lesson-2--follow-a-request-without-exposing-its-contents">Lesson
+2 — Follow a request without exposing its contents</a></li>
+<li><a href="#lesson-3--count-the-right-thing" id="toc-lesson-3--count-the-right-thing">Lesson 3 — Count the right
+thing</a></li>
+<li><a href="#lesson-4--respond-to-an-incident-in-order" id="toc-lesson-4--respond-to-an-incident-in-order">Lesson 4 — Respond to
+an incident in order</a></li>
+<li><a href="#lesson-5--alerts-need-an-action" id="toc-lesson-5--alerts-need-an-action">Lesson 5 — Alerts need an
+action</a></li>
+<li><a href="#lesson-6--your-independent-challenge" id="toc-lesson-6--your-independent-challenge">Lesson 6 — Your
+independent challenge</a></li>
+</ul></li>
+</ul>
+<div class="rail-footer">Self-contained reading edition<br>Diagrams and styles embedded</div>
+</aside>
+<main id="content">
+<div class="toolbar"><span>Illustrated reference guide</span><button type="button" onclick="window.print()">Print / Save PDF</button></div>
+<h1 id="logging-monitoring-and-incident-response">Logging, Monitoring,
+and Incident Response</h1>
+<h2 id="at-a-glance">At a glance</h2>
+<p>This workshop teaches you to answer “What happened?” without
+collecting every private detail or guessing from a generic error screen.
+You will connect synthetic events across a web layer and API,
+distinguish event logs from aggregate measurements, and rehearse an
+incident response that prioritizes restoring service while preserving
+evidence.</p>
+<p>Run the Python lab in <code>exercises</code> with
+<code>python lab.py</code>. It creates only in-memory synthetic events.
+It does not install a telemetry collector, contact a monitoring vendor,
+or access your real application logs.</p>
+<p><img role="img" aria-label="A request identifier connects symptoms to the failing dependency and recovery decision." src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9Ijc5MCIgdmlld0JveD0iMCAwIDEyMDAgNzkwIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IkxvZ2dpbmcsIE1vbml0b3JpbmcsIGFuZCBJbmNpZGVudCBSZXNwb25zZSBmbG93Ij48cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI3OTAiIHJ4PSIyNCIgZmlsbD0iI2VkZjRmZiIvPjxnIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSxBcmlhbCxzYW5zLXNlcmlmIiBmaWxsPSIjMTczOTY0Ij48dGV4dCB4PSI1MCIgeT0iNjAiIGZvbnQtc2l6ZT0iMzIiIGZvbnQtd2VpZ2h0PSI3MDAiPkxvZ2dpbmcsIE1vbml0b3JpbmcsIGFuZCBJbmNpZGVudCBSZXNwb25zZTwvdGV4dD48cmVjdCB4PSI1MCIgeT0iMTU1IiB3aWR0aD0iNTIwIiBoZWlnaHQ9IjE5NSIgcng9IjE4IiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSIjYjhjZmVkIiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSI3NSIgeT0iMTk3IiBmb250LXNpemU9IjI1IiBmb250LXdlaWdodD0iNzAwIj4xIMK3IFVzZXItdmlzaWJsZSBmYWlsdXJlPC90ZXh0Pjx0ZXh0IHg9Ijc1IiB5PSIyNjgiIGZvbnQtc2l6ZT0iMjMiPklkZW50aWZ5IGltcGFjdCBiZWZvcmUgZ3Vlc3NpbmcgYXQgdGhlPC90ZXh0Pjx0ZXh0IHg9Ijc1IiB5PSIzMDAiIGZvbnQtc2l6ZT0iMjMiPmNhdXNlPC90ZXh0PjxyZWN0IHg9IjYzMCIgeT0iMTU1IiB3aWR0aD0iNTIwIiBoZWlnaHQ9IjE5NSIgcng9IjE4IiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSIjYjhjZmVkIiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSI2NTUiIHk9IjE5NyIgZm9udC1zaXplPSIyNSIgZm9udC13ZWlnaHQ9IjcwMCI+MiDCtyBDb3JyZWxhdGVkIGV2ZW50czwvdGV4dD48dGV4dCB4PSI2NTUiIHk9IjI2OCIgZm9udC1zaXplPSIyMyI+Rm9sbG93IG9uZSByZXF1ZXN0IElEIGFjcm9zcyBjb21wb25lbnQ8L3RleHQ+PHRleHQgeD0iNjU1IiB5PSIzMDAiIGZvbnQtc2l6ZT0iMjMiPmJvdW5kYXJpZXM8L3RleHQ+PHJlY3QgeD0iNTAiIHk9IjQxNSIgd2lkdGg9IjUyMCIgaGVpZ2h0PSIxOTUiIHJ4PSIxOCIgZmlsbD0id2hpdGUiIHN0cm9rZT0iI2I4Y2ZlZCIgc3Ryb2tlLXdpZHRoPSIyIi8+PHRleHQgeD0iNzUiIHk9IjQ1NyIgZm9udC1zaXplPSIyNSIgZm9udC13ZWlnaHQ9IjcwMCI+MyDCtyBTYWZlIGV2aWRlbmNlPC90ZXh0Pjx0ZXh0IHg9Ijc1IiB5PSI1MjgiIGZvbnQtc2l6ZT0iMjMiPktlZXAgdXNlZnVsIGNvZGVzOyBleGNsdWRlIHJhdyBxdWVyaWVzPC90ZXh0Pjx0ZXh0IHg9Ijc1IiB5PSI1NjAiIGZvbnQtc2l6ZT0iMjMiPmFuZCB0b2tlbnM8L3RleHQ+PHJlY3QgeD0iNjMwIiB5PSI0MTUiIHdpZHRoPSI1MjAiIGhlaWdodD0iMTk1IiByeD0iMTgiIGZpbGw9IndoaXRlIiBzdHJva2U9IiNiOGNmZWQiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9IjY1NSIgeT0iNDU3IiBmb250LXNpemU9IjI1IiBmb250LXdlaWdodD0iNzAwIj40IMK3IE1pdGlnYXRlIGFuZCB2ZXJpZnk8L3RleHQ+PHRleHQgeD0iNjU1IiB5PSI1MjgiIGZvbnQtc2l6ZT0iMjMiPlJlY29yZCB0aGUgYWN0aW9uLCBjb25maXJtIHJlY292ZXJ5LDwvdGV4dD48dGV4dCB4PSI2NTUiIHk9IjU2MCIgZm9udC1zaXplPSIyMyI+YW5kIHByZXZlbnQgcmVjdXJyZW5jZTwvdGV4dD48cmVjdCB4PSI1MCIgeT0iNjYwIiB3aWR0aD0iMTEwMCIgaGVpZ2h0PSI5NSIgcng9IjE1IiBmaWxsPSIjZGFlOGZmIi8+PHRleHQgeD0iNzUiIHk9IjY5NiIgZm9udC1zaXplPSIyMyI+U3ludGhldGljIGxvZyBtb2RlbDsgbm8gY29sbGVjdG9yLCBkYXNoYm9hcmQsIG9yIGxpdmUgYWxlcnQgaW5zdGFsbGVkLjwvdGV4dD48L2c+PGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMjQ1YWM0IiBzdHJva2Utd2lkdGg9IjMiPjxwYXRoIGQ9Ik01NzUgMjUwaDQwbS0xMiAtOWwxMiA5IC0xMiA5TTg5MCAzNTV2MjVIMzEwdjI1bS05IC0xMmw5IDEyIDkgLTEyTTU3NSA1MTBoNDBtLTEyIC05bDEyIDkgLTEyIDkiLz48L2c+PC9zdmc+" alt="A request identifier connects symptoms to the failing dependency and recovery decision." /></p>
+<h2 id="lesson-1--ask-a-question-before-collecting-data">Lesson 1 — Ask
+a question before collecting data</h2>
+<p>Imagine the learning website reports “Search failed.” You need to
+know whether this affects one request or everyone, when it started, and
+where the failure occurred. A stack trace alone may not answer those
+questions.</p>
+<p>Logs describe events. Metrics summarize measurements such as request
+count, error rate, or latency. Traces connect operations across a
+request path. These signals complement each other rather than replacing
+each other. <a href="https://opentelemetry.io/docs/concepts/signals/">OpenTelemetry&#39;s
+signal overview</a></p>
+<p>Start with operational questions: Can users complete search? How
+often does it fail? Which dependency is slow? What changed near the
+onset? Choose instrumentation that helps answer those questions, not a
+dashboard full of unrelated numbers.</p>
+<h2 id="lesson-2--follow-a-request-without-exposing-its-contents">Lesson
+2 — Follow a request without exposing its contents</h2>
+<p>The lab emits four events. Two different request IDs are interleaved.
+Filter for <code>req-A</code>: web start, API timeout, then web failure.
+The other request succeeded and should not be mistaken for a step in the
+failing chain.</p>
+<p>The <code>emit()</code> function allowlists extra fields. Synthetic
+query and token values passed to it are deliberately excluded. This
+demonstrates data minimization: prevent unnecessary fields from entering
+the log instead of assuming someone will redact them later.</p>
+<p>Request IDs are correlation aids, not authorization credentials. Do
+not allow an ID supplied by a client to grant access to another user&#39;s
+logs. A production system also needs access controls, retention, and an
+approach to identifiers that may themselves be sensitive.</p>
+<p><strong>Checkpoint:</strong> Explain why logging the entire request
+object can create a new incident while you investigate the first
+one.</p>
+<h2 id="lesson-3--count-the-right-thing">Lesson 3 — Count the right
+thing</h2>
+<p>The synthetic dataset contains one failed completed web request and
+one successful completed web request. The lab counts requests, not every
+error event. Counting both the API error and the web error as two failed
+user requests would inflate the result.</p>
+<p>These two records are teaching data, not a measured availability
+claim about your website. A meaningful metric needs a defined
+denominator and time window. “Five errors” means something different out
+of ten requests than out of a million.</p>
+<p>Latency also has a distribution. An average can hide a slow tail.
+When investigating real performance, examine appropriate percentiles and
+sample sizes, then distinguish application latency from dependency
+latency. Avoid assigning a performance target before understanding user
+needs and actual measurements.</p>
+<h2 id="lesson-4--respond-to-an-incident-in-order">Lesson 4 — Respond to
+an incident in order</h2>
+<p>First establish impact and severity. Identify who is affected and
+whether there is an active safety or privacy risk. Stop harmful
+operations when necessary. Assign an incident owner and a communication
+channel so multiple people do not make conflicting changes.</p>
+<p>Next gather a small timeline: last known good state, first observed
+failure, recent deployments or configuration changes, and the exact
+evidence. A nearby deployment is a hypothesis, not proof of
+causation.</p>
+<p>Choose a bounded mitigation: roll back a known bad release, disable a
+risky feature, or reduce load if the evidence supports it. Record the
+action and verify its effect. A reverted code deployment does not
+reverse database writes or external agent actions.</p>
+<p>After restoration, investigate the underlying cause and add
+prevention: a regression test, a better alert, safer rollout, or clearer
+operational procedure. A post-incident review should explain the system
+conditions rather than merely blaming the person who clicked deploy.</p>
+<h2 id="lesson-5--alerts-need-an-action">Lesson 5 — Alerts need an
+action</h2>
+<p>An alert should tell an appropriate person that intervention may be
+needed. If every warning pages someone, people learn to ignore the
+noise. Distinguish informational events from symptoms that threaten the
+service objective.</p>
+<p>For search, a sustained increase in failed requests may be more
+useful than an alert for one transient timeout. For an unauthorized
+disclosure, even one verified event may require immediate action. The
+threshold depends on the consequence, not a universal recipe.</p>
+<p>Attach a short runbook: how to confirm impact, which dashboards or
+logs to inspect, which actions are safe, and when to escalate. Keep
+secrets out of runbooks and incident messages.</p>
+<h2 id="lesson-6--your-independent-challenge">Lesson 6 — Your
+independent challenge</h2>
+<p>Add a second failing dependency to the synthetic events. Reconstruct
+two separate request chains and compute user-request failures without
+double counting. Then remove one correlation ID and describe what
+becomes uncertain.</p>
+<p>Write a one-page runbook for the learning website&#39;s search: symptom,
+scope check, recent-change check, mitigation options, verification, and
+communication. Do not claim an installed alert exists until it has
+actually been configured and tested.</p>
+<p>The lab proves its filtering, allowlisted event fields, and synthetic
+counting logic. It does not prove production observability. You are
+finished when you can explain what evidence is available, what is
+missing, and what decision each signal supports.</p>
+</main>
+<dialog id="diagram-dialog" aria-label="Enlarged diagram">
+<div class="zoom-toolbar"><span>Diagram detail</span><button type="button" id="diagram-close">Close</button></div>
+<div class="zoom-body"><img id="diagram-large" alt></div>
+</dialog>
+<script>
+const diagramDialog = document.getElementById('diagram-dialog');
+const diagramLarge = document.getElementById('diagram-large');
+document.querySelectorAll('main img').forEach((picture) => {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'diagram-button';
+  button.textContent = 'Enlarge diagram';
+  button.addEventListener('click', () => {
+    diagramLarge.src = picture.src;
+    diagramLarge.alt = picture.alt;
+    diagramDialog.showModal();
+  });
+  picture.insertAdjacentElement('afterend', button);
+});
+document.getElementById('diagram-close').addEventListener('click', () => diagramDialog.close());
+</script>
+</body>
+</html>

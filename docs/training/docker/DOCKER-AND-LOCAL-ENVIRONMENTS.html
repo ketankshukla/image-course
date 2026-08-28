@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Docker and Reproducible Local Environments</title>
+<style type="text/css">:root{color-scheme:light;--ink:#19283c;--muted:#56667a;--blue:#145bd8;--navy:#081a33;--line:#dce5ef;--paper:#fff;--bg:#edf2f7}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:30px}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.75 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:#145ac0;text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:3px solid #d58b00;outline-offset:4px}
+.skip{position:fixed;top:-100px;left:16px;z-index:10;background:white;padding:10px}
+.skip:focus{top:10px}
+aside{position:fixed;inset:0 auto 0 0;width:284px;overflow:auto;padding:30px 22px;background:var(--navy);color:#e9f0fa;border-right:1px solid #244363}
+.brand{font-size:12px;letter-spacing:.17em;text-transform:uppercase;color:#76dcf3;font-weight:700}
+aside h2{font-size:22px;line-height:1.3;margin:12px 0 22px;color:white;border:0;padding:0}
+aside ul{list-style:none;margin:0;padding:0}
+aside li{margin:0 0 5px}
+aside li ul{margin-left:0}
+aside a{display:block;padding:7px 10px;border-radius:6px;color:#d2deed;text-decoration:none;font-size:13px;line-height:1.45}
+aside a:hover{background:#193554;color:white}
+.rail-footer{margin-top:22px;border-top:1px solid #2c4260;padding-top:20px;color:#9db0c9;font-size:12px}
+main{margin-left:284px;padding:42px clamp(24px,4vw,72px) 90px;max-width:1550px}
+.toolbar{display:flex;align-items:center;gap:15px;justify-content:space-between;margin-bottom:30px;font-size:12px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+button{font:600 13px system-ui;border:1px solid #c9d7e8;background:#fff;color:#164176;padding:10px 15px;border-radius:8px;cursor:pointer}
+button:hover{background:#e6f0ff}
+h1{font-size:clamp(40px,4.4vw,66px);line-height:1.1;letter-spacing:-.045em;background:linear-gradient(120deg,#07172e,#124481);color:white;border-radius:20px;padding:40px;margin:0 0 34px;box-shadow:0 18px 45px #0b254025}
+h2{font-size:30px;line-height:1.3;color:#103e7c;letter-spacing:-.025em;margin:58px 0 22px;padding-top:23px;border-top:3px solid #2367c9}
+h3{font-size:23px;line-height:1.35;color:#075e76;letter-spacing:-.02em;margin:34px 0 15px}
+p{margin:16px 0;max-width:90ch}
+li{margin:7px 0}
+strong{color:#113862}
+blockquote{background:#e1f1f7;border-left:5px solid #068caf;border-radius:0 12px 12px 0;margin:28px 0;padding:12px 25px;color:#184050}
+figure{margin:28px 0 32px}
+figure img{display:block;width:100%;height:auto;border-radius:14px;background:#07172d;box-shadow:0 12px 28px #0a254025}
+figcaption{font-size:14px;line-height:1.6;color:var(--muted);padding:13px 2px}
+.diagram-button{margin-top:9px;font-size:12px}
+img{max-width:100%;height:auto}
+pre{padding:23px 25px;overflow:auto;background:#091b32;color:#dfedff;border:1px solid #203a56;border-radius:12px;line-height:1.6;tab-size:4}
+code{font-family:"Cascadia Code",Consolas,monospace;font-size:.85em}
+:not(pre)>code{background:#e3eaf3;color:#98305b;padding:.12em .32em;border-radius:4px;overflow-wrap:anywhere}
+pre code{white-space:pre;color:inherit}
+table{border-collapse:separate;border-spacing:0;display:block;overflow-x:auto;max-width:100%;margin:24px 0 30px;border:1px solid var(--line);border-radius:10px;background:white;font-size:15px;line-height:1.6}
+th,td{text-align:left;vertical-align:top;padding:13px 16px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-width:130px}
+th{background:#103c78;color:white;font-weight:650}
+tr:nth-child(even) td{background:#f4f7fb}
+tr:last-child td{border-bottom:0}
+th:last-child,td:last-child{border-right:0}
+hr{border:0;border-top:1px solid var(--line);margin:40px 0}
+dialog{border:1px solid #375679;border-radius:15px;padding:0;background:#07172e;color:white;width:96vw;max-width:1900px;max-height:96vh;overflow:hidden}
+dialog::backdrop{background:#030b17dd}
+.zoom-toolbar{display:flex;gap:10px;align-items:center;justify-content:flex-end;padding:12px 18px;background:#102943}
+.zoom-toolbar span{margin-right:auto;font-size:14px}
+.zoom-body{overflow:auto;max-height:82vh;padding:12px}
+.zoom-body img{display:block;width:100%;max-width:none;margin:auto;height:auto}
+footer{margin-top:60px;border-top:1px solid var(--line);padding-top:20px;font-size:13px;color:var(--muted)}
+@media(max-width:1000px){aside{position:relative;width:auto;padding:24px}aside nav ul{columns:2}aside li{break-inside:avoid}.rail-footer{display:none}main{margin-left:0;padding:28px 24px 60px}}
+@media(max-width:600px){body{font-size:16px}aside nav ul{columns:1}aside{max-height:330px}main{padding:22px 16px 50px}h1{font-size:38px;padding:27px}h2{font-size:26px}h3{font-size:21px}.toolbar{font-size:10px}pre{padding:17px;font-size:14px}.zoom-toolbar{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{aside,.toolbar,.diagram-button,dialog{display:none!important}body{background:white;font-size:11pt}main{margin:0;max-width:none;padding:0}h1{color:#12345a;background:none;padding:0;box-shadow:none;font-size:32pt}h2,h3{break-after:avoid}figure,blockquote{break-inside:avoid}pre{background:#f3f5f9;color:#152f4e;white-space:pre-wrap}pre code{white-space:pre-wrap}table{display:table;font-size:9pt}th,td{min-width:0;padding:7px}figure img{box-shadow:none}}
+</style><style type="text/css">
+body{font-size:24px;line-height:1.7}
+main{max-width:1500px}
+p{max-width:65ch}
+h2{font-size:36px}
+h3{font-size:28px;color:#17478a}
+blockquote{background:#edf4ff;border-left-color:#245ac4;color:#19283c}
+table{font-size:21px}
+figcaption{font-size:20px}
+pre{font-size:20px}
+:not(pre)>code{background:#edf4ff;color:#17478a}
+button{min-height:44px;font-size:16px}
+aside a{font-size:15px}
+.brand{color:#c4d8fa}
+a:focus-visible,button:focus-visible{outline-color:#245ac4}
+@media(max-width:600px){body{font-size:24px}h2{font-size:32px}h3{font-size:27px}pre{font-size:18px}aside a{font-size:15px}}
+@media print{body{font-size:12pt}h2{font-size:22pt}h3{font-size:17pt}table{font-size:10pt}pre{font-size:10pt}}
+</style>
+</head>
+<body>
+<a class="skip" href="#content">Skip to document</a>
+<aside aria-label="Document contents">
+<div class="brand">Visual learning library</div>
+<h2>Docker Workshop</h2>
+<ul>
+<li><a href="#docker-and-reproducible-local-environments" id="toc-docker-and-reproducible-local-environments">Docker and
+Reproducible Local Environments</a>
+<ul>
+<li><a href="#at-a-glance" id="toc-at-a-glance">At a glance</a></li>
+<li><a href="#lesson-1--separate-the-recipe-from-the-running-process" id="toc-lesson-1--separate-the-recipe-from-the-running-process">Lesson 1
+— Separate the recipe from the running process</a></li>
+<li><a href="#lesson-2--read-the-dockerfile-line-by-line" id="toc-lesson-2--read-the-dockerfile-line-by-line">Lesson 2 — Read the
+Dockerfile line by line</a></li>
+<li><a href="#lesson-3--build-and-run-manually" id="toc-lesson-3--build-and-run-manually">Lesson 3 — Build and run
+manually</a></li>
+<li><a href="#lesson-4--understand-storage-before-adding-a-database" id="toc-lesson-4--understand-storage-before-adding-a-database">Lesson 4
+— Understand storage before adding a database</a></li>
+<li><a href="#lesson-5--add-services-deliberately" id="toc-lesson-5--add-services-deliberately">Lesson 5 — Add services
+deliberately</a></li>
+<li><a href="#lesson-6--your-challenge-and-verification-record" id="toc-lesson-6--your-challenge-and-verification-record">Lesson 6 —
+Your challenge and verification record</a></li>
+</ul></li>
+</ul>
+<div class="rail-footer">Self-contained reading edition<br>Diagrams and styles embedded</div>
+</aside>
+<main id="content">
+<div class="toolbar"><span>Illustrated reference guide</span><button type="button" onclick="window.print()">Print / Save PDF</button></div>
+<h1 id="docker-and-reproducible-local-environments">Docker and
+Reproducible Local Environments</h1>
+<h2 id="at-a-glance">At a glance</h2>
+<p>This workshop teaches you what an image, container, port mapping, and
+volume actually do. You will package a tiny Python health service, run
+it through an explicitly local host port, inspect its logs, and
+understand which changes survive container removal. The supplied service
+has no database or secrets.</p>
+<p>You need a working Docker installation for the container exercises.
+Docker is not installed in the authoring environment, so image build and
+container execution are explicitly <strong>not verified here</strong>.
+The Python service can be checked separately; that does not prove the
+container works. Do not install or change system software without
+understanding its platform requirements and licensing.</p>
+<p><img role="img" aria-label="A source recipe builds an image; a container runs it behind an explicit port mapping." src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9Ijc5MCIgdmlld0JveD0iMCAwIDEyMDAgNzkwIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IkRvY2tlciBhbmQgTG9jYWwgRW52aXJvbm1lbnRzIGZsb3ciPjxyZWN0IHdpZHRoPSIxMjAwIiBoZWlnaHQ9Ijc5MCIgcng9IjI0IiBmaWxsPSIjZWRmNGZmIi8+PGcgZm9udC1mYW1pbHk9IlNlZ29lIFVJLEFyaWFsLHNhbnMtc2VyaWYiIGZpbGw9IiMxNzM5NjQiPjx0ZXh0IHg9IjUwIiB5PSI2MCIgZm9udC1zaXplPSIzMiIgZm9udC13ZWlnaHQ9IjcwMCI+RG9ja2VyIGFuZCBMb2NhbCBFbnZpcm9ubWVudHM8L3RleHQ+PHJlY3QgeD0iNTAiIHk9IjE1NSIgd2lkdGg9IjUyMCIgaGVpZ2h0PSIxOTUiIHJ4PSIxOCIgZmlsbD0id2hpdGUiIHN0cm9rZT0iI2I4Y2ZlZCIgc3Ryb2tlLXdpZHRoPSIyIi8+PHRleHQgeD0iNzUiIHk9IjE5NyIgZm9udC1zaXplPSIyNSIgZm9udC13ZWlnaHQ9IjcwMCI+MSDCtyBTb3VyY2UgYW5kIERvY2tlcmZpbGU8L3RleHQ+PHRleHQgeD0iNzUiIHk9IjI2OCIgZm9udC1zaXplPSIyMyI+QSBzbWFsbCByZWNpcGUgY29waWVzIG9ubHkgdGhlPC90ZXh0Pjx0ZXh0IHg9Ijc1IiB5PSIzMDAiIGZvbnQtc2l6ZT0iMjMiPmFwcGxpY2F0aW9uPC90ZXh0PjxyZWN0IHg9IjYzMCIgeT0iMTU1IiB3aWR0aD0iNTIwIiBoZWlnaHQ9IjE5NSIgcng9IjE4IiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSIjYjhjZmVkIiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSI2NTUiIHk9IjE5NyIgZm9udC1zaXplPSIyNSIgZm9udC13ZWlnaHQ9IjcwMCI+MiDCtyBCdWlsZCBhbiBpbWFnZTwvdGV4dD48dGV4dCB4PSI2NTUiIHk9IjI2OCIgZm9udC1zaXplPSIyMyI+UmVjb3JkIHRoZSBiYXNlIHJlZmVyZW5jZSBhbmQgYnVpbGQ8L3RleHQ+PHRleHQgeD0iNjU1IiB5PSIzMDAiIGZvbnQtc2l6ZT0iMjMiPm91dGNvbWU8L3RleHQ+PHJlY3QgeD0iNTAiIHk9IjQxNSIgd2lkdGg9IjUyMCIgaGVpZ2h0PSIxOTUiIHJ4PSIxOCIgZmlsbD0id2hpdGUiIHN0cm9rZT0iI2I4Y2ZlZCIgc3Ryb2tlLXdpZHRoPSIyIi8+PHRleHQgeD0iNzUiIHk9IjQ1NyIgZm9udC1zaXplPSIyNSIgZm9udC13ZWlnaHQ9IjcwMCI+MyDCtyBSdW4gYSBjb250YWluZXI8L3RleHQ+PHRleHQgeD0iNzUiIHk9IjUyOCIgZm9udC1zaXplPSIyMyI+UHVibGlzaCBob3N0IGxvb3BiYWNrIDQxODAgdG8gY29udGFpbmVyPC90ZXh0Pjx0ZXh0IHg9Ijc1IiB5PSI1NjAiIGZvbnQtc2l6ZT0iMjMiPnBvcnQgODA4MDwvdGV4dD48cmVjdCB4PSI2MzAiIHk9IjQxNSIgd2lkdGg9IjUyMCIgaGVpZ2h0PSIxOTUiIHJ4PSIxOCIgZmlsbD0id2hpdGUiIHN0cm9rZT0iI2I4Y2ZlZCIgc3Ryb2tlLXdpZHRoPSIyIi8+PHRleHQgeD0iNjU1IiB5PSI0NTciIGZvbnQtc2l6ZT0iMjUiIGZvbnQtd2VpZ2h0PSI3MDAiPjQgwrcgSW5zcGVjdCBhbmQgc3RvcDwvdGV4dD48dGV4dCB4PSI2NTUiIHk9IjUyOCIgZm9udC1zaXplPSIyMyI+Q2hlY2sgaGVhbHRoIGFuZCBsb2dzOyBzdG9wIG9ubHkgdGhlPC90ZXh0Pjx0ZXh0IHg9IjY1NSIgeT0iNTYwIiBmb250LXNpemU9IjIzIj5uYW1lZCBsYWIgY29udGFpbmVyPC90ZXh0PjxyZWN0IHg9IjUwIiB5PSI2NjAiIHdpZHRoPSIxMTAwIiBoZWlnaHQ9Ijk1IiByeD0iMTUiIGZpbGw9IiNkYWU4ZmYiLz48dGV4dCB4PSI3NSIgeT0iNjk2IiBmb250LXNpemU9IjIzIj5Eb2NrZXIgdW5hdmFpbGFibGUgaGVyZTogaW1hZ2UgYnVpbGQgYW5kIGNvbnRhaW5lciBydW4gcmVtYWluIHVudmVyaWZpZWQuPC90ZXh0PjwvZz48ZyBmaWxsPSJub25lIiBzdHJva2U9IiMyNDVhYzQiIHN0cm9rZS13aWR0aD0iMyI+PHBhdGggZD0iTTU3NSAyNTBoNDBtLTEyIC05bDEyIDkgLTEyIDlNODkwIDM1NXYyNUgzMTB2MjVtLTkgLTEybDkgMTIgOSAtMTJNNTc1IDUxMGg0MG0tMTIgLTlsMTIgOSAtMTIgOSIvPjwvZz48L3N2Zz4=" alt="A source recipe builds an image; a container runs it behind an explicit port mapping." /></p>
+<h2 id="lesson-1--separate-the-recipe-from-the-running-process">Lesson 1
+— Separate the recipe from the running process</h2>
+<p>A Dockerfile is a build recipe. An image is the packaged filesystem
+and configuration produced from it. A container is a running or stopped
+instance created from an image. Building an image does not start the
+service, and stopping a container does not delete the image.</p>
+<p>Think of an image as a prepared application package, not a complete
+virtual copy of your laptop. Containers still depend on a host runtime
+and operating-system facilities. “It runs in Docker” is not proof that
+every environment is identical or secure.</p>
+<p>The lab contains <code>app.py</code>, <code>Dockerfile</code>, and
+<code>.dockerignore</code>. The application responds to
+<code>/health</code> on port 8080. It binds to all interfaces inside the
+container because binding only to container-local loopback would prevent
+ordinary mapped-port access.</p>
+<h2 id="lesson-2--read-the-dockerfile-line-by-line">Lesson 2 — Read the
+Dockerfile line by line</h2>
+<p><code>FROM python:3.14-slim</code> selects the base image.
+<code>WORKDIR /app</code> establishes the working directory.
+<code>COPY app.py .</code> copies only the needed source.
+<code>USER 65532:65532</code> runs the application as a non-root numeric
+user. <code>EXPOSE 8080</code> documents the intended container port.
+<code>CMD</code> specifies the process to start.</p>
+<p>The version tag is a teaching choice, not an immutable artifact
+reference. Tags can change. For stronger reproducibility, resolve and
+review a supported image digest, record it, and maintain an update
+process. Do not invent a digest in documentation.</p>
+<p>The ignore file excludes Git metadata, environment files, and Python
+caches from the build context. The context is the set of files available
+to the build; carelessly sending an entire project can expose
+unnecessary data even when you intended to copy one file.</p>
+<p><strong>Checkpoint:</strong> Explain why <code>EXPOSE</code> is not
+the same as publishing a port on your laptop.</p>
+<h2 id="lesson-3--build-and-run-manually">Lesson 3 — Build and run
+manually</h2>
+<p>In the <code>exercises/container-lab</code> folder, after confirming
+Docker is installed and running:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>docker version</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>docker build <span class="op">-</span>t learning-container-lab<span class="op">:</span>local <span class="op">.</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>docker run <span class="op">--</span>rm <span class="op">--</span>name learning-container-lab <span class="op">-</span>p <span class="dv">127.0</span><span class="op">.</span><span class="dv">0.1</span><span class="op">:</span><span class="dv">4180</span><span class="op">:</span><span class="dv">8080</span> learning-container-lab<span class="op">:</span>local</span></code></pre></div>
+<p>In another terminal:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">curl</span><span class="op">.</span><span class="fu">exe</span> <span class="op">-</span>i http<span class="op">://</span><span class="dv">127.0</span><span class="op">.</span><span class="dv">0.1</span><span class="op">:</span><span class="dv">4180</span><span class="op">/</span>health</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>docker logs learning-container-lab</span></code></pre></div>
+<p>The expected health response is status 200 with the service name. The
+host port is 4180; the application still listens on 8080 inside the
+container. Publishing specifically on <code>127.0.0.1</code> keeps the
+mapping local rather than exposing it on every host network interface.
+<a href="https://docs.docker.com/get-started/docker-concepts/running-containers/publishing-ports/">Docker&#39;s
+port-publishing guide</a></p>
+<p>If the name already exists, inspect it before acting. Do not delete
+an unfamiliar container. When finished with your own lab instance, run
+<code>docker stop learning-container-lab</code>. Because it was created
+with <code>--rm</code>, its container is removed after it stops; the
+image remains.</p>
+<h2 id="lesson-4--understand-storage-before-adding-a-database">Lesson 4
+— Understand storage before adding a database</h2>
+<p>A container&#39;s writable layer is not a durable storage strategy.
+Replacing a container can discard data stored there. A named volume or
+an explicitly chosen bind mount can preserve data independently, but
+each has different ownership and host-access consequences.</p>
+<p>Do not mount your home directory, whole drive, or Docker socket into
+a practice container. A bind mount can let the container change real
+host files. Start with a deliberately created disposable directory and a
+clear reason for the mount.</p>
+<p>For a future database service, distinguish deleting the container
+from deleting its volume. Avoid broad prune commands or
+<code>down -v</code> without verifying what data they would remove. This
+workshop does not create a volume, so there is no database data to clean
+up.</p>
+<h2 id="lesson-5--add-services-deliberately">Lesson 5 — Add services
+deliberately</h2>
+<p>A multi-service development setup might include a frontend, API,
+database, and worker. Each needs a role, internal address, readiness
+check, and data boundary. Inside one container, <code>localhost</code>
+refers to that container—not another service and not automatically your
+host.</p>
+<p>Compose can describe a group of services, networks, and volumes. It
+does not remove the need for startup readiness, migrations, credentials,
+or recovery. A process starting is different from a database being ready
+to accept the operation your app needs.</p>
+<p>Keep this first exercise small before introducing a whole platform.
+If the single health service fails, diagnose image build, process
+startup, binding address, and port mapping separately.</p>
+<h2 id="lesson-6--your-challenge-and-verification-record">Lesson 6 —
+Your challenge and verification record</h2>
+<p>Change the response to include a non-secret configuration value.
+Rebuild and run a fresh container. Observe that editing a source file on
+the host does not change code already copied into an existing image.</p>
+<p>Record the image reference, build output, health response, and logs.
+Then stop only your named practice container. A completed Python syntax
+or HTTP check is not a substitute for these container observations.</p>
+<p>The Docker artifacts are ready for your manual rehearsal, but
+container execution remains unverified until Docker is available and
+these steps are run. Nothing is deployed to Vercel and no real project
+is containerized by this document.</p>
+</main>
+<dialog id="diagram-dialog" aria-label="Enlarged diagram">
+<div class="zoom-toolbar"><span>Diagram detail</span><button type="button" id="diagram-close">Close</button></div>
+<div class="zoom-body"><img id="diagram-large" alt></div>
+</dialog>
+<script>
+const diagramDialog = document.getElementById('diagram-dialog');
+const diagramLarge = document.getElementById('diagram-large');
+document.querySelectorAll('main img').forEach((picture) => {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'diagram-button';
+  button.textContent = 'Enlarge diagram';
+  button.addEventListener('click', () => {
+    diagramLarge.src = picture.src;
+    diagramLarge.alt = picture.alt;
+    diagramDialog.showModal();
+  });
+  picture.insertAdjacentElement('afterend', button);
+});
+document.getElementById('diagram-close').addEventListener('click', () => diagramDialog.close());
+</script>
+</body>
+</html>

@@ -18,6 +18,75 @@
           "file": "PUBLISHING-CASE-STUDIES.md"
         }
       ]
+    },
+    {
+      "title": "Hands-on team workflows",
+      "documents": [
+        {
+          "id": 18,
+          "file": "training/START-HERE.md"
+        },
+        {
+          "id": 3,
+          "file": "training/ci-cd/CI-CD-FROM-SOLO-TO-TEAM.md"
+        },
+        {
+          "id": 4,
+          "file": "training/debugging/DEBUGGING-WITHOUT-GUESSING.md"
+        },
+        {
+          "id": 5,
+          "file": "training/testing/TESTING-THAT-CATCHES-REAL-PROBLEMS.md"
+        },
+        {
+          "id": 6,
+          "file": "training/http-api/HTTP-AND-API-DEVELOPMENT.md"
+        },
+        {
+          "id": 7,
+          "file": "training/git-team/GIT-COLLABORATION-AND-REVIEW.md"
+        },
+        {
+          "id": 8,
+          "file": "training/databases/DATABASES-AND-SAFE-MIGRATIONS.md"
+        },
+        {
+          "id": 9,
+          "file": "training/identity/AUTHENTICATION-AUTHORIZATION-AND-SECRETS.md"
+        },
+        {
+          "id": 10,
+          "file": "training/configuration/CONFIGURATION-AND-ENVIRONMENTS.md"
+        },
+        {
+          "id": 11,
+          "file": "training/background-jobs/BACKGROUND-JOBS-AND-RELIABLE-WORKFLOWS.md"
+        },
+        {
+          "id": 12,
+          "file": "training/observability/LOGGING-MONITORING-AND-INCIDENTS.md"
+        },
+        {
+          "id": 13,
+          "file": "training/docker/DOCKER-AND-LOCAL-ENVIRONMENTS.md"
+        },
+        {
+          "id": 14,
+          "file": "training/refactoring/SOFTWARE-DESIGN-AND-REFACTORING.md"
+        },
+        {
+          "id": 15,
+          "file": "training/accessibility/ACCESSIBLE-AND-RESILIENT-INTERFACES.md"
+        },
+        {
+          "id": 16,
+          "file": "training/performance/PERFORMANCE-INVESTIGATION.md"
+        },
+        {
+          "id": 17,
+          "file": "training/codebase/READING-AN-UNFAMILIAR-CODEBASE.md"
+        }
+      ]
     }
   ]
 }

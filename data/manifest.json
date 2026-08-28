@@ -2091,7 +2091,7 @@
       "subtitle": "Find your way around the files and publish the next case study.",
       "icon": "🧭",
       "slug": "library-guides",
-      "chaptersCount": 2,
+      "chaptersCount": 18,
       "modules": [
         {
           "number": 1,
@@ -2109,10 +2109,97 @@
               "slug": "publishing-case-studies"
             }
           ]
+        },
+        {
+          "number": 2,
+          "title": "Hands-on team workflows",
+          "icon": "🛠️",
+          "chapters": [
+            {
+              "number": 18,
+              "title": "Your Practical Software Engineering Workshops",
+              "slug": "start-here"
+            },
+            {
+              "number": 3,
+              "title": "From Solo Pushes to Confident Team Releases",
+              "slug": "ci-cd-from-solo-to-team"
+            },
+            {
+              "number": 4,
+              "title": "Debugging Without Guessing",
+              "slug": "debugging-without-guessing"
+            },
+            {
+              "number": 5,
+              "title": "Testing That Catches Real Problems",
+              "slug": "testing-that-catches-real-problems"
+            },
+            {
+              "number": 6,
+              "title": "HTTP and API Development — Conversations Between Programs",
+              "slug": "http-and-api-development"
+            },
+            {
+              "number": 7,
+              "title": "Git Collaboration and Code Review",
+              "slug": "git-collaboration-and-review"
+            },
+            {
+              "number": 8,
+              "title": "Databases and Safe Schema Changes",
+              "slug": "databases-and-safe-migrations"
+            },
+            {
+              "number": 9,
+              "title": "Authentication, Authorization, and Secrets",
+              "slug": "authentication-authorization-and-secrets"
+            },
+            {
+              "number": 10,
+              "title": "Configuration and Environments — Know What You Are Running",
+              "slug": "configuration-and-environments"
+            },
+            {
+              "number": 11,
+              "title": "Background Jobs and Reliable Workflows",
+              "slug": "background-jobs-and-reliable-workflows"
+            },
+            {
+              "number": 12,
+              "title": "Logging, Monitoring, and Incident Response",
+              "slug": "logging-monitoring-and-incidents"
+            },
+            {
+              "number": 13,
+              "title": "Docker and Reproducible Local Environments",
+              "slug": "docker-and-local-environments"
+            },
+            {
+              "number": 14,
+              "title": "Software Design and Refactoring Without Breaking Behavior",
+              "slug": "software-design-and-refactoring"
+            },
+            {
+              "number": 15,
+              "title": "Accessible and Resilient Interfaces",
+              "slug": "accessible-and-resilient-interfaces"
+            },
+            {
+              "number": 16,
+              "title": "Performance Investigation — Measure Before You Optimize",
+              "slug": "performance-investigation"
+            },
+            {
+              "number": 17,
+              "title": "Reading and Taking Over an Unfamiliar Codebase",
+              "slug": "reading-an-unfamiliar-codebase"
+            }
+          ]
         }
       ],
-      "dataUrl": "/library/collections/library-guides.c671a042ac469f00322a.json"
+      "dataUrl": "/library/collections/library-guides.ea08810ef31939939072.json"
     }
   ],
-  "searchUrl": "/library/search.667bb0536520c71d36f1.json"
+  "searchUrl": "/library/search.ecbc6a6db518bf50b59e.json"
 }

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HTTP and API Development — Conversations Between Programs</title>
+<style type="text/css">:root{color-scheme:light;--ink:#19283c;--muted:#56667a;--blue:#145bd8;--navy:#081a33;--line:#dce5ef;--paper:#fff;--bg:#edf2f7}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:30px}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.75 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:#145ac0;text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:3px solid #d58b00;outline-offset:4px}
+.skip{position:fixed;top:-100px;left:16px;z-index:10;background:white;padding:10px}
+.skip:focus{top:10px}
+aside{position:fixed;inset:0 auto 0 0;width:284px;overflow:auto;padding:30px 22px;background:var(--navy);color:#e9f0fa;border-right:1px solid #244363}
+.brand{font-size:12px;letter-spacing:.17em;text-transform:uppercase;color:#76dcf3;font-weight:700}
+aside h2{font-size:22px;line-height:1.3;margin:12px 0 22px;color:white;border:0;padding:0}
+aside ul{list-style:none;margin:0;padding:0}
+aside li{margin:0 0 5px}
+aside li ul{margin-left:0}
+aside a{display:block;padding:7px 10px;border-radius:6px;color:#d2deed;text-decoration:none;font-size:13px;line-height:1.45}
+aside a:hover{background:#193554;color:white}
+.rail-footer{margin-top:22px;border-top:1px solid #2c4260;padding-top:20px;color:#9db0c9;font-size:12px}
+main{margin-left:284px;padding:42px clamp(24px,4vw,72px) 90px;max-width:1550px}
+.toolbar{display:flex;align-items:center;gap:15px;justify-content:space-between;margin-bottom:30px;font-size:12px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+button{font:600 13px system-ui;border:1px solid #c9d7e8;background:#fff;color:#164176;padding:10px 15px;border-radius:8px;cursor:pointer}
+button:hover{background:#e6f0ff}
+h1{font-size:clamp(40px,4.4vw,66px);line-height:1.1;letter-spacing:-.045em;background:linear-gradient(120deg,#07172e,#124481);color:white;border-radius:20px;padding:40px;margin:0 0 34px;box-shadow:0 18px 45px #0b254025}
+h2{font-size:30px;line-height:1.3;color:#103e7c;letter-spacing:-.025em;margin:58px 0 22px;padding-top:23px;border-top:3px solid #2367c9}
+h3{font-size:23px;line-height:1.35;color:#075e76;letter-spacing:-.02em;margin:34px 0 15px}
+p{margin:16px 0;max-width:90ch}
+li{margin:7px 0}
+strong{color:#113862}
+blockquote{background:#e1f1f7;border-left:5px solid #068caf;border-radius:0 12px 12px 0;margin:28px 0;padding:12px 25px;color:#184050}
+figure{margin:28px 0 32px}
+figure img{display:block;width:100%;height:auto;border-radius:14px;background:#07172d;box-shadow:0 12px 28px #0a254025}
+figcaption{font-size:14px;line-height:1.6;color:var(--muted);padding:13px 2px}
+.diagram-button{margin-top:9px;font-size:12px}
+img{max-width:100%;height:auto}
+pre{padding:23px 25px;overflow:auto;background:#091b32;color:#dfedff;border:1px solid #203a56;border-radius:12px;line-height:1.6;tab-size:4}
+code{font-family:"Cascadia Code",Consolas,monospace;font-size:.85em}
+:not(pre)>code{background:#e3eaf3;color:#98305b;padding:.12em .32em;border-radius:4px;overflow-wrap:anywhere}
+pre code{white-space:pre;color:inherit}
+table{border-collapse:separate;border-spacing:0;display:block;overflow-x:auto;max-width:100%;margin:24px 0 30px;border:1px solid var(--line);border-radius:10px;background:white;font-size:15px;line-height:1.6}
+th,td{text-align:left;vertical-align:top;padding:13px 16px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-width:130px}
+th{background:#103c78;color:white;font-weight:650}
+tr:nth-child(even) td{background:#f4f7fb}
+tr:last-child td{border-bottom:0}
+th:last-child,td:last-child{border-right:0}
+hr{border:0;border-top:1px solid var(--line);margin:40px 0}
+dialog{border:1px solid #375679;border-radius:15px;padding:0;background:#07172e;color:white;width:96vw;max-width:1900px;max-height:96vh;overflow:hidden}
+dialog::backdrop{background:#030b17dd}
+.zoom-toolbar{display:flex;gap:10px;align-items:center;justify-content:flex-end;padding:12px 18px;background:#102943}
+.zoom-toolbar span{margin-right:auto;font-size:14px}
+.zoom-body{overflow:auto;max-height:82vh;padding:12px}
+.zoom-body img{display:block;width:100%;max-width:none;margin:auto;height:auto}
+footer{margin-top:60px;border-top:1px solid var(--line);padding-top:20px;font-size:13px;color:var(--muted)}
+@media(max-width:1000px){aside{position:relative;width:auto;padding:24px}aside nav ul{columns:2}aside li{break-inside:avoid}.rail-footer{display:none}main{margin-left:0;padding:28px 24px 60px}}
+@media(max-width:600px){body{font-size:16px}aside nav ul{columns:1}aside{max-height:330px}main{padding:22px 16px 50px}h1{font-size:38px;padding:27px}h2{font-size:26px}h3{font-size:21px}.toolbar{font-size:10px}pre{padding:17px;font-size:14px}.zoom-toolbar{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{aside,.toolbar,.diagram-button,dialog{display:none!important}body{background:white;font-size:11pt}main{margin:0;max-width:none;padding:0}h1{color:#12345a;background:none;padding:0;box-shadow:none;font-size:32pt}h2,h3{break-after:avoid}figure,blockquote{break-inside:avoid}pre{background:#f3f5f9;color:#152f4e;white-space:pre-wrap}pre code{white-space:pre-wrap}table{display:table;font-size:9pt}th,td{min-width:0;padding:7px}figure img{box-shadow:none}}
+</style><style type="text/css">
+body{font-size:24px;line-height:1.7}
+main{max-width:1500px}
+p{max-width:65ch}
+h2{font-size:36px}
+h3{font-size:28px;color:#17478a}
+blockquote{background:#edf4ff;border-left-color:#245ac4;color:#19283c}
+table{font-size:21px}
+figcaption{font-size:20px}
+pre{font-size:20px}
+:not(pre)>code{background:#edf4ff;color:#17478a}
+button{min-height:44px;font-size:16px}
+aside a{font-size:15px}
+.brand{color:#c4d8fa}
+a:focus-visible,button:focus-visible{outline-color:#245ac4}
+@media(max-width:600px){body{font-size:24px}h2{font-size:32px}h3{font-size:27px}pre{font-size:18px}aside a{font-size:15px}}
+@media print{body{font-size:12pt}h2{font-size:22pt}h3{font-size:17pt}table{font-size:10pt}pre{font-size:10pt}}
+</style>
+</head>
+<body>
+<a class="skip" href="#content">Skip to document</a>
+<aside aria-label="Document contents">
+<div class="brand">Visual learning library</div>
+<h2>HTTP/API Workshop</h2>
+<ul>
+<li><a href="#http-and-api-development--conversations-between-programs" id="toc-http-and-api-development--conversations-between-programs">HTTP
+and API Development — Conversations Between Programs</a>
+<ul>
+<li><a href="#at-a-glance" id="toc-at-a-glance">At a glance</a></li>
+<li><a href="#lesson-1--read-the-conversation" id="toc-lesson-1--read-the-conversation">Lesson 1 — Read the
+conversation</a></li>
+<li><a href="#lesson-2--run-it-and-inspect-a-response" id="toc-lesson-2--run-it-and-inspect-a-response">Lesson 2 — Run it and
+inspect a response</a></li>
+<li><a href="#lesson-3--create-something-and-understand-validation" id="toc-lesson-3--create-something-and-understand-validation">Lesson 3 —
+Create something and understand validation</a></li>
+<li><a href="#lesson-4--make-failure-understandable" id="toc-lesson-4--make-failure-understandable">Lesson 4 — Make failure
+understandable</a></li>
+<li><a href="#lesson-5--pagination-retries-and-contracts" id="toc-lesson-5--pagination-retries-and-contracts">Lesson 5 —
+Pagination, retries, and contracts</a></li>
+<li><a href="#lesson-6--prove-the-contract-and-extend-it" id="toc-lesson-6--prove-the-contract-and-extend-it">Lesson 6 — Prove the
+contract and extend it</a></li>
+<li><a href="#pocket-legend-and-evidence-record" id="toc-pocket-legend-and-evidence-record">Pocket legend and evidence
+record</a></li>
+</ul></li>
+</ul>
+<div class="rail-footer">Self-contained reading edition<br>Diagrams and styles embedded</div>
+</aside>
+<main id="content">
+<div class="toolbar"><span>Illustrated reference guide</span><button type="button" onclick="window.print()">Print / Save PDF</button></div>
+<h1 id="http-and-api-development--conversations-between-programs">HTTP
+and API Development — Conversations Between Programs</h1>
+<h2 id="at-a-glance">At a glance</h2>
+<p>This workshop teaches you to read, design, and test the conversations
+between a frontend and a backend. You will start a local
+lesson-catalogue API, make requests manually, create a record,
+deliberately send invalid requests, and explain why the server responds
+differently in each case. The aim is to understand the exchange, not
+memorize a list of status codes.</p>
+<p>Use Node.js 22 or newer and PowerShell. No installation or cloud
+account is needed. The app binds only to your local computer and stores
+synthetic data in memory. Restarting it resets the records. It is
+intentionally unauthenticated and is not a deployable private-data
+service.</p>
+<p><img role="img" aria-label="Request validation separates a client request from a state-changing operation." src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9Ijc5MCIgdmlld0JveD0iMCAwIDEyMDAgNzkwIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IkhUVFAgYW5kIEFQSSBEZXZlbG9wbWVudCBmbG93Ij48cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI3OTAiIHJ4PSIyNCIgZmlsbD0iI2VkZjRmZiIvPjxnIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSxBcmlhbCxzYW5zLXNlcmlmIiBmaWxsPSIjMTczOTY0Ij48dGV4dCB4PSI1MCIgeT0iNjAiIGZvbnQtc2l6ZT0iMzIiIGZvbnQtd2VpZ2h0PSI3MDAiPkhUVFAgYW5kIEFQSSBEZXZlbG9wbWVudDwvdGV4dD48cmVjdCB4PSI1MCIgeT0iMTU1IiB3aWR0aD0iNTIwIiBoZWlnaHQ9IjE5NSIgcng9IjE4IiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSIjYjhjZmVkIiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSI3NSIgeT0iMTk3IiBmb250LXNpemU9IjI1IiBmb250LXdlaWdodD0iNzAwIj4xIMK3IENsaWVudCByZXF1ZXN0PC90ZXh0Pjx0ZXh0IHg9Ijc1IiB5PSIyNjgiIGZvbnQtc2l6ZT0iMjMiPk1ldGhvZCwgVVJMLCBoZWFkZXJzLCBhbmQgSlNPTiBib2R5PC90ZXh0PjxyZWN0IHg9IjYzMCIgeT0iMTU1IiB3aWR0aD0iNTIwIiBoZWlnaHQ9IjE5NSIgcng9IjE4IiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSIjYjhjZmVkIiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSI2NTUiIHk9IjE5NyIgZm9udC1zaXplPSIyNSIgZm9udC13ZWlnaHQ9IjcwMCI+MiDCtyBTZXJ2ZXIgdmFsaWRhdGlvbjwvdGV4dD48dGV4dCB4PSI2NTUiIHk9IjI2OCIgZm9udC1zaXplPSIyMyI+UmVqZWN0IGludmFsaWQgcmVxdWVzdHMgYmVmb3JlIGNoYW5naW5nPC90ZXh0Pjx0ZXh0IHg9IjY1NSIgeT0iMzAwIiBmb250LXNpemU9IjIzIj5zdGF0ZTwvdGV4dD48cmVjdCB4PSI1MCIgeT0iNDE1IiB3aWR0aD0iNTIwIiBoZWlnaHQ9IjE5NSIgcng9IjE4IiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSIjYjhjZmVkIiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSI3NSIgeT0iNDU3IiBmb250LXNpemU9IjI1IiBmb250LXdlaWdodD0iNzAwIj4zIMK3IERvbWFpbiBvcGVyYXRpb248L3RleHQ+PHRleHQgeD0iNzUiIHk9IjUyOCIgZm9udC1zaXplPSIyMyI+UmVhZCBvciBjcmVhdGUgdGhlIHN5bnRoZXRpYyBsZXNzb248L3RleHQ+PHJlY3QgeD0iNjMwIiB5PSI0MTUiIHdpZHRoPSI1MjAiIGhlaWdodD0iMTk1IiByeD0iMTgiIGZpbGw9IndoaXRlIiBzdHJva2U9IiNiOGNmZWQiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9IjY1NSIgeT0iNDU3IiBmb250LXNpemU9IjI1IiBmb250LXdlaWdodD0iNzAwIj40IMK3IFJlc3BvbnNlIGFuZCB0ZXN0PC90ZXh0Pjx0ZXh0IHg9IjY1NSIgeT0iNTI4IiBmb250LXNpemU9IjIzIj5JbnNwZWN0IHN0YXR1cywgcGF5bG9hZCwgYW5kIHN0b3JlZDwvdGV4dD48dGV4dCB4PSI2NTUiIHk9IjU2MCIgZm9udC1zaXplPSIyMyI+b3V0Y29tZTwvdGV4dD48cmVjdCB4PSI1MCIgeT0iNjYwIiB3aWR0aD0iMTEwMCIgaGVpZ2h0PSI5NSIgcng9IjE1IiBmaWxsPSIjZGFlOGZmIi8+PHRleHQgeD0iNzUiIHk9IjY5NiIgZm9udC1zaXplPSIyMyI+TG9jYWwgaW4tbWVtb3J5IEFQSTsgbm90IGEgcHJvZHVjdGlvbiBhdXRoZW50aWNhdGlvbiBvciBwZXJzaXN0ZW5jZSBzeXN0ZW0uPC90ZXh0PjwvZz48ZyBmaWxsPSJub25lIiBzdHJva2U9IiMyNDVhYzQiIHN0cm9rZS13aWR0aD0iMyI+PHBhdGggZD0iTTU3NSAyNTBoNDBtLTEyIC05bDEyIDkgLTEyIDlNODkwIDM1NXYyNUgzMTB2MjVtLTkgLTEybDkgMTIgOSAtMTJNNTc1IDUxMGg0MG0tMTIgLTlsMTIgOSAtMTIgOSIvPjwvZz48L3N2Zz4=" alt="Request validation separates a client request from a state-changing operation." /></p>
+<h2 id="lesson-1--read-the-conversation">Lesson 1 — Read the
+conversation</h2>
+<p>An API is an interface another program can use. HTTP is one way
+programs communicate. The browser is a client; your Node process is a
+server. The client sends a method, target URL, headers, and sometimes a
+body. The server returns a status, headers, and usually a body.</p>
+<p>Imagine a learner saving a new lesson called FilePilot. The browser
+cannot simply change the server&#39;s memory. It asks the server to create
+the lesson. The server checks whether the request has the right form and
+whether the operation is allowed by its contract, then returns the
+result.</p>
+<p>In our diagram, the validation boundary matters. A friendly form is
+not a trustworthy input filter. Someone can call the API directly
+without using that form. Every state-changing request therefore has to
+be checked at the server.</p>
+<p><code>GET /lessons</code> reads the collection.
+<code>POST /lessons</code> asks to create a new lesson. Query parameters
+such as <code>limit=1</code> describe the requested page. The JSON body
+of a POST describes the lesson to create. A header such as
+<code>Content-Type: application/json</code> explains the format of that
+body; it does not prove that the body is valid JSON.</p>
+<p><strong>Checkpoint:</strong> Describe a request without using the
+word “endpoint” as a substitute for explaining it. Name its method,
+path, input format, and intended effect.</p>
+<h2 id="lesson-2--run-it-and-inspect-a-response">Lesson 2 — Run it and
+inspect a response</h2>
+<p>The lab is in <code>docs/training/http-api/exercises/api-lab</code>.
+Open PowerShell in that folder, or copy it to a fresh practice folder
+first. Run:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>node server<span class="op">.</span><span class="fu">mjs</span></span></code></pre></div>
+<p>In another terminal:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">curl</span><span class="op">.</span><span class="fu">exe</span> <span class="op">-</span>i <span class="st">&quot;http://127.0.0.1:4175/lessons?limit=1&quot;</span></span></code></pre></div>
+<p>Use <code>curl.exe</code> explicitly on Windows to avoid confusion
+with shell aliases. <code>-i</code> includes response headers. The
+response should have status 200, a JSON content type, and one record.
+The <code>total</code> field describes the whole collection, not just
+the page.</p>
+<p>The files are deliberately small:</p>
+<pre class="text"><code>api-lab/
+├── server.mjs   HTTP routing, validation, in-memory records, responses
+└── test.mjs     Real local HTTP requests with contract assertions</code></pre>
+<p><code>makeServer()</code> constructs a fresh server and record
+collection. The bottom of the file starts it only when executed
+directly. Tests import the factory and choose a temporary free port,
+avoiding collisions with the manual server.</p>
+<p>Read the <code>send</code> helper. It assigns the status and JSON
+header, serializes the body, and ends the response. Consistent response
+construction prevents one error branch from accidentally returning HTML
+while the rest return JSON.</p>
+<p>Stop the manual server with Ctrl+C. Do not kill an unrelated process
+if the port is occupied; find your earlier lab terminal first.</p>
+<h2 id="lesson-3--create-something-and-understand-validation">Lesson 3 —
+Create something and understand validation</h2>
+<p>With the server running, create a record using PowerShell:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="va">$lessonBody</span> <span class="op">=</span> @<span class="op">{</span> title <span class="op">=</span> <span class="st">&#39;FilePilot&#39;</span> <span class="op">}</span> <span class="op">|</span> <span class="fu">ConvertTo-Json</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Invoke-WebRequest</span> <span class="op">-</span>Uri <span class="st">&#39;http://127.0.0.1:4175/lessons&#39;</span> <span class="op">-</span>Method Post <span class="op">-</span>ContentType <span class="st">&#39;application/json&#39;</span> <span class="op">-</span>Body <span class="va">$lessonBody</span></span></code></pre></div>
+<p>The expected status is 201, meaning a new resource was created.
+Repeat the same request: this teaching contract rejects a duplicate
+exact title with 409. That uniqueness choice is specific to this demo; a
+real catalogue could instead allow duplicate titles and use another
+identity rule.</p>
+<p>Read the POST path in order: content type, body-size limit, JSON
+parsing, title validation, duplicate check, insertion. The server
+permits a trimmed title of 1–80 characters. It never trusts a
+client-generated ID; it assigns one internally. The data is not durable
+and the ID counter resets on restart.</p>
+<p>The body-size check is a small teaching limit, not a complete
+production abuse-control strategy. A production server also needs
+suitable timeouts, connection limits, authentication where appropriate,
+and well-tested request parsing. Do not promote this local demonstration
+into a public service merely because its happy path works.</p>
+<p><strong>Checkpoint:</strong> Explain why valid JSON can still be
+invalid input. <code>{&quot;title&quot;:42}</code> parses successfully but
+violates our field contract.</p>
+<h2 id="lesson-4--make-failure-understandable">Lesson 4 — Make failure
+understandable</h2>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Meaning in this lab</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>Collection read succeeded</td>
+</tr>
+<tr>
+<td>201</td>
+<td>Lesson created</td>
+</tr>
+<tr>
+<td>400</td>
+<td>Invalid JSON, title, or page parameters</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Unknown route</td>
+</tr>
+<tr>
+<td>405</td>
+<td>Method not supported on this route; inspect <code>Allow</code></td>
+</tr>
+<tr>
+<td>409</td>
+<td>Exact title already exists</td>
+</tr>
+<tr>
+<td>413</td>
+<td>Request body exceeded the local limit</td>
+</tr>
+<tr>
+<td>415</td>
+<td>Body format was not declared as JSON</td>
+</tr>
+</tbody>
+</table>
+<p>An HTTP status is a broad category. The error body carries a stable
+application code and a human-readable message. A client should not need
+to parse prose to determine that a title is duplicated. <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status">MDN&#39;s
+status-code reference</a></p>
+<p>Send malformed JSON with a client, a title containing only spaces, an
+invalid limit of zero, and an unsupported DELETE request. Compare
+responses. A server returning 200 for every failure forces clients to
+invent a second success protocol and makes monitoring misleading.</p>
+<p>Authentication and permission failures are different: 401 generally
+concerns missing or invalid authentication; 403 concerns refusal to
+permit the request. This lab does not implement either. The later
+identity workshop handles the distinction without pretending that a
+client-supplied user ID is authentication.</p>
+<p><strong>Checkpoint:</strong> Explain why a network timeout is not the
+same as a server returning 400. With a timeout, you may not know whether
+a state-changing operation already happened.</p>
+<h2 id="lesson-5--pagination-retries-and-contracts">Lesson 5 —
+Pagination, retries, and contracts</h2>
+<p>Create a few distinct titles. Request
+<code>?limit=1&amp;offset=0</code>, then
+<code>?limit=1&amp;offset=1</code>. The page limit is 1–10 and the
+offset is a nonnegative integer up to 999999. The implementation uses
+insertion order and array slicing. It is intentionally simple.</p>
+<p>Offset pagination can shift when records are added or removed. A
+larger system may use a stable ordering and a cursor tied to the last
+seen record. The contract must say which ordering clients can rely on;
+“some records” is not enough for predictable navigation.</p>
+<p>Do not automatically retry every POST after a timeout. The original
+operation could have succeeded even though its response was lost. An
+idempotency key and server-side operation record can make an operation
+retry-safe; the background-jobs workshop explores the underlying
+principle. Duplicate-title rejection is not a general idempotency
+implementation.</p>
+<p>Keep transport validation separate from domain rules as the app
+grows. “The body is JSON” is a transport concern. “This person may
+create this lesson” is an authorization concern. “This title conflicts
+with existing state” is a domain concern. Separating them makes errors
+easier to test and explain.</p>
+<h2 id="lesson-6--prove-the-contract-and-extend-it">Lesson 6 — Prove the
+contract and extend it</h2>
+<p>Run:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>node <span class="op">--</span>test test<span class="op">.</span><span class="fu">mjs</span></span></code></pre></div>
+<p>One integration test exercises seven request scenarios against a real
+local HTTP server: read, invalid page, wrong media type, invalid JSON,
+create, duplicate, and unsupported method. It checks both statuses and
+selected response fields. This is not seven independent tests; a failure
+stops later assertions in that test. Split scenarios into isolated tests
+as an extension.</p>
+<p>Your challenge is to add <code>GET /lessons/:id</code>. First define
+the response for a known ID and an unknown one. Write failing
+assertions, implement the route, and prove the existing collection
+behavior still works. Then consider whether a creation response should
+include a <code>Location</code> header pointing to that resource.</p>
+<p>For your real learning website, these same concepts explain
+lazy-loaded collections. For MCP or A2A services, transport success
+still does not prove that a tool operation or task succeeded. Read the
+application-level contract as well as the transport status.</p>
+<h2 id="pocket-legend-and-evidence-record">Pocket legend and evidence
+record</h2>
+<p>An endpoint is a route exposed by the service. A method expresses the
+operation. Headers carry metadata. A payload is the transmitted body.
+JSON is a data format, not an access-control mechanism. Pagination
+breaks a collection into pages. Idempotency concerns the effect of
+repeating an operation, not merely whether the response looks
+similar.</p>
+<p>Record a successful read, a successful creation, a rejected request,
+and the test result. Explain what state changes and what does not. The
+automated check verifies the local HTTP contract only; it does not
+certify production scalability, authentication, durability, or security.
+Nothing is deployed by this workshop.</p>
+</main>
+<dialog id="diagram-dialog" aria-label="Enlarged diagram">
+<div class="zoom-toolbar"><span>Diagram detail</span><button type="button" id="diagram-close">Close</button></div>
+<div class="zoom-body"><img id="diagram-large" alt></div>
+</dialog>
+<script>
+const diagramDialog = document.getElementById('diagram-dialog');
+const diagramLarge = document.getElementById('diagram-large');
+document.querySelectorAll('main img').forEach((picture) => {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'diagram-button';
+  button.textContent = 'Enlarge diagram';
+  button.addEventListener('click', () => {
+    diagramLarge.src = picture.src;
+    diagramLarge.alt = picture.alt;
+    diagramDialog.showModal();
+  });
+  picture.insertAdjacentElement('afterend', button);
+});
+document.getElementById('diagram-close').addEventListener('click', () => diagramDialog.close());
+</script>
+</body>
+</html>

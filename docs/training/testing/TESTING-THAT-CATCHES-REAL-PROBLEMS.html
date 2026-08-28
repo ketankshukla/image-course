@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Testing That Catches Real Problems</title>
+<style type="text/css">:root{color-scheme:light;--ink:#19283c;--muted:#56667a;--blue:#145bd8;--navy:#081a33;--line:#dce5ef;--paper:#fff;--bg:#edf2f7}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:30px}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.75 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:#145ac0;text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:3px solid #d58b00;outline-offset:4px}
+.skip{position:fixed;top:-100px;left:16px;z-index:10;background:white;padding:10px}
+.skip:focus{top:10px}
+aside{position:fixed;inset:0 auto 0 0;width:284px;overflow:auto;padding:30px 22px;background:var(--navy);color:#e9f0fa;border-right:1px solid #244363}
+.brand{font-size:12px;letter-spacing:.17em;text-transform:uppercase;color:#76dcf3;font-weight:700}
+aside h2{font-size:22px;line-height:1.3;margin:12px 0 22px;color:white;border:0;padding:0}
+aside ul{list-style:none;margin:0;padding:0}
+aside li{margin:0 0 5px}
+aside li ul{margin-left:0}
+aside a{display:block;padding:7px 10px;border-radius:6px;color:#d2deed;text-decoration:none;font-size:13px;line-height:1.45}
+aside a:hover{background:#193554;color:white}
+.rail-footer{margin-top:22px;border-top:1px solid #2c4260;padding-top:20px;color:#9db0c9;font-size:12px}
+main{margin-left:284px;padding:42px clamp(24px,4vw,72px) 90px;max-width:1550px}
+.toolbar{display:flex;align-items:center;gap:15px;justify-content:space-between;margin-bottom:30px;font-size:12px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+button{font:600 13px system-ui;border:1px solid #c9d7e8;background:#fff;color:#164176;padding:10px 15px;border-radius:8px;cursor:pointer}
+button:hover{background:#e6f0ff}
+h1{font-size:clamp(40px,4.4vw,66px);line-height:1.1;letter-spacing:-.045em;background:linear-gradient(120deg,#07172e,#124481);color:white;border-radius:20px;padding:40px;margin:0 0 34px;box-shadow:0 18px 45px #0b254025}
+h2{font-size:30px;line-height:1.3;color:#103e7c;letter-spacing:-.025em;margin:58px 0 22px;padding-top:23px;border-top:3px solid #2367c9}
+h3{font-size:23px;line-height:1.35;color:#075e76;letter-spacing:-.02em;margin:34px 0 15px}
+p{margin:16px 0;max-width:90ch}
+li{margin:7px 0}
+strong{color:#113862}
+blockquote{background:#e1f1f7;border-left:5px solid #068caf;border-radius:0 12px 12px 0;margin:28px 0;padding:12px 25px;color:#184050}
+figure{margin:28px 0 32px}
+figure img{display:block;width:100%;height:auto;border-radius:14px;background:#07172d;box-shadow:0 12px 28px #0a254025}
+figcaption{font-size:14px;line-height:1.6;color:var(--muted);padding:13px 2px}
+.diagram-button{margin-top:9px;font-size:12px}
+img{max-width:100%;height:auto}
+pre{padding:23px 25px;overflow:auto;background:#091b32;color:#dfedff;border:1px solid #203a56;border-radius:12px;line-height:1.6;tab-size:4}
+code{font-family:"Cascadia Code",Consolas,monospace;font-size:.85em}
+:not(pre)>code{background:#e3eaf3;color:#98305b;padding:.12em .32em;border-radius:4px;overflow-wrap:anywhere}
+pre code{white-space:pre;color:inherit}
+table{border-collapse:separate;border-spacing:0;display:block;overflow-x:auto;max-width:100%;margin:24px 0 30px;border:1px solid var(--line);border-radius:10px;background:white;font-size:15px;line-height:1.6}
+th,td{text-align:left;vertical-align:top;padding:13px 16px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-width:130px}
+th{background:#103c78;color:white;font-weight:650}
+tr:nth-child(even) td{background:#f4f7fb}
+tr:last-child td{border-bottom:0}
+th:last-child,td:last-child{border-right:0}
+hr{border:0;border-top:1px solid var(--line);margin:40px 0}
+dialog{border:1px solid #375679;border-radius:15px;padding:0;background:#07172e;color:white;width:96vw;max-width:1900px;max-height:96vh;overflow:hidden}
+dialog::backdrop{background:#030b17dd}
+.zoom-toolbar{display:flex;gap:10px;align-items:center;justify-content:flex-end;padding:12px 18px;background:#102943}
+.zoom-toolbar span{margin-right:auto;font-size:14px}
+.zoom-body{overflow:auto;max-height:82vh;padding:12px}
+.zoom-body img{display:block;width:100%;max-width:none;margin:auto;height:auto}
+footer{margin-top:60px;border-top:1px solid var(--line);padding-top:20px;font-size:13px;color:var(--muted)}
+@media(max-width:1000px){aside{position:relative;width:auto;padding:24px}aside nav ul{columns:2}aside li{break-inside:avoid}.rail-footer{display:none}main{margin-left:0;padding:28px 24px 60px}}
+@media(max-width:600px){body{font-size:16px}aside nav ul{columns:1}aside{max-height:330px}main{padding:22px 16px 50px}h1{font-size:38px;padding:27px}h2{font-size:26px}h3{font-size:21px}.toolbar{font-size:10px}pre{padding:17px;font-size:14px}.zoom-toolbar{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{aside,.toolbar,.diagram-button,dialog{display:none!important}body{background:white;font-size:11pt}main{margin:0;max-width:none;padding:0}h1{color:#12345a;background:none;padding:0;box-shadow:none;font-size:32pt}h2,h3{break-after:avoid}figure,blockquote{break-inside:avoid}pre{background:#f3f5f9;color:#152f4e;white-space:pre-wrap}pre code{white-space:pre-wrap}table{display:table;font-size:9pt}th,td{min-width:0;padding:7px}figure img{box-shadow:none}}
+</style><style type="text/css">
+body{font-size:24px;line-height:1.7}
+main{max-width:1500px}
+p{max-width:65ch}
+h2{font-size:36px}
+h3{font-size:28px;color:#17478a}
+blockquote{background:#edf4ff;border-left-color:#245ac4;color:#19283c}
+table{font-size:21px}
+figcaption{font-size:20px}
+pre{font-size:20px}
+:not(pre)>code{background:#edf4ff;color:#17478a}
+button{min-height:44px;font-size:16px}
+aside a{font-size:15px}
+.brand{color:#c4d8fa}
+a:focus-visible,button:focus-visible{outline-color:#245ac4}
+@media(max-width:600px){body{font-size:24px}h2{font-size:32px}h3{font-size:27px}pre{font-size:18px}aside a{font-size:15px}}
+@media print{body{font-size:12pt}h2{font-size:22pt}h3{font-size:17pt}table{font-size:10pt}pre{font-size:10pt}}
+</style>
+</head>
+<body>
+<a class="skip" href="#content">Skip to document</a>
+<aside aria-label="Document contents">
+<div class="brand">Visual learning library</div>
+<h2>Testing Workshop</h2>
+<ul>
+<li><a href="#testing-that-catches-real-problems" id="toc-testing-that-catches-real-problems">Testing That Catches Real
+Problems</a>
+<ul>
+<li><a href="#at-a-glance" id="toc-at-a-glance">At a glance</a></li>
+<li><a href="#lesson-1--turn-a-promise-into-observable-evidence" id="toc-lesson-1--turn-a-promise-into-observable-evidence">Lesson 1 —
+Turn a promise into observable evidence</a></li>
+<li><a href="#lesson-2--run-the-misleading-green-test" id="toc-lesson-2--run-the-misleading-green-test">Lesson 2 — Run the
+misleading green test</a></li>
+<li><a href="#lesson-3--write-a-precise-unit-test" id="toc-lesson-3--write-a-precise-unit-test">Lesson 3 — Write a precise
+unit test</a></li>
+<li><a href="#lesson-4--test-boundaries-without-waiting-for-the-clock" id="toc-lesson-4--test-boundaries-without-waiting-for-the-clock">Lesson
+4 — Test boundaries without waiting for the clock</a></li>
+<li><a href="#lesson-5--verify-that-denied-work-never-happens" id="toc-lesson-5--verify-that-denied-work-never-happens">Lesson 5 —
+Verify that denied work never happens</a></li>
+<li><a href="#lesson-6--know-what-integration-and-browser-tests-add" id="toc-lesson-6--know-what-integration-and-browser-tests-add">Lesson 6
+— Know what integration and browser tests add</a></li>
+<li><a href="#lesson-7--test-the-tests" id="toc-lesson-7--test-the-tests">Lesson 7 — Test the tests</a></li>
+<li><a href="#lesson-8--put-the-evidence-into-your-delivery-workflow" id="toc-lesson-8--put-the-evidence-into-your-delivery-workflow">Lesson 8
+— Put the evidence into your delivery workflow</a></li>
+<li><a href="#pocket-legend-and-completion-checklist" id="toc-pocket-legend-and-completion-checklist">Pocket legend and
+completion checklist</a></li>
+</ul></li>
+</ul>
+<div class="rail-footer">Self-contained reading edition<br>Diagrams and styles embedded</div>
+</aside>
+<main id="content">
+<div class="toolbar"><span>Illustrated reference guide</span><button type="button" onclick="window.print()">Print / Save PDF</button></div>
+<h1 id="testing-that-catches-real-problems">Testing That Catches Real
+Problems</h1>
+<h2 id="at-a-glance">At a glance</h2>
+<p>This eight-lesson workshop teaches you to write tests that protect
+meaningful behavior rather than merely produce green badges. You will
+test a miniature FilePilot-style approval service, compare a weak test
+with stronger assertions, isolate dependencies, check failure paths, and
+deliberately break corrected code to see whether the suite notices. It
+connects debugging to CI/CD: discover a problem, preserve the discovery
+as a test, and make that test part of the release gate.</p>
+<p>You need Node.js 22 or newer and PowerShell. The exercise uses
+built-in Node modules only. No package installation, account, cloud
+service, database, or real file operation is required. All filenames and
+approvals are synthetic fixtures. The lab is not the production
+FilePilot implementation and is not a complete authorization system.</p>
+<blockquote>
+<p><strong>The key idea:</strong> A passing test means its assertions
+were satisfied. It does not mean the feature is complete, secure, or
+correct in every situation. Ask: “What wrong behavior would make this
+test fail?”</p>
+</blockquote>
+<h2 id="lesson-1--turn-a-promise-into-observable-evidence">Lesson 1 —
+Turn a promise into observable evidence</h2>
+<p><img role="img" aria-label="Requirements become assertions about decisions, calls, and final state." src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjY5MCIgdmlld0JveD0iMCAwIDEyMDAgNjkwIj48cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2OTAiIHJ4PSIyNCIgZmlsbD0iI2VkZjRmZiIvPjxnIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSxBcmlhbCxzYW5zLXNlcmlmIiBmaWxsPSIjMTczOTY0Ij48dGV4dCB4PSI1MCIgeT0iNjUiIGZvbnQtc2l6ZT0iMzYiIGZvbnQtd2VpZ2h0PSI3MDAiPkEgZ3JlZW4gYmFkZ2UgaXMgb25seSBhcyBnb29kIGFzIHRoZSBxdWVzdGlvbi48L3RleHQ+PC9nPjxnIGZpbGw9IndoaXRlIiBzdHJva2U9IiNiYWQwZWYiIHN0cm9rZS13aWR0aD0iMiI+PHJlY3QgeD0iNTAiIHk9IjEyMCIgd2lkdGg9IjUzMCIgaGVpZ2h0PSIzMjUiIHJ4PSIxOCIvPjxyZWN0IHg9IjYyMCIgeT0iMTIwIiB3aWR0aD0iNTMwIiBoZWlnaHQ9IjMyNSIgcng9IjE4Ii8+PC9nPjxnIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSxBcmlhbCxzYW5zLXNlcmlmIiBmaWxsPSIjMTczOTY0IiBmb250LXNpemU9IjI2Ij48dGV4dCB4PSI4MCIgeT0iMTcwIiBmb250LXdlaWdodD0iNzAwIj5XZWFrIHF1ZXN0aW9uPC90ZXh0Pjx0ZXh0IHg9IjY1MCIgeT0iMTcwIiBmb250LXdlaWdodD0iNzAwIj5NZWFuaW5nZnVsIHF1ZXN0aW9uPC90ZXh0Pjx0ZXh0IHg9IjgwIiB5PSIyMzAiPkRpZCB0aGUgZnVuY3Rpb24gcmV0dXJuIGEgYm9vbGVhbj88L3RleHQ+PHRleHQgeD0iODAiIHk9IjI4NSI+Qm90aCB0cnVlIGFuZCBmYWxzZSBzYXRpc2Z5IGl0LjwvdGV4dD48dGV4dCB4PSI4MCIgeT0iMzg1IiBmb250LXdlaWdodD0iNzAwIj5JbmNvcnJlY3QgcGVybWlzc2lvbiBjYW4gcGFzcy48L3RleHQ+PHRleHQgeD0iNjUwIiB5PSIyMzAiPldhcyBpbnZhbGlkIGFwcHJvdmFsIHJlamVjdGVkPzwvdGV4dD48dGV4dCB4PSI2NTAiIHk9IjI4NSI+V2FzIHRoZSBvcGVyYXRpb24gbmV2ZXIgY2FsbGVkPzwvdGV4dD48dGV4dCB4PSI2NTAiIHk9IjM4NSIgZm9udC13ZWlnaHQ9IjcwMCI+VGhlIGRhbmdlcm91cyBiZWhhdmlvciBmYWlscy48L3RleHQ+PC9nPjxyZWN0IHg9IjUwIiB5PSI0OTUiIHdpZHRoPSIxMTAwIiBoZWlnaHQ9IjE0MCIgcng9IjE4IiBmaWxsPSIjZGFlOGZmIi8+PGcgZm9udC1mYW1pbHk9IlNlZ29lIFVJLEFyaWFsLHNhbnMtc2VyaWYiIGZpbGw9IiMxNzM5NjQiIGZvbnQtc2l6ZT0iMjYiPjx0ZXh0IHg9IjgwIiB5PSI1NDAiIGZvbnQtd2VpZ2h0PSI3MDAiPkluc3BlY3QgdGhyZWUga2luZHMgb2YgZXZpZGVuY2U8L3RleHQ+PHRleHQgeD0iODAiIHk9IjU5MCI+RGVjaXNpb246IGRlbmllZDwvdGV4dD48dGV4dCB4PSI0NDAiIHk9IjU5MCI+Q2FsbHM6IG5vbmU8L3RleHQ+PHRleHQgeD0iNzkwIiB5PSI1OTAiPlN0YXRlOiB1bmNoYW5nZWQ8L3RleHQ+PC9nPjwvc3ZnPgo=" alt="Requirements become assertions about decisions, calls, and final state." /></p>
+<h3 id="what-the-diagram-teaches">What the diagram teaches</h3>
+<p>Imagine FilePilot proposes moving a document from an inbox to an
+archive. The user must approve the specific plan before it executes.
+Someone writes a test that checks whether the permission function
+returns a boolean. It passes. But the function accepts the string
+<code>&quot;false&quot;</code> as approval because a nonempty string is truthy in
+JavaScript.</p>
+<p>The test asked a technically valid but insufficient question. It
+checked the shape of the answer, not whether the decision was right. A
+better test says: “When approval is the text <code>false</code>, the
+result must be false.” A stronger service-level check adds: “The move
+adapter must not be called.”</p>
+<p>A denied response alone is not enough. Imagine a service that
+performs the move and then returns <code>denied</code>. The screen would
+appear reassuring while the side effect had already happened. Good tests
+inspect both the response and the relevant side effect.</p>
+<h3 id="our-deliberately-small-contract">Our deliberately small
+contract</h3>
+<p>For this teaching model, approval is valid only when all three
+conditions hold:</p>
+<ol type="1">
+<li><code>approved</code> is the actual boolean <code>true</code>, not a
+string or another truthy value.</li>
+<li>The approval belongs to the same plan ID.</li>
+<li>The current time is strictly before the expiry time. At the exact
+expiry instant, approval is no longer valid.</li>
+</ol>
+<p>The service must not call its move adapter when permission is denied.
+When allowed, it must await the adapter and report completion only after
+success. An adapter error must propagate rather than becoming a false
+success.</p>
+<p>These rules are explicit assumptions for the workshop. A real system
+additionally needs authenticated approvers, trusted approval storage,
+authorization, immutable plan contents, replay protection, durable
+records, path safety, and recovery. A caller-supplied
+<code>approved: true</code> object is not a security credential.</p>
+<p><strong>Checkpoint:</strong> Write one positive assertion and one
+“must never happen” assertion for a feature you own.</p>
+<h2 id="lesson-2--run-the-misleading-green-test">Lesson 2 — Run the
+misleading green test</h2>
+<p>Copy the starter to a new practice directory. Do not overwrite an
+earlier exercise:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span><span class="fu">Test-Path</span> <span class="op">-</span>LiteralPath E<span class="op">:</span>\testing-lab<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">throw</span> <span class="st">&#39;Choose a new practice folder first.&#39;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">Copy-Item</span> <span class="op">-</span>LiteralPath E<span class="op">:</span>\image-course\docs\training\testing\exercises\testing-lab <span class="op">-</span>Destination E<span class="op">:</span>\testing-lab <span class="op">-</span>Recurse</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">Set-Location</span> E<span class="op">:</span>\testing-lab</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>npm run test<span class="op">:</span>weak</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>npm test</span></code></pre></div>
+<p>There are no dependencies to install. The first command runs one
+intentionally weak test; the second runs the meaningful suite. Expected
+starting results:</p>
+<pre class="text"><code>Weak example:       1 passes, 0 fail
+Meaningful suite:   8 pass,   3 fail</code></pre>
+<h3 id="understand-the-file-structure">Understand the file
+structure</h3>
+<pre class="text"><code>testing-lab/
+├── package.json              Commands; no external dependencies
+├── policy.mjs                Permission decision and execution service
+└── tests/
+    ├── fixtures.mjs          Fresh synthetic inputs for each test
+    ├── weak.example.mjs      A demonstration of false confidence
+    └── policy.test.mjs       Eleven behavior and component checks</code></pre>
+<p><code>mayExecute</code> decides whether the approval satisfies the
+small contract. <code>executePlan</code> calls that policy before
+invoking an injected <code>move</code> function. The production
+filesystem is not imported. In this lab the adapter is a function
+supplied by each test.</p>
+<p>Read the weak test:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>approval<span class="op">.</span><span class="at">approved</span> <span class="op">=</span> <span class="st">&#39;false&#39;</span><span class="op">;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>assert<span class="op">.</span><span class="fu">equal</span>(<span class="kw">typeof</span> <span class="fu">mayExecute</span>(plan<span class="op">,</span> approval<span class="op">,</span> now)<span class="op">,</span> <span class="st">&#39;boolean&#39;</span>)<span class="op">;</span></span></code></pre></div>
+<p>It accepts both <code>true</code> and <code>false</code> as results.
+That means an incorrect permission decision can satisfy it. The problem
+is the assertion—not the test runner.</p>
+<p>Change your question from “Did it return a boolean?” to “Did it
+reject this invalid approval?” Before looking at the supplied strong
+test, write the assertion yourself.</p>
+<p><strong>Checkpoint:</strong> Explain why adding more tests with
+equally weak assertions would not solve the problem.</p>
+<h2 id="lesson-3--write-a-precise-unit-test">Lesson 3 — Write a precise
+unit test</h2>
+<p>A unit test checks a small behavior in isolation. Here we can call
+the permission function directly without starting a browser or
+server.</p>
+<p>Use the pattern <strong>Arrange → Act → Assert</strong>:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">test</span>(<span class="st">&#39;text false is not approval&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Arrange: create known inputs and the case we want to investigate.</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> { plan<span class="op">,</span> approval<span class="op">,</span> now } <span class="op">=</span> <span class="fu">fixture</span>()<span class="op">;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  approval<span class="op">.</span><span class="at">approved</span> <span class="op">=</span> <span class="st">&#39;false&#39;</span><span class="op">;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Act: exercise the real decision code.</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> allowed <span class="op">=</span> <span class="fu">mayExecute</span>(plan<span class="op">,</span> approval<span class="op">,</span> now)<span class="op">;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Assert: compare with the requirement, not another implementation.</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  assert<span class="op">.</span><span class="fu">equal</span>(allowed<span class="op">,</span> <span class="kw">false</span>)<span class="op">;</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+<p><code>fixture()</code> creates fresh objects every time. If tests
+share and mutate one approval object, the result can depend on execution
+order. A fixture is controlled starting data, not an elaborate hidden
+scenario you cannot explain.</p>
+<p>Do not compute the expected value by copying the production
+expression into the test. If both expressions have the same mistake, the
+test agrees with the bug. Derive expected values from the stated
+contract.</p>
+<h3 id="read-the-initial-failure">Read the initial failure</h3>
+<p>The starter uses <code>approval.approved &amp;&amp; ...</code>. The
+text <code>false</code> is a nonempty string, so it passes this
+truthiness check. The final <code>Boolean(...)</code> converts the
+combined expression to a boolean but does not make the earlier approval
+interpretation correct.</p>
+<p>In <code>policy.mjs</code>, change:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>approval<span class="op">.</span><span class="at">approved</span> <span class="op">&amp;&amp;</span></span></code></pre></div>
+<p>to:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>approval<span class="op">.</span><span class="at">approved</span> <span class="op">===</span> <span class="kw">true</span> <span class="op">&amp;&amp;</span></span></code></pre></div>
+<p>Run <code>npm test</code>. Ten tests should pass and one should fail.
+The exact-expiry rule is still broken. The weak test also still passes;
+it could not distinguish the original behavior from the corrected
+behavior.</p>
+<h3 id="design-a-case-matrix">Design a case matrix</h3>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Expected decision</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Boolean true, matching plan, before expiry</td>
+<td>Allow</td>
+<td>All requirements satisfied</td>
+</tr>
+<tr>
+<td>Boolean false</td>
+<td>Deny</td>
+<td>User did not approve</td>
+</tr>
+<tr>
+<td>Text <code>&quot;false&quot;</code></td>
+<td>Deny</td>
+<td>Wrong type, not a valid approval</td>
+</tr>
+<tr>
+<td>Missing approval</td>
+<td>Deny</td>
+<td>No authorization evidence</td>
+</tr>
+<tr>
+<td>Approval for another plan</td>
+<td>Deny</td>
+<td>Approval is scoped to a different action</td>
+</tr>
+<tr>
+<td>After expiry</td>
+<td>Deny</td>
+<td>Approval is no longer valid</td>
+</tr>
+<tr>
+<td>Exactly at expiry</td>
+<td>Deny</td>
+<td>Validity ends at this instant</td>
+</tr>
+</tbody>
+</table>
+<p>The suite samples this contract; it does not enumerate every possible
+JavaScript value. Add cases based on risk, and validate untrusted input
+at the real application&#39;s boundary.</p>
+<p><strong>Checkpoint:</strong> Add a test rejecting the string
+<code>&quot;true&quot;</code>. Predict whether the current corrected
+implementation will pass it before running it.</p>
+<h2 id="lesson-4--test-boundaries-without-waiting-for-the-clock">Lesson
+4 — Test boundaries without waiting for the clock</h2>
+<p>The lab passes <code>now</code> into the function instead of calling
+the wall clock internally. That makes the time scenario explicit and
+repeatable. You do not have to wait for an approval to expire or race
+against a millisecond boundary.</p>
+<p>The fixture uses an expiry of 2000. Compare current times 1999, 2000,
+and 2001. These are synthetic numeric time units, not meaningful dates.
+The rule is <code>now &lt; expiresAt</code>.</p>
+<p>The starter incorrectly uses:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>approval<span class="op">.</span><span class="at">expiresAt</span> <span class="op">&gt;=</span> now</span></code></pre></div>
+<p>Change it to:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>approval<span class="op">.</span><span class="at">expiresAt</span> <span class="op">&gt;</span> now</span></code></pre></div>
+<p>Run the supplied suite again. All eleven tests should pass. If you
+added your own extra tests, your total will be higher.</p>
+<p>The lesson is not that strict comparison is always right. Another
+product could define an inclusive boundary. The important part is to
+decide the contract first and test the boundary explicitly.</p>
+<h3 id="what-makes-a-test-flaky">What makes a test flaky?</h3>
+<p>A flaky test passes and fails without an intended code change. Common
+causes include uncontrolled time, shared state, random inputs without a
+recorded seed, live external services, and assumptions about execution
+order. Adding retries can hide the evidence without fixing the
+cause.</p>
+<p>Use fresh fixtures, deterministic inputs, isolated resources, and
+awaited asynchronous operations. For UI tests, wait for meaningful
+conditions rather than sleeping an arbitrary number of seconds.
+Playwright&#39;s assertions can retry until the expected condition is met
+within a timeout. That reduces timing assumptions; it does not make
+every test automatically reliable. <a href="https://playwright.dev/docs/test-assertions">Playwright
+assertions</a></p>
+<p><strong>Checkpoint:</strong> Explain why checking 1999, 2000, and
+2001 is more informative than checking three unrelated times far before
+expiry.</p>
+<h2 id="lesson-5--verify-that-denied-work-never-happens">Lesson 5 —
+Verify that denied work never happens</h2>
+<p><img role="img" aria-label="Testing layers distinguish a policy decision, service interaction, real adapter behavior, and the user journey." src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9Ijc2MCIgdmlld0JveD0iMCAwIDEyMDAgNzYwIj48cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI3NjAiIHJ4PSIyNCIgZmlsbD0iI2VkZjRmZiIvPjxnIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSxBcmlhbCxzYW5zLXNlcmlmIiBmaWxsPSIjMTczOTY0Ij48dGV4dCB4PSI1MCIgeT0iNjUiIGZvbnQtc2l6ZT0iMzYiIGZvbnQtd2VpZ2h0PSI3MDAiPkVhY2ggdGVzdGluZyBsYXllciBhbnN3ZXJzIGEgZGlmZmVyZW50IHF1ZXN0aW9uLjwvdGV4dD48L2c+PGcgZmlsbD0id2hpdGUiIHN0cm9rZT0iI2JhZDBlZiIgc3Ryb2tlLXdpZHRoPSIyIj48cmVjdCB4PSI1MCIgeT0iMTEwIiB3aWR0aD0iMTEwMCIgaGVpZ2h0PSIxMjAiIHJ4PSIxNSIvPjxyZWN0IHg9IjUwIiB5PSIyNTUiIHdpZHRoPSIxMTAwIiBoZWlnaHQ9IjEyMCIgcng9IjE1Ii8+PHJlY3QgeD0iNTAiIHk9IjQwMCIgd2lkdGg9IjExMDAiIGhlaWdodD0iMTIwIiByeD0iMTUiLz48cmVjdCB4PSI1MCIgeT0iNTQ1IiB3aWR0aD0iMTEwMCIgaGVpZ2h0PSIxMjAiIHJ4PSIxNSIvPjwvZz48ZyBmb250LWZhbWlseT0iU2Vnb2UgVUksQXJpYWwsc2Fucy1zZXJpZiIgZmlsbD0iIzE3Mzk2NCIgZm9udC1zaXplPSIyNSI+PGcgZm9udC13ZWlnaHQ9IjcwMCI+PHRleHQgeD0iODAiIHk9IjE1NSI+VW5pdCDCtyByZWFsIHBlcm1pc3Npb24gZnVuY3Rpb248L3RleHQ+PHRleHQgeD0iODAiIHk9IjMwMCI+Q29tcG9uZW50IGludGVncmF0aW9uIMK3IHNlcnZpY2UgKyBwb2xpY3kgKyBmYWtlIGFkYXB0ZXI8L3RleHQ+PHRleHQgeD0iODAiIHk9IjQ0NSI+UmVhbC1hZGFwdGVyIGludGVncmF0aW9uIMK3IGRpc3Bvc2FibGUgc2FuZGJveDwvdGV4dD48dGV4dCB4PSI4MCIgeT0iNTkwIj5FbmQtdG8tZW5kIMK3IHVzZXIgaW50ZXJmYWNlIHRocm91Z2ggdGhlIHJ1bm5pbmcgc3lzdGVtPC90ZXh0PjwvZz48dGV4dCB4PSI4MCIgeT0iMjAwIj5EbyBpbnZhbGlkIGFwcHJvdmFscyBhbmQgZXhwaXJ5IGJvdW5kYXJpZXMgcHJvZHVjZSB0aGUgcmlnaHQgZGVjaXNpb24/PC90ZXh0Pjx0ZXh0IHg9IjgwIiB5PSIzNDUiPkRvZXMgdGhlIHNlcnZpY2UgZW5mb3JjZSB0aGUgZGVjaXNpb24gYW5kIGhhbmRsZSB0aGUgYWRhcHRlciByZXN1bHQ/PC90ZXh0Pjx0ZXh0IHg9IjgwIiB5PSI0OTAiPkRvIGFjdHVhbCBmaWxlc3lzdGVtIHJ1bGVzLCBjb2xsaXNpb25zLCBhbmQgcGVybWlzc2lvbnMgYmVoYXZlIGNvcnJlY3RseT88L3RleHQ+PHRleHQgeD0iODAiIHk9IjYzNSI+Q2FuIHRoZSB1c2VyIGNvbXBsZXRlIHRoZSBpbnRlbmRlZCBqb3VybmV5IHNhZmVseSBhbmQgdW5kZXJzdGFuZCB0aGUgcmVzdWx0PzwvdGV4dD48dGV4dCB4PSI1MCIgeT0iNzIwIj5UaGlzIHJ1bm5hYmxlIGxhYiBjb3ZlcnMgdGhlIGZpcnN0IHR3byBsYXllcnPigJRub3QgcmVhbCBmaWxlcyBvciBicm93c2VyIGpvdXJuZXlzLjwvdGV4dD48L2c+PC9zdmc+Cg==" alt="Testing layers distinguish a policy decision, service interaction, real adapter behavior, and the user journey." /></p>
+<h3 id="what-the-diagram-teaches-1">What the diagram teaches</h3>
+<p>A correct permission function is necessary, but another function
+might forget to call it. That is why the service needs its own tests.
+The test should exercise the real service and real permission function
+while replacing only the dangerous external operation.</p>
+<p>Here is the essential denial check:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> calls <span class="op">=</span> []<span class="op">;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> result <span class="op">=</span> <span class="cf">await</span> <span class="fu">executePlan</span>(plan<span class="op">,</span> approval<span class="op">,</span> {</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  now<span class="op">,</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">move</span><span class="op">:</span> <span class="kw">async</span> (<span class="op">...</span>args) <span class="kw">=&gt;</span> calls<span class="op">.</span><span class="fu">push</span>(args)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>assert<span class="op">.</span><span class="fu">deepEqual</span>(</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  { result<span class="op">,</span> calls }<span class="op">,</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">result</span><span class="op">:</span> { <span class="dt">status</span><span class="op">:</span> <span class="st">&#39;denied&#39;</span> }<span class="op">,</span> <span class="dt">calls</span><span class="op">:</span> [] }</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span></code></pre></div>
+<p>The supplied test sets <code>approval.approved</code> to the string
+<code>false</code> first. The <code>calls</code> array acts as a spy: it
+records invocations so you can inspect whether the operation was
+attempted. No actual file is touched.</p>
+<h3 id="test-doubles-in-plain-english">Test doubles in plain
+English</h3>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Purpose in a test</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stub</td>
+<td>Supplies a controlled response</td>
+<td>An adapter that always throws a simulated error</td>
+</tr>
+<tr>
+<td>Spy</td>
+<td>Records calls for assertions</td>
+<td>The <code>calls</code> array above</td>
+</tr>
+<tr>
+<td>Fake</td>
+<td>A simplified working implementation</td>
+<td>A Map that models moving a named item</td>
+</tr>
+<tr>
+<td>Mock</td>
+<td>Commonly, a double with configured expectations</td>
+<td>Expect exactly one call with specific arguments</td>
+</tr>
+</tbody>
+</table>
+<p>Terminology varies between libraries. Focus on what you replaced and
+what evidence that replacement can provide. Node has built-in testing
+and mocking facilities; this workshop uses simple functions so the
+mechanics stay visible. <a href="https://nodejs.org/download/release/v22.15.0/docs/api/test.html">Node
+test runner reference</a></p>
+<p>Do not replace <code>mayExecute</code> with a stub returning false in
+the very test intended to prove that real approval validation works. You
+would test a behavior you invented inside the test rather than the
+policy you plan to ship.</p>
+<h3 id="asynchronous-failure-is-part-of-the-contract">Asynchronous
+failure is part of the contract</h3>
+<p>The adapter can fail. The supplied test uses
+<code>await assert.rejects(...)</code> and an adapter that throws
+<code>simulated adapter failure</code>. It checks that the service does
+not report completion after failure.</p>
+<p>The <code>await</code> matters. A test that starts an asynchronous
+action and finishes before checking its result may provide misleading
+evidence or produce later unhandled failures. Always ensure the runner
+waits for the behavior being asserted.</p>
+<p><strong>Checkpoint:</strong> Explain why “result is denied” and
+“adapter was never called” are separate assertions worth protecting.</p>
+<h2 id="lesson-6--know-what-integration-and-browser-tests-add">Lesson 6
+— Know what integration and browser tests add</h2>
+<p>The final supplied test combines the real policy, the real execution
+service, and an in-memory adapter. The adapter models a transfer in a
+Map. It rejects a missing source or occupied destination, moves the
+synthetic content, and records the call.</p>
+<p>The test checks the completed result, exact source and destination,
+one invocation, absence of the original Map entry, and the content at
+the destination. This is a <strong>component integration test with a
+fake adapter</strong>. It is not a filesystem integration test, an HTTP
+test, or an end-to-end browser test.</p>
+<h3 id="what-remains-unproven">What remains unproven</h3>
+<p>Real filesystems involve permissions, collisions, locks, symbolic
+links, junctions, platform-specific path rules, partial failures, and
+races. A Map models none of these. Before shipping a real adapter, test
+it in an explicitly created disposable sandbox, with validated paths and
+deliberate recovery behavior. Never run a destructive training test
+against your Downloads folder or home directory.</p>
+<p>A browser test adds another boundary: can the user actually submit an
+approval and understand the outcome? A proposed FilePilot journey would
+open a synthetic proposal, decline it, attempt execution through the
+service boundary, and confirm no action record exists. Merely seeing a
+disabled button does not prove that the server rejects unauthorized
+requests.</p>
+<p>For your existing learning website, a simpler browser journey is:
+search for FilePilot, open the correct article, and verify its title.
+Prefer user-visible roles and labels over fragile selectors tied to
+layout. <a href="https://playwright.dev/docs/best-practices">Playwright
+testing practices</a></p>
+<p>Browser automation is described here as the next layer; this
+dependency-free lab does not include a browser app or claim to have run
+an end-to-end suite. Its runnable exercises focus on assertions,
+boundaries, and safe test doubles.</p>
+<h3 id="choose-layers-according-to-the-risk">Choose layers according to
+the risk</h3>
+<p>Use fast focused tests for many rule combinations, integration tests
+for boundaries between components, and a smaller set of important full
+journeys. There is no magic percentage split that makes every project
+good. The expensive failure modes of your project should influence what
+you test.</p>
+<p><strong>Checkpoint:</strong> Name one defect each layer could catch
+that the other layers in this lab would miss.</p>
+<h2 id="lesson-7--test-the-tests">Lesson 7 — Test the tests</h2>
+<p>Once everything is green, ask whether it would notice a meaningful
+regression. <strong>Mutation testing</strong> deliberately changes
+behavior and checks whether tests fail. You can perform a small version
+manually without installing a mutation-testing framework.</p>
+<p>Keep the corrected version available. Make one temporary change at a
+time in your disposable practice copy, run <code>npm test</code>,
+observe the intended assertion failure, and restore the correct
+code:</p>
+<ol type="1">
+<li>Replace strict boolean approval with the original truthiness
+check.</li>
+<li>Replace strict expiry with the original inclusive comparison.</li>
+<li>Temporarily replace the matching-plan expression with
+<code>true</code>.</li>
+</ol>
+<p>The meaningful suite should detect all three. A syntax error is not
+useful proof here: the mutant should still run and fail because its
+behavior violates a requirement. The accompanying verification script
+checks these three deliberate regressions in a temporary copy; it does
+not alter your starter.</p>
+<h3 id="coverage-is-a-clue-not-a-verdict">Coverage is a clue, not a
+verdict</h3>
+<p>Coverage tells you which code was executed under measurement. It does
+not tell you whether the assertion is meaningful. The weak test can
+execute the permission expression and still accept an incorrect result.
+Conversely, an uncovered branch might be critical validation that
+deserves immediate attention.</p>
+<p>Use coverage to ask better questions, not to replace them. Likewise,
+detecting three selected mutations is evidence about three faults, not a
+comprehensive mutation score or a security certification.</p>
+<h3 id="maintain-readable-tests">Maintain readable tests</h3>
+<p>Name the behavior being protected. Keep expected values close to the
+assertion. Avoid giant setup helpers that hide why a case is valid or
+invalid. Refactor repeated preparation only when it remains obvious what
+each test is arranging.</p>
+<p><strong>Checkpoint:</strong> Introduce a new valid-JavaScript bug and
+predict which named test should catch it. If none does, add a meaningful
+test before claiming your suite protects that behavior.</p>
+<h2 id="lesson-8--put-the-evidence-into-your-delivery-workflow">Lesson 8
+— Put the evidence into your delivery workflow</h2>
+<p>The CI/CD course taught you to make a quality check required. This
+workshop teaches you what belongs inside it. In this dependency-free
+lab, <code>npm test</code> is the command that runs the meaningful
+suite. Keep <code>test:weak</code> as a teaching demonstration, not as
+your release gate.</p>
+<p>For a larger project, install its locked dependencies, run the
+appropriate build and verification commands, then run relevant tests. Do
+not introduce a required check before establishing its baseline. Do not
+silence a failure with <code>continue-on-error</code> simply to make
+merging possible.</p>
+<p>When CI fails, read the named assertion. Is the implementation wrong,
+the expected behavior outdated, or the test setup invalid? A changed
+requirement may justify changing a test, but that decision should be
+explicit and reviewed. Deleting an inconvenient test is not a fix.</p>
+<h3 id="your-independent-challenge">Your independent challenge</h3>
+<p>Our approvals bind only a plan ID. Suppose the source or destination
+changes while the ID stays the same. The lab does not detect that
+change.</p>
+<p>Design a stronger teaching contract that binds approval to a plan
+version or digest of its immutable action fields. First write a test
+where an approved destination is replaced with another destination.
+Require rejection and zero adapter calls. Then implement the new check
+and add a matching unchanged-plan success case.</p>
+<p>Do not mistake a digest for authentication: a malicious caller who
+can fabricate both plan and approval can fabricate matching fields too.
+The real system must obtain approvals from a trusted source associated
+with an authorized user. This challenge explores binding semantics only;
+it is intentionally not solved in the starter.</p>
+<h3 id="apply-the-same-thinking-elsewhere">Apply the same thinking
+elsewhere</h3>
+<table>
+<thead>
+<tr>
+<th>Project</th>
+<th>Weak evidence</th>
+<th>Stronger evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RAG</td>
+<td>An answer was returned</td>
+<td>Retrieved evidence belongs to the user&#39;s allowed document set</td>
+</tr>
+<tr>
+<td>HarborCare</td>
+<td>Response has a patient object</td>
+<td>Recipient receives exactly the permitted synthetic fields and no
+forbidden fields</td>
+</tr>
+<tr>
+<td>MCP</td>
+<td>Tool returns JSON</td>
+<td>Unauthorized caller cannot reach the restricted handler</td>
+</tr>
+<tr>
+<td>A2A</td>
+<td>Task reports success</td>
+<td>Duplicate task delivery does not duplicate a side effect</td>
+</tr>
+<tr>
+<td>Learning library</td>
+<td>Search box exists</td>
+<td>Known query opens the intended article</td>
+</tr>
+</tbody>
+</table>
+<p>These are example test contracts, not claims that those systems have
+already implemented the protections. For model-driven features, separate
+deterministic authorization checks from variable answer-quality
+evaluations. A favorable model response on one run is not a permission
+boundary.</p>
+<h2 id="pocket-legend-and-completion-checklist">Pocket legend and
+completion checklist</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Plain-English meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Assertion</td>
+<td>An executable statement of what must be true</td>
+</tr>
+<tr>
+<td>Fixture</td>
+<td>Known starting data for a test</td>
+</tr>
+<tr>
+<td>Unit test</td>
+<td>Focused check of a small behavior</td>
+</tr>
+<tr>
+<td>Integration test</td>
+<td>Check that selected components work together</td>
+</tr>
+<tr>
+<td>End-to-end test</td>
+<td>Check of a journey across the intended running stack</td>
+</tr>
+<tr>
+<td>Test double</td>
+<td>Controlled replacement for a dependency</td>
+</tr>
+<tr>
+<td>Regression</td>
+<td>A previously working behavior becoming broken again</td>
+</tr>
+<tr>
+<td>Mutation</td>
+<td>A deliberate behavior change used to challenge tests</td>
+</tr>
+<tr>
+<td>Coverage</td>
+<td>Measurement of code execution during tests</td>
+</tr>
+<tr>
+<td>Flaky test</td>
+<td>A check whose outcome varies for unintended reasons</td>
+</tr>
+</tbody>
+</table>
+<p>You have completed the workshop when you can explain why the weak
+test passes, fix both defects, demonstrate the forbidden-side-effect
+assertion, describe the fake adapter&#39;s limitations, and show a
+deliberate regression being caught.</p>
+<p>The corrected supplied suite has eleven passing tests. The starter is
+intentionally left broken for your practice. Both diagrams are embedded
+in the HTML edition. No live project settings, real files, or cloud
+deployments are changed by the exercise. References were checked on 27
+August 2026.</p>
+</main>
+<dialog id="diagram-dialog" aria-label="Enlarged diagram">
+<div class="zoom-toolbar"><span>Diagram detail</span><button type="button" id="diagram-close">Close</button></div>
+<div class="zoom-body"><img id="diagram-large" alt></div>
+</dialog>
+<script>
+const diagramDialog = document.getElementById('diagram-dialog');
+const diagramLarge = document.getElementById('diagram-large');
+document.querySelectorAll('main img').forEach((picture) => {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'diagram-button';
+  button.textContent = 'Enlarge diagram';
+  button.addEventListener('click', () => {
+    diagramLarge.src = picture.src;
+    diagramLarge.alt = picture.alt;
+    diagramDialog.showModal();
+  });
+  picture.insertAdjacentElement('afterend', button);
+});
+document.getElementById('diagram-close').addEventListener('click', () => diagramDialog.close());
+</script>
+</body>
+</html>
