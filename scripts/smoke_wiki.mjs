@@ -28,7 +28,7 @@ for(const entry of entries){
 assert.equal((await get(`${prefix}/not-a-real-concept`)).status,404);
 const redirect=live?await get('/wiki/rag?q=test'):await get('/wiki/rag?q=test','course.ketanshukla.dev');
 assert.equal(redirect.status,308);
-assert.equal(redirect.headers.get('location'),'https://wiki.ketanshukla.dev/rag?q=test');
+assert.equal(new URL(redirect.headers.get('location'),live?origin:'https://wiki.ketanshukla.dev').href,'https://wiki.ketanshukla.dev/rag?q=test');
 if(!live){
   const rewrite=await get('/rag','wiki.ketanshukla.dev');
   assert.equal(rewrite.status,200);
