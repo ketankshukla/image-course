@@ -4,7 +4,7 @@
 
 :root {
   --white: #ffffff;
-  --sidebar-width: 320px;
+  --sidebar-width: min(420px, 88vw);
 }
 
 html {

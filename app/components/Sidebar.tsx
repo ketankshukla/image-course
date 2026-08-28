@@ -14,7 +14,6 @@ interface SidebarProps {
   currentChapterNumber: number | null;
   expandedCourses: Set<string>;
   expandedModules: Record<string, Set<number>>;
-  completedByCourse: Record<string, number[]>;
   searchQuery: string;
   onSearch: (query: string) => void;
   onToggleCourse: (id: string) => void;
@@ -32,7 +31,6 @@ export default function Sidebar({
   currentChapterNumber,
   expandedCourses,
   expandedModules,
-  completedByCourse,
   searchQuery,
   onSearch,
   onToggleCourse,
@@ -78,7 +76,6 @@ export default function Sidebar({
             currentChapterNumber={currentChapterNumber}
             expanded={expandedCourses.has(course.id)}
             expandedModules={expandedModules[course.id] || new Set()}
-            completed={completedByCourse[course.id] || []}
             onToggle={() => onToggleCourse(course.id)}
             onToggleModule={(moduleNumber) => onToggleModule(course.id, moduleNumber)}
             onSelectChapter={onSelectChapter}
@@ -138,7 +135,6 @@ interface CourseGroupProps {
   currentChapterNumber: number | null;
   expanded: boolean;
   expandedModules: Set<number>;
-  completed: number[];
   onToggle: () => void;
   onToggleModule: (moduleNumber: number) => void;
   onSelectChapter: (courseId: string, chapterNumber: number) => void;
@@ -151,13 +147,11 @@ function CourseGroup({
   currentChapterNumber,
   expanded,
   expandedModules,
-  completed,
   onToggle,
   onToggleModule,
   onSelectChapter,
   onCloseSidebar,
 }: CourseGroupProps) {
-  const progress = course.chaptersCount > 0 ? Math.round((completed.length / course.chaptersCount) * 100) : 0;
   const isCurrent = currentCourseId === course.id;
 
   return (
@@ -172,11 +166,10 @@ function CourseGroup({
       >
         <span className="flex items-center gap-2 flex-1 min-w-0">
           <span className="text-xl">{course.icon}</span>
-          <span className="font-semibold text-sm text-gray-900 truncate">
+          <span className="font-semibold text-sm text-gray-900 whitespace-normal break-words">
             {course.title}
           </span>
         </span>
-        <span className="text-xs text-gray-500 ml-2">{progress}%</span>
         <span
           className={cn(
             "chevron text-xs text-gray-500 transition-transform duration-300 ml-2",
@@ -198,7 +191,6 @@ function CourseGroup({
             currentCourseId={currentCourseId}
             currentChapterNumber={currentChapterNumber}
             expanded={expandedModules.has(module.number)}
-            completed={completed}
             onToggle={() => onToggleModule(module.number)}
             onSelectChapter={onSelectChapter}
             onCloseSidebar={onCloseSidebar}
@@ -215,7 +207,6 @@ interface ModuleGroupProps {
   currentCourseId: string | null;
   currentChapterNumber: number | null;
   expanded: boolean;
-  completed: number[];
   onToggle: () => void;
   onSelectChapter: (courseId: string, chapterNumber: number) => void;
   onCloseSidebar: () => void;
@@ -227,7 +218,6 @@ function ModuleGroup({
   currentCourseId,
   currentChapterNumber,
   expanded,
-  completed,
   onToggle,
   onSelectChapter,
   onCloseSidebar,
@@ -241,7 +231,7 @@ function ModuleGroup({
       >
         <span className="flex items-center gap-2 flex-1 min-w-0">
           <span className="text-base">{module.icon}</span>
-          <span className="font-semibold text-sm text-gray-800 truncate">
+          <span className="font-semibold text-sm text-gray-800 whitespace-normal break-words">
             {module.title}
           </span>
         </span>
@@ -260,7 +250,6 @@ function ModuleGroup({
       >
         {module.chapters.map((chapter, index) => {
           const isActive = currentCourseId === course.id && currentChapterNumber === chapter.number;
-          const isCompleted = completed.includes(chapter.number);
           // Guide IDs stay stable for bookmarks; menu numbers follow reading order.
           const displayNumber = course.kind === "guide" ? index + 1 : chapter.number;
           return (
@@ -277,17 +266,13 @@ function ModuleGroup({
               }}
               className={cn(
                 "chapter-link flex items-center gap-3 pl-12 pr-4 py-2 text-sm text-gray-700 no-underline transition-colors border-l-[3px] border-transparent hover:bg-gray-100 hover:text-primary",
-                isActive && "bg-primary/10 text-primary border-l-primary font-semibold",
-                isCompleted && "completed"
+                isActive && "bg-primary/10 text-primary border-l-primary font-semibold"
               )}
             >
               <span className="chapter-number text-xs text-gray-500 min-w-[24px]">
                 {displayNumber.toString().padStart(2, "0")}
               </span>
-              <span className="truncate">{chapter.title}</span>
-              {isCompleted && (
-                <span className="ml-auto text-secondary text-sm">✓</span>
-              )}
+              <span className="min-w-0 whitespace-normal break-words">{chapter.title}</span>
             </a>
           );
         })}

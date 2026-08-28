@@ -4,15 +4,13 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import ReadingControls from "./ReadingControls";
 import { Chapter, CourseData } from "@/lib/types";
-import { chapterByNumber, cn, highlightInHtml } from "@/lib/utils";
+import { chapterByNumber, highlightInHtml } from "@/lib/utils";
 
 interface ChapterContentProps {
   readingSize: number;
   onReadingSizeChange: (size: number) => void;
   chapter: Chapter;
   course: CourseData;
-  completed: number[];
-  onMarkComplete: (n: number) => void;
   onNavigate: (courseId: string, chapterNumber: number) => void;
   highlightQuery?: string;
 }
@@ -20,8 +18,6 @@ interface ChapterContentProps {
 export default function ChapterContent({
   chapter,
   course,
-  completed,
-  onMarkComplete,
   onNavigate,
   highlightQuery = "",
   readingSize,
@@ -202,7 +198,6 @@ export default function ChapterContent({
         {next ? (
           <button
             onClick={() => {
-              onMarkComplete(chapter.number);
               onNavigate(course.id, next);
             }}
             className="nav-btn next flex items-center justify-center gap-2 px-5 py-3 bg-primary hover:bg-primary-dark text-white rounded-lg font-medium transition-colors"
@@ -210,19 +205,7 @@ export default function ChapterContent({
             Next: {map.get(next)?.title} →
           </button>
         ) : (
-          <button
-            onClick={() => onMarkComplete(chapter.number)}
-            className={cn(
-              "nav-btn next flex items-center justify-center gap-2 px-5 py-3 rounded-lg font-medium transition-colors",
-              completed.includes(chapter.number)
-                ? "bg-secondary text-white cursor-default"
-                : "bg-primary hover:bg-primary-dark text-white"
-            )}
-          >
-            {completed.includes(chapter.number)
-              ? "Completed ✓"
-              : "Mark Complete ✓"}
-          </button>
+          <span />
         )}
       </div>
     </div>

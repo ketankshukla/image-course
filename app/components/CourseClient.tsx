@@ -20,8 +20,6 @@ export default function CourseClient({ manifest }: { manifest: SiteManifest }) {
   const [shelf, setShelf] = useState<Shelf>("course");
   const [expandedCourses, setExpandedCourses] = useState<Set<string>>(new Set());
   const [expandedModules, setExpandedModules] = useState<Record<string, Set<number>>>({});
-  const [completed, setCompleted] = useState<Record<string, number[]>>({});
-  const [progressReady, setProgressReady] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [highlightQuery, setHighlightQuery] = useState("");
@@ -42,26 +40,6 @@ export default function CourseClient({ manifest }: { manifest: SiteManifest }) {
   const currentSummary = manifest.courses.find(c => c.id === selection.courseId);
   const currentCourse = selection.courseId ? loaded[selection.courseId] : undefined;
   const currentChapter = currentCourse && selection.number ? chapterByNumber(currentCourse.modules).get(selection.number) : undefined;
-  const totalChapters = manifest.courses.reduce((sum, c) => sum + c.chaptersCount, 0);
-  const completedTotal = manifest.courses.reduce((sum, c) => sum + (completed[c.id] || []).length, 0);
-
-  useEffect(() => {
-    try {
-      const value = JSON.parse(localStorage.getItem("courseProgress") || "{}");
-      const safe: Record<string, number[]> = {};
-      for (const course of manifest.courses) {
-        const valid = new Set(course.modules.flatMap(m => m.chapters.map(c => c.number)));
-        if (Array.isArray(value?.[course.id])) safe[course.id] = [...new Set<number>(value[course.id].filter((n: number) => valid.has(n)))];
-      }
-      setCompleted(safe);
-    } catch { /* Storage is optional. */ }
-    setProgressReady(true);
-  }, [manifest]);
-
-  useEffect(() => {
-    if (!progressReady) return;
-    try { localStorage.setItem("courseProgress", JSON.stringify(completed)); } catch { /* Private browsing. */ }
-  }, [completed, progressReady]);
 
   useEffect(() => {
     const parse = () => {
@@ -140,11 +118,7 @@ export default function CourseClient({ manifest }: { manifest: SiteManifest }) {
     setHighlightQuery("");
     window.dispatchEvent(new PopStateEvent("popstate"));
   }
-  function markComplete(id: string, number: number) {
-    setCompleted(prev => ({ ...prev, [id]: [...new Set([...(prev[id] || []), number])] }));
-  }
   const visibleManifest = useMemo(() => ({ ...manifest, courses: manifest.courses.filter(c => c.kind === shelf) }), [manifest, shelf]);
-  const progress = totalChapters ? Math.round(completedTotal / totalChapters * 100) : 0;
 
   return (
     <div className="min-h-screen" style={{ "--reading-size": `${readingSize}px` } as CSSProperties}>
@@ -155,7 +129,6 @@ export default function CourseClient({ manifest }: { manifest: SiteManifest }) {
         </Link>
         <span className="hidden lg:block text-sm truncate max-w-md">{currentSummary?.title || "Concepts → Case studies → Working projects"}</span>
         <div className="flex items-center gap-4">
-          <span className="hidden sm:block text-sm">Reading progress {progress}%</span>
           <button onClick={() => setSidebarOpen(s => !s)} className="md:hidden bg-white/20 px-3 py-2 rounded-md" aria-label="Toggle menu" aria-expanded={sidebarOpen}>☰</button>
         </div>
       </header>
@@ -163,7 +136,7 @@ export default function CourseClient({ manifest }: { manifest: SiteManifest }) {
       <div className="flex mt-[60px] min-h-[calc(100vh-60px)]">
         <Sidebar manifest={manifest} shelf={shelf} onShelfChange={changeShelf} open={sidebarOpen}
           currentCourseId={selection.courseId} currentChapterNumber={selection.number}
-          expandedCourses={expandedCourses} expandedModules={expandedModules} completedByCourse={completed}
+          expandedCourses={expandedCourses} expandedModules={expandedModules}
           searchQuery={searchQuery} onSearch={setSearchQuery} onToggleCourse={toggleCourse}
           onToggleModule={toggleModule} onSelectChapter={navigate} onCloseSidebar={() => setSidebarOpen(false)} />
         <main id="main-content" tabIndex={-1} className="main-content min-w-0 flex-1 p-4 md:p-8 md:ml-[var(--sidebar-width)]">
@@ -171,9 +144,9 @@ export default function CourseClient({ manifest }: { manifest: SiteManifest }) {
             {searchQuery.trim() ? <SearchResults query={searchQuery} searchUrl={manifest.searchUrl} onSelect={(id, n) => navigate(id, n, searchQuery.trim())} />
               : error ? <div role="alert" className="p-8"><h1 className="text-2xl mb-4">Something needs attention</h1><p>{error}</p><button className="mt-4 underline" onClick={() => { setError(""); setRetry(n => n + 1); }}>Try again</button></div>
               : currentSummary && !currentCourse ? <p role="status" className="p-12 text-center">Loading collection…</p>
-              : currentChapter && currentCourse ? <ChapterContent key={`${currentCourse.id}:${currentChapter.number}`} chapter={currentChapter} course={currentCourse} completed={completed[currentCourse.id] || []} onMarkComplete={n => markComplete(currentCourse.id, n)} onNavigate={navigate} highlightQuery={highlightQuery} readingSize={readingSize} onReadingSizeChange={changeReadingSize} />
-              : currentCourse ? <CourseWelcome course={currentCourse} completed={completed[currentCourse.id] || []} onStart={() => { const first = currentCourse.modules[0]?.chapters[0]; if (first) navigate(currentCourse.id, first.number); }} />
-              : <SiteWelcome manifest={visibleManifest} shelf={shelf} allCollections={manifest.courses} onShelfChange={changeShelf} completedByCourse={completed} completedTotal={completedTotal} totalChapters={totalChapters} onSelectCourse={navigate} />}
+              : currentChapter && currentCourse ? <ChapterContent key={`${currentCourse.id}:${currentChapter.number}`} chapter={currentChapter} course={currentCourse} onNavigate={navigate} highlightQuery={highlightQuery} readingSize={readingSize} onReadingSizeChange={changeReadingSize} />
+              : currentCourse ? <CourseWelcome course={currentCourse} onStart={() => { const first = currentCourse.modules[0]?.chapters[0]; if (first) navigate(currentCourse.id, first.number); }} />
+              : <SiteWelcome manifest={visibleManifest} shelf={shelf} allCollections={manifest.courses} onShelfChange={changeShelf} onSelectCourse={navigate} />}
           </div>
         </main>
       </div>

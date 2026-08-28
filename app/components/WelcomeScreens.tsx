@@ -9,10 +9,9 @@ const descriptions = {
   guide: "Understand the workspace and learn how to add the next case study."
 };
 
-export function SiteWelcome({ manifest, shelf, allCollections, onShelfChange, completedByCourse, completedTotal, totalChapters, onSelectCourse }: {
+export function SiteWelcome({ manifest, shelf, allCollections, onShelfChange, onSelectCourse }: {
   manifest: SiteManifest; shelf: CourseSummary["kind"]; allCollections: CourseSummary[];
   onShelfChange: (kind: CourseSummary["kind"]) => void;
-  completedByCourse: Record<string, number[]>; completedTotal: number; totalChapters: number;
   onSelectCourse: (id: string) => void;
 }) {
   return <div className="py-4 md:py-8">
@@ -29,25 +28,24 @@ export function SiteWelcome({ manifest, shelf, allCollections, onShelfChange, co
     </div>
     <div className="flex flex-wrap items-end justify-between gap-3 mb-6">
       <div><h2 className="text-2xl font-serif mb-2">{labels[shelf]}</h2><p className="text-gray-500 max-w-2xl">{descriptions[shelf]}</p></div>
-      <p className="text-xs text-gray-500">{completedTotal} / {totalChapters} articles read</p>
     </div>
     <div className="grid grid-cols-1 xl:grid-cols-2 gap-5">
       {manifest.courses.map(course => <div key={course.id} className="rounded-xl border border-gray-200 p-6 hover:border-primary transition-colors">
         <div className="flex gap-3 items-start mb-3"><span className="text-3xl">{course.icon}</span><h3 className="font-serif text-xl">{course.title}</h3></div>
         <p className="text-gray-500 mb-4">{course.subtitle}</p>
-        <p className="text-xs text-gray-500 mb-4">{course.modules.length} {course.kind === "course" ? "modules" : "sections"} · {course.chaptersCount} {course.kind === "course" ? "lessons" : "guides"} · {(completedByCourse[course.id] || []).length} read</p>
+        <p className="text-xs text-gray-500 mb-4">{course.modules.length} {course.kind === "course" ? "modules" : "sections"} · {course.chaptersCount} {course.kind === "course" ? "lessons" : "guides"}</p>
         <button className="rounded-lg bg-primary text-white font-semibold px-5 py-3 hover:bg-primary-dark" onClick={() => onSelectCourse(course.id)}>Explore {course.kind === "course" ? "course" : "collection"} →</button>
       </div>)}
     </div>
   </div>;
 }
 
-export function CourseWelcome({ course, completed, onStart }: { course: CourseData; completed: number[]; onStart: () => void }) {
+export function CourseWelcome({ course, onStart }: { course: CourseData; onStart: () => void }) {
   return <div className="py-6">
     <p className="uppercase tracking-widest text-xs text-primary mb-3">{labels[course.kind]}</p>
     <h1 className="text-3xl md:text-4xl font-serif mb-4">{course.icon} {course.title}</h1>
     <p className="text-lg text-gray-500 max-w-3xl mb-5">{course.subtitle}</p>
-    <p className="text-sm text-gray-500 mb-7">{course.chaptersCount} articles · {completed.length} completed</p>
+    <p className="text-sm text-gray-500 mb-7">{course.chaptersCount} articles</p>
     {course.id === "hospital" && <p className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6 text-sm">Synthetic learning case only. These guides do not describe a deployed clinical system or certify compliance.</p>}
     <button onClick={onStart} className="bg-primary text-white px-6 py-3 rounded-lg font-semibold mb-10">Start reading →</button>
     <div className="space-y-6">{course.modules.map(module => <section key={module.number}>
