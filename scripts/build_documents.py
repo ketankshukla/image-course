@@ -20,7 +20,7 @@ TRAINING_EDITIONS = {
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--collection", choices=["hospital", "filepilot", *TRAINING_EDITIONS, "all-training"], default="hospital")
+    parser.add_argument("--collection", choices=["hospital", "filepilot", "evidence-desk", *TRAINING_EDITIONS, "all-training"], default="hospital")
     args = parser.parse_args()
     training = args.collection in TRAINING_EDITIONS or args.collection == "all-training"
     collection = DOCS / ("training" if training else "case-studies") / args.collection
@@ -39,18 +39,18 @@ def main():
         documents = sorted(collection.glob("*.md")) if training else sorted(collection.rglob("*.md")) + [DOCS / "FOLDER-STRUCTURE.md", DOCS / "PUBLISHING-CASE-STUDIES.md"]
     for source in documents:
         title = source.read_text(encoding="utf-8").splitlines()[0].lstrip("# ")
-        edition = TRAINING_EDITIONS.get(source.parent.name, "Engineering Workshops") if training else "FilePilot" if args.collection == "filepilot" else "HarborCare"
+        edition = TRAINING_EDITIONS.get(source.parent.name, "Engineering Workshops") if training else {"filepilot": "FilePilot", "evidence-desk": "Five Layers of AI Engineering"}.get(args.collection, "HarborCare")
         subprocess.run([
             pandoc, source.name, "--from=gfm", "--to=html5", "--standalone",
             "--embed-resources", "--toc", "--toc-depth=2",
             f"--template={DOCS / 'assets/document.template.html'}",
             f"--css={DOCS / 'assets/document.css'}",
-            *([f"--css={DOCS / 'assets/reading-document.css'}"] if training or args.collection == "filepilot" else []),
+            *([f"--css={DOCS / 'assets/reading-document.css'}"] if training or args.collection in ("filepilot", "evidence-desk") else []),
             "--metadata", f"title={title}",
             "--metadata", f"edition={edition}" if source.parent != DOCS else "edition=Workspace guide",
             f"--output={source.with_suffix('.html').name}",
         ], cwd=source.parent, check=True)
-        if training:
+        if training or args.collection == "evidence-desk":
             output = source.with_suffix('.html')
             reading = output.read_text(encoding='utf-8')
             reading = re.sub(r'href="((?!https?://)[^"#]+)\.md(#[^"]*)?"', lambda match: f'href="{match[1]}.html{match[2] or ""}"', reading)

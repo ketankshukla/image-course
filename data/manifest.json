@@ -2215,8 +2215,96 @@
           ]
         }
       ],
-      "dataUrl": "/library/collections/library-guides.53d906bc21a5cf546d2b.json"
+      "dataUrl": "/library/collections/library-guides.31213381f2034993f781.json"
+    },
+    {
+      "id": "evidence-desk",
+      "kind": "case-study",
+      "title": "EvidenceDesk — Five Layers of AI Engineering",
+      "subtitle": "Prompt, context, harness, loop and graph engineering through one Next.js and Python capstone.",
+      "icon": "🔎",
+      "slug": "evidence-desk",
+      "chaptersCount": 11,
+      "modules": [
+        {
+          "number": 1,
+          "title": "Start here",
+          "icon": "🧭",
+          "chapters": [
+            {
+              "number": 1,
+              "title": "Five Layers of AI Engineering — Build EvidenceDesk",
+              "slug": "00-start-here"
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "title": "The five engineering layers",
+          "icon": "🛠️",
+          "chapters": [
+            {
+              "number": 2,
+              "title": "1. Prompt Engineering — Turn a Wish into a Testable Assignment",
+              "slug": "01-prompt-engineering"
+            },
+            {
+              "number": 3,
+              "title": "2. Context Engineering — Give the Model the Right Evidence",
+              "slug": "02-context-engineering"
+            },
+            {
+              "number": 4,
+              "title": "3. Harness Engineering — Build the Controlled Runtime",
+              "slug": "03-harness-engineering"
+            },
+            {
+              "number": 5,
+              "title": "4. Loop Engineering — Know When to Continue and When to Stop",
+              "slug": "04-loop-engineering"
+            },
+            {
+              "number": 6,
+              "title": "5. Graph Engineering — Coordinate Work without Losing Control",
+              "slug": "05-graph-engineering"
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "title": "Build and demonstrate",
+          "icon": "🧠",
+          "chapters": [
+            {
+              "number": 7,
+              "title": "EvidenceDesk Architecture — Next.js in Front, Python Behind",
+              "slug": "06-project-architecture"
+            },
+            {
+              "number": 8,
+              "title": "Build EvidenceDesk Manually — File by File, in Small Working Slices",
+              "slug": "07-manual-build"
+            },
+            {
+              "number": 9,
+              "title": "Evaluation and Production — Prove the System Deserves to Run",
+              "slug": "08-evaluation-and-production"
+            },
+            {
+              "number": 10,
+              "title": "The Video's Five Engineering Types — Useful Ideas and Necessary Qualifications",
+              "slug": "09-transcript-assessment"
+            },
+            {
+              "number": 11,
+              "title": "Practice Lab — Trace All Five Layers without an AI Account",
+              "slug": "10-practice-lab"
+            }
+          ]
+        }
+      ],
+      "dataUrl": "/library/collections/evidence-desk.0c1a091c18936eb5418f.json"
     }
   ],
-  "searchUrl": "/library/search.8efc74c3237364f691c5.json"
+  "searchUrl": "/library/search.5ce771e140194559c2a0.json"
 }

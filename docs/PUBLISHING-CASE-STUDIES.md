@@ -2,7 +2,7 @@
 
 ## One source collection, two reading formats
 
-The website has three shelves: Courses for the ten visual volumes, Case Studies for Acme, HarborCare and FilePilot, and Library Guides for workspace and publishing instructions. Each case study has its own reading order, reference sections and build workbooks. Search covers all published articles.
+The website has three shelves: Courses for the ten visual volumes, Case Studies for Acme, HarborCare, FilePilot and EvidenceDesk, and Library Guides for workshops, workspace and publishing instructions. Each case study has its own reading order, reference sections and build workbooks. Search covers all published articles.
 
 The editable Markdown remains the source of truth. Standalone HTML editions remain useful for local reading, but the website does not embed those large HTML files. Its build converts the Markdown into small collection files and prepares standalone images.
 

@@ -1,0 +1,69 @@
+{
+  "id": "evidence-desk",
+  "kind": "case-study",
+  "title": "EvidenceDesk — Five Layers of AI Engineering",
+  "subtitle": "Prompt, context, harness, loop and graph engineering through one Next.js and Python capstone.",
+  "icon": "🔎",
+  "order": 4,
+  "sections": [
+    {
+      "title": "Start here",
+      "documents": [
+        {
+          "id": 1,
+          "file": "00-START-HERE.md"
+        }
+      ]
+    },
+    {
+      "title": "The five engineering layers",
+      "documents": [
+        {
+          "id": 2,
+          "file": "01-PROMPT-ENGINEERING.md"
+        },
+        {
+          "id": 3,
+          "file": "02-CONTEXT-ENGINEERING.md"
+        },
+        {
+          "id": 4,
+          "file": "03-HARNESS-ENGINEERING.md"
+        },
+        {
+          "id": 5,
+          "file": "04-LOOP-ENGINEERING.md"
+        },
+        {
+          "id": 6,
+          "file": "05-GRAPH-ENGINEERING.md"
+        }
+      ]
+    },
+    {
+      "title": "Build and demonstrate",
+      "documents": [
+        {
+          "id": 7,
+          "file": "06-PROJECT-ARCHITECTURE.md"
+        },
+        {
+          "id": 8,
+          "file": "07-MANUAL-BUILD.md"
+        },
+        {
+          "id": 9,
+          "file": "08-EVALUATION-AND-PRODUCTION.md"
+        },
+        {
+          "id": 10,
+          "file": "09-TRANSCRIPT-ASSESSMENT.md"
+        },
+        {
+          "id": 11,
+          "file": "10-PRACTICE-LAB.md"
+        }
+      ]
+    }
+  ]
+}

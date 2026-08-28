@@ -110,8 +110,9 @@ Workspace</h1>
 <p>The course website remains one Git repository. Its ten course
 collections live together under <code>courses</code>. All case-study
 documents live under <code>docs/case-studies</code>, separated into
-Acme, HarborCare, and FilePilot. These are teaching collections; adding
-them does not install or deploy their proposed applications.</p>
+Acme, HarborCare, FilePilot, and EvidenceDesk. These are teaching
+collections; adding them does not install or deploy their proposed
+applications.</p>
 <pre class="text"><code>image-course/
 ├── app/                          Course website pages and interface
 ├── lib/                          Website helpers and types
@@ -149,6 +150,12 @@ them does not install or deploy their proposed applications.</p>
 │       │   ├── ...               Strategy, legend, safety and architecture guides
 │       │   ├── manual-build/     Eight sequential workbook documents
 │       │   └── assets/           Four original architecture diagrams
+│       ├── evidence-desk/
+│       │   ├── collection.json   Eleven-chapter publication allowlist
+│       │   ├── 00-START-HERE.md / .html
+│       │   ├── ...               Five layers, architecture, build and release guides
+│       │   ├── lab/              Offline Python exercise with eleven tests
+│       │   └── assets/           Nine original teaching diagrams
 │       └── hospital/
 │           ├── 00-START-HERE.md / .html
 │           ├── 01-PROJECT-STRATEGY.md / .html
@@ -168,6 +175,8 @@ them does not install or deploy their proposed applications.</p>
 <ul>
 <li><a href="case-studies/filepilot/00-START-HERE.html">FilePilot safe
 file-automation collection</a></li>
+<li><a href="case-studies/evidence-desk/00-START-HERE.html">EvidenceDesk
+— five layers of AI engineering</a></li>
 <li><a href="case-studies/filepilot/manual-build/00-START-HERE.html">FilePilot
 manual-build series</a></li>
 <li><a href="case-studies/hospital/00-START-HERE.html">HarborCare

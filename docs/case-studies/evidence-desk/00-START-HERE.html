@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Five Layers of AI Engineering — Build EvidenceDesk</title>
+<style type="text/css">:root{color-scheme:light;--ink:#19283c;--muted:#56667a;--blue:#145bd8;--navy:#081a33;--line:#dce5ef;--paper:#fff;--bg:#edf2f7}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:30px}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.75 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:#145ac0;text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:3px solid #d58b00;outline-offset:4px}
+.skip{position:fixed;top:-100px;left:16px;z-index:10;background:white;padding:10px}
+.skip:focus{top:10px}
+aside{position:fixed;inset:0 auto 0 0;width:284px;overflow:auto;padding:30px 22px;background:var(--navy);color:#e9f0fa;border-right:1px solid #244363}
+.brand{font-size:12px;letter-spacing:.17em;text-transform:uppercase;color:#76dcf3;font-weight:700}
+aside h2{font-size:22px;line-height:1.3;margin:12px 0 22px;color:white;border:0;padding:0}
+aside ul{list-style:none;margin:0;padding:0}
+aside li{margin:0 0 5px}
+aside li ul{margin-left:0}
+aside a{display:block;padding:7px 10px;border-radius:6px;color:#d2deed;text-decoration:none;font-size:13px;line-height:1.45}
+aside a:hover{background:#193554;color:white}
+.rail-footer{margin-top:22px;border-top:1px solid #2c4260;padding-top:20px;color:#9db0c9;font-size:12px}
+main{margin-left:284px;padding:42px clamp(24px,4vw,72px) 90px;max-width:1550px}
+.toolbar{display:flex;align-items:center;gap:15px;justify-content:space-between;margin-bottom:30px;font-size:12px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+button{font:600 13px system-ui;border:1px solid #c9d7e8;background:#fff;color:#164176;padding:10px 15px;border-radius:8px;cursor:pointer}
+button:hover{background:#e6f0ff}
+h1{font-size:clamp(40px,4.4vw,66px);line-height:1.1;letter-spacing:-.045em;background:linear-gradient(120deg,#07172e,#124481);color:white;border-radius:20px;padding:40px;margin:0 0 34px;box-shadow:0 18px 45px #0b254025}
+h2{font-size:30px;line-height:1.3;color:#103e7c;letter-spacing:-.025em;margin:58px 0 22px;padding-top:23px;border-top:3px solid #2367c9}
+h3{font-size:23px;line-height:1.35;color:#075e76;letter-spacing:-.02em;margin:34px 0 15px}
+p{margin:16px 0;max-width:90ch}
+li{margin:7px 0}
+strong{color:#113862}
+blockquote{background:#e1f1f7;border-left:5px solid #068caf;border-radius:0 12px 12px 0;margin:28px 0;padding:12px 25px;color:#184050}
+figure{margin:28px 0 32px}
+figure img{display:block;width:100%;height:auto;border-radius:14px;background:#07172d;box-shadow:0 12px 28px #0a254025}
+figcaption{font-size:14px;line-height:1.6;color:var(--muted);padding:13px 2px}
+.diagram-button{margin-top:9px;font-size:12px}
+img{max-width:100%;height:auto}
+pre{padding:23px 25px;overflow:auto;background:#091b32;color:#dfedff;border:1px solid #203a56;border-radius:12px;line-height:1.6;tab-size:4}
+code{font-family:"Cascadia Code",Consolas,monospace;font-size:.85em}
+:not(pre)>code{background:#e3eaf3;color:#98305b;padding:.12em .32em;border-radius:4px;overflow-wrap:anywhere}
+pre code{white-space:pre;color:inherit}
+table{border-collapse:separate;border-spacing:0;display:block;overflow-x:auto;max-width:100%;margin:24px 0 30px;border:1px solid var(--line);border-radius:10px;background:white;font-size:15px;line-height:1.6}
+th,td{text-align:left;vertical-align:top;padding:13px 16px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-width:130px}
+th{background:#103c78;color:white;font-weight:650}
+tr:nth-child(even) td{background:#f4f7fb}
+tr:last-child td{border-bottom:0}
+th:last-child,td:last-child{border-right:0}
+hr{border:0;border-top:1px solid var(--line);margin:40px 0}
+dialog{border:1px solid #375679;border-radius:15px;padding:0;background:#07172e;color:white;width:96vw;max-width:1900px;max-height:96vh;overflow:hidden}
+dialog::backdrop{background:#030b17dd}
+.zoom-toolbar{display:flex;gap:10px;align-items:center;justify-content:flex-end;padding:12px 18px;background:#102943}
+.zoom-toolbar span{margin-right:auto;font-size:14px}
+.zoom-body{overflow:auto;max-height:82vh;padding:12px}
+.zoom-body img{display:block;width:100%;max-width:none;margin:auto;height:auto}
+footer{margin-top:60px;border-top:1px solid var(--line);padding-top:20px;font-size:13px;color:var(--muted)}
+@media(max-width:1000px){aside{position:relative;width:auto;padding:24px}aside nav ul{columns:2}aside li{break-inside:avoid}.rail-footer{display:none}main{margin-left:0;padding:28px 24px 60px}}
+@media(max-width:600px){body{font-size:16px}aside nav ul{columns:1}aside{max-height:330px}main{padding:22px 16px 50px}h1{font-size:38px;padding:27px}h2{font-size:26px}h3{font-size:21px}.toolbar{font-size:10px}pre{padding:17px;font-size:14px}.zoom-toolbar{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{aside,.toolbar,.diagram-button,dialog{display:none!important}body{background:white;font-size:11pt}main{margin:0;max-width:none;padding:0}h1{color:#12345a;background:none;padding:0;box-shadow:none;font-size:32pt}h2,h3{break-after:avoid}figure,blockquote{break-inside:avoid}pre{background:#f3f5f9;color:#152f4e;white-space:pre-wrap}pre code{white-space:pre-wrap}table{display:table;font-size:9pt}th,td{min-width:0;padding:7px}figure img{box-shadow:none}}
+</style><style type="text/css">
+body{font-size:24px;line-height:1.7}
+main{max-width:1500px}
+p{max-width:65ch}
+h2{font-size:36px}
+h3{font-size:28px;color:#17478a}
+blockquote{background:#edf4ff;border-left-color:#245ac4;color:#19283c}
+table{font-size:21px}
+figcaption{font-size:20px}
+pre{font-size:20px}
+:not(pre)>code{background:#edf4ff;color:#17478a}
+button{min-height:44px;font-size:16px}
+aside a{font-size:15px}
+.brand{color:#c4d8fa}
+a:focus-visible,button:focus-visible{outline-color:#245ac4}
+@media(max-width:600px){body{font-size:24px}h2{font-size:32px}h3{font-size:27px}pre{font-size:18px}aside a{font-size:15px}}
+@media print{body{font-size:12pt}h2{font-size:22pt}h3{font-size:17pt}table{font-size:10pt}pre{font-size:10pt}}
+</style>
+</head>
+<body>
+<a class="skip" href="#content">Skip to document</a>
+<aside aria-label="Document contents">
+<div class="brand">Visual learning library</div>
+<h2>Five Layers of AI Engineering</h2>
+<ul>
+<li><a href="#five-layers-of-ai-engineering--build-evidencedesk" id="toc-five-layers-of-ai-engineering--build-evidencedesk">Five Layers
+of AI Engineering — Build EvidenceDesk</a>
+<ul>
+<li><a href="#at-a-glance" id="toc-at-a-glance">At a glance</a></li>
+<li><a href="#what-the-diagram-teaches" id="toc-what-the-diagram-teaches">What the diagram teaches</a></li>
+<li><a href="#the-real-life-style-case-study" id="toc-the-real-life-style-case-study">The real-life-style case
+study</a></li>
+<li><a href="#your-learning-route" id="toc-your-learning-route">Your
+learning route</a></li>
+<li><a href="#what-you-need-before-starting" id="toc-what-you-need-before-starting">What you need before
+starting</a></li>
+<li><a href="#a-small-legend-before-the-big-words" id="toc-a-small-legend-before-the-big-words">A small legend before the
+big words</a></li>
+<li><a href="#what-a-convincing-demonstration-looks-like" id="toc-what-a-convincing-demonstration-looks-like">What a convincing
+demonstration looks like</a></li>
+<li><a href="#how-to-present-this-course" id="toc-how-to-present-this-course">How to present this course</a></li>
+</ul></li>
+</ul>
+<div class="rail-footer">Self-contained reading edition<br>Diagrams and styles embedded</div>
+</aside>
+<main id="content">
+<div class="toolbar"><span>Illustrated reference guide</span><button type="button" onclick="window.print()">Print / Save PDF</button></div>
+<h1 id="five-layers-of-ai-engineering--build-evidencedesk">Five Layers
+of AI Engineering — Build EvidenceDesk</h1>
+<h2 id="at-a-glance">At a glance</h2>
+<p>This is a hands-on course about <strong>prompt, context, harness,
+loop, and graph engineering</strong>. You will learn what each layer
+does, why it fails, how to implement it, and how to demonstrate that it
+works. Our single capstone is EvidenceDesk: a Next.js/React interface
+with a Python backend that turns a small evidence collection into a
+reviewable decision brief.</p>
+<blockquote>
+<p><strong>Key idea:</strong> You do not need five different projects.
+Build one understandable system, then give it five increasingly capable
+layers.</p>
+</blockquote>
+<p>This package contains teaching chapters, architecture, a manual
+construction workbook, production and evaluation guidance, a transcript
+assessment, and a small executable Python exercise. It does
+<strong>not</strong> claim that the complete production application
+already exists. The web application described here is your build
+project; the Python exercise is a deliberately limited local
+demonstration.</p>
+<h2 id="what-the-diagram-teaches">What the diagram teaches</h2>
+<p><img role="img" aria-label="Five engineering responsibilities, from instructions to coordinated work" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9Ijc2MCIgdmlld0JveD0iMCAwIDEyMDAgNzYwIiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUgZGVzYyI+PHRpdGxlIGlkPSJ0aXRsZSI+Rml2ZSByZXNwb25zaWJpbGl0aWVzLiBPbmUgdW5kZXJzdGFuZGFibGUgc3lzdGVtLjwvdGl0bGU+PGRlc2MgaWQ9ImRlc2MiPkVhY2ggbGF5ZXIgYW5zd2VycyBhIGRpZmZlcmVudCBxdWVzdGlvbjsgbm9uZSByZXBsYWNlcyB0aGUgb3RoZXJzLjwvZGVzYz48ZGVmcz48bWFya2VyIGlkPSJhcnJvdyIgbWFya2VyV2lkdGg9IjEwIiBtYXJrZXJIZWlnaHQ9IjEwIiByZWZYPSI5IiByZWZZPSI1IiBvcmllbnQ9ImF1dG8iPjxwYXRoIGQ9Ik0wIDBMMTAgNUwwIDEwIiBmaWxsPSIjM2I4MmM0Ii8+PC9tYXJrZXI+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMjAwIiBoZWlnaHQ9Ijc2MCIgcng9IjI0IiBmaWxsPSIjZjRmOWZmIi8+PHRleHQgeD0iNTAiIHk9IjY1IiBmaWxsPSIjMTIzYjY2IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNCIgZm9udC13ZWlnaHQ9IjcwMCI+Rml2ZSByZXNwb25zaWJpbGl0aWVzLiBPbmUgdW5kZXJzdGFuZGFibGUgc3lzdGVtLjwvdGV4dD48dGV4dCB4PSI1MCIgeT0iMTA1IiBmaWxsPSIjNDU2NTgxIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMSI+RWFjaCBsYXllciBhbnN3ZXJzIGEgZGlmZmVyZW50IHF1ZXN0aW9uOyBub25lIHJlcGxhY2VzIHRoZSBvdGhlcnMuPC90ZXh0PjxyZWN0IHg9IjUwIiB5PSIxNTUiIHdpZHRoPSI1MjAiIGhlaWdodD0iMTMwIiByeD0iMTQiIGZpbGw9IndoaXRlIiBzdHJva2U9IiNiN2Q0ZWQiIHN0cm9rZS13aWR0aD0iMiIvPjxyZWN0IHg9IjUwIiB5PSIxNTUiIHdpZHRoPSI3IiBoZWlnaHQ9IjEzMCIgcng9IjMiIGZpbGw9IiMyMDc0YjgiLz48dGV4dCB4PSI3MiIgeT0iMTkxIiBmaWxsPSIjMTY0YzdiIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyNSIgZm9udC13ZWlnaHQ9IjcwMCI+MSAgUHJvbXB0PC90ZXh0Pjx0ZXh0IHg9IjcyIiB5PSIyMjciIGZpbGw9IiMyOTQ2NWUiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjIxIj5XaGF0IGlzIHRoZSBhc3NpZ25tZW50PzwvdGV4dD48dGV4dCB4PSI3MiIgeT0iMjU2IiBmaWxsPSIjMjk0NjVlIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMSI+SW5zdHJ1Y3Rpb25zLCBleGFtcGxlcywgb3V0cHV0IGNvbnRyYWN0PC90ZXh0PjxyZWN0IHg9IjYzMCIgeT0iMTU1IiB3aWR0aD0iNTIwIiBoZWlnaHQ9IjEzMCIgcng9IjE0IiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSIjYjdkNGVkIiBzdHJva2Utd2lkdGg9IjIiLz48cmVjdCB4PSI2MzAiIHk9IjE1NSIgd2lkdGg9IjciIGhlaWdodD0iMTMwIiByeD0iMyIgZmlsbD0iIzIwNzRiOCIvPjx0ZXh0IHg9IjY1MiIgeT0iMTkxIiBmaWxsPSIjMTY0YzdiIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyNSIgZm9udC13ZWlnaHQ9IjcwMCI+MiAgQ29udGV4dDwvdGV4dD48dGV4dCB4PSI2NTIiIHk9IjIyNyIgZmlsbD0iIzI5NDY1ZSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjEiPldoYXQgZXZpZGVuY2UgbWF5IGl0IHVzZT88L3RleHQ+PHRleHQgeD0iNjUyIiB5PSIyNTYiIGZpbGw9IiMyOTQ2NWUiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjIxIj5QZXJtaXNzaW9uLCByZWxldmFuY2UsIGZyZXNobmVzczwvdGV4dD48cmVjdCB4PSI1MCIgeT0iMzI1IiB3aWR0aD0iNTIwIiBoZWlnaHQ9IjEzMCIgcng9IjE0IiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSIjYjdkNGVkIiBzdHJva2Utd2lkdGg9IjIiLz48cmVjdCB4PSI1MCIgeT0iMzI1IiB3aWR0aD0iNyIgaGVpZ2h0PSIxMzAiIHJ4PSIzIiBmaWxsPSIjMjA3NGI4Ii8+PHRleHQgeD0iNzIiIHk9IjM2MSIgZmlsbD0iIzE2NGM3YiIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjUiIGZvbnQtd2VpZ2h0PSI3MDAiPjMgIEhhcm5lc3M8L3RleHQ+PHRleHQgeD0iNzIiIHk9IjM5NyIgZmlsbD0iIzI5NDY1ZSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjEiPldoYXQgYWN0aW9ucyBhcmUgYWxsb3dlZD88L3RleHQ+PHRleHQgeD0iNzIiIHk9IjQyNiIgZmlsbD0iIzI5NDY1ZSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjEiPlRvb2xzLCB2YWxpZGF0aW9uLCByZWNvcmRzLCBpc29sYXRpb248L3RleHQ+PHJlY3QgeD0iNjMwIiB5PSIzMjUiIHdpZHRoPSI1MjAiIGhlaWdodD0iMTMwIiByeD0iMTQiIGZpbGw9IndoaXRlIiBzdHJva2U9IiNiN2Q0ZWQiIHN0cm9rZS13aWR0aD0iMiIvPjxyZWN0IHg9IjYzMCIgeT0iMzI1IiB3aWR0aD0iNyIgaGVpZ2h0PSIxMzAiIHJ4PSIzIiBmaWxsPSIjMjA3NGI4Ii8+PHRleHQgeD0iNjUyIiB5PSIzNjEiIGZpbGw9IiMxNjRjN2IiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjI1IiBmb250LXdlaWdodD0iNzAwIj40ICBMb29wPC90ZXh0Pjx0ZXh0IHg9IjY1MiIgeT0iMzk3IiBmaWxsPSIjMjk0NjVlIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMSI+Q29udGludWUsIHBhdXNlLCBvciBzdG9wPzwvdGV4dD48dGV4dCB4PSI2NTIiIHk9IjQyNiIgZmlsbD0iIzI5NDY1ZSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjEiPkNoZWNrZXIsIGxpbWl0cywgY2FuY2VsbGF0aW9uLCByZWNvdmVyeTwvdGV4dD48cmVjdCB4PSIyODAiIHk9IjUwMCIgd2lkdGg9IjY0MCIgaGVpZ2h0PSIxMzAiIHJ4PSIxNCIgZmlsbD0id2hpdGUiIHN0cm9rZT0iI2I3ZDRlZCIgc3Ryb2tlLXdpZHRoPSIyIi8+PHJlY3QgeD0iMjgwIiB5PSI1MDAiIHdpZHRoPSI3IiBoZWlnaHQ9IjEzMCIgcng9IjMiIGZpbGw9IiMyMDc0YjgiLz48dGV4dCB4PSIzMDIiIHk9IjUzNiIgZmlsbD0iIzE2NGM3YiIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjUiIGZvbnQtd2VpZ2h0PSI3MDAiPjUgIEdyYXBoPC90ZXh0Pjx0ZXh0IHg9IjMwMiIgeT0iNTcyIiBmaWxsPSIjMjk0NjVlIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMSI+V2hhdCBkZXBlbmRzIG9uIHdoYXQ/PC90ZXh0Pjx0ZXh0IHg9IjMwMiIgeT0iNjAxIiBmaWxsPSIjMjk0NjVlIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMSI+UGFyYWxsZWwgcmVzZWFyY2gsIGpvaW4sIHdyaXRlciwgY3JpdGljPC90ZXh0PjxyZWN0IHg9IjUwIiB5PSI2NzAiIHdpZHRoPSIxMTAwIiBoZWlnaHQ9IjU4IiByeD0iMTIiIGZpbGw9IiNkZmVkZmIiLz48dGV4dCB4PSI3MiIgeT0iNzA3IiBmaWxsPSIjMTY0YzdiIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMiI+RXZpZGVuY2VEZXNrIGNvbWJpbmVzIGFsbCBmaXZlIHRvIHByb2R1Y2UgYSByZXZpZXdhYmxlLCBldmlkZW5jZS1iYWNrZWQgYnJpZWYuPC90ZXh0Pjwvc3ZnPgo=" alt="Five engineering responsibilities, from instructions to coordinated work" /></p>
+<p>Imagine asking a research assistant: “Which document-search product
+should our small support team trial?” A clever assistant can still fail
+if the assignment is vague, the pricing sheet is obsolete, their account
+can read another team&#39;s confidential files, a retry repeats an action,
+or the final report arrives before the cost analysis finishes.</p>
+<p>The five layers address these different problems. Prompt engineering
+defines the assignment. Context engineering supplies the right evidence.
+Harness engineering provides controlled tools and records. Loop
+engineering decides whether work should continue. Graph engineering
+arranges dependencies between pieces of work. None makes the others
+obsolete.</p>
+<p>The diagram is a responsibility map, not a historical timeline or a
+requirement to buy five products. One Python program can implement all
+five. Some tasks only need a prompt and a deterministic validator. We
+add complexity only when a test exposes a need.</p>
+<h2 id="the-real-life-style-case-study">The real-life-style case
+study</h2>
+<p>Our fictional company, Northstar Support, has twelve support
+specialists. Its manager wants to choose between two fictional
+knowledge-search services, Cedar and Birch. The evidence packet includes
+product descriptions, a current price sheet, an older price sheet, an
+internal requirements note, and a deliberately restricted document
+belonging to another team.</p>
+<p>The manager asks: “For twelve people, compare annual cost, SSO
+support and export capability. Stay within our stated requirements. Show
+evidence for each conclusion. Do not purchase anything.”</p>
+<p>The word “fictional” matters: the prices and capabilities are
+learning fixtures, not market research. The project must say when
+evidence is missing. “No document proves this” is different from “the
+product does not support this.”</p>
+<p>A successful brief includes a comparison, source excerpts, explicit
+unknowns, and a reasoned recommendation that a human can approve. A
+rejected brief is also a successful demonstration if the system
+correctly notices unsupported claims and prevents publication.</p>
+<h2 id="your-learning-route">Your learning route</h2>
+<table>
+<thead>
+<tr>
+<th>Chapter</th>
+<th>Question you will answer</th>
+<th>Artifact you produce</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="01-PROMPT-ENGINEERING.html">Prompt engineering</a></td>
+<td>What exactly should the model do?</td>
+<td>Versioned assignment and output contract</td>
+</tr>
+<tr>
+<td><a href="02-CONTEXT-ENGINEERING.html">Context engineering</a></td>
+<td>What information should it see?</td>
+<td>Authorized evidence packet</td>
+</tr>
+<tr>
+<td><a href="03-HARNESS-ENGINEERING.html">Harness engineering</a></td>
+<td>What may it do, and what is recorded?</td>
+<td>Tool gateway and run ledger</td>
+</tr>
+<tr>
+<td><a href="04-LOOP-ENGINEERING.html">Loop engineering</a></td>
+<td>When should it retry, pause or stop?</td>
+<td>Bounded state machine</td>
+</tr>
+<tr>
+<td><a href="05-GRAPH-ENGINEERING.html">Graph engineering</a></td>
+<td>What depends on what?</td>
+<td>Research, merge and review graph</td>
+</tr>
+<tr>
+<td><a href="06-PROJECT-ARCHITECTURE.html">Architecture</a></td>
+<td>How do the frontend and backend connect?</td>
+<td>Repository, contracts and deployment map</td>
+</tr>
+<tr>
+<td><a href="07-MANUAL-BUILD.html">Manual build</a></td>
+<td>What do I write first?</td>
+<td>Incremental construction workbook</td>
+</tr>
+<tr>
+<td><a href="08-EVALUATION-AND-PRODUCTION.html">Evaluation and
+production</a></td>
+<td>What evidence permits release?</td>
+<td>Failure tests and release gates</td>
+</tr>
+<tr>
+<td><a href="09-TRANSCRIPT-ASSESSMENT.html">Transcript assessment</a></td>
+<td>Which claims need qualification?</td>
+<td>A grounded mental model</td>
+</tr>
+<tr>
+<td><a href="10-PRACTICE-LAB.html">Practice lab</a></td>
+<td>Can I trace the rules without an AI account?</td>
+<td>Executable Python experiment</td>
+</tr>
+</tbody>
+</table>
+<p>Read the five concepts in order, then build. Alternatively, read the
+architecture after chapter one if seeing the whole system helps you
+learn. Every chapter contains an exercise and an explanation you can
+compare with your own answer.</p>
+<h2 id="what-you-need-before-starting">What you need before
+starting</h2>
+<p>You should be able to read a Python function, a JavaScript object and
+a basic React component. If these feel unfamiliar, begin by changing one
+variable and predicting the output in the practice lab. You do not need
+to understand distributed systems or vector databases before the first
+lesson.</p>
+<p>For the full build, use Git, Node.js, a supported Python release, an
+editor and two local terminals. The early stages need no paid AI API.
+Start with fixtures and a fake model so mistakes are understandable and
+repeatable. Introduce a real model only after your contracts work.</p>
+<p>A useful rhythm is one concept session followed by one build session.
+Stop when you can explain your code rather than when you have copied the
+whole page. No lesson requires a completion counter or score.</p>
+<h2 id="a-small-legend-before-the-big-words">A small legend before the
+big words</h2>
+<p>A <strong>model</strong> predicts an output from supplied input. An
+<strong>agent</strong> is an application that lets a model help choose
+actions. A <strong>workflow</strong> is a sequence whose rules you
+define. <strong>State</strong> is what the application currently knows
+about a run. A <strong>contract</strong> is the agreed shape and meaning
+of information crossing a boundary.</p>
+<p><strong>RAG</strong> means retrieving evidence before generating an
+answer. <strong>MCP</strong> is an optional protocol for exposing tools
+to model-connected applications. <strong>A2A</strong> is an optional
+protocol for cooperation between independently operated agents. You do
+not need MCP or A2A merely because your application contains multiple
+Python functions. See the architecture for where optional adapters
+belong.</p>
+<h2 id="what-a-convincing-demonstration-looks-like">What a convincing
+demonstration looks like</h2>
+<p>First run a normal comparison. Then remove the current price sheet
+and show an honest unknown. Try an unauthorized document and show that
+retrieval excludes it before model input. Simulate a timeout and show a
+bounded retry. Finally restart a worker and show that an approved result
+is not published twice.</p>
+<p>These demonstrations reveal your engineering judgment. “It generated
+a nice paragraph” demonstrates much less.</p>
+<h2 id="how-to-present-this-course">How to present this course</h2>
+<p>Say: “I built a system that knows what to ask, what evidence to use,
+which actions are permitted, when to stop, and which tasks must finish
+before others start.” Then show one failure and its protective behavior.
+Explain the code boundary responsible for that behavior. That is a
+stronger story than listing frameworks.</p>
+</main>
+<dialog id="diagram-dialog" aria-label="Enlarged diagram">
+<div class="zoom-toolbar"><span>Diagram detail</span><button type="button" id="diagram-close">Close</button></div>
+<div class="zoom-body"><img id="diagram-large" alt></div>
+</dialog>
+<script>
+const diagramDialog = document.getElementById('diagram-dialog');
+const diagramLarge = document.getElementById('diagram-large');
+document.querySelectorAll('main img').forEach((picture) => {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'diagram-button';
+  button.textContent = 'Enlarge diagram';
+  button.addEventListener('click', () => {
+    diagramLarge.src = picture.src;
+    diagramLarge.alt = picture.alt;
+    diagramDialog.showModal();
+  });
+  picture.insertAdjacentElement('afterend', button);
+});
+document.getElementById('diagram-close').addEventListener('click', () => diagramDialog.close());
+</script>
+</body>
+</html>

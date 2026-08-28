@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2. Context Engineering — Give the Model the Right Evidence</title>
+<style type="text/css">:root{color-scheme:light;--ink:#19283c;--muted:#56667a;--blue:#145bd8;--navy:#081a33;--line:#dce5ef;--paper:#fff;--bg:#edf2f7}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:30px}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.75 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:#145ac0;text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:3px solid #d58b00;outline-offset:4px}
+.skip{position:fixed;top:-100px;left:16px;z-index:10;background:white;padding:10px}
+.skip:focus{top:10px}
+aside{position:fixed;inset:0 auto 0 0;width:284px;overflow:auto;padding:30px 22px;background:var(--navy);color:#e9f0fa;border-right:1px solid #244363}
+.brand{font-size:12px;letter-spacing:.17em;text-transform:uppercase;color:#76dcf3;font-weight:700}
+aside h2{font-size:22px;line-height:1.3;margin:12px 0 22px;color:white;border:0;padding:0}
+aside ul{list-style:none;margin:0;padding:0}
+aside li{margin:0 0 5px}
+aside li ul{margin-left:0}
+aside a{display:block;padding:7px 10px;border-radius:6px;color:#d2deed;text-decoration:none;font-size:13px;line-height:1.45}
+aside a:hover{background:#193554;color:white}
+.rail-footer{margin-top:22px;border-top:1px solid #2c4260;padding-top:20px;color:#9db0c9;font-size:12px}
+main{margin-left:284px;padding:42px clamp(24px,4vw,72px) 90px;max-width:1550px}
+.toolbar{display:flex;align-items:center;gap:15px;justify-content:space-between;margin-bottom:30px;font-size:12px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+button{font:600 13px system-ui;border:1px solid #c9d7e8;background:#fff;color:#164176;padding:10px 15px;border-radius:8px;cursor:pointer}
+button:hover{background:#e6f0ff}
+h1{font-size:clamp(40px,4.4vw,66px);line-height:1.1;letter-spacing:-.045em;background:linear-gradient(120deg,#07172e,#124481);color:white;border-radius:20px;padding:40px;margin:0 0 34px;box-shadow:0 18px 45px #0b254025}
+h2{font-size:30px;line-height:1.3;color:#103e7c;letter-spacing:-.025em;margin:58px 0 22px;padding-top:23px;border-top:3px solid #2367c9}
+h3{font-size:23px;line-height:1.35;color:#075e76;letter-spacing:-.02em;margin:34px 0 15px}
+p{margin:16px 0;max-width:90ch}
+li{margin:7px 0}
+strong{color:#113862}
+blockquote{background:#e1f1f7;border-left:5px solid #068caf;border-radius:0 12px 12px 0;margin:28px 0;padding:12px 25px;color:#184050}
+figure{margin:28px 0 32px}
+figure img{display:block;width:100%;height:auto;border-radius:14px;background:#07172d;box-shadow:0 12px 28px #0a254025}
+figcaption{font-size:14px;line-height:1.6;color:var(--muted);padding:13px 2px}
+.diagram-button{margin-top:9px;font-size:12px}
+img{max-width:100%;height:auto}
+pre{padding:23px 25px;overflow:auto;background:#091b32;color:#dfedff;border:1px solid #203a56;border-radius:12px;line-height:1.6;tab-size:4}
+code{font-family:"Cascadia Code",Consolas,monospace;font-size:.85em}
+:not(pre)>code{background:#e3eaf3;color:#98305b;padding:.12em .32em;border-radius:4px;overflow-wrap:anywhere}
+pre code{white-space:pre;color:inherit}
+table{border-collapse:separate;border-spacing:0;display:block;overflow-x:auto;max-width:100%;margin:24px 0 30px;border:1px solid var(--line);border-radius:10px;background:white;font-size:15px;line-height:1.6}
+th,td{text-align:left;vertical-align:top;padding:13px 16px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-width:130px}
+th{background:#103c78;color:white;font-weight:650}
+tr:nth-child(even) td{background:#f4f7fb}
+tr:last-child td{border-bottom:0}
+th:last-child,td:last-child{border-right:0}
+hr{border:0;border-top:1px solid var(--line);margin:40px 0}
+dialog{border:1px solid #375679;border-radius:15px;padding:0;background:#07172e;color:white;width:96vw;max-width:1900px;max-height:96vh;overflow:hidden}
+dialog::backdrop{background:#030b17dd}
+.zoom-toolbar{display:flex;gap:10px;align-items:center;justify-content:flex-end;padding:12px 18px;background:#102943}
+.zoom-toolbar span{margin-right:auto;font-size:14px}
+.zoom-body{overflow:auto;max-height:82vh;padding:12px}
+.zoom-body img{display:block;width:100%;max-width:none;margin:auto;height:auto}
+footer{margin-top:60px;border-top:1px solid var(--line);padding-top:20px;font-size:13px;color:var(--muted)}
+@media(max-width:1000px){aside{position:relative;width:auto;padding:24px}aside nav ul{columns:2}aside li{break-inside:avoid}.rail-footer{display:none}main{margin-left:0;padding:28px 24px 60px}}
+@media(max-width:600px){body{font-size:16px}aside nav ul{columns:1}aside{max-height:330px}main{padding:22px 16px 50px}h1{font-size:38px;padding:27px}h2{font-size:26px}h3{font-size:21px}.toolbar{font-size:10px}pre{padding:17px;font-size:14px}.zoom-toolbar{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{aside,.toolbar,.diagram-button,dialog{display:none!important}body{background:white;font-size:11pt}main{margin:0;max-width:none;padding:0}h1{color:#12345a;background:none;padding:0;box-shadow:none;font-size:32pt}h2,h3{break-after:avoid}figure,blockquote{break-inside:avoid}pre{background:#f3f5f9;color:#152f4e;white-space:pre-wrap}pre code{white-space:pre-wrap}table{display:table;font-size:9pt}th,td{min-width:0;padding:7px}figure img{box-shadow:none}}
+</style><style type="text/css">
+body{font-size:24px;line-height:1.7}
+main{max-width:1500px}
+p{max-width:65ch}
+h2{font-size:36px}
+h3{font-size:28px;color:#17478a}
+blockquote{background:#edf4ff;border-left-color:#245ac4;color:#19283c}
+table{font-size:21px}
+figcaption{font-size:20px}
+pre{font-size:20px}
+:not(pre)>code{background:#edf4ff;color:#17478a}
+button{min-height:44px;font-size:16px}
+aside a{font-size:15px}
+.brand{color:#c4d8fa}
+a:focus-visible,button:focus-visible{outline-color:#245ac4}
+@media(max-width:600px){body{font-size:24px}h2{font-size:32px}h3{font-size:27px}pre{font-size:18px}aside a{font-size:15px}}
+@media print{body{font-size:12pt}h2{font-size:22pt}h3{font-size:17pt}table{font-size:10pt}pre{font-size:10pt}}
+</style>
+</head>
+<body>
+<a class="skip" href="#content">Skip to document</a>
+<aside aria-label="Document contents">
+<div class="brand">Visual learning library</div>
+<h2>Five Layers of AI Engineering</h2>
+<ul>
+<li><a href="#2-context-engineering--give-the-model-the-right-evidence" id="toc-2-context-engineering--give-the-model-the-right-evidence">2.
+Context Engineering — Give the Model the Right Evidence</a>
+<ul>
+<li><a href="#at-a-glance" id="toc-at-a-glance">At a glance</a></li>
+<li><a href="#what-the-diagram-teaches" id="toc-what-the-diagram-teaches">What the diagram teaches</a></li>
+<li><a href="#follow-one-question-through-the-pipeline" id="toc-follow-one-question-through-the-pipeline">Follow one question
+through the pipeline</a></li>
+<li><a href="#design-an-evidence-record" id="toc-design-an-evidence-record">Design an evidence record</a></li>
+<li><a href="#rag-without-the-mystery" id="toc-rag-without-the-mystery">RAG without the mystery</a></li>
+<li><a href="#budget-the-context-deliberately" id="toc-budget-the-context-deliberately">Budget the context
+deliberately</a></li>
+<li><a href="#memory-is-an-application-responsibility" id="toc-memory-is-an-application-responsibility">Memory is an
+application responsibility</a></li>
+<li><a href="#build-assignment" id="toc-build-assignment">Build
+assignment</a></li>
+<li><a href="#check-your-understanding" id="toc-check-your-understanding">Check your understanding</a></li>
+<li><a href="#how-to-present-it" id="toc-how-to-present-it">How to
+present it</a></li>
+</ul></li>
+</ul>
+<div class="rail-footer">Self-contained reading edition<br>Diagrams and styles embedded</div>
+</aside>
+<main id="content">
+<div class="toolbar"><span>Illustrated reference guide</span><button type="button" onclick="window.print()">Print / Save PDF</button></div>
+<h1 id="2-context-engineering--give-the-model-the-right-evidence">2.
+Context Engineering — Give the Model the Right Evidence</h1>
+<h2 id="at-a-glance">At a glance</h2>
+<p>Context is the information available to the model during a request.
+Context engineering is deciding what to include, exclude, refresh and
+preserve. A bigger pile of information is not automatically a better
+answer.</p>
+<p>In EvidenceDesk, the job is to build a small, relevant, authorized
+evidence packet for each research question.</p>
+<h2 id="what-the-diagram-teaches">What the diagram teaches</h2>
+<p><img role="img" aria-label="Evidence passes through permission, version, relevance and size checks before the model sees it" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9Ijc2MCIgdmlld0JveD0iMCAwIDEyMDAgNzYwIiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUgZGVzYyI+PHRpdGxlIGlkPSJ0aXRsZSI+QnVpbGQgYW4gYXV0aG9yaXplZCBldmlkZW5jZSBwYWNrZXQuPC90aXRsZT48ZGVzYyBpZD0iZGVzYyI+RmlsdGVyaW5nIGhhcHBlbnMgYmVmb3JlIGV2aWRlbmNlIGVudGVycyB0aGUgbW9kZWwuPC9kZXNjPjxkZWZzPjxtYXJrZXIgaWQ9ImFycm93IiBtYXJrZXJXaWR0aD0iMTAiIG1hcmtlckhlaWdodD0iMTAiIHJlZlg9IjkiIHJlZlk9IjUiIG9yaWVudD0iYXV0byI+PHBhdGggZD0iTTAgMEwxMCA1TDAgMTAiIGZpbGw9IiMzYjgyYzQiLz48L21hcmtlcj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEyMDAiIGhlaWdodD0iNzYwIiByeD0iMjQiIGZpbGw9IiNmNGY5ZmYiLz48dGV4dCB4PSI1MCIgeT0iNjUiIGZpbGw9IiMxMjNiNjYiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjM0IiBmb250LXdlaWdodD0iNzAwIj5CdWlsZCBhbiBhdXRob3JpemVkIGV2aWRlbmNlIHBhY2tldC48L3RleHQ+PHRleHQgeD0iNTAiIHk9IjEwNSIgZmlsbD0iIzQ1NjU4MSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjEiPkZpbHRlcmluZyBoYXBwZW5zIGJlZm9yZSBldmlkZW5jZSBlbnRlcnMgdGhlIG1vZGVsLjwvdGV4dD48cGF0aCBkPSJNMzgwIDI2MEg0MjUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzNiODJjNCIgc3Ryb2tlLXdpZHRoPSIzIiBtYXJrZXItZW5kPSJ1cmwoI2Fycm93KSIvPjxwYXRoIGQ9Ik03NjUgMjYwSDgxMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjM2I4MmM0IiBzdHJva2Utd2lkdGg9IjMiIG1hcmtlci1lbmQ9InVybCgjYXJyb3cpIi8+PHBhdGggZD0iTTk4NSAzNDBWNDAwSDYwMFY0NDUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzNiODJjNCIgc3Ryb2tlLXdpZHRoPSIzIiBtYXJrZXItZW5kPSJ1cmwoI2Fycm93KSIvPjxyZWN0IHg9IjUwIiB5PSIxODAiIHdpZHRoPSIzMzAiIGhlaWdodD0iMTYwIiByeD0iMTQiIGZpbGw9IndoaXRlIiBzdHJva2U9IiNiN2Q0ZWQiIHN0cm9rZS13aWR0aD0iMiIvPjxyZWN0IHg9IjUwIiB5PSIxODAiIHdpZHRoPSI3IiBoZWlnaHQ9IjE2MCIgcng9IjMiIGZpbGw9IiMyMDc0YjgiLz48dGV4dCB4PSI3MiIgeT0iMjE2IiBmaWxsPSIjMTY0YzdiIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyNSIgZm9udC13ZWlnaHQ9IjcwMCI+MSAgUGVybWlzc2lvbjwvdGV4dD48dGV4dCB4PSI3MiIgeT0iMjUyIiBmaWxsPSIjMjk0NjVlIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMSI+QXV0aGVudGljYXRlZCB3b3Jrc3BhY2U8L3RleHQ+PHRleHQgeD0iNzIiIHk9IjI4MSIgZmlsbD0iIzI5NDY1ZSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjEiPkFsbG93ZWQgc291cmNlIHJlY29yZHM8L3RleHQ+PHRleHQgeD0iNzIiIHk9IjMxMCIgZmlsbD0iIzI5NDY1ZSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjEiPkV4Y2x1ZGUgcmVzdHJpY3RlZCBxdW90ZTwvdGV4dD48cmVjdCB4PSI0MzUiIHk9IjE4MCIgd2lkdGg9IjMzMCIgaGVpZ2h0PSIxNjAiIHJ4PSIxNCIgZmlsbD0id2hpdGUiIHN0cm9rZT0iI2I3ZDRlZCIgc3Ryb2tlLXdpZHRoPSIyIi8+PHJlY3QgeD0iNDM1IiB5PSIxODAiIHdpZHRoPSI3IiBoZWlnaHQ9IjE2MCIgcng9IjMiIGZpbGw9IiMyMDc0YjgiLz48dGV4dCB4PSI0NTciIHk9IjIxNiIgZmlsbD0iIzE2NGM3YiIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjUiIGZvbnQtd2VpZ2h0PSI3MDAiPjIgIEZyZXNobmVzczwvdGV4dD48dGV4dCB4PSI0NTciIHk9IjI1MiIgZmlsbD0iIzI5NDY1ZSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjEiPlZlcnNpb24gYW5kIGVmZmVjdGl2ZSBkYXRlPC90ZXh0Pjx0ZXh0IHg9IjQ1NyIgeT0iMjgxIiBmaWxsPSIjMjk0NjVlIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMSI+UHJlc2VydmUgcmVhbCBjb25mbGljdHM8L3RleHQ+PHRleHQgeD0iNDU3IiB5PSIzMTAiIGZpbGw9IiMyOTQ2NWUiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjIxIj5FeGNsdWRlIHN1cGVyc2VkZWQgcHJpY2U8L3RleHQ+PHJlY3QgeD0iODIwIiB5PSIxODAiIHdpZHRoPSIzMzAiIGhlaWdodD0iMTYwIiByeD0iMTQiIGZpbGw9IndoaXRlIiBzdHJva2U9IiNiN2Q0ZWQiIHN0cm9rZS13aWR0aD0iMiIvPjxyZWN0IHg9IjgyMCIgeT0iMTgwIiB3aWR0aD0iNyIgaGVpZ2h0PSIxNjAiIHJ4PSIzIiBmaWxsPSIjMjA3NGI4Ii8+PHRleHQgeD0iODQyIiB5PSIyMTYiIGZpbGw9IiMxNjRjN2IiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjI1IiBmb250LXdlaWdodD0iNzAwIj4zICBSZWxldmFuY2U8L3RleHQ+PHRleHQgeD0iODQyIiB5PSIyNTIiIGZpbGw9IiMyOTQ2NWUiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjIxIj5RdWVzdGlvbi1mb2N1c2VkIGV4Y2VycHRzPC90ZXh0Pjx0ZXh0IHg9Ijg0MiIgeT0iMjgxIiBmaWxsPSIjMjk0NjVlIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMSI+S2VlcCBxdWFsaWZ5aW5nIHNlbnRlbmNlczwvdGV4dD48dGV4dCB4PSI4NDIiIHk9IjMxMCIgZmlsbD0iIzI5NDY1ZSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjEiPlJhbms7IGRvIG5vdCBndWVzcyB0cnV0aDwvdGV4dD48cmVjdCB4PSIyNjAiIHk9IjQ1NSIgd2lkdGg9IjY4MCIgaGVpZ2h0PSIxNTAiIHJ4PSIxNCIgZmlsbD0id2hpdGUiIHN0cm9rZT0iI2I3ZDRlZCIgc3Ryb2tlLXdpZHRoPSIyIi8+PHJlY3QgeD0iMjYwIiB5PSI0NTUiIHdpZHRoPSI3IiBoZWlnaHQ9IjE1MCIgcng9IjMiIGZpbGw9IiMyMDc0YjgiLz48dGV4dCB4PSIyODIiIHk9IjQ5MSIgZmlsbD0iIzE2NGM3YiIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjUiIGZvbnQtd2VpZ2h0PSI3MDAiPjQgIFBhY2tldCBhbmQgcHJvdmVuYW5jZTwvdGV4dD48dGV4dCB4PSIyODIiIHk9IjUyNyIgZmlsbD0iIzI5NDY1ZSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjEiPlNvdXJjZSBJRHMgKyBleGNlcnB0cyArIHZlcnNpb24gKyB0b2tlbiBidWRnZXQ8L3RleHQ+PHRleHQgeD0iMjgyIiB5PSI1NTYiIGZpbGw9IiMyOTQ2NWUiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjIxIj5Pbmx5IHRoaXMgc2VsZWN0ZWQgcGFja2V0IHJlYWNoZXMgdGhlIG1vZGVsLjwvdGV4dD48cmVjdCB4PSI1MCIgeT0iNjcwIiB3aWR0aD0iMTEwMCIgaGVpZ2h0PSI1OCIgcng9IjEyIiBmaWxsPSIjZGZlZGZiIi8+PHRleHQgeD0iNzIiIHk9IjcwNyIgZmlsbD0iIzE2NGM3YiIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjIiPlJlbGV2YW50IGRvZXMgbm90IG1lYW4gYXV0aG9yaXplZC4gU2ltaWxhciBkb2VzIG5vdCBtZWFuIHRydWUuPC90ZXh0Pjwvc3ZnPgo=" alt="Evidence passes through permission, version, relevance and size checks before the model sees it" /></p>
+<p>Notice that the permission gate comes <strong>before</strong> the
+model. Telling the model “do not reveal private files” after sending
+those files is not an access-control system. If Northstar&#39;s support team
+cannot read the finance team&#39;s confidential quote, that quote must not
+appear in retrieval results, prompts, caches or user-visible logs.</p>
+<p>Also notice the source record retained at the end. Evidence is not
+just text. It needs identity, origin, version and permission information
+so the answer can be inspected later.</p>
+<h2 id="follow-one-question-through-the-pipeline">Follow one question
+through the pipeline</h2>
+<p>The question is: “What will Cedar cost for twelve people over a
+year?” The collection contains an old 15-dollar price sheet and a
+current 20-dollar price sheet. It also contains a restricted negotiated
+quote. A naive nearest-match search might return all three because they
+share the same vocabulary.</p>
+<p>First, authenticate the user and determine the workspace on the
+server. Never accept a browser-supplied workspace_id as proof of
+membership. Next, search only the permitted source set. Then check
+effective dates and supersession metadata. Finally, rank the relevant
+passages and assemble a packet that explicitly identifies the current
+price.</p>
+<p>If two current documents genuinely disagree, do not simply choose the
+one with a higher similarity score. Return a conflict. Similarity means
+“related to the question,” not “true,” “current” or “authorized.”</p>
+<h2 id="design-an-evidence-record">Design an evidence record</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="st">&quot;P2&quot;</span><span class="fu">,</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;workspace_id&quot;</span><span class="fu">:</span> <span class="st">&quot;northstar&quot;</span><span class="fu">,</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;document_id&quot;</span><span class="fu">:</span> <span class="st">&quot;cedar-pricing&quot;</span><span class="fu">,</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;version&quot;</span><span class="fu">:</span> <span class="dv">2</span><span class="fu">,</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;effective_from&quot;</span><span class="fu">:</span> <span class="st">&quot;2026-08-01&quot;</span><span class="fu">,</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;classification&quot;</span><span class="fu">:</span> <span class="st">&quot;internal&quot;</span><span class="fu">,</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;text&quot;</span><span class="fu">:</span> <span class="st">&quot;Base subscription: USD 20 per seat per month.&quot;</span><span class="fu">,</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;source_hash&quot;</span><span class="fu">:</span> <span class="st">&quot;content-digest-recorded-at-ingestion&quot;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<p>The hash lets you detect changed contents. It does not prove the
+source is truthful. The classification describes handling requirements,
+not permission by itself. Authorization still depends on the
+authenticated user&#39;s allowed documents and the operation being
+performed.</p>
+<p>Store the original document and the excerpt mapping. When a reader
+opens a citation, show the excerpt inline with title and date. Avoid
+forcing the reader to open six external tabs just to understand the
+brief.</p>
+<h2 id="rag-without-the-mystery">RAG without the mystery</h2>
+<p>RAG stands for retrieval-augmented generation. It means finding
+relevant information and giving it to the model before asking for an
+answer.</p>
+<p>Start with keyword search over five synthetic documents. You will
+understand every result. Later add <strong>embeddings</strong>,
+numerical representations that help compare meaning. A vector search
+finds nearby representations; it is not a truth detector. Combine
+retrieval with metadata filters, source freshness and human review.</p>
+<p><strong>Chunking</strong> means splitting a large document into
+useful pieces. A bad split separates a price from “only available with
+an annual commitment.” The model receives the number but loses its
+condition. Prefer sections with titles and enough neighboring context to
+retain meaning. Evaluate chunking with questions whose answers depend on
+qualifications, not only obvious keywords.</p>
+<p><strong>Reranking</strong> means reordering candidate results with a
+more focused relevance check. It cannot repair documents that were never
+retrieved. Measure retrieval failures before blaming the writer
+prompt.</p>
+<h2 id="budget-the-context-deliberately">Budget the context
+deliberately</h2>
+<p>A model&#39;s context limit is measured in tokens, not ordinary words.
+Tokens are units used by the model&#39;s text representation; their
+relationship to words varies by language and content. Reserve room for
+instructions, tool descriptions, evidence, recent state and output.</p>
+<p>For a teaching experiment, use a 4,000-token evidence budget—not as a
+provider limit, but as your application policy. Include the strongest
+relevant excerpts, then record why other candidates were excluded. Use
+the tokenizer appropriate to the chosen model when enforcing an actual
+limit.</p>
+<p>When the packet is too large, do not truncate random characters off
+the end. You might remove a warning or a negation. Select whole
+passages, summarize with source mappings, or ask a narrower
+question.</p>
+<p>The general emphasis on selective, maintained context is supported by
+<a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">Anthropic&#39;s
+context-engineering discussion</a>. The budgets and pipeline in this
+lesson are design choices for EvidenceDesk.</p>
+<h2 id="memory-is-an-application-responsibility">Memory is an
+application responsibility</h2>
+<p>A model call does not automatically have your complete project
+history. Some products manage conversation state for you; your own
+application still needs to know what information is restored on the next
+call.</p>
+<p>Persist a structured run record: question, source versions,
+unresolved issues, last successful node and budget used. On resume,
+rebuild a fresh packet from that record. Do not append every past prompt
+and raw log indefinitely.</p>
+<p>Summaries can lose facts. Keep source references and explicit
+decisions alongside summaries. If permission changes during a long run,
+re-check access before the next read and before releasing the result. A
+cached answer may contain information the user is no longer allowed to
+receive.</p>
+<h2 id="build-assignment">Build assignment</h2>
+<p>Write retrieve_evidence(user, question), then
+assemble_context(records, budget). Keep authorization and ranking as
+separate functions so their tests cannot accidentally substitute for
+each other.</p>
+<p>Prepare six fixtures: current price, old price, restricted quote,
+irrelevant page, conflicting current claim, and a source containing
+“ignore all rules.” Assert that the restricted record never reaches the
+candidate packet. Assert that old information is labeled or excluded
+according to your explicit freshness rule.</p>
+<p>For prompt-injection testing, do not stop at a prompt instruction.
+The harness must also prevent source text from acquiring tool
+authority.</p>
+<h2 id="check-your-understanding">Check your understanding</h2>
+<p><strong>Question:</strong> A finance document is the best semantic
+match. Can you send it to the model and ask the model to hide it?</p>
+<p><strong>Answer:</strong> No. Permission must be enforced before model
+input. A source can be relevant and forbidden at the same time.</p>
+<h2 id="how-to-present-it">How to present it</h2>
+<p>Show the input collection, then the smaller evidence packet. Explain
+one exclusion for permission, one for age, and one for irrelevance.
+Demonstrate a conflict without smoothing it away. You are showing
+deliberate information handling, not merely a vector database.</p>
+</main>
+<dialog id="diagram-dialog" aria-label="Enlarged diagram">
+<div class="zoom-toolbar"><span>Diagram detail</span><button type="button" id="diagram-close">Close</button></div>
+<div class="zoom-body"><img id="diagram-large" alt></div>
+</dialog>
+<script>
+const diagramDialog = document.getElementById('diagram-dialog');
+const diagramLarge = document.getElementById('diagram-large');
+document.querySelectorAll('main img').forEach((picture) => {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'diagram-button';
+  button.textContent = 'Enlarge diagram';
+  button.addEventListener('click', () => {
+    diagramLarge.src = picture.src;
+    diagramLarge.alt = picture.alt;
+    diagramDialog.showModal();
+  });
+  picture.insertAdjacentElement('afterend', button);
+});
+document.getElementById('diagram-close').addEventListener('click', () => diagramDialog.close());
+</script>
+</body>
+</html>

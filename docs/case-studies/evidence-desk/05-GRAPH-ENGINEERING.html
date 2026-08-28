@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>5. Graph Engineering — Coordinate Work without Losing Control</title>
+<style type="text/css">:root{color-scheme:light;--ink:#19283c;--muted:#56667a;--blue:#145bd8;--navy:#081a33;--line:#dce5ef;--paper:#fff;--bg:#edf2f7}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:30px}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.75 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:#145ac0;text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:3px solid #d58b00;outline-offset:4px}
+.skip{position:fixed;top:-100px;left:16px;z-index:10;background:white;padding:10px}
+.skip:focus{top:10px}
+aside{position:fixed;inset:0 auto 0 0;width:284px;overflow:auto;padding:30px 22px;background:var(--navy);color:#e9f0fa;border-right:1px solid #244363}
+.brand{font-size:12px;letter-spacing:.17em;text-transform:uppercase;color:#76dcf3;font-weight:700}
+aside h2{font-size:22px;line-height:1.3;margin:12px 0 22px;color:white;border:0;padding:0}
+aside ul{list-style:none;margin:0;padding:0}
+aside li{margin:0 0 5px}
+aside li ul{margin-left:0}
+aside a{display:block;padding:7px 10px;border-radius:6px;color:#d2deed;text-decoration:none;font-size:13px;line-height:1.45}
+aside a:hover{background:#193554;color:white}
+.rail-footer{margin-top:22px;border-top:1px solid #2c4260;padding-top:20px;color:#9db0c9;font-size:12px}
+main{margin-left:284px;padding:42px clamp(24px,4vw,72px) 90px;max-width:1550px}
+.toolbar{display:flex;align-items:center;gap:15px;justify-content:space-between;margin-bottom:30px;font-size:12px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+button{font:600 13px system-ui;border:1px solid #c9d7e8;background:#fff;color:#164176;padding:10px 15px;border-radius:8px;cursor:pointer}
+button:hover{background:#e6f0ff}
+h1{font-size:clamp(40px,4.4vw,66px);line-height:1.1;letter-spacing:-.045em;background:linear-gradient(120deg,#07172e,#124481);color:white;border-radius:20px;padding:40px;margin:0 0 34px;box-shadow:0 18px 45px #0b254025}
+h2{font-size:30px;line-height:1.3;color:#103e7c;letter-spacing:-.025em;margin:58px 0 22px;padding-top:23px;border-top:3px solid #2367c9}
+h3{font-size:23px;line-height:1.35;color:#075e76;letter-spacing:-.02em;margin:34px 0 15px}
+p{margin:16px 0;max-width:90ch}
+li{margin:7px 0}
+strong{color:#113862}
+blockquote{background:#e1f1f7;border-left:5px solid #068caf;border-radius:0 12px 12px 0;margin:28px 0;padding:12px 25px;color:#184050}
+figure{margin:28px 0 32px}
+figure img{display:block;width:100%;height:auto;border-radius:14px;background:#07172d;box-shadow:0 12px 28px #0a254025}
+figcaption{font-size:14px;line-height:1.6;color:var(--muted);padding:13px 2px}
+.diagram-button{margin-top:9px;font-size:12px}
+img{max-width:100%;height:auto}
+pre{padding:23px 25px;overflow:auto;background:#091b32;color:#dfedff;border:1px solid #203a56;border-radius:12px;line-height:1.6;tab-size:4}
+code{font-family:"Cascadia Code",Consolas,monospace;font-size:.85em}
+:not(pre)>code{background:#e3eaf3;color:#98305b;padding:.12em .32em;border-radius:4px;overflow-wrap:anywhere}
+pre code{white-space:pre;color:inherit}
+table{border-collapse:separate;border-spacing:0;display:block;overflow-x:auto;max-width:100%;margin:24px 0 30px;border:1px solid var(--line);border-radius:10px;background:white;font-size:15px;line-height:1.6}
+th,td{text-align:left;vertical-align:top;padding:13px 16px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-width:130px}
+th{background:#103c78;color:white;font-weight:650}
+tr:nth-child(even) td{background:#f4f7fb}
+tr:last-child td{border-bottom:0}
+th:last-child,td:last-child{border-right:0}
+hr{border:0;border-top:1px solid var(--line);margin:40px 0}
+dialog{border:1px solid #375679;border-radius:15px;padding:0;background:#07172e;color:white;width:96vw;max-width:1900px;max-height:96vh;overflow:hidden}
+dialog::backdrop{background:#030b17dd}
+.zoom-toolbar{display:flex;gap:10px;align-items:center;justify-content:flex-end;padding:12px 18px;background:#102943}
+.zoom-toolbar span{margin-right:auto;font-size:14px}
+.zoom-body{overflow:auto;max-height:82vh;padding:12px}
+.zoom-body img{display:block;width:100%;max-width:none;margin:auto;height:auto}
+footer{margin-top:60px;border-top:1px solid var(--line);padding-top:20px;font-size:13px;color:var(--muted)}
+@media(max-width:1000px){aside{position:relative;width:auto;padding:24px}aside nav ul{columns:2}aside li{break-inside:avoid}.rail-footer{display:none}main{margin-left:0;padding:28px 24px 60px}}
+@media(max-width:600px){body{font-size:16px}aside nav ul{columns:1}aside{max-height:330px}main{padding:22px 16px 50px}h1{font-size:38px;padding:27px}h2{font-size:26px}h3{font-size:21px}.toolbar{font-size:10px}pre{padding:17px;font-size:14px}.zoom-toolbar{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{aside,.toolbar,.diagram-button,dialog{display:none!important}body{background:white;font-size:11pt}main{margin:0;max-width:none;padding:0}h1{color:#12345a;background:none;padding:0;box-shadow:none;font-size:32pt}h2,h3{break-after:avoid}figure,blockquote{break-inside:avoid}pre{background:#f3f5f9;color:#152f4e;white-space:pre-wrap}pre code{white-space:pre-wrap}table{display:table;font-size:9pt}th,td{min-width:0;padding:7px}figure img{box-shadow:none}}
+</style><style type="text/css">
+body{font-size:24px;line-height:1.7}
+main{max-width:1500px}
+p{max-width:65ch}
+h2{font-size:36px}
+h3{font-size:28px;color:#17478a}
+blockquote{background:#edf4ff;border-left-color:#245ac4;color:#19283c}
+table{font-size:21px}
+figcaption{font-size:20px}
+pre{font-size:20px}
+:not(pre)>code{background:#edf4ff;color:#17478a}
+button{min-height:44px;font-size:16px}
+aside a{font-size:15px}
+.brand{color:#c4d8fa}
+a:focus-visible,button:focus-visible{outline-color:#245ac4}
+@media(max-width:600px){body{font-size:24px}h2{font-size:32px}h3{font-size:27px}pre{font-size:18px}aside a{font-size:15px}}
+@media print{body{font-size:12pt}h2{font-size:22pt}h3{font-size:17pt}table{font-size:10pt}pre{font-size:10pt}}
+</style>
+</head>
+<body>
+<a class="skip" href="#content">Skip to document</a>
+<aside aria-label="Document contents">
+<div class="brand">Visual learning library</div>
+<h2>Five Layers of AI Engineering</h2>
+<ul>
+<li><a href="#5-graph-engineering--coordinate-work-without-losing-control" id="toc-5-graph-engineering--coordinate-work-without-losing-control">5.
+Graph Engineering — Coordinate Work without Losing Control</a>
+<ul>
+<li><a href="#at-a-glance" id="toc-at-a-glance">At a glance</a></li>
+<li><a href="#what-the-diagram-teaches" id="toc-what-the-diagram-teaches">What the diagram teaches</a></li>
+<li><a href="#design-each-node-as-a-contract" id="toc-design-each-node-as-a-contract">Design each node as a
+contract</a></li>
+<li><a href="#what-happens-when-one-branch-fails" id="toc-what-happens-when-one-branch-fails">What happens when one branch
+fails?</a></li>
+<li><a href="#why-a-critic-is-useful-but-not-magical" id="toc-why-a-critic-is-useful-but-not-magical">Why a critic is useful
+but not magical</a></li>
+<li><a href="#multi-node-does-not-mean-multi-agent" id="toc-multi-node-does-not-mean-multi-agent">Multi-node does not mean
+multi-agent</a></li>
+<li><a href="#concurrency-needs-ownership-rules" id="toc-concurrency-needs-ownership-rules">Concurrency needs ownership
+rules</a></li>
+<li><a href="#build-assignment" id="toc-build-assignment">Build
+assignment</a></li>
+<li><a href="#check-your-understanding" id="toc-check-your-understanding">Check your understanding</a></li>
+<li><a href="#how-to-present-it" id="toc-how-to-present-it">How to
+present it</a></li>
+</ul></li>
+</ul>
+<div class="rail-footer">Self-contained reading edition<br>Diagrams and styles embedded</div>
+</aside>
+<main id="content">
+<div class="toolbar"><span>Illustrated reference guide</span><button type="button" onclick="window.print()">Print / Save PDF</button></div>
+<h1 id="5-graph-engineering--coordinate-work-without-losing-control">5.
+Graph Engineering — Coordinate Work without Losing Control</h1>
+<h2 id="at-a-glance">At a glance</h2>
+<p>A graph describes tasks and their connections. A node is a unit of
+work. An edge says what can happen next or what must finish first. Graph
+engineering makes coordination explicit.</p>
+<p>EvidenceDesk uses three research branches: cost, capabilities and
+requirements. Their results meet at a merge step before a writer and
+critic work on the brief.</p>
+<h2 id="what-the-diagram-teaches">What the diagram teaches</h2>
+<p><img role="img" aria-label="Three research branches join before writing and review, with a bounded revision path" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9Ijc2MCIgdmlld0JveD0iMCAwIDEyMDAgNzYwIiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUgZGVzYyI+PHRpdGxlIGlkPSJ0aXRsZSI+Q29vcmRpbmF0ZSBpbmRlcGVuZGVudCB3b3JrLCB0aGVuIHJldmlldyBpdC48L3RpdGxlPjxkZXNjIGlkPSJkZXNjIj5FYWNoIGJyYW5jaCByZXR1cm5zIGEgdHlwZWQgcmVzdWx0OyByZXF1aXJlZCBmYWlsdXJlcyByZW1haW4gdmlzaWJsZS48L2Rlc2M+PGRlZnM+PG1hcmtlciBpZD0iYXJyb3ciIG1hcmtlcldpZHRoPSIxMCIgbWFya2VySGVpZ2h0PSIxMCIgcmVmWD0iOSIgcmVmWT0iNSIgb3JpZW50PSJhdXRvIj48cGF0aCBkPSJNMCAwTDEwIDVMMCAxMCIgZmlsbD0iIzNiODJjNCIvPjwvbWFya2VyPjwvZGVmcz48cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI3NjAiIHJ4PSIyNCIgZmlsbD0iI2Y0ZjlmZiIvPjx0ZXh0IHg9IjUwIiB5PSI2NSIgZmlsbD0iIzEyM2I2NiIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMzQiIGZvbnQtd2VpZ2h0PSI3MDAiPkNvb3JkaW5hdGUgaW5kZXBlbmRlbnQgd29yaywgdGhlbiByZXZpZXcgaXQuPC90ZXh0Pjx0ZXh0IHg9IjUwIiB5PSIxMDUiIGZpbGw9IiM0NTY1ODEiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjIxIj5FYWNoIGJyYW5jaCByZXR1cm5zIGEgdHlwZWQgcmVzdWx0OyByZXF1aXJlZCBmYWlsdXJlcyByZW1haW4gdmlzaWJsZS48L3RleHQ+PHBhdGggZD0iTTIxNSAzMDBWNDEwIiBmaWxsPSJub25lIiBzdHJva2U9IiMzYjgyYzQiIHN0cm9rZS13aWR0aD0iMyIgbWFya2VyLWVuZD0idXJsKCNhcnJvdykiLz48cGF0aCBkPSJNNjAwIDMwMFYzNTVIMjE1VjQxMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjM2I4MmM0IiBzdHJva2Utd2lkdGg9IjMiIG1hcmtlci1lbmQ9InVybCgjYXJyb3cpIi8+PHBhdGggZD0iTTk4NSAzMDBWMzU1SDIxNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjM2I4MmM0IiBzdHJva2Utd2lkdGg9IjMiIG1hcmtlci1lbmQ9InVybCgjYXJyb3cpIi8+PHBhdGggZD0iTTM4MCA1MDBINDI1IiBmaWxsPSJub25lIiBzdHJva2U9IiMzYjgyYzQiIHN0cm9rZS13aWR0aD0iMyIgbWFya2VyLWVuZD0idXJsKCNhcnJvdykiLz48cGF0aCBkPSJNNzY1IDUwMEg4MTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzNiODJjNCIgc3Ryb2tlLXdpZHRoPSIzIiBtYXJrZXItZW5kPSJ1cmwoI2Fycm93KSIvPjxwYXRoIGQ9Ik05ODUgNTgwVjYzMEg2MDBWNTkwIiBmaWxsPSJub25lIiBzdHJva2U9IiMzYjgyYzQiIHN0cm9rZS13aWR0aD0iMyIgbWFya2VyLWVuZD0idXJsKCNhcnJvdykiLz48cmVjdCB4PSI1MCIgeT0iMTYwIiB3aWR0aD0iMzMwIiBoZWlnaHQ9IjE0MCIgcng9IjE0IiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSIjYjdkNGVkIiBzdHJva2Utd2lkdGg9IjIiLz48cmVjdCB4PSI1MCIgeT0iMTYwIiB3aWR0aD0iNyIgaGVpZ2h0PSIxNDAiIHJ4PSIzIiBmaWxsPSIjMjA3NGI4Ii8+PHRleHQgeD0iNzIiIHk9IjE5NiIgZmlsbD0iIzE2NGM3YiIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjUiIGZvbnQtd2VpZ2h0PSI3MDAiPkNvc3QgcmVzZWFyY2g8L3RleHQ+PHRleHQgeD0iNzIiIHk9IjIzMiIgZmlsbD0iIzI5NDY1ZSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjEiPlByaWNlcyBhbmQgY2FsY3VsYXRpb25zPC90ZXh0Pjx0ZXh0IHg9IjcyIiB5PSIyNjEiIGZpbGw9IiMyOTQ2NWUiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjIxIj5Vbml0cywgZGF0ZXMsIGFzc3VtcHRpb25zPC90ZXh0PjxyZWN0IHg9IjQzNSIgeT0iMTYwIiB3aWR0aD0iMzMwIiBoZWlnaHQ9IjE0MCIgcng9IjE0IiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSIjYjdkNGVkIiBzdHJva2Utd2lkdGg9IjIiLz48cmVjdCB4PSI0MzUiIHk9IjE2MCIgd2lkdGg9IjciIGhlaWdodD0iMTQwIiByeD0iMyIgZmlsbD0iIzIwNzRiOCIvPjx0ZXh0IHg9IjQ1NyIgeT0iMTk2IiBmaWxsPSIjMTY0YzdiIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyNSIgZm9udC13ZWlnaHQ9IjcwMCI+Q2FwYWJpbGl0eSByZXNlYXJjaDwvdGV4dD48dGV4dCB4PSI0NTciIHk9IjIzMiIgZmlsbD0iIzI5NDY1ZSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjEiPkZlYXR1cmUgZXZpZGVuY2U8L3RleHQ+PHRleHQgeD0iNDU3IiB5PSIyNjEiIGZpbGw9IiMyOTQ2NWUiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjIxIj5Vbmtub3ducyBhbmQgY29uZmxpY3RzPC90ZXh0PjxyZWN0IHg9IjgyMCIgeT0iMTYwIiB3aWR0aD0iMzMwIiBoZWlnaHQ9IjE0MCIgcng9IjE0IiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSIjYjdkNGVkIiBzdHJva2Utd2lkdGg9IjIiLz48cmVjdCB4PSI4MjAiIHk9IjE2MCIgd2lkdGg9IjciIGhlaWdodD0iMTQwIiByeD0iMyIgZmlsbD0iIzIwNzRiOCIvPjx0ZXh0IHg9Ijg0MiIgeT0iMTk2IiBmaWxsPSIjMTY0YzdiIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyNSIgZm9udC13ZWlnaHQ9IjcwMCI+UmVxdWlyZW1lbnRzPC90ZXh0Pjx0ZXh0IHg9Ijg0MiIgeT0iMjMyIiBmaWxsPSIjMjk0NjVlIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMSI+VGVhbSBjb25zdHJhaW50czwvdGV4dD48dGV4dCB4PSI4NDIiIHk9IjI2MSIgZmlsbD0iIzI5NDY1ZSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjEiPk11c3QtaGF2ZXMgYW5kIHRyYWRlb2ZmczwvdGV4dD48cmVjdCB4PSI1MCIgeT0iNDIwIiB3aWR0aD0iMzMwIiBoZWlnaHQ9IjE2MCIgcng9IjE0IiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSIjYjdkNGVkIiBzdHJva2Utd2lkdGg9IjIiLz48cmVjdCB4PSI1MCIgeT0iNDIwIiB3aWR0aD0iNyIgaGVpZ2h0PSIxNjAiIHJ4PSIzIiBmaWxsPSIjMjA3NGI4Ii8+PHRleHQgeD0iNzIiIHk9IjQ1NiIgZmlsbD0iIzE2NGM3YiIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjUiIGZvbnQtd2VpZ2h0PSI3MDAiPk1lcmdlPC90ZXh0Pjx0ZXh0IHg9IjcyIiB5PSI0OTIiIGZpbGw9IiMyOTQ2NWUiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjIxIj5XYWl0IGZvciByZXF1aXJlZCByZXN1bHRzPC90ZXh0Pjx0ZXh0IHg9IjcyIiB5PSI1MjEiIGZpbGw9IiMyOTQ2NWUiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjIxIj5QcmVzZXJ2ZSBkaXNhZ3JlZW1lbnRzPC90ZXh0Pjx0ZXh0IHg9IjcyIiB5PSI1NTAiIGZpbGw9IiMyOTQ2NWUiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjIxIj5NYXJrIHBhcnRpYWwgd29yazwvdGV4dD48cmVjdCB4PSI0MzUiIHk9IjQyMCIgd2lkdGg9IjMzMCIgaGVpZ2h0PSIxNjAiIHJ4PSIxNCIgZmlsbD0id2hpdGUiIHN0cm9rZT0iI2I3ZDRlZCIgc3Ryb2tlLXdpZHRoPSIyIi8+PHJlY3QgeD0iNDM1IiB5PSI0MjAiIHdpZHRoPSI3IiBoZWlnaHQ9IjE2MCIgcng9IjMiIGZpbGw9IiMyMDc0YjgiLz48dGV4dCB4PSI0NTciIHk9IjQ1NiIgZmlsbD0iIzE2NGM3YiIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjUiIGZvbnQtd2VpZ2h0PSI3MDAiPldyaXRlcjwvdGV4dD48dGV4dCB4PSI0NTciIHk9IjQ5MiIgZmlsbD0iIzI5NDY1ZSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjEiPlVzZSBtZXJnZWQgcGFja2V0PC90ZXh0Pjx0ZXh0IHg9IjQ1NyIgeT0iNTIxIiBmaWxsPSIjMjk0NjVlIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMSI+UHJvZHVjZSBkcmFmdCBjbGFpbXM8L3RleHQ+PHRleHQgeD0iNDU3IiB5PSI1NTAiIGZpbGw9IiMyOTQ2NWUiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjIxIj5ObyBhdXRvbWF0aWMgYXBwcm92YWw8L3RleHQ+PHJlY3QgeD0iODIwIiB5PSI0MjAiIHdpZHRoPSIzMzAiIGhlaWdodD0iMTYwIiByeD0iMTQiIGZpbGw9IndoaXRlIiBzdHJva2U9IiNiN2Q0ZWQiIHN0cm9rZS13aWR0aD0iMiIvPjxyZWN0IHg9IjgyMCIgeT0iNDIwIiB3aWR0aD0iNyIgaGVpZ2h0PSIxNjAiIHJ4PSIzIiBmaWxsPSIjMjA3NGI4Ii8+PHRleHQgeD0iODQyIiB5PSI0NTYiIGZpbGw9IiMxNjRjN2IiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjI1IiBmb250LXdlaWdodD0iNzAwIj5Dcml0aWMgKyBjaGVja3M8L3RleHQ+PHRleHQgeD0iODQyIiB5PSI0OTIiIGZpbGw9IiMyOTQ2NWUiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjIxIj5WZXJpZnkgc3VwcG9ydCBhbmQgc2NvcGU8L3RleHQ+PHRleHQgeD0iODQyIiB5PSI1MjEiIGZpbGw9IiMyOTQ2NWUiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjIxIj5BdCBtb3N0IHR3byByZXZpc2lvbnM8L3RleHQ+PHRleHQgeD0iODQyIiB5PSI1NTAiIGZpbGw9IiMyOTQ2NWUiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjIxIj5UaGVuIGh1bWFuIHJldmlldzwvdGV4dD48cmVjdCB4PSI1MCIgeT0iNjcwIiB3aWR0aD0iMTEwMCIgaGVpZ2h0PSI1OCIgcng9IjEyIiBmaWxsPSIjZGZlZGZiIi8+PHRleHQgeD0iNzIiIHk9IjcwNyIgZmlsbD0iIzE2NGM3YiIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjIiPkEgZ3JhcGggY2FuIGNvbnRhaW4gY3ljbGVzLiBNdWx0aXBsZSBub2RlcyBkbyBub3QgcmVxdWlyZSBtdWx0aXBsZSBhdXRvbm9tb3VzIGFnZW50cy48L3RleHQ+PC9zdmc+Cg==" alt="Three research branches join before writing and review, with a bounded revision path" /></p>
+<p>The branches share one authorized source snapshot but produce
+separate result fields. Cost analysis should not overwrite capability
+analysis. The merge step waits for the required branch outcomes and
+preserves disagreements.</p>
+<p>Parallel arrows mean tasks may overlap, not that they magically
+become faster or independent. Provider rate limits, shared budgets and
+database contention can erase the expected speedup.</p>
+<p>The revision arrow makes this a graph with a cycle. It is not a
+directed acyclic graph once that arrow exists. A tree is another special
+kind of graph, not a synonym for every agent workflow.</p>
+<h2 id="design-each-node-as-a-contract">Design each node as a
+contract</h2>
+<p>The cost node accepts pricing evidence and seat count. It returns a
+calculated subscription amount, units, currency, source IDs and
+unknowns.</p>
+<p>The capabilities node accepts feature evidence and requested
+capabilities. It returns supported, unsupported or unknown assessments.
+“Unsupported” requires evidence of absence or a rule defining that
+result; a missing passage generally means unknown.</p>
+<p>The requirements node accepts the team&#39;s requirements. It returns the
+must-have constraints and tradeoffs, not a new set of invented
+preferences.</p>
+<p>The merge node accepts all three typed results. It records missing
+branches and contradictions. The writer receives this merged packet, not
+an uncontrolled concatenation of every worker&#39;s conversation.</p>
+<h2 id="what-happens-when-one-branch-fails">What happens when one branch
+fails?</h2>
+<p>Suppose cost and requirements finish, but capability retrieval times
+out. You have to choose a policy before deployment.</p>
+<p>For our first version, a required branch failure prevents an
+apparently complete recommendation. The application may show a partial
+draft clearly labeled incomplete, but cannot send it to approval as if
+all requirements were assessed.</p>
+<p>An optional branch, such as illustrative examples, can be skipped
+with an explicit note. Required versus optional belongs in graph
+configuration, not in a model&#39;s improvised judgment.</p>
+<p>A <strong>join</strong> is the point where branches reconverge. It
+should receive success, unknown or error for every required branch.
+Waiting only for successful outputs can hang forever if one branch
+failed and no terminal result was recorded.</p>
+<h2 id="why-a-critic-is-useful-but-not-magical">Why a critic is useful
+but not magical</h2>
+<p>Give the critic the user&#39;s question, merged evidence, candidate draft
+and review rubric. Do not give it the writer&#39;s persuasive
+self-justification as if it were evidence.</p>
+<p>Ask it to identify unsupported claims, inconsistent numbers, missing
+requirements and overconfident recommendations. Its output should name
+the issue and the affected claim, not merely say “looks good.”</p>
+<p>A separate model call can reduce some context contamination, but does
+not guarantee independent judgment. Two calls can share the same blind
+spots. Deterministic validators and human review remain necessary.</p>
+<p>Cap revisions at two. If the critic and writer keep disagreeing,
+preserve the disagreement and ask a reviewer rather than forcing
+consensus.</p>
+<h2 id="multi-node-does-not-mean-multi-agent">Multi-node does not mean
+multi-agent</h2>
+<p>A calculator node is ordinary Python. A retrieval node can be
+ordinary Python. A writer node calls a model. You might have a graph
+with only one model-driven node.</p>
+<p>Likewise, several specialized prompts running in one process do not
+require A2A. Use an agent-to-agent protocol when independently operated
+services genuinely need a common task interface. For a single-repository
+beginner project, typed function calls are easier to inspect.</p>
+<p><a href="https://docs.langchain.com/oss/python/langgraph/workflows-agents">LangGraph&#39;s
+workflows and agents guide</a> describes patterns such as
+parallelization and routing. In this course, start with explicit Python
+functions; adopt a graph framework only after you can explain the
+dependencies it will manage.</p>
+<h2 id="concurrency-needs-ownership-rules">Concurrency needs ownership
+rules</h2>
+<p>Have each branch return a distinct result rather than mutate the same
+dictionary at arbitrary moments. The orchestrator combines them after
+completion. If using persisted shared state, define reducers or
+transactional updates deliberately.</p>
+<p>A reducer is a rule for combining updates. “Append unique evidence
+IDs” is a reasonable reducer. “Last writer wins” is dangerous for a list
+of unresolved failures because the last result could erase earlier
+problems.</p>
+<p>Tag events with node names and attempt numbers. Otherwise overlapping
+logs are difficult to reconstruct. Keep one run-level cancellation flag,
+and ensure branches observe it before starting new work.</p>
+<h2 id="build-assignment">Build assignment</h2>
+<p>First write a sequential version: cost, capabilities, requirements,
+merge. Test its result. Then run the independent research functions
+concurrently and compare the final merged output.</p>
+<p>Inject a failure into the capabilities branch. Confirm the join
+returns an explicit incomplete result instead of hanging or approving.
+Add a test where two branches disagree about a feature. The merge must
+preserve the conflict.</p>
+<p>Only after these pass should you add the writer-critic revision
+cycle. The loop&#39;s budget from the previous chapter still applies to
+every graph iteration.</p>
+<h2 id="check-your-understanding">Check your understanding</h2>
+<p><strong>Question:</strong> Is running three agents always better than
+one?</p>
+<p><strong>Answer:</strong> No. It adds cost, coordination and failure
+modes. Parallel tasks help when the work is genuinely separable and the
+combined result is measurably better or faster. Measure that
+tradeoff.</p>
+<h2 id="how-to-present-it">How to present it</h2>
+<p>Highlight the three branch outputs in the UI, then show their merge.
+Break one branch and demonstrate the incomplete state. Explain why the
+writer cannot start with a falsely complete packet. This makes the graph
+visible as an engineering decision rather than decorative boxes.</p>
+</main>
+<dialog id="diagram-dialog" aria-label="Enlarged diagram">
+<div class="zoom-toolbar"><span>Diagram detail</span><button type="button" id="diagram-close">Close</button></div>
+<div class="zoom-body"><img id="diagram-large" alt></div>
+</dialog>
+<script>
+const diagramDialog = document.getElementById('diagram-dialog');
+const diagramLarge = document.getElementById('diagram-large');
+document.querySelectorAll('main img').forEach((picture) => {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'diagram-button';
+  button.textContent = 'Enlarge diagram';
+  button.addEventListener('click', () => {
+    diagramLarge.src = picture.src;
+    diagramLarge.alt = picture.alt;
+    diagramDialog.showModal();
+  });
+  picture.insertAdjacentElement('afterend', button);
+});
+document.getElementById('diagram-close').addEventListener('click', () => diagramDialog.close());
+</script>
+</body>
+</html>

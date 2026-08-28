@@ -2,7 +2,7 @@
 
 ## At a glance
 
-The course website remains one Git repository. Its ten course collections live together under `courses`. All case-study documents live under `docs/case-studies`, separated into Acme, HarborCare, and FilePilot. These are teaching collections; adding them does not install or deploy their proposed applications.
+The course website remains one Git repository. Its ten course collections live together under `courses`. All case-study documents live under `docs/case-studies`, separated into Acme, HarborCare, FilePilot, and EvidenceDesk. These are teaching collections; adding them does not install or deploy their proposed applications.
 
 ```text
 image-course/
@@ -42,6 +42,12 @@ image-course/
 │       │   ├── ...               Strategy, legend, safety and architecture guides
 │       │   ├── manual-build/     Eight sequential workbook documents
 │       │   └── assets/           Four original architecture diagrams
+│       ├── evidence-desk/
+│       │   ├── collection.json   Eleven-chapter publication allowlist
+│       │   ├── 00-START-HERE.md / .html
+│       │   ├── ...               Five layers, architecture, build and release guides
+│       │   ├── lab/              Offline Python exercise with eleven tests
+│       │   └── assets/           Nine original teaching diagrams
 │       └── hospital/
 │           ├── 00-START-HERE.md / .html
 │           ├── 01-PROJECT-STRATEGY.md / .html
@@ -62,6 +68,7 @@ image-course/
 ## 1. Start reading here
 
 - [FilePilot safe file-automation collection](case-studies/filepilot/00-START-HERE.html)
+- [EvidenceDesk — five layers of AI engineering](case-studies/evidence-desk/00-START-HERE.html)
 - [FilePilot manual-build series](case-studies/filepilot/manual-build/00-START-HERE.html)
 - [HarborCare hospital case-study collection](case-studies/hospital/00-START-HERE.html)
 - [HarborCare manual-build series](case-studies/hospital/manual-build/00-START-HERE.html)

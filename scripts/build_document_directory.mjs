@@ -39,6 +39,7 @@ const groups = [
   ['acme', 'Acme — business operations', 'A coherent customer-service case: evidence, specialist agents, approvals and controlled actions.'],
   ['hospital', 'HarborCare — privacy-first coordination', 'A synthetic hospital discharge scenario with recipient-specific information sharing.'],
   ['filepilot', 'FilePilot — safe file automation', 'A proposed local assistant for finding and organizing files through approved, recoverable operations.'],
+  ['evidence-desk', 'EvidenceDesk — five layers of AI engineering', 'Deep lessons in prompt, context, harness, loop and graph engineering, with a Next.js/Python capstone and manual build workbook.'],
   ['planning', 'Planning & reading-style references', 'Roadmaps, production plans and the blue reading-style sample. Historical plans are not current implementation status.'],
   ['maintenance', 'Authoring & verification references', 'Templates, prompt records and verification notes for maintaining the document collection.'],
   ...courseConfig.map(c => ['course-'+c.id, c.title, c.subtitle]),
@@ -52,6 +53,7 @@ const overrides = {
 };
 function purpose(p, title) {
   const s = (p+' '+title).toLowerCase();
+  if (s.includes('evidence-desk/')) return 'Learn one part of the five-layer AI engineering course and apply it to the EvidenceDesk Next.js and Python capstone.';
   if (/coding-confidence\/video-fact-check/.test(s)) return 'Separate the supplied coding video\'s useful advice from factual errors, uncertain predictions, and unsupported generalizations.';
   if (/coding-confidence\/coding-with-confidence/.test(s)) return 'Plan a gradual return to coding through 12 core modules, 3 optional AI extensions, and a safe FilePilot Mini project.';
   if (/template\.html$/.test(s)) return 'Maintain HTML rendering layouts; this is a template, not a finished lesson.';

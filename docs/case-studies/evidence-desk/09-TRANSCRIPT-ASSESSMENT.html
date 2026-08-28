@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Video&#39;s Five Engineering Types — Useful Ideas and Necessary Qualifications</title>
+<style type="text/css">:root{color-scheme:light;--ink:#19283c;--muted:#56667a;--blue:#145bd8;--navy:#081a33;--line:#dce5ef;--paper:#fff;--bg:#edf2f7}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:30px}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.75 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:#145ac0;text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:3px solid #d58b00;outline-offset:4px}
+.skip{position:fixed;top:-100px;left:16px;z-index:10;background:white;padding:10px}
+.skip:focus{top:10px}
+aside{position:fixed;inset:0 auto 0 0;width:284px;overflow:auto;padding:30px 22px;background:var(--navy);color:#e9f0fa;border-right:1px solid #244363}
+.brand{font-size:12px;letter-spacing:.17em;text-transform:uppercase;color:#76dcf3;font-weight:700}
+aside h2{font-size:22px;line-height:1.3;margin:12px 0 22px;color:white;border:0;padding:0}
+aside ul{list-style:none;margin:0;padding:0}
+aside li{margin:0 0 5px}
+aside li ul{margin-left:0}
+aside a{display:block;padding:7px 10px;border-radius:6px;color:#d2deed;text-decoration:none;font-size:13px;line-height:1.45}
+aside a:hover{background:#193554;color:white}
+.rail-footer{margin-top:22px;border-top:1px solid #2c4260;padding-top:20px;color:#9db0c9;font-size:12px}
+main{margin-left:284px;padding:42px clamp(24px,4vw,72px) 90px;max-width:1550px}
+.toolbar{display:flex;align-items:center;gap:15px;justify-content:space-between;margin-bottom:30px;font-size:12px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+button{font:600 13px system-ui;border:1px solid #c9d7e8;background:#fff;color:#164176;padding:10px 15px;border-radius:8px;cursor:pointer}
+button:hover{background:#e6f0ff}
+h1{font-size:clamp(40px,4.4vw,66px);line-height:1.1;letter-spacing:-.045em;background:linear-gradient(120deg,#07172e,#124481);color:white;border-radius:20px;padding:40px;margin:0 0 34px;box-shadow:0 18px 45px #0b254025}
+h2{font-size:30px;line-height:1.3;color:#103e7c;letter-spacing:-.025em;margin:58px 0 22px;padding-top:23px;border-top:3px solid #2367c9}
+h3{font-size:23px;line-height:1.35;color:#075e76;letter-spacing:-.02em;margin:34px 0 15px}
+p{margin:16px 0;max-width:90ch}
+li{margin:7px 0}
+strong{color:#113862}
+blockquote{background:#e1f1f7;border-left:5px solid #068caf;border-radius:0 12px 12px 0;margin:28px 0;padding:12px 25px;color:#184050}
+figure{margin:28px 0 32px}
+figure img{display:block;width:100%;height:auto;border-radius:14px;background:#07172d;box-shadow:0 12px 28px #0a254025}
+figcaption{font-size:14px;line-height:1.6;color:var(--muted);padding:13px 2px}
+.diagram-button{margin-top:9px;font-size:12px}
+img{max-width:100%;height:auto}
+pre{padding:23px 25px;overflow:auto;background:#091b32;color:#dfedff;border:1px solid #203a56;border-radius:12px;line-height:1.6;tab-size:4}
+code{font-family:"Cascadia Code",Consolas,monospace;font-size:.85em}
+:not(pre)>code{background:#e3eaf3;color:#98305b;padding:.12em .32em;border-radius:4px;overflow-wrap:anywhere}
+pre code{white-space:pre;color:inherit}
+table{border-collapse:separate;border-spacing:0;display:block;overflow-x:auto;max-width:100%;margin:24px 0 30px;border:1px solid var(--line);border-radius:10px;background:white;font-size:15px;line-height:1.6}
+th,td{text-align:left;vertical-align:top;padding:13px 16px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-width:130px}
+th{background:#103c78;color:white;font-weight:650}
+tr:nth-child(even) td{background:#f4f7fb}
+tr:last-child td{border-bottom:0}
+th:last-child,td:last-child{border-right:0}
+hr{border:0;border-top:1px solid var(--line);margin:40px 0}
+dialog{border:1px solid #375679;border-radius:15px;padding:0;background:#07172e;color:white;width:96vw;max-width:1900px;max-height:96vh;overflow:hidden}
+dialog::backdrop{background:#030b17dd}
+.zoom-toolbar{display:flex;gap:10px;align-items:center;justify-content:flex-end;padding:12px 18px;background:#102943}
+.zoom-toolbar span{margin-right:auto;font-size:14px}
+.zoom-body{overflow:auto;max-height:82vh;padding:12px}
+.zoom-body img{display:block;width:100%;max-width:none;margin:auto;height:auto}
+footer{margin-top:60px;border-top:1px solid var(--line);padding-top:20px;font-size:13px;color:var(--muted)}
+@media(max-width:1000px){aside{position:relative;width:auto;padding:24px}aside nav ul{columns:2}aside li{break-inside:avoid}.rail-footer{display:none}main{margin-left:0;padding:28px 24px 60px}}
+@media(max-width:600px){body{font-size:16px}aside nav ul{columns:1}aside{max-height:330px}main{padding:22px 16px 50px}h1{font-size:38px;padding:27px}h2{font-size:26px}h3{font-size:21px}.toolbar{font-size:10px}pre{padding:17px;font-size:14px}.zoom-toolbar{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{aside,.toolbar,.diagram-button,dialog{display:none!important}body{background:white;font-size:11pt}main{margin:0;max-width:none;padding:0}h1{color:#12345a;background:none;padding:0;box-shadow:none;font-size:32pt}h2,h3{break-after:avoid}figure,blockquote{break-inside:avoid}pre{background:#f3f5f9;color:#152f4e;white-space:pre-wrap}pre code{white-space:pre-wrap}table{display:table;font-size:9pt}th,td{min-width:0;padding:7px}figure img{box-shadow:none}}
+</style><style type="text/css">
+body{font-size:24px;line-height:1.7}
+main{max-width:1500px}
+p{max-width:65ch}
+h2{font-size:36px}
+h3{font-size:28px;color:#17478a}
+blockquote{background:#edf4ff;border-left-color:#245ac4;color:#19283c}
+table{font-size:21px}
+figcaption{font-size:20px}
+pre{font-size:20px}
+:not(pre)>code{background:#edf4ff;color:#17478a}
+button{min-height:44px;font-size:16px}
+aside a{font-size:15px}
+.brand{color:#c4d8fa}
+a:focus-visible,button:focus-visible{outline-color:#245ac4}
+@media(max-width:600px){body{font-size:24px}h2{font-size:32px}h3{font-size:27px}pre{font-size:18px}aside a{font-size:15px}}
+@media print{body{font-size:12pt}h2{font-size:22pt}h3{font-size:17pt}table{font-size:10pt}pre{font-size:10pt}}
+</style>
+</head>
+<body>
+<a class="skip" href="#content">Skip to document</a>
+<aside aria-label="Document contents">
+<div class="brand">Visual learning library</div>
+<h2>Five Layers of AI Engineering</h2>
+<ul>
+<li><a href="#the-videos-five-engineering-types--useful-ideas-and-necessary-qualifications" id="toc-the-videos-five-engineering-types--useful-ideas-and-necessary-qualifications">The
+Video&#39;s Five Engineering Types — Useful Ideas and Necessary
+Qualifications</a>
+<ul>
+<li><a href="#at-a-glance" id="toc-at-a-glance">At a glance</a></li>
+<li><a href="#what-to-keep" id="toc-what-to-keep">What to keep</a></li>
+<li><a href="#claim-by-claim-assessment" id="toc-claim-by-claim-assessment">Claim-by-claim assessment</a></li>
+<li><a href="#what-the-diagram-teaches" id="toc-what-the-diagram-teaches">What the diagram teaches</a></li>
+<li><a href="#sources-and-their-limits" id="toc-sources-and-their-limits">Sources and their limits</a></li>
+<li><a href="#how-to-present-it--a-confident-way-to-use-the-video" id="toc-how-to-present-it--a-confident-way-to-use-the-video">How to
+present it — a confident way to use the video</a></li>
+<li><a href="#exercise" id="toc-exercise">Exercise</a></li>
+</ul></li>
+</ul>
+<div class="rail-footer">Self-contained reading edition<br>Diagrams and styles embedded</div>
+</aside>
+<main id="content">
+<div class="toolbar"><span>Illustrated reference guide</span><button type="button" onclick="window.print()">Print / Save PDF</button></div>
+<h1 id="the-videos-five-engineering-types--useful-ideas-and-necessary-qualifications">The
+Video&#39;s Five Engineering Types — Useful Ideas and Necessary
+Qualifications</h1>
+<h2 id="at-a-glance">At a glance</h2>
+<p>The supplied transcript runs from approximately 0:00 to 21:18. Its
+five-part framework is a useful teaching lens. It is not an established
+universal ranking of engineering skills, and the exact claims about when
+terminology originated are not verified here.</p>
+<p>Research checked: 28 August 2026. The original video URL was not
+supplied. Timestamps refer to the pasted transcript, whose transcription
+may contain errors. This course discusses the ideas without reproducing
+the speaker&#39;s name, biography or promotional references.</p>
+<h2 id="what-to-keep">What to keep</h2>
+<p>The strongest idea is that good AI applications need more than a
+clever instruction. Information selection, runtime control, stopping
+rules and coordination all affect the outcome. EvidenceDesk turns those
+responsibilities into concrete functions, tests and user-visible
+behavior.</p>
+<p>The framework is most helpful as five overlapping layers. It becomes
+misleading if interpreted as “prompting is obsolete, so skip straight to
+graphs.”</p>
+<h2 id="claim-by-claim-assessment">Claim-by-claim assessment</h2>
+<table>
+<thead>
+<tr>
+<th>Transcript region</th>
+<th>Idea</th>
+<th>Assessment and course treatment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0:00–1:24</td>
+<td>The most important skill has shifted five times</td>
+<td>Opinion/framing, not a demonstrated measurement; we teach
+complementary responsibilities</td>
+</tr>
+<tr>
+<td>1:24–4:35</td>
+<td>Prompt engineering is largely a temporary bug</td>
+<td>Too broad; task clarity and contracts still matter even as model
+behavior changes</td>
+</tr>
+<tr>
+<td>1:24–4:35</td>
+<td>Models naturally know when to use tools</td>
+<td>Capability is not access; the application must expose and authorize
+tools</td>
+</tr>
+<tr>
+<td>5:09–8:20</td>
+<td>Context supplies company-specific facts</td>
+<td>Useful; retrieval must also handle permissions, freshness and
+provenance</td>
+</tr>
+<tr>
+<td>5:09–8:20</td>
+<td>Context windows are measured in words</td>
+<td>Technical correction: model limits are typically expressed in
+tokens</td>
+</tr>
+<tr>
+<td>5:09–8:20</td>
+<td>Models are stateless</td>
+<td>Useful simplification at the individual-call level; applications and
+providers may maintain conversation state</td>
+</tr>
+<tr>
+<td>8:20–11:04</td>
+<td>Harness is the operating system around the model</td>
+<td>Helpful analogy, not a literal OS definition or security
+guarantee</td>
+</tr>
+<tr>
+<td>11:04–15:59</td>
+<td>Autonomous loops need goals and stopping conditions</td>
+<td>Useful; add durable state, budgets, cancellation and side-effect
+safety</td>
+</tr>
+<tr>
+<td>11:04–15:59</td>
+<td>A particular loop command expires after seven days</td>
+<td>Product/version-specific and not verified as a current general
+rule</td>
+</tr>
+<tr>
+<td>15:59–21:18</td>
+<td>Graphs organize parallel work and review</td>
+<td>Useful; graphs may include cycles and need not use multiple
+agents</td>
+</tr>
+<tr>
+<td>15:59–21:18</td>
+<td>A separate critic is unbiased</td>
+<td>Not guaranteed; correlated errors remain, so retain deterministic
+and human checks</td>
+</tr>
+</tbody>
+</table>
+<h2 id="what-the-diagram-teaches">What the diagram teaches</h2>
+<p><img role="img" aria-label="Five responsibilities are layered together rather than replacing one another" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9Ijc2MCIgdmlld0JveD0iMCAwIDEyMDAgNzYwIiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUgZGVzYyI+PHRpdGxlIGlkPSJ0aXRsZSI+Rml2ZSByZXNwb25zaWJpbGl0aWVzLiBPbmUgdW5kZXJzdGFuZGFibGUgc3lzdGVtLjwvdGl0bGU+PGRlc2MgaWQ9ImRlc2MiPkVhY2ggbGF5ZXIgYW5zd2VycyBhIGRpZmZlcmVudCBxdWVzdGlvbjsgbm9uZSByZXBsYWNlcyB0aGUgb3RoZXJzLjwvZGVzYz48ZGVmcz48bWFya2VyIGlkPSJhcnJvdyIgbWFya2VyV2lkdGg9IjEwIiBtYXJrZXJIZWlnaHQ9IjEwIiByZWZYPSI5IiByZWZZPSI1IiBvcmllbnQ9ImF1dG8iPjxwYXRoIGQ9Ik0wIDBMMTAgNUwwIDEwIiBmaWxsPSIjM2I4MmM0Ii8+PC9tYXJrZXI+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMjAwIiBoZWlnaHQ9Ijc2MCIgcng9IjI0IiBmaWxsPSIjZjRmOWZmIi8+PHRleHQgeD0iNTAiIHk9IjY1IiBmaWxsPSIjMTIzYjY2IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIzNCIgZm9udC13ZWlnaHQ9IjcwMCI+Rml2ZSByZXNwb25zaWJpbGl0aWVzLiBPbmUgdW5kZXJzdGFuZGFibGUgc3lzdGVtLjwvdGV4dD48dGV4dCB4PSI1MCIgeT0iMTA1IiBmaWxsPSIjNDU2NTgxIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMSI+RWFjaCBsYXllciBhbnN3ZXJzIGEgZGlmZmVyZW50IHF1ZXN0aW9uOyBub25lIHJlcGxhY2VzIHRoZSBvdGhlcnMuPC90ZXh0PjxyZWN0IHg9IjUwIiB5PSIxNTUiIHdpZHRoPSI1MjAiIGhlaWdodD0iMTMwIiByeD0iMTQiIGZpbGw9IndoaXRlIiBzdHJva2U9IiNiN2Q0ZWQiIHN0cm9rZS13aWR0aD0iMiIvPjxyZWN0IHg9IjUwIiB5PSIxNTUiIHdpZHRoPSI3IiBoZWlnaHQ9IjEzMCIgcng9IjMiIGZpbGw9IiMyMDc0YjgiLz48dGV4dCB4PSI3MiIgeT0iMTkxIiBmaWxsPSIjMTY0YzdiIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyNSIgZm9udC13ZWlnaHQ9IjcwMCI+MSAgUHJvbXB0PC90ZXh0Pjx0ZXh0IHg9IjcyIiB5PSIyMjciIGZpbGw9IiMyOTQ2NWUiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjIxIj5XaGF0IGlzIHRoZSBhc3NpZ25tZW50PzwvdGV4dD48dGV4dCB4PSI3MiIgeT0iMjU2IiBmaWxsPSIjMjk0NjVlIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMSI+SW5zdHJ1Y3Rpb25zLCBleGFtcGxlcywgb3V0cHV0IGNvbnRyYWN0PC90ZXh0PjxyZWN0IHg9IjYzMCIgeT0iMTU1IiB3aWR0aD0iNTIwIiBoZWlnaHQ9IjEzMCIgcng9IjE0IiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSIjYjdkNGVkIiBzdHJva2Utd2lkdGg9IjIiLz48cmVjdCB4PSI2MzAiIHk9IjE1NSIgd2lkdGg9IjciIGhlaWdodD0iMTMwIiByeD0iMyIgZmlsbD0iIzIwNzRiOCIvPjx0ZXh0IHg9IjY1MiIgeT0iMTkxIiBmaWxsPSIjMTY0YzdiIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyNSIgZm9udC13ZWlnaHQ9IjcwMCI+MiAgQ29udGV4dDwvdGV4dD48dGV4dCB4PSI2NTIiIHk9IjIyNyIgZmlsbD0iIzI5NDY1ZSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjEiPldoYXQgZXZpZGVuY2UgbWF5IGl0IHVzZT88L3RleHQ+PHRleHQgeD0iNjUyIiB5PSIyNTYiIGZpbGw9IiMyOTQ2NWUiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjIxIj5QZXJtaXNzaW9uLCByZWxldmFuY2UsIGZyZXNobmVzczwvdGV4dD48cmVjdCB4PSI1MCIgeT0iMzI1IiB3aWR0aD0iNTIwIiBoZWlnaHQ9IjEzMCIgcng9IjE0IiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSIjYjdkNGVkIiBzdHJva2Utd2lkdGg9IjIiLz48cmVjdCB4PSI1MCIgeT0iMzI1IiB3aWR0aD0iNyIgaGVpZ2h0PSIxMzAiIHJ4PSIzIiBmaWxsPSIjMjA3NGI4Ii8+PHRleHQgeD0iNzIiIHk9IjM2MSIgZmlsbD0iIzE2NGM3YiIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjUiIGZvbnQtd2VpZ2h0PSI3MDAiPjMgIEhhcm5lc3M8L3RleHQ+PHRleHQgeD0iNzIiIHk9IjM5NyIgZmlsbD0iIzI5NDY1ZSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjEiPldoYXQgYWN0aW9ucyBhcmUgYWxsb3dlZD88L3RleHQ+PHRleHQgeD0iNzIiIHk9IjQyNiIgZmlsbD0iIzI5NDY1ZSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjEiPlRvb2xzLCB2YWxpZGF0aW9uLCByZWNvcmRzLCBpc29sYXRpb248L3RleHQ+PHJlY3QgeD0iNjMwIiB5PSIzMjUiIHdpZHRoPSI1MjAiIGhlaWdodD0iMTMwIiByeD0iMTQiIGZpbGw9IndoaXRlIiBzdHJva2U9IiNiN2Q0ZWQiIHN0cm9rZS13aWR0aD0iMiIvPjxyZWN0IHg9IjYzMCIgeT0iMzI1IiB3aWR0aD0iNyIgaGVpZ2h0PSIxMzAiIHJ4PSIzIiBmaWxsPSIjMjA3NGI4Ii8+PHRleHQgeD0iNjUyIiB5PSIzNjEiIGZpbGw9IiMxNjRjN2IiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjI1IiBmb250LXdlaWdodD0iNzAwIj40ICBMb29wPC90ZXh0Pjx0ZXh0IHg9IjY1MiIgeT0iMzk3IiBmaWxsPSIjMjk0NjVlIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMSI+Q29udGludWUsIHBhdXNlLCBvciBzdG9wPzwvdGV4dD48dGV4dCB4PSI2NTIiIHk9IjQyNiIgZmlsbD0iIzI5NDY1ZSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjEiPkNoZWNrZXIsIGxpbWl0cywgY2FuY2VsbGF0aW9uLCByZWNvdmVyeTwvdGV4dD48cmVjdCB4PSIyODAiIHk9IjUwMCIgd2lkdGg9IjY0MCIgaGVpZ2h0PSIxMzAiIHJ4PSIxNCIgZmlsbD0id2hpdGUiIHN0cm9rZT0iI2I3ZDRlZCIgc3Ryb2tlLXdpZHRoPSIyIi8+PHJlY3QgeD0iMjgwIiB5PSI1MDAiIHdpZHRoPSI3IiBoZWlnaHQ9IjEzMCIgcng9IjMiIGZpbGw9IiMyMDc0YjgiLz48dGV4dCB4PSIzMDIiIHk9IjUzNiIgZmlsbD0iIzE2NGM3YiIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjUiIGZvbnQtd2VpZ2h0PSI3MDAiPjUgIEdyYXBoPC90ZXh0Pjx0ZXh0IHg9IjMwMiIgeT0iNTcyIiBmaWxsPSIjMjk0NjVlIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMSI+V2hhdCBkZXBlbmRzIG9uIHdoYXQ/PC90ZXh0Pjx0ZXh0IHg9IjMwMiIgeT0iNjAxIiBmaWxsPSIjMjk0NjVlIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMSI+UGFyYWxsZWwgcmVzZWFyY2gsIGpvaW4sIHdyaXRlciwgY3JpdGljPC90ZXh0PjxyZWN0IHg9IjUwIiB5PSI2NzAiIHdpZHRoPSIxMTAwIiBoZWlnaHQ9IjU4IiByeD0iMTIiIGZpbGw9IiNkZmVkZmIiLz48dGV4dCB4PSI3MiIgeT0iNzA3IiBmaWxsPSIjMTY0YzdiIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMiI+RXZpZGVuY2VEZXNrIGNvbWJpbmVzIGFsbCBmaXZlIHRvIHByb2R1Y2UgYSByZXZpZXdhYmxlLCBldmlkZW5jZS1iYWNrZWQgYnJpZWYuPC90ZXh0Pjwvc3ZnPgo=" alt="Five responsibilities are layered together rather than replacing one another" /></p>
+<p>The bottom-line question is not “Which fashionable label wins?” It is
+“Which responsibility is failing in my application?”</p>
+<p>An unsupported price can be caused by stale retrieval, ambiguous
+instructions or an absent validator. An endless run is a control problem
+even if every sentence is eloquent. An unauthorized disclosure is an
+access-control failure even if the model followed the business task
+perfectly.</p>
+<p>This is why the course keeps ordinary software engineering central.
+Functions, schemas, tests, authentication, transactions and deployment
+discipline support every layer.</p>
+<h2 id="sources-and-their-limits">Sources and their limits</h2>
+<p><a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">Anthropic&#39;s
+context-engineering article</a> supports treating context as a finite
+resource that needs active selection. It is an engineering perspective,
+not proof of the video&#39;s entire historical narrative.</p>
+<p><a href="https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents">Anthropic&#39;s
+long-running harness example</a> illustrates explicit state and
+incremental work. Its results are not a guarantee for every model or
+domain.</p>
+<p><a href="https://docs.langchain.com/oss/python/langgraph/workflows-agents">LangGraph&#39;s
+workflow patterns</a> provide concrete examples of branching and
+coordination. Choosing that framework is optional in our capstone.</p>
+<p><a href="https://docs.langchain.com/oss/python/langgraph/persistence">LangGraph
+persistence</a> explains checkpointed state. Durable storage alone does
+not prove exactly-once external effects.</p>
+<p><a href="https://fastapi.tiangolo.com/tutorial/background-tasks/">FastAPI
+background tasks</a> helps distinguish lightweight request-associated
+work from work better handled by separate workers.</p>
+<p><a href="https://nextjs.org/docs/app/getting-started/server-and-client-components">Next.js
+server/client boundaries</a> informs the frontend architecture, not a
+promise that server rendering automatically provides authorization.</p>
+<h2 id="how-to-present-it--a-confident-way-to-use-the-video">How to
+present it — a confident way to use the video</h2>
+<p>Treat it as permission to think beyond typing code, not permission to
+stop understanding code. You can use AI to draft a function, then trace
+its inputs, test its failures and decide whether it belongs in the
+system.</p>
+<p>The confidence-building question is: “Can I explain and verify one
+boundary today?” After enough of these small boundaries, you understand
+the whole application.</p>
+<h2 id="exercise">Exercise</h2>
+<p>Classify this failure: “The model correctly summarizes a confidential
+document that the user should not see.”</p>
+<p><strong>Answer:</strong> The immediate failure is
+authorization/context handling, with harness enforcement also
+implicated. Improving the prose prompt is not the primary fix. Prevent
+the unauthorized document from entering the model&#39;s input and all
+downstream outputs.</p>
+</main>
+<dialog id="diagram-dialog" aria-label="Enlarged diagram">
+<div class="zoom-toolbar"><span>Diagram detail</span><button type="button" id="diagram-close">Close</button></div>
+<div class="zoom-body"><img id="diagram-large" alt></div>
+</dialog>
+<script>
+const diagramDialog = document.getElementById('diagram-dialog');
+const diagramLarge = document.getElementById('diagram-large');
+document.querySelectorAll('main img').forEach((picture) => {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'diagram-button';
+  button.textContent = 'Enlarge diagram';
+  button.addEventListener('click', () => {
+    diagramLarge.src = picture.src;
+    diagramLarge.alt = picture.alt;
+    diagramDialog.showModal();
+  });
+  picture.insertAdjacentElement('afterend', button);
+});
+document.getElementById('diagram-close').addEventListener('click', () => diagramDialog.close());
+</script>
+</body>
+</html>

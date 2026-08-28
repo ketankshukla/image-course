@@ -35,7 +35,7 @@ Each lesson is built around a single **visual diagram** and includes:
 - `Case study`, `Lab and checkpoint`
 - `Glossary`, `Sources`, and `Related lessons`
 
-The site renders them alongside 14 Acme guides, 16 HarborCare guides and two library guides. Navigation is grouped into Courses, Case Studies and Library Guides; search spans all 276 published articles.
+The site renders them alongside 14 Acme guides, 16 HarborCare guides, 16 FilePilot guides, 11 EvidenceDesk lessons and 20 library guides/workshops. Navigation is grouped into Courses, Case Studies and Library Guides; search spans all 321 published articles.
 
 ---
 
@@ -54,6 +54,8 @@ The site renders them alongside 14 Acme guides, 16 HarborCare guides and two lib
 └── docs/                # Case studies, general planning, folder guide
     ├── case-studies/acme/
     ├── case-studies/hospital/
+    ├── case-studies/filepilot/
+    ├── case-studies/evidence-desk/
     └── general/
 ```
 

@@ -4,7 +4,7 @@ Your blue-and-white map of the learning workspace: what each document explains, 
 
 ## At a glance
 
-358 documents: 244 individual course lessons and 114 guides, planning documents and maintenance references. Matching HTML and Markdown files count as one document.
+369 documents: 244 individual course lessons and 125 guides, planning documents and maintenance references. Matching HTML and Markdown files count as one document.
 
 Coverage: all Markdown documents under docs and courses; HTML reading editions paired with their Markdown sources; standalone HTML templates and Word/PDF files under docs; root README and AGENTS instructions. Course export bundles, images, code, JSON configuration and generated website files are not individual catalogue entries. This directory is local-only because it also links unpublished authoring notes. It does not publish those notes to the website.
 
@@ -24,6 +24,7 @@ Locations below are relative to the image-course repository root. Links are rela
 - [Acme — business operations](#acme) — 15 documents
 - [HarborCare — privacy-first coordination](#hospital) — 16 documents
 - [FilePilot — safe file automation](#filepilot) — 16 documents
+- [EvidenceDesk — five layers of AI engineering](#evidence-desk) — 11 documents
 - [Planning & reading-style references](#planning) — 4 documents
 - [Authoring & verification references](#maintenance) — 10 documents
 - [Visual Course Volume 1 — MCP, ACP, A2A and RAG](#course-01) — 30 documents
@@ -58,7 +59,7 @@ The searchable local map of reading guides, course lessons, planning files and a
 
 ### Your Organized Learning Workspace
 
-The course website remains one Git repository. Its ten course collections live together under courses. All case-study documents live under docs/case-studies, separated into Acme, HarborCare, and FilePilot. These are teaching collections; adding them does not install or deploy their proposed applications.
+The course website remains one Git repository. Its ten course collections live together under courses. All case-study documents live under docs/case-studies, separated into Acme, HarborCare, FilePilot, and EvidenceDesk. These are teaching collections; adding them does not install or deploy their proposed applications.
 
 **Use it for:** Locate folders and understand which files belong together.
 
@@ -72,7 +73,7 @@ The course website remains one Git repository. Its ten course collections live t
 
 ### Publishing a New Case Study
 
-The website has three shelves: Courses for the ten visual volumes, Case Studies for Acme, HarborCare and FilePilot, and Library Guides for workspace and publishing instructions. Each case study has its own reading order, reference sections and build workbooks. Search covers all published articles.
+The website has three shelves: Courses for the ten visual volumes, Case Studies for Acme, HarborCare, FilePilot and EvidenceDesk, and Library Guides for workshops, workspace and publishing instructions. Each case study has its own reading order, reference sections and build workbooks. Search covers all published articles.
 
 **Use it for:** Add a case study to the website safely and verify its publication.
 
@@ -1059,6 +1060,166 @@ Finish with two clearly labelled deliverables: a restricted local sandbox applic
 [Read HTML](case-studies/filepilot/manual-build/07-PRODUCTION-DEMO.html) · [Markdown source](case-studies/filepilot/manual-build/07-PRODUCTION-DEMO.md) · [Website reader](https://course.ketanshukla.dev/#course=filepilot&chapter=16)
 
 **Inside:** 1. Build a release checklist · 2. Keep configuration explicit · 3. Make state upgrades recoverable
+
+<a id="evidence-desk"></a>
+
+## EvidenceDesk — five layers of AI engineering
+
+Deep lessons in prompt, context, harness, loop and graph engineering, with a Next.js/Python capstone and manual build workbook.
+
+### Five Layers of AI Engineering — Build EvidenceDesk
+
+This is a hands-on course about prompt, context, harness, loop, and graph engineering. You will learn what each layer does, why it fails, how to implement it, and how to demonstrate that it works. Our single capstone is EvidenceDesk: a Next.js/React interface with a Python backend that turns a small evidence collection into a reviewable decision brief.
+
+**Use it for:** Learn one part of the five-layer AI engineering course and apply it to the EvidenceDesk Next.js and Python capstone.
+
+**Location:** `docs/case-studies/evidence-desk/00-START-HERE.md`
+
+**Availability:** Published in website
+
+[Read HTML](case-studies/evidence-desk/00-START-HERE.html) · [Markdown source](case-studies/evidence-desk/00-START-HERE.md) · [Website reader](https://course.ketanshukla.dev/#course=evidence-desk&chapter=1)
+
+**Inside:** The real-life-style case study · Your learning route · What you need before starting
+
+### 1. Prompt Engineering — Turn a Wish into a Testable Assignment
+
+A prompt is the assignment you give the model: its goal, limits, available information and expected response. Prompt engineering means improving that assignment using observed results, not collecting magical phrases.
+
+**Use it for:** Learn one part of the five-layer AI engineering course and apply it to the EvidenceDesk Next.js and Python capstone.
+
+**Location:** `docs/case-studies/evidence-desk/01-PROMPT-ENGINEERING.md`
+
+**Availability:** Published in website
+
+[Read HTML](case-studies/evidence-desk/01-PROMPT-ENGINEERING.html) · [Markdown source](case-studies/evidence-desk/01-PROMPT-ENGINEERING.md) · [Website reader](https://course.ketanshukla.dev/#course=evidence-desk&chapter=2)
+
+**Inside:** Build the assignment in five parts · Work through a concrete answer · Why examples help—and when they hurt
+
+### 2. Context Engineering — Give the Model the Right Evidence
+
+Context is the information available to the model during a request. Context engineering is deciding what to include, exclude, refresh and preserve. A bigger pile of information is not automatically a better answer.
+
+**Use it for:** Learn one part of the five-layer AI engineering course and apply it to the EvidenceDesk Next.js and Python capstone.
+
+**Location:** `docs/case-studies/evidence-desk/02-CONTEXT-ENGINEERING.md`
+
+**Availability:** Published in website
+
+[Read HTML](case-studies/evidence-desk/02-CONTEXT-ENGINEERING.html) · [Markdown source](case-studies/evidence-desk/02-CONTEXT-ENGINEERING.md) · [Website reader](https://course.ketanshukla.dev/#course=evidence-desk&chapter=3)
+
+**Inside:** Follow one question through the pipeline · Design an evidence record · RAG without the mystery
+
+### 3. Harness Engineering — Build the Controlled Runtime
+
+The harness is the application machinery around model calls: tools, permissions, validation, state, timeouts, logs and recovery. Think of a supervised workshop. The worker may propose a tool, but the workshop decides whether it is available and safe to use.
+
+**Use it for:** Learn one part of the five-layer AI engineering course and apply it to the EvidenceDesk Next.js and Python capstone.
+
+**Location:** `docs/case-studies/evidence-desk/03-HARNESS-ENGINEERING.md`
+
+**Availability:** Published in website
+
+[Read HTML](case-studies/evidence-desk/03-HARNESS-ENGINEERING.html) · [Markdown source](case-studies/evidence-desk/03-HARNESS-ENGINEERING.md) · [Website reader](https://course.ketanshukla.dev/#course=evidence-desk&chapter=4)
+
+**Inside:** Start with three narrow tools · Trace a tool call · The run ledger
+
+### 4. Loop Engineering — Know When to Continue and When to Stop
+
+A loop repeats work while a condition permits it. Loop engineering makes repetition bounded, observable and recoverable. “Keep trying until it works” is not a production specification.
+
+**Use it for:** Learn one part of the five-layer AI engineering course and apply it to the EvidenceDesk Next.js and Python capstone.
+
+**Location:** `docs/case-studies/evidence-desk/04-LOOP-ENGINEERING.md`
+
+**Availability:** Published in website
+
+[Read HTML](case-studies/evidence-desk/04-LOOP-ENGINEERING.html) · [Markdown source](case-studies/evidence-desk/04-LOOP-ENGINEERING.md) · [Website reader](https://course.ketanshukla.dev/#course=evidence-desk&chapter=5)
+
+**Inside:** Define success outside the model · A state machine in ordinary English · Budgets are more than a counter
+
+### 5. Graph Engineering — Coordinate Work without Losing Control
+
+A graph describes tasks and their connections. A node is a unit of work. An edge says what can happen next or what must finish first. Graph engineering makes coordination explicit.
+
+**Use it for:** Learn one part of the five-layer AI engineering course and apply it to the EvidenceDesk Next.js and Python capstone.
+
+**Location:** `docs/case-studies/evidence-desk/05-GRAPH-ENGINEERING.md`
+
+**Availability:** Published in website
+
+[Read HTML](case-studies/evidence-desk/05-GRAPH-ENGINEERING.html) · [Markdown source](case-studies/evidence-desk/05-GRAPH-ENGINEERING.md) · [Website reader](https://course.ketanshukla.dev/#course=evidence-desk&chapter=6)
+
+**Inside:** Design each node as a contract · What happens when one branch fails? · Why a critic is useful but not magical
+
+### EvidenceDesk Architecture — Next.js in Front, Python Behind
+
+Build one application repository with three deployable processes: a Next.js frontend, a Python FastAPI API, and a Python worker. Store durable application state in PostgreSQL and original evidence in private object storage.
+
+**Use it for:** Learn one part of the five-layer AI engineering course and apply it to the EvidenceDesk Next.js and Python capstone.
+
+**Location:** `docs/case-studies/evidence-desk/06-PROJECT-ARCHITECTURE.md`
+
+**Availability:** Published in website
+
+[Read HTML](case-studies/evidence-desk/06-PROJECT-ARCHITECTURE.html) · [Markdown source](case-studies/evidence-desk/06-PROJECT-ARCHITECTURE.md) · [Website reader](https://course.ketanshukla.dev/#course=evidence-desk&chapter=7)
+
+**Inside:** One repository, separate deployment units · Follow the calls · API contracts
+
+### Build EvidenceDesk Manually — File by File, in Small Working Slices
+
+This workbook takes you from an empty application folder to a production-ready design through eight build stages. It specifies what to create, what each function owns, and what to test before continuing.
+
+**Use it for:** Learn one part of the five-layer AI engineering course and apply it to the EvidenceDesk Next.js and Python capstone.
+
+**Location:** `docs/case-studies/evidence-desk/07-MANUAL-BUILD.md`
+
+**Availability:** Published in website
+
+[Read HTML](case-studies/evidence-desk/07-MANUAL-BUILD.html) · [Markdown source](case-studies/evidence-desk/07-MANUAL-BUILD.md) · [Website reader](https://course.ketanshukla.dev/#course=evidence-desk&chapter=8)
+
+**Inside:** Stage 1 — Create the workspace and synthetic facts · Stage 2 — Write schemas and pure functions · Stage 3 — Introduce a model boundary without a real model
+
+### Evaluation and Production — Prove the System Deserves to Run
+
+Compilation proves that code can be built. It does not prove that a brief is correct, evidence is private, retries are safe, or a feature is complete.
+
+**Use it for:** Learn one part of the five-layer AI engineering course and apply it to the EvidenceDesk Next.js and Python capstone.
+
+**Location:** `docs/case-studies/evidence-desk/08-EVALUATION-AND-PRODUCTION.md`
+
+**Availability:** Published in website
+
+[Read HTML](case-studies/evidence-desk/08-EVALUATION-AND-PRODUCTION.html) · [Markdown source](case-studies/evidence-desk/08-EVALUATION-AND-PRODUCTION.md) · [Website reader](https://course.ketanshukla.dev/#course=evidence-desk&chapter=9)
+
+**Inside:** Build a failure-oriented evaluation set · Measure different things separately · Why “it compiles” should be rejected
+
+### The Video's Five Engineering Types — Useful Ideas and Necessary Qualifications
+
+The supplied transcript runs from approximately 0:00 to 21:18. Its five-part framework is a useful teaching lens. It is not an established universal ranking of engineering skills, and the exact claims about when terminology originated are not verified here.
+
+**Use it for:** Learn one part of the five-layer AI engineering course and apply it to the EvidenceDesk Next.js and Python capstone.
+
+**Location:** `docs/case-studies/evidence-desk/09-TRANSCRIPT-ASSESSMENT.md`
+
+**Availability:** Published in website
+
+[Read HTML](case-studies/evidence-desk/09-TRANSCRIPT-ASSESSMENT.html) · [Markdown source](case-studies/evidence-desk/09-TRANSCRIPT-ASSESSMENT.md) · [Website reader](https://course.ketanshukla.dev/#course=evidence-desk&chapter=10)
+
+**Inside:** What to keep · Claim-by-claim assessment · Sources and their limits
+
+### Practice Lab — Trace All Five Layers without an AI Account
+
+This offline Python exercise demonstrates the control flow with a fake writer and synthetic prices. It uses only Python's standard library, makes no network calls, and needs no API key.
+
+**Use it for:** Learn one part of the five-layer AI engineering course and apply it to the EvidenceDesk Next.js and Python capstone.
+
+**Location:** `docs/case-studies/evidence-desk/10-PRACTICE-LAB.md`
+
+**Availability:** Published in website
+
+[Read HTML](case-studies/evidence-desk/10-PRACTICE-LAB.html) · [Markdown source](case-studies/evidence-desk/10-PRACTICE-LAB.md) · [Website reader](https://course.ketanshukla.dev/#course=evidence-desk&chapter=11)
+
+**Inside:** Run it · Read the functions in this order · Experiment 1 — An invalid citation
 
 <a id="planning"></a>
 

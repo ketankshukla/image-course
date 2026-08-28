@@ -18,7 +18,7 @@ You already have subjects you care about: useful file automation, trustworthy ag
 
 ## What the video gives us—and what we change
 
-The supplied Aish Reganti transcript encourages moving beyond typing toward problem definition, specifications, review, and domain understanding. Those ideas shape this curriculum. We add explicit code-reading and manual practice so “directing AI” does not become “accepting output I cannot assess.”
+The supplied coding-video transcript encourages moving beyond typing toward problem definition, specifications, review, and domain understanding. Those ideas shape this curriculum. We add explicit code-reading and manual practice so “directing AI” does not become “accepting output I cannot assess.”
 
 Some of the video's historical and labor-market claims need qualification. COBOL was a consortium effort, not simply an IBM launch; the claim that specialties are disappearing is not established; and a personal hiring account does not describe every employer. The companion [video fact-check](VIDEO-FACT-CHECK.md) contains timestamped assessments and primary-source links.
 

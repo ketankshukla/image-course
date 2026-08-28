@@ -4,7 +4,7 @@
 
 **My assessment: keep the encouragement, strengthen the evidence, and do not abandon the fundamentals.** The transcript offers a useful way to approach AI-assisted development: understand an existing system, specify a change, inspect the implementation, and test the outcome. It does not establish that technical specialties, degrees, or manual coding have become obsolete.
 
-This analysis covers the supplied transcript attributed to Aish Reganti, from 0:00 to 15:24. The exact YouTube URL and publication date were not supplied or independently confirmed. The speaker's employment history and personal hiring experience are not independently verified here. Timestamps refer to the pasted transcript, which includes apparent transcription errors. This is an analysis of its claims, not a judgment of the speaker.
+This analysis covers the supplied coding-video transcript, from 0:00 to 15:24. The exact YouTube URL and publication date were not supplied or independently confirmed. Timestamps refer to the pasted transcript, which includes apparent transcription errors. The focus is on evaluating the claims and their usefulness for learning.
 
 Research checked: **27 August 2026**. Forecasts and product capabilities can change. The companion [Coding with Confidence course outline](CODING-WITH-CONFIDENCE.md) turns the useful ideas into a practical learning plan. It is an original proposed curriculum, not an endorsed course from the video creator.
 
