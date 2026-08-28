@@ -7,6 +7,13 @@
 .fp-mission-nav > div { max-width: 1192px; margin: auto; }
 .fp-mission-nav strong { font-size: 23px; }
 .fp-mission-nav p { font-size: 15px; margin: 6px 0 16px; }
+.fp-mission-group { margin: 10px 0; }
+.fp-mission-group summary { padding: 10px 0; cursor: pointer; font-weight: 700; }
+.fp-clues { display: grid; gap: 12px; margin: 24px 0; }
+.fp-clue { padding: 16px; background: #f0f7fe; border: 1px solid #c6dced; border-radius: 10px; }
+.fp-clue p { margin: 16px 0 0; }
+.fp-comparison { margin-top: 22px; }
+.fp-comparison h4 { font-size: 19px; font-weight: 700; margin-top: 18px; }
 .fp-mission-links { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
 .fp-mission-links a { background: #edf5fc; border: 1px solid #c6dced; border-radius: 9px; padding: 12px; font-size: 14px; line-height: 1.45; }
 .fp-mission-links a:hover { background: #dcecf9; }

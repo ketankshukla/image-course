@@ -1,6 +1,8 @@
+import { investigations } from "./filepilot-investigations";
+
 export type MissionAction = { label: string; next: string };
 export type MissionStep = { title: string; explanation: string; evidence: string[]; actions: MissionAction[]; complete?: boolean; blocked?: boolean };
-export type Mission = { id: number; title: string; topic: string; brief: string; boundary: string; steps: Record<string, MissionStep> };
+export type Mission = { id: number; title: string; topic: string; brief: string; boundary: string; steps: Record<string, MissionStep>; clues?: { id: string; title: string; text: string }[]; comparison?: { title: string; explanation: string }[] };
 const action = (label: string, next: string): MissionAction => ({ label, next });
 const step = (title: string, explanation: string, evidence: string[], actions: MissionAction[], flags: Partial<MissionStep> = {}): MissionStep => ({ title, explanation, evidence, actions, ...flags });
 const done = (explanation: string, evidence: string[]) => step("Mission complete", explanation, evidence, [], { complete: true });
@@ -75,10 +77,12 @@ export const missions: Mission[] = [
     review: step("Review the final manifest", "Recheck completeness, version status, recipient permission, and exact package contents together.", ["brief-final.txt · approved · allowed", "logo.png · approved · allowed", "delivery-instructions.txt · supplied by owner · approved · allowed", "Checklist: all three required items present", "Restricted or superseded files: none"], [action("Approve this exact handover manifest", "export")]),
     export: step("A simulated package is ready", "Verify what is actually in the resulting manifest. A success banner alone cannot establish that the right files were included.", ["Package manifest: brief-final.txt, logo.png, delivery-instructions.txt", "Recipient: external design agency", "Count: 3 files", "Actual network transfers: 0"], [action("Verify manifest against checklist and record handover", "done")]),
     done: done("You combined completeness, privacy, source authority, and approval. This is the same habit that prevents incomplete features from passing a release gate just because they build.", ["Acceptance checklist: satisfied", "Privacy review: permitted files only", "Handover: recorded as a simulation, not an actual delivery"])
-  } }
+  } },
+  ...investigations
 ];
 
-export function advanceMission(mission: Mission, current: string, target: string): string {
+export function advanceMission(mission: Mission, current: string, target: string, inspected: string[] = []): string {
+  if (current === "start" && mission.clues?.some(c => !inspected.includes(c.id))) throw new Error("Inspect every evidence card before choosing a strategy.");
   if (!mission.steps[current]?.actions.some(a => a.next === target) || !mission.steps[target]) throw new Error("That transition is not available from the current step.");
   return target;
 }

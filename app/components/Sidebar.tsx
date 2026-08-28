@@ -59,7 +59,7 @@ export default function Sidebar({
       <SearchBox query={searchQuery} onSearch={onSearch} />
       <Link href="/labs/filepilot" className="block mx-4 my-3 rounded-xl border border-blue-200 bg-blue-50 p-3 text-blue-900 hover:bg-blue-100">
         <span className="block text-sm font-bold">🗂️ FilePilot Mission Lab</span>
-        <span className="block text-xs mt-1">10 missions: search, privacy, recovery & more →</span>
+        <span className="block text-xs mt-1">30 missions: search, privacy, recovery & more →</span>
       </Link>
       <div className="grid grid-cols-3 gap-1 p-3 border-b" aria-label="Library sections">
         {(Object.keys(labels) as CourseSummary["kind"][]).map(kind => <button key={kind}
