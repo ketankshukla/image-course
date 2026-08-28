@@ -253,9 +253,11 @@ function ModuleGroup({
         className="module-chapters overflow-hidden transition-all duration-300 bg-white"
         hidden={!expanded}
       >
-        {module.chapters.map((chapter) => {
+        {module.chapters.map((chapter, index) => {
           const isActive = currentCourseId === course.id && currentChapterNumber === chapter.number;
           const isCompleted = completed.includes(chapter.number);
+          // Guide IDs stay stable for bookmarks; menu numbers follow reading order.
+          const displayNumber = course.kind === "guide" ? index + 1 : chapter.number;
           return (
             <a
               key={chapter.number}
@@ -275,7 +277,7 @@ function ModuleGroup({
               )}
             >
               <span className="chapter-number text-xs text-gray-500 min-w-[24px]">
-                {chapter.number.toString().padStart(2, "0")}
+                {displayNumber.toString().padStart(2, "0")}
               </span>
               <span className="truncate">{chapter.title}</span>
               {isCompleted && (
