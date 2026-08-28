@@ -36,6 +36,9 @@ export default function ChapterContent({
     () => highlightInHtml(chapter.body, highlightQuery),
     [chapter.body, highlightQuery]
   );
+  // Preserve the body DOM on unrelated renders, including the diagram controls
+  // installed by the effect below and active search-match classes.
+  const bodyMarkup = useMemo(() => ({ __html: highlightedHtml }), [highlightedHtml]);
 
   useEffect(() => {
     if (zoom) dialogRef.current?.showModal();
@@ -176,7 +179,7 @@ export default function ChapterContent({
       <div
         ref={bodyRef}
         className="content-body"
-        dangerouslySetInnerHTML={{ __html: highlightedHtml }}
+        dangerouslySetInnerHTML={bodyMarkup}
       />
 
       <dialog ref={dialogRef} className="diagram-dialog" aria-label="Enlarged diagram" onClose={() => setZoom(null)}>
