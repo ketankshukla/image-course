@@ -7,6 +7,19 @@
   "order": 3,
   "sections": [
     {
+      "title": "Coding with confidence",
+      "documents": [
+        {
+          "id": 19,
+          "file": "training/coding-confidence/CODING-WITH-CONFIDENCE.md"
+        },
+        {
+          "id": 20,
+          "file": "training/coding-confidence/VIDEO-FACT-CHECK.md"
+        }
+      ]
+    },
+    {
       "title": "Library guides",
       "documents": [
         {

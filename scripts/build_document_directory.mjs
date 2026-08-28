@@ -52,6 +52,8 @@ const overrides = {
 };
 function purpose(p, title) {
   const s = (p+' '+title).toLowerCase();
+  if (/coding-confidence\/video-fact-check/.test(s)) return 'Separate the supplied coding video\'s useful advice from factual errors, uncertain predictions, and unsupported generalizations.';
+  if (/coding-confidence\/coding-with-confidence/.test(s)) return 'Plan a gradual return to coding through 12 core modules, 3 optional AI extensions, and a safe FilePilot Mini project.';
   if (/template\.html$/.test(s)) return 'Maintain HTML rendering layouts; this is a template, not a finished lesson.';
   if (/verification|verify\.md/.test(s)) return 'Review the checks and limitations recorded at authoring time; rerun current checks before release.';
   if (/prompt/.test(s)) return 'Maintain or reproduce diagram authoring; not the recommended learner starting point.';

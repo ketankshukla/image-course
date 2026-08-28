@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Coding with Confidence: Become the Builder, Not Just the Typist</title>
+<style type="text/css">:root{color-scheme:light;--ink:#19283c;--muted:#56667a;--blue:#145bd8;--navy:#081a33;--line:#dce5ef;--paper:#fff;--bg:#edf2f7}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:30px}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.75 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:#145ac0;text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:3px solid #d58b00;outline-offset:4px}
+.skip{position:fixed;top:-100px;left:16px;z-index:10;background:white;padding:10px}
+.skip:focus{top:10px}
+aside{position:fixed;inset:0 auto 0 0;width:284px;overflow:auto;padding:30px 22px;background:var(--navy);color:#e9f0fa;border-right:1px solid #244363}
+.brand{font-size:12px;letter-spacing:.17em;text-transform:uppercase;color:#76dcf3;font-weight:700}
+aside h2{font-size:22px;line-height:1.3;margin:12px 0 22px;color:white;border:0;padding:0}
+aside ul{list-style:none;margin:0;padding:0}
+aside li{margin:0 0 5px}
+aside li ul{margin-left:0}
+aside a{display:block;padding:7px 10px;border-radius:6px;color:#d2deed;text-decoration:none;font-size:13px;line-height:1.45}
+aside a:hover{background:#193554;color:white}
+.rail-footer{margin-top:22px;border-top:1px solid #2c4260;padding-top:20px;color:#9db0c9;font-size:12px}
+main{margin-left:284px;padding:42px clamp(24px,4vw,72px) 90px;max-width:1550px}
+.toolbar{display:flex;align-items:center;gap:15px;justify-content:space-between;margin-bottom:30px;font-size:12px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+button{font:600 13px system-ui;border:1px solid #c9d7e8;background:#fff;color:#164176;padding:10px 15px;border-radius:8px;cursor:pointer}
+button:hover{background:#e6f0ff}
+h1{font-size:clamp(40px,4.4vw,66px);line-height:1.1;letter-spacing:-.045em;background:linear-gradient(120deg,#07172e,#124481);color:white;border-radius:20px;padding:40px;margin:0 0 34px;box-shadow:0 18px 45px #0b254025}
+h2{font-size:30px;line-height:1.3;color:#103e7c;letter-spacing:-.025em;margin:58px 0 22px;padding-top:23px;border-top:3px solid #2367c9}
+h3{font-size:23px;line-height:1.35;color:#075e76;letter-spacing:-.02em;margin:34px 0 15px}
+p{margin:16px 0;max-width:90ch}
+li{margin:7px 0}
+strong{color:#113862}
+blockquote{background:#e1f1f7;border-left:5px solid #068caf;border-radius:0 12px 12px 0;margin:28px 0;padding:12px 25px;color:#184050}
+figure{margin:28px 0 32px}
+figure img{display:block;width:100%;height:auto;border-radius:14px;background:#07172d;box-shadow:0 12px 28px #0a254025}
+figcaption{font-size:14px;line-height:1.6;color:var(--muted);padding:13px 2px}
+.diagram-button{margin-top:9px;font-size:12px}
+img{max-width:100%;height:auto}
+pre{padding:23px 25px;overflow:auto;background:#091b32;color:#dfedff;border:1px solid #203a56;border-radius:12px;line-height:1.6;tab-size:4}
+code{font-family:"Cascadia Code",Consolas,monospace;font-size:.85em}
+:not(pre)>code{background:#e3eaf3;color:#98305b;padding:.12em .32em;border-radius:4px;overflow-wrap:anywhere}
+pre code{white-space:pre;color:inherit}
+table{border-collapse:separate;border-spacing:0;display:block;overflow-x:auto;max-width:100%;margin:24px 0 30px;border:1px solid var(--line);border-radius:10px;background:white;font-size:15px;line-height:1.6}
+th,td{text-align:left;vertical-align:top;padding:13px 16px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-width:130px}
+th{background:#103c78;color:white;font-weight:650}
+tr:nth-child(even) td{background:#f4f7fb}
+tr:last-child td{border-bottom:0}
+th:last-child,td:last-child{border-right:0}
+hr{border:0;border-top:1px solid var(--line);margin:40px 0}
+dialog{border:1px solid #375679;border-radius:15px;padding:0;background:#07172e;color:white;width:96vw;max-width:1900px;max-height:96vh;overflow:hidden}
+dialog::backdrop{background:#030b17dd}
+.zoom-toolbar{display:flex;gap:10px;align-items:center;justify-content:flex-end;padding:12px 18px;background:#102943}
+.zoom-toolbar span{margin-right:auto;font-size:14px}
+.zoom-body{overflow:auto;max-height:82vh;padding:12px}
+.zoom-body img{display:block;width:100%;max-width:none;margin:auto;height:auto}
+footer{margin-top:60px;border-top:1px solid var(--line);padding-top:20px;font-size:13px;color:var(--muted)}
+@media(max-width:1000px){aside{position:relative;width:auto;padding:24px}aside nav ul{columns:2}aside li{break-inside:avoid}.rail-footer{display:none}main{margin-left:0;padding:28px 24px 60px}}
+@media(max-width:600px){body{font-size:16px}aside nav ul{columns:1}aside{max-height:330px}main{padding:22px 16px 50px}h1{font-size:38px;padding:27px}h2{font-size:26px}h3{font-size:21px}.toolbar{font-size:10px}pre{padding:17px;font-size:14px}.zoom-toolbar{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{aside,.toolbar,.diagram-button,dialog{display:none!important}body{background:white;font-size:11pt}main{margin:0;max-width:none;padding:0}h1{color:#12345a;background:none;padding:0;box-shadow:none;font-size:32pt}h2,h3{break-after:avoid}figure,blockquote{break-inside:avoid}pre{background:#f3f5f9;color:#152f4e;white-space:pre-wrap}pre code{white-space:pre-wrap}table{display:table;font-size:9pt}th,td{min-width:0;padding:7px}figure img{box-shadow:none}}
+</style><style type="text/css">
+body{font-size:24px;line-height:1.7}
+main{max-width:1500px}
+p{max-width:65ch}
+h2{font-size:36px}
+h3{font-size:28px;color:#17478a}
+blockquote{background:#edf4ff;border-left-color:#245ac4;color:#19283c}
+table{font-size:21px}
+figcaption{font-size:20px}
+pre{font-size:20px}
+:not(pre)>code{background:#edf4ff;color:#17478a}
+button{min-height:44px;font-size:16px}
+aside a{font-size:15px}
+.brand{color:#c4d8fa}
+a:focus-visible,button:focus-visible{outline-color:#245ac4}
+@media(max-width:600px){body{font-size:24px}h2{font-size:32px}h3{font-size:27px}pre{font-size:18px}aside a{font-size:15px}}
+@media print{body{font-size:12pt}h2{font-size:22pt}h3{font-size:17pt}table{font-size:10pt}pre{font-size:10pt}}
+</style>
+</head>
+<body>
+<a class="skip" href="#content">Skip to document</a>
+<aside aria-label="Document contents">
+<div class="brand">Visual learning library</div>
+<h2>Coding with Confidence</h2>
+<ul>
+<li><a href="#coding-with-confidence-become-the-builder-not-just-the-typist" id="toc-coding-with-confidence-become-the-builder-not-just-the-typist">Coding
+with Confidence: Become the Builder, Not Just the Typist</a>
+<ul>
+<li><a href="#at-a-glance" id="toc-at-a-glance">At a glance</a></li>
+<li><a href="#what-the-video-gives-usand-what-we-change" id="toc-what-the-video-gives-usand-what-we-change">What the video gives
+us—and what we change</a></li>
+<li><a href="#the-new-working-agreement" id="toc-the-new-working-agreement">The new working agreement</a></li>
+<li><a href="#build-understanding-in-layers" id="toc-build-understanding-in-layers">Build understanding in
+layers</a></li>
+<li><a href="#the-project-that-ties-the-course-together" id="toc-the-project-that-ties-the-course-together">The project that ties
+the course together</a></li>
+<li><a href="#core-course-twelve-modules" id="toc-core-course-twelve-modules">Core course: twelve modules</a></li>
+<li><a href="#optional-extensions-add-complexity-only-for-a-reason" id="toc-optional-extensions-add-complexity-only-for-a-reason">Optional
+extensions: add complexity only for a reason</a></li>
+<li><a href="#your-first-session-one-rule-you-can-explain" id="toc-your-first-session-one-rule-you-can-explain">Your first session:
+one rule you can explain</a></li>
+<li><a href="#a-worked-six-field-specification" id="toc-a-worked-six-field-specification">A worked six-field
+specification</a></li>
+<li><a href="#how-to-review-before-saying-done" id="toc-how-to-review-before-saying-done">How to review before saying
+“done”</a></li>
+<li><a href="#how-we-will-use-ai-in-learning-sessions" id="toc-how-we-will-use-ai-in-learning-sessions">How we will use AI in
+learning sessions</a></li>
+<li><a href="#a-routine-for-days-when-confidence-is-low" id="toc-a-routine-for-days-when-confidence-is-low">A routine for days
+when confidence is low</a></li>
+<li><a href="#what-to-postpone" id="toc-what-to-postpone">What to
+postpone</a></li>
+<li><a href="#what-success-will-look-like" id="toc-what-success-will-look-like">What success will look
+like</a></li>
+</ul></li>
+</ul>
+<div class="rail-footer">Self-contained reading edition<br>Diagrams and styles embedded</div>
+</aside>
+<main id="content">
+<div class="toolbar"><span>Illustrated reference guide</span><button type="button" onclick="window.print()">Print / Save PDF</button></div>
+<h1 id="coding-with-confidence-become-the-builder-not-just-the-typist">Coding
+with Confidence: Become the Builder, Not Just the Typist</h1>
+<h2 id="at-a-glance">At a glance</h2>
+<p><strong>A practical course outline for returning to software
+development with AI beside you—not in place of your
+understanding.</strong></p>
+<p>You do not need to prove that you can out-type an AI model. This
+course is about being able to say: “I understand the problem. I can
+follow the code. I can change it safely. I can show you why it works—and
+where it does not.”</p>
+<p>You already have subjects you care about: useful file automation,
+trustworthy agents, and safe information sharing. We will use those
+interests instead of sending you back to months of disconnected syntax
+exercises. At the same time, we will not pretend you can review a system
+well without learning how its code behaves.</p>
+<p><strong>Format:</strong> 12 core modules, followed by 3 optional
+AI-system extensions. Each module contains three proposed lessons, a
+practical assignment, an explain-it-back exercise, and a small piece of
+evidence you keep. This document is the course blueprint and includes a
+first exercise; it is <strong>not yet the complete set of lesson
+workbooks or an implemented FilePilot application</strong>.</p>
+<p><strong>Suggested pace:</strong> two to four sessions per module,
+usually 30–60 minutes each. Adjust freely. This is a planning estimate,
+not a deadline or promise of proficiency. The first exercise can be done
+on paper; the later Python exercises need a local interpreter, editor,
+terminal, and eventually Git. Paid AI tools and live model API calls are
+not prerequisites for the core path.</p>
+<p><strong>Starting project:</strong> FilePilot Mini, a new learning
+implementation that begins with fictional file metadata. It is separate
+from the website&#39;s existing mission simulations. We will not point it at
+your personal folders.</p>
+<blockquote>
+<p>The goal is not “I never get stuck.” The goal is “When I get stuck, I
+know a small, safe step I can take next.”</p>
+</blockquote>
+<h2 id="what-the-video-gives-usand-what-we-change">What the video gives
+us—and what we change</h2>
+<p>The supplied Aish Reganti transcript encourages moving beyond typing
+toward problem definition, specifications, review, and domain
+understanding. Those ideas shape this curriculum. We add explicit
+code-reading and manual practice so “directing AI” does not become
+“accepting output I cannot assess.”</p>
+<p>Some of the video&#39;s historical and labor-market claims need
+qualification. COBOL was a consortium effort, not simply an IBM launch;
+the claim that specialties are disappearing is not established; and a
+personal hiring account does not describe every employer. The companion
+<a href="VIDEO-FACT-CHECK.html">video fact-check</a> contains timestamped
+assessments and primary-source links.</p>
+<p>For this course, the useful conclusion is narrower and stronger:
+<strong>AI can help you practise engineering, but it cannot supply your
+understanding merely by producing a finished application.</strong> A
+2026 study of learning a Python library found weaker quiz performance
+with AI assistance in that setting; how participants engaged with it
+mattered. That is why our design includes prediction and teach-back, not
+just generation. <a href="https://www.anthropic.com/research/AI-assistance-coding-skills">Anthropic&#39;s
+learning study</a>.</p>
+<h2 id="the-new-working-agreement">The new working agreement</h2>
+<p><img role="img" aria-label="The builder&#39;s loop: understand, specify, build a small slice, inspect and test, explain, then revise." src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjgwMCIgdmlld0JveD0iMCAwIDEyMDAgODAwIiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUgZGVzYyI+Cjx0aXRsZSBpZD0idGl0bGUiPlRoZSBidWlsZGVyJ3MgbGVhcm5pbmcgbG9vcDwvdGl0bGU+PGRlc2MgaWQ9ImRlc2MiPlVuZGVyc3RhbmQgdGhlIG5lZWQsIHNwZWNpZnkgb25lIGJlaGF2aW9yLCBidWlsZCBhIHNtYWxsIHNsaWNlLCBpbnNwZWN0IGFuZCB0ZXN0LCBleHBsYWluIGl0LCBhbmQgcmV2aXNlIHRoZSByZXF1aXJlbWVudC48L2Rlc2M+CjxyZWN0IHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjgwMCIgcng9IjI0IiBmaWxsPSIjZWRmNGZiIi8+CjxnIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSwgQXJpYWwsIHNhbnMtc2VyaWYiIGZpbGw9IiMxNzRkNzkiPgo8dGV4dCB4PSI1MCIgeT0iNjYiIGZvbnQtc2l6ZT0iMzgiIGZvbnQtd2VpZ2h0PSI3MDAiPkJ1aWxkIHVuZGVyc3RhbmRpbmcsIG5vdCBqdXN0IG91dHB1dDwvdGV4dD4KPHRleHQgeD0iNTAiIHk9IjExMiIgZm9udC1zaXplPSIyNSI+QSBsZWFybmluZyBsb29wIHlvdSBjYW4gcmVwZWF0IHdpdGggYW55IGxhbmd1YWdlIG9yIGFzc2lzdGFudDwvdGV4dD4KPGcgZmlsbD0id2hpdGUiIHN0cm9rZT0iI2JhZDRlOSIgc3Ryb2tlLXdpZHRoPSIyIj48cmVjdCB4PSI1MCIgeT0iMTYwIiB3aWR0aD0iMzMwIiBoZWlnaHQ9IjIxMCIgcng9IjE2Ii8+PHJlY3QgeD0iNDM1IiB5PSIxNjAiIHdpZHRoPSIzMzAiIGhlaWdodD0iMjEwIiByeD0iMTYiLz48cmVjdCB4PSI4MjAiIHk9IjE2MCIgd2lkdGg9IjMzMCIgaGVpZ2h0PSIyMTAiIHJ4PSIxNiIvPjxyZWN0IHg9IjgyMCIgeT0iNDQwIiB3aWR0aD0iMzMwIiBoZWlnaHQ9IjIxMCIgcng9IjE2Ii8+PHJlY3QgeD0iNDM1IiB5PSI0NDAiIHdpZHRoPSIzMzAiIGhlaWdodD0iMjEwIiByeD0iMTYiLz48cmVjdCB4PSI1MCIgeT0iNDQwIiB3aWR0aD0iMzMwIiBoZWlnaHQ9IjIxMCIgcng9IjE2Ii8+PC9nPgo8ZyBmb250LXNpemU9IjI5IiBmb250LXdlaWdodD0iNzAwIj48dGV4dCB4PSI3NCIgeT0iMjEwIj4xLiBVbmRlcnN0YW5kPC90ZXh0Pjx0ZXh0IHg9IjQ1OSIgeT0iMjEwIj4yLiBTcGVjaWZ5PC90ZXh0Pjx0ZXh0IHg9Ijg0NCIgeT0iMjEwIj4zLiBCdWlsZCBhIHNsaWNlPC90ZXh0Pjx0ZXh0IHg9Ijg0NCIgeT0iNDkwIj40LiBJbnNwZWN0ICsgdGVzdDwvdGV4dD48dGV4dCB4PSI0NTkiIHk9IjQ5MCI+NS4gRXhwbGFpbiBpdDwvdGV4dD48dGV4dCB4PSI3NCIgeT0iNDkwIj42LiBSZXZpc2U8L3RleHQ+PC9nPgo8ZyBmb250LXNpemU9IjI1IiBmaWxsPSIjMjk0NzVmIj48dGV4dCB4PSI3NCIgeT0iMjY2Ij5XaG9zZSBwcm9ibGVtIGlzIGl0PzwvdGV4dD48dGV4dCB4PSI3NCIgeT0iMzA4Ij5XaGF0IG11c3Qgc3RheSBzYWZlPzwvdGV4dD48dGV4dCB4PSI0NTkiIHk9IjI2NiI+T25lIGNsZWFyIGJlaGF2aW9yLjwvdGV4dD48dGV4dCB4PSI0NTkiIHk9IjMwOCI+RXhwZWN0ZWQgb3V0Y29tZXMuPC90ZXh0Pjx0ZXh0IHg9Ijg0NCIgeT0iMjY2Ij5TbWFsbCBlbm91Z2ggdG8gcmVhZC48L3RleHQ+PHRleHQgeD0iODQ0IiB5PSIzMDgiPkFJIGNhbiBoZWxwIGRyYWZ0IGl0LjwvdGV4dD48dGV4dCB4PSI4NDQiIHk9IjU0NiI+VHJ5IGEgY291bnRlcmV4YW1wbGUuPC90ZXh0Pjx0ZXh0IHg9Ijg0NCIgeT0iNTg4Ij5DaGVjayBhY3R1YWwgYmVoYXZpb3IuPC90ZXh0Pjx0ZXh0IHg9IjQ1OSIgeT0iNTQ2Ij5Vc2UgeW91ciBvd24gd29yZHMuPC90ZXh0Pjx0ZXh0IHg9IjQ1OSIgeT0iNTg4Ij5QcmVkaWN0IGEgbmV3IGlucHV0LjwvdGV4dD48dGV4dCB4PSI3NCIgeT0iNTQ2Ij5LZWVwIHRoZSBldmlkZW5jZS48L3RleHQ+PHRleHQgeD0iNzQiIHk9IjU4OCI+Q2hvb3NlIHRoZSBuZXh0IHNsaWNlLjwvdGV4dD48L2c+Cjx0ZXh0IHg9IjUwIiB5PSI3MzUiIGZvbnQtc2l6ZT0iMjciIGZvbnQtd2VpZ2h0PSI3MDAiPllvdXIgdW5kZXJzdGFuZGluZyBpcyB0aGUgb3V0Y29tZS4gVGhlIGNvZGUgaXMgcGFydCBvZiB0aGUgZXZpZGVuY2UuPC90ZXh0PjwvZz4KPGcgc3Ryb2tlPSIjMzY4M2JhIiBzdHJva2Utd2lkdGg9IjQiIGZpbGw9Im5vbmUiPjxwYXRoIGQ9Ik0zODcgMjY1aDM3bS0xMi0xMCAxMiAxMC0xMiAxME03NzIgMjY1aDM3bS0xMi0xMCAxMiAxMC0xMiAxME05ODUgMzgwdjQ4bS0xMC0xMiAxMCAxMiAxMC0xMk04MTAgNTQ1aC0zN20xMi0xMC0xMiAxMCAxMiAxME00MjUgNTQ1aC0zN20xMi0xMC0xMiAxMCAxMiAxME0yMTUgNDMwdi00OG0tMTAgMTIgMTAtMTIgMTAgMTIiLz48L2c+PC9zdmc+Cg==" alt="The builder&#39;s loop: understand, specify, build a small slice, inspect and test, explain, then revise." /></p>
+<h3 id="what-the-diagram-teaches">What the diagram teaches</h3>
+<p>Start with a person&#39;s need, not a stack. “I want to organize my
+downloads” is a request, but not yet a safe specification. Who owns the
+files? Are duplicates safe to delete? Is a folder name sensitive? These
+questions decide the product before a framework does.</p>
+<p>Next, write down one small behavior. Ask AI to help draft or
+challenge it, then choose the rule yourself. Build only enough to make
+that rule observable. A function that returns a proposed destination is
+enough for the first version; it does not need a dashboard, agents, or
+cloud infrastructure.</p>
+<p>Then inspect the result. Predict an output, run the example, and
+investigate any disagreement. Finally, explain the rule in your own
+words. If you cannot explain one part, shrink that part and study it.
+Returning to an earlier step is normal—it is how the loop produces
+learning.</p>
+<table>
+<thead>
+<tr>
+<th>You remain responsible for</th>
+<th>AI can help with</th>
+<th>Evidence before moving on</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Choosing the problem and limits</td>
+<td>Asking questions and suggesting alternatives</td>
+<td>A short requirement with an explicit non-goal</td>
+</tr>
+<tr>
+<td>Understanding the chosen rule</td>
+<td>Explaining code and drawing a data flow</td>
+<td>Your prediction for a new input</td>
+</tr>
+<tr>
+<td>Accepting or rejecting a change</td>
+<td>Drafting a small implementation and tests</td>
+<td>A reviewed diff and an observed result</td>
+</tr>
+<tr>
+<td>Deciding what is safe to release</td>
+<td>Finding risks and drafting release notes</td>
+<td>Acceptance checks and a recovery plan</td>
+</tr>
+</tbody>
+</table>
+<p>These are learning responsibilities, not a claim that one person
+should replace a whole engineering team. Security, operations,
+accessibility, and domain specialists still provide expertise you may
+need.</p>
+<h2 id="build-understanding-in-layers">Build understanding in
+layers</h2>
+<p><img role="img" aria-label="Five learning layers: read a small function, change one rule, connect components, verify failures, and release a bounded feature. Earlier skills remain useful at every layer." src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjgzMCIgdmlld0JveD0iMCAwIDEyMDAgODMwIiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUgZGVzYyI+Cjx0aXRsZSBpZD0idGl0bGUiPkxlYXJuaW5nIGxheWVycyB0aGF0IHN0YXkgdXNlZnVsPC90aXRsZT48ZGVzYyBpZD0iZGVzYyI+UmVhZCBhbmQgcHJlZGljdCwgY2hhbmdlIGEgcnVsZSwgY29ubmVjdCBwYXJ0cywgdmVyaWZ5IGZhaWx1cmVzLCB0aGVuIHJlbGVhc2UgYSBib3VuZGVkIGZlYXR1cmUuIEhpZ2hlciBsYXllcnMga2VlcCB0aGUgc2tpbGxzIGJlbmVhdGggdGhlbS48L2Rlc2M+CjxyZWN0IHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjgzMCIgcng9IjI0IiBmaWxsPSIjZWRmNGZiIi8+CjxnIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSwgQXJpYWwsIHNhbnMtc2VyaWYiIGZpbGw9IiMxNzRkNzkiPjx0ZXh0IHg9IjUwIiB5PSI2NSIgZm9udC1zaXplPSIzOCIgZm9udC13ZWlnaHQ9IjcwMCI+TW92ZSB1cCB3aXRob3V0IGxvc2luZyB0aGUgZm91bmRhdGlvbnM8L3RleHQ+PHRleHQgeD0iNTAiIHk9IjExMiIgZm9udC1zaXplPSIyNSI+U3RhcnQgYXQgdGhlIGJvdHRvbS4gRWFybGllciBza2lsbHMgcmVtYWluIHVzZWZ1bCBhdCBldmVyeSBsYXllci48L3RleHQ+CjxyZWN0IHg9IjIyMCIgeT0iMTU1IiB3aWR0aD0iOTMwIiBoZWlnaHQ9Ijk1IiByeD0iMTQiIGZpbGw9IiMxNzRkNzkiLz48cmVjdCB4PSIxODAiIHk9IjI2NSIgd2lkdGg9Ijk3MCIgaGVpZ2h0PSI5NSIgcng9IjE0IiBmaWxsPSIjMjc2YjljIi8+PHJlY3QgeD0iMTQwIiB5PSIzNzUiIHdpZHRoPSIxMDEwIiBoZWlnaHQ9Ijk1IiByeD0iMTQiIGZpbGw9IiNjNGRlZjQiLz48cmVjdCB4PSIxMDAiIHk9IjQ4NSIgd2lkdGg9IjEwNTAiIGhlaWdodD0iOTUiIHJ4PSIxNCIgZmlsbD0iI2Q5ZWFmYiIvPjxyZWN0IHg9IjYwIiB5PSI1OTUiIHdpZHRoPSIxMDkwIiBoZWlnaHQ9Ijk1IiByeD0iMTQiIGZpbGw9IndoaXRlIiBzdHJva2U9IiNiYWQ0ZTkiIHN0cm9rZS13aWR0aD0iMiIvPgo8ZyBmb250LXNpemU9IjI4IiBmb250LXdlaWdodD0iNzAwIj48dGV4dCB4PSIyNDUiIHk9IjE5NCIgZmlsbD0id2hpdGUiPjUuIFJFTEVBU0UgQSBCT1VOREVEIEZFQVRVUkU8L3RleHQ+PHRleHQgeD0iMjA1IiB5PSIzMDQiIGZpbGw9IndoaXRlIj40LiBWRVJJRlkgRkFJTFVSRVM8L3RleHQ+PHRleHQgeD0iMTY1IiB5PSI0MTQiPjMuIENPTk5FQ1QgVEhFIFBBUlRTPC90ZXh0Pjx0ZXh0IHg9IjEyNSIgeT0iNTI0Ij4yLiBDSEFOR0UgT05FIFJVTEU8L3RleHQ+PHRleHQgeD0iODUiIHk9IjYzNCI+MS4gUkVBRCBBTkQgUFJFRElDVDwvdGV4dD48L2c+CjxnIGZvbnQtc2l6ZT0iMjQiPjx0ZXh0IHg9IjI0NSIgeT0iMjMxIiBmaWxsPSJ3aGl0ZSI+RXhwbGFpbiB0aGUgY2hlY2tzLCB0aGUgbGltaXRzLCBhbmQgdGhlIHJlY292ZXJ5IHBsYW4uPC90ZXh0Pjx0ZXh0IHg9IjIwNSIgeT0iMzQxIiBmaWxsPSJ3aGl0ZSI+U2hvdyB3aGF0IGhhcHBlbnMgd2hlbiBhbiBhc3N1bXB0aW9uIGlzIHdyb25nLjwvdGV4dD48dGV4dCB4PSIxNjUiIHk9IjQ1MSI+Rm9sbG93IGFuIGlucHV0IGFjcm9zcyBmdW5jdGlvbnMgYW5kIGZpbGVzLjwvdGV4dD48dGV4dCB4PSIxMjUiIHk9IjU2MSI+TWFrZSBhIHNtYWxsIG1hbnVhbCBlZGl0IGFuZCBpbnNwZWN0IGl0cyBlZmZlY3QuPC90ZXh0Pjx0ZXh0IHg9Ijg1IiB5PSI2NzEiPlVuZGVyc3RhbmQgd2hhdCBhIHNob3J0IGZ1bmN0aW9uIHJldHVybnMuPC90ZXh0PjwvZz48dGV4dCB4PSI2MCIgeT0iNzY2IiBmb250LXNpemU9IjI3IiBmb250LXdlaWdodD0iNzAwIj5BSSBtYXkgYXNzaXN0IGF0IGV2ZXJ5IGxheWVyLiBJdCBkb2VzIG5vdCByZXBsYWNlIHByYWN0aXNpbmcgdGhlIGxheWVyLjwvdGV4dD48L2c+PC9zdmc+Cg==" alt="Five learning layers: read a small function, change one rule, connect components, verify failures, and release a bounded feature. Earlier skills remain useful at every layer." /></p>
+<h3 id="what-the-diagram-teaches-1">What the diagram teaches</h3>
+<p>Moving “one level up” does not mean discarding the lower levels. A
+person reviewing architecture still needs to follow a condition, a loop,
+and an error path. A person approving a release still needs to
+understand what a failing test means.</p>
+<p>We start with Python because it fits your file-automation interests.
+Stay with one language through the core path. The optional website
+interface can come later; learning Python, TypeScript, React, cloud
+hosting, and three agent protocols at once would make it harder to
+identify which part you understand.</p>
+<p>You can use documentation at every level. The brief unaided moments
+are for noticing what you know, not for recreating a closed-book
+interview or proving that tools are cheating.</p>
+<h2 id="the-project-that-ties-the-course-together">The project that ties
+the course together</h2>
+<p>FilePilot Mini helps a fictional studio organize example documents.
+The owner wants a list of proposed moves, an explanation for each
+choice, and a way to refuse or reverse an action. In early modules,
+“files” are just records such as a name and a category. Later, a
+separately created disposable fixture folder provides actual test
+files.</p>
+<p><img role="img" aria-label="FilePilot Mini architecture: fictional records enter a validator and planner, which produces a read-only preview. Only later does an approved plan reach a sandbox executor and a journal-based recovery step." src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9Ijg4MCIgdmlld0JveD0iMCAwIDEyMDAgODgwIiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUgZGVzYyI+Cjx0aXRsZSBpZD0idGl0bGUiPlByb3Bvc2VkIEZpbGVQaWxvdCBNaW5pIGxlYXJuaW5nIGFyY2hpdGVjdHVyZTwvdGl0bGU+PGRlc2MgaWQ9ImRlc2MiPkZpY3Rpb25hbCBtZXRhZGF0YSBwYXNzZXMgdGhyb3VnaCB2YWxpZGF0aW9uIGFuZCBwbGFubmluZyB0byBhIHByZXZpZXcuIEEgbGF0ZXIgYXBwcm92ZWQgcGxhbiByZWFjaGVzIGEgZGlzcG9zYWJsZSBzYW5kYm94IGV4ZWN1dG9yIGFuZCBhIHJlY292ZXJ5IGpvdXJuYWwuIFJlamVjdGVkIHBsYW5zIGRvIG5vdCBleGVjdXRlLjwvZGVzYz4KPHJlY3Qgd2lkdGg9IjEyMDAiIGhlaWdodD0iODgwIiByeD0iMjQiIGZpbGw9IiNlZGY0ZmIiLz4KPGcgZm9udC1mYW1pbHk9IlNlZ29lIFVJLCBBcmlhbCwgc2Fucy1zZXJpZiIgZmlsbD0iIzE3NGQ3OSI+PHRleHQgeD0iNTAiIHk9IjY1IiBmb250LXNpemU9IjM4IiBmb250LXdlaWdodD0iNzAwIj5QbGFuIGZpcnN0LiBBY3Qgb25seSB3aXRoaW4gYSBzYWZlIGJvdW5kYXJ5LjwvdGV4dD48dGV4dCB4PSI1MCIgeT0iMTEwIiBmb250LXNpemU9IjI1Ij5Qcm9wb3NlZCBjb3Vyc2UgcHJvamVjdCDigJQgbm90IGFuIGFscmVhZHkgaW1wbGVtZW50ZWQgYXBwbGljYXRpb248L3RleHQ+CjxnIGZpbGw9IndoaXRlIiBzdHJva2U9IiNiYWQ0ZTkiIHN0cm9rZS13aWR0aD0iMiI+PHJlY3QgeD0iNTAiIHk9IjE1NSIgd2lkdGg9IjMyNSIgaGVpZ2h0PSIxNzAiIHJ4PSIxNiIvPjxyZWN0IHg9IjQzNyIgeT0iMTU1IiB3aWR0aD0iMzI1IiBoZWlnaHQ9IjE3MCIgcng9IjE2Ii8+PHJlY3QgeD0iODI1IiB5PSIxNTUiIHdpZHRoPSIzMjUiIGhlaWdodD0iMTcwIiByeD0iMTYiLz48L2c+CjxnIGZvbnQtc2l6ZT0iMjgiIGZvbnQtd2VpZ2h0PSI3MDAiPjx0ZXh0IHg9Ijc1IiB5PSIyMDMiPkZpY3Rpb25hbCByZWNvcmRzPC90ZXh0Pjx0ZXh0IHg9IjQ2MiIgeT0iMjAzIj5WYWxpZGF0ZSArIHBsYW48L3RleHQ+PHRleHQgeD0iODUwIiB5PSIyMDMiPlJlYWQtb25seSBwcmV2aWV3PC90ZXh0PjwvZz48ZyBmb250LXNpemU9IjI0Ij48dGV4dCB4PSI3NSIgeT0iMjUwIj5OYW1lcyBhbmQgc3RhYmxlIElEcy48L3RleHQ+PHRleHQgeD0iNzUiIHk9IjI5MCI+Tm8gcGVyc29uYWwgZm9sZGVycy48L3RleHQ+PHRleHQgeD0iNDYyIiB5PSIyNTAiPlJlamVjdCBpbnZhbGlkIGlucHV0LjwvdGV4dD48dGV4dCB4PSI0NjIiIHk9IjI5MCI+RGV0ZWN0IGNvbGxpc2lvbnMuPC90ZXh0Pjx0ZXh0IHg9Ijg1MCIgeT0iMjUwIj5TaG93IGV4YWN0IHByb3Bvc2Fscy48L3RleHQ+PHRleHQgeD0iODUwIiB5PSIyOTAiPkV4cGxhaW4gZWFjaCBjaG9pY2UuPC90ZXh0PjwvZz4KPHJlY3QgeD0iNTAiIHk9IjM5NSIgd2lkdGg9IjExMDAiIGhlaWdodD0iNDAwIiByeD0iMTgiIGZpbGw9IiNkY2VjZmYiIHN0cm9rZT0iIzM2ODNiYSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtZGFzaGFycmF5PSIxMCA3Ii8+PHRleHQgeD0iNzUiIHk9IjQ0MiIgZm9udC1zaXplPSIyNyIgZm9udC13ZWlnaHQ9IjcwMCI+TEFURVIgTU9EVUxFUzogZGlzcG9zYWJsZSBwcmFjdGljZSBmb2xkZXIgb25seTwvdGV4dD4KPGcgZmlsbD0id2hpdGUiIHN0cm9rZT0iI2JhZDRlOSIgc3Ryb2tlLXdpZHRoPSIyIj48cmVjdCB4PSI4MjUiIHk9IjQ5MCIgd2lkdGg9IjMwMCIgaGVpZ2h0PSIxNzUiIHJ4PSIxNSIvPjxyZWN0IHg9IjQ0MCIgeT0iNDkwIiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjE3NSIgcng9IjE1Ii8+PHJlY3QgeD0iNzUiIHk9IjQ5MCIgd2lkdGg9IjMwMCIgaGVpZ2h0PSIxNzUiIHJ4PSIxNSIvPjwvZz4KPGcgZm9udC1zaXplPSIyNyIgZm9udC13ZWlnaHQ9IjcwMCI+PHRleHQgeD0iODUwIiB5PSI1MzYiPkFwcHJvdmUgdGhpcyBwbGFuPC90ZXh0Pjx0ZXh0IHg9IjQ2NSIgeT0iNTM2Ij5TYW5kYm94IGV4ZWN1dG9yPC90ZXh0Pjx0ZXh0IHg9IjEwMCIgeT0iNTM2Ij5Kb3VybmFsICsgdW5kbzwvdGV4dD48L2c+PGcgZm9udC1zaXplPSIyNCI+PHRleHQgeD0iODUwIiB5PSI1ODEiPk5vdCBhIGJsYW5rZXQgeWVzLjwvdGV4dD48dGV4dCB4PSI4NTAiIHk9IjYyNSI+UmVjaGVjayBjaGFuZ2VkIGZpbGVzLjwvdGV4dD48dGV4dCB4PSI0NjUiIHk9IjU4MSI+U3RheSBpbnNpZGUgdGhlIHJvb3QuPC90ZXh0Pjx0ZXh0IHg9IjQ2NSIgeT0iNjI1Ij5OZXZlciBvdmVyd3JpdGUuPC90ZXh0Pjx0ZXh0IHg9IjEwMCIgeT0iNTgxIj5SZWNvcmQgY29tcGxldGVkIHdvcmsuPC90ZXh0Pjx0ZXh0IHg9IjEwMCIgeT0iNjI1Ij5SZWZ1c2UgdW5kbyBjb25mbGljdHMuPC90ZXh0PjwvZz48dGV4dCB4PSI3NSIgeT0iNzQwIiBmb250LXNpemU9IjI2IiBmb250LXdlaWdodD0iNzAwIj5EZW5pZWQsIHN0YWxlLCBvciBjb25mbGljdGluZyBwbGFuPyBTdG9wLiBFeHBsYWluLiBEbyBub3QgZXhlY3V0ZS48L3RleHQ+PHRleHQgeD0iNTAiIHk9Ijg0MSIgZm9udC1zaXplPSIyNCI+UGxhbm5pbmcgaXMgYSBkZWNpc2lvbi4gRXhlY3V0aW9uIGlzIGEgc2lkZSBlZmZlY3QuIEtlZXAgdGhlbSBzZXBhcmF0ZS48L3RleHQ+PC9nPgo8ZyBzdHJva2U9IiMzNjgzYmEiIHN0cm9rZS13aWR0aD0iNCIgZmlsbD0ibm9uZSI+PHBhdGggZD0iTTM4NSAyNDBoNDBtLTEyLTEwIDEyIDEwLTEyIDEwTTc3MiAyNDBoNDBtLTEyLTEwIDEyIDEwLTEyIDEwTTk4MCAzMzV2NDVtLTEwLTEyIDEwIDEyIDEwLTEyTTgxMyA1NzVoLTYwbTEyLTEwLTEyIDEwIDEyIDEwTTQyOCA1NzVoLTQwbTEyLTEwLTEyIDEwIDEyIDEwIi8+PC9nPjwvc3ZnPgo=" alt="FilePilot Mini architecture: fictional records enter a validator and planner, which produces a read-only preview. Only later does an approved plan reach a sandbox executor and a journal-based recovery step." /></p>
+<h3 id="what-the-diagram-teaches-2">What the diagram teaches</h3>
+<p>The <strong>planner</strong> decides what should happen without
+changing files. That separation makes it easy to ask, “What would you
+do?” without risking “What have you already done?” A
+<strong>validator</strong> checks whether inputs meet the rules. A
+<strong>preview</strong> shows the human the exact proposal.</p>
+<p>The later <strong>executor</strong> performs an approved operation
+only inside a disposable practice folder. Approval belongs to a specific
+plan, not a permanent “yes” to anything the program later decides. If a
+file changes after preview, the execution step must detect that and
+refuse or request a fresh plan. A <strong>journal</strong> records
+enough about completed actions to attempt recovery; undo must also
+refuse to overwrite a newly created file.</p>
+<p>This architecture is our proposed teaching design. The diagram is not
+evidence that these components have already been implemented. The
+existing FilePilot website missions remain simulations and do not
+operate on your actual files.</p>
+<h3 id="the-milestonesnot-a-giant-first-build">The milestones—not a
+giant first build</h3>
+<table>
+<thead>
+<tr>
+<th>Milestone</th>
+<th>What exists</th>
+<th>What is deliberately absent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A: Understand</td>
+<td>A tiny classification function and examples</td>
+<td>Filesystem changes, AI calls, cloud hosting</td>
+</tr>
+<tr>
+<td>B: Plan</td>
+<td>A validated list of proposed moves</td>
+<td>Permission to execute those moves</td>
+</tr>
+<tr>
+<td>C: Practise safely</td>
+<td>An executor and journal for disposable fixtures</td>
+<td>Personal folders, deletion, unattended automation</td>
+</tr>
+<tr>
+<td>D: Demonstrate</td>
+<td>A tested release and a clear walkthrough</td>
+<td>Claims of production certification</td>
+</tr>
+<tr>
+<td>Optional extensions</td>
+<td>Restricted tool access, evidence retrieval, a specialist
+handoff</td>
+<td>A requirement to use agents for simple rules</td>
+</tr>
+</tbody>
+</table>
+<h2 id="core-course-twelve-modules">Core course: twelve modules</h2>
+<h3 id="module-1--restart-with-a-small-success">Module 1 — Restart with
+a small success</h3>
+<p><strong>Question:</strong> What counts as my work when AI helped?</p>
+<p><strong>Lessons:</strong> 1. Separate typing from understanding. 2.
+Predict the result of a tiny function. 3. Describe a result without
+borrowing the assistant&#39;s explanation.</p>
+<p><strong>Practice:</strong> use the first-session exercise below.
+Classify five fictional names and explain the rule. List one thing it
+cannot do, such as confirming a file&#39;s true contents from its
+extension.</p>
+<p><strong>AI role:</strong> explain unfamiliar words and give hints
+after your prediction. Do not ask for the next ten features.</p>
+<p><strong>Your evidence:</strong> five expected outputs, the actual
+outputs if you run it, and a two-sentence explanation. <strong>Move on
+when:</strong> you can classify one new example correctly and explain
+why. If not, repeat with fewer examples; that is not a failed
+course.</p>
+<h3 id="module-2--read-python-without-trying-to-memorize-python">Module
+2 — Read Python without trying to memorize Python</h3>
+<p><strong>Question:</strong> How does an input become an output?</p>
+<p><strong>Lessons:</strong> 1. Values, strings, lists, and
+dictionaries. 2. Conditions, loops, and functions. 3. Return values,
+exceptions, and side effects—a change outside the function&#39;s returned
+answer.</p>
+<p><strong>Practice:</strong> manually change a classifier to handle a
+new category. Trace the value of each variable through two inputs. A
+list of three file records is enough.</p>
+<p><strong>AI role:</strong> explain a line only after you have
+described your best guess. Ask it to quiz you with a different input,
+not repeatedly restate the same answer.</p>
+<p><strong>Your evidence:</strong> a before/after code diff and a
+hand-drawn trace. <strong>Move on when:</strong> you can change one
+condition and predict both the intended effect and a possible unintended
+effect.</p>
+<h3 id="module-3--explore-a-codebase-without-drowning-in-it">Module 3 —
+Explore a codebase without drowning in it</h3>
+<p><strong>Question:</strong> Where should I look first?</p>
+<p><strong>Lessons:</strong> 1. Locate the entry point, data
+definitions, and tests. 2. Follow one request across files. 3.
+Distinguish observed behavior from an AI&#39;s plausible description.</p>
+<p><strong>Practice:</strong> inspect a small existing FilePilot mission
+or a workshop example. Follow just one input and decision. Label
+simulation code as simulation code. Draw a three-to-five-box map before
+proposing changes.</p>
+<p><strong>AI role:</strong> point to exact functions and explain their
+callers. Verify its claims in the source. For external open-source
+examples, read the license before reusing code and inspect install
+scripts before running them.</p>
+<p><strong>Your evidence:</strong> a codebase map and one claim checked
+against the actual code. <strong>Move on when:</strong> you can identify
+where one rule lives and where its result is consumed. Companion: <a href="../codebase/READING-AN-UNFAMILIAR-CODEBASE.html">Reading an
+Unfamiliar Codebase</a>.</p>
+<h3 id="module-4--turn-a-vague-request-into-a-testable-specification">Module
+4 — Turn a vague request into a testable specification</h3>
+<p><strong>Question:</strong> What exactly would count as correct?</p>
+<p><strong>Lessons:</strong> 1. Write the six fields from the video. 2.
+Add exclusions and failure behavior. 3. Turn examples into acceptance
+checks—observable conditions for accepting a feature.</p>
+<p><strong>Practice:</strong> specify a read-only move planner. It must
+not change anything, must reject invalid records, and must report a name
+collision. Use the worked specification later in this outline as a
+model, not as a substitute for your decisions.</p>
+<p><strong>AI role:</strong> challenge the spec with missing cases. You
+choose the final rule and record why.</p>
+<p><strong>Your evidence:</strong> one page of requirements plus at
+least five examples with expected outcomes. <strong>Move on
+when:</strong> another person could tell whether the planner meets your
+requirements without asking what “works well” means.</p>
+<h3 id="module-5--build-one-small-slice-with-ai">Module 5 — Build one
+small slice with AI</h3>
+<p><strong>Question:</strong> How do I stay in control while accepting
+help?</p>
+<p><strong>Lessons:</strong> 1. Limit a request to one behavior. 2.
+Review the diff—the exact lines changed. 3. Stop when the change becomes
+too large to understand.</p>
+<p><strong>Practice:</strong> ask AI to implement only the planner from
+Module 4. Keep file reads and writes outside the pure planning logic.
+Review each changed file and reject unrelated cleanup or new
+dependencies that do not serve the spec.</p>
+<p><strong>AI role:</strong> produce a bounded draft and explain
+alternatives. If the patch is too large, ask for a smaller slice rather
+than accepting it because it looks polished.</p>
+<p><strong>Your evidence:</strong> a small patch, a list of accepted
+decisions, and one rejected suggestion. <strong>Move on when:</strong>
+you can explain every public input, output, and side effect of the
+slice.</p>
+<h3 id="module-6--test-the-requirement-not-the-assistants-story">Module
+6 — Test the requirement, not the assistant&#39;s story</h3>
+<p><strong>Question:</strong> Could the code and its tests agree and
+still be wrong?</p>
+<p><strong>Lessons:</strong> 1. Expected results come from the spec. 2.
+Test normal inputs, boundaries, and forbidden actions. 3. Deliberately
+break a rule and make sure a test catches it.</p>
+<p><strong>Practice:</strong> check empty input, mixed-case extensions,
+unsupported records, duplicate destinations, and absence of writes.
+Introduce a tiny temporary fault, such as allowing a collision, observe
+a relevant failure, and restore the correct implementation.</p>
+<p><strong>AI role:</strong> suggest missing tests only after you have
+written expected results. A second assistant may help review, but it is
+not proof of independence or correctness.</p>
+<p><strong>Your evidence:</strong> a requirement-to-test table and a
+red-to-green example. <strong>Move on when:</strong> at least one test
+rejects an intentionally incorrect implementation for the right reason.
+Companion: <a href="../testing/TESTING-THAT-CATCHES-REAL-PROBLEMS.html">Testing That
+Catches Real Problems</a>.</p>
+<h3 id="module-7--debug-without-handing-away-the-investigation">Module 7
+— Debug without handing away the investigation</h3>
+<p><strong>Question:</strong> What is the smallest observation that
+could tell me what is wrong?</p>
+<p><strong>Lessons:</strong> 1. Reproduce the failure. 2. Trace one
+input and form a hypothesis. 3. Change one thing and verify the
+explanation.</p>
+<p><strong>Practice:</strong> investigate a misclassified mixed-case
+filename or a missing record. State expected and actual behavior before
+changing code. Add a regression test—a check that prevents the same bug
+returning.</p>
+<p><strong>AI role:</strong> offer two hypotheses and one diagnostic
+check, not an immediate rewrite. You choose the check and interpret its
+output.</p>
+<p><strong>Your evidence:</strong> a short bug report with cause, fix,
+and regression evidence. <strong>Move on when:</strong> you can explain
+why the fix addresses the cause rather than merely hiding the symptom.
+Companion: <a href="../debugging/DEBUGGING-WITHOUT-GUESSING.html">Debugging Without
+Guessing</a>.</p>
+<h3 id="module-8--review-the-system-at-four-levels">Module 8 — Review
+the system at four levels</h3>
+<p><strong>Question:</strong> What should make me hesitate before
+accepting a change?</p>
+<p><strong>Lessons:</strong> 1. Architecture and responsibilities. 2.
+Code constructs and assumptions. 3. Logic and test evidence.</p>
+<p><strong>Practice:</strong> review a candidate change that mixes
+planning with file moves. Explain why a preview operation should not
+secretly execute the plan. Compare a simpler separation of
+responsibilities with an unnecessary class hierarchy.</p>
+<p><strong>AI role:</strong> propose a design and defend its trade-offs;
+you still inspect the implementation. Use original playbooks as
+questions, not as a badge saying the code is now senior-quality. <a href="https://google.github.io/eng-practices/review/reviewer/looking-for.html">Google&#39;s
+code-review guidance</a>.</p>
+<p><strong>Your evidence:</strong> a review note identifying one
+concrete risk and a simpler alternative. <strong>Move on when:</strong>
+you can connect a review comment to observable behavior, not just a
+style preference. Companion: <a href="../refactoring/SOFTWARE-DESIGN-AND-REFACTORING.html">Software Design
+and Refactoring</a>.</p>
+<h3 id="module-9--make-file-operations-safe-to-practise">Module 9 — Make
+file operations safe to practise</h3>
+<p><strong>Question:</strong> What could go wrong between preview and
+execution?</p>
+<p><strong>Lessons:</strong> 1. Restrict operations to a disposable
+practice root. 2. Bind approval to an exact plan and recheck state. 3.
+Journal completed actions and handle recovery conflicts.</p>
+<p><strong>Practice:</strong> use freshly created fixture files, never
+personal folders. Test a changed file, an existing destination, an
+interrupted sequence, a repeated request, and an undo collision. Reject
+traversal outside the root and exclude symlinks/junctions in this
+learning version. Do not implement deletion.</p>
+<p><strong>AI role:</strong> help construct adversarial fixtures and
+explain containment checks. Treat this as a bounded training design, not
+a race-proof filesystem security boundary for hostile multi-user
+systems.</p>
+<p><strong>Your evidence:</strong> a safety table and a demonstrated
+refusal. <strong>Move on when:</strong> you can show that a denied
+operation leaves the fixture unchanged and explain why an undo might
+legitimately be refused.</p>
+<h3 id="module-10--use-git-and-review-as-safety-tools">Module 10 — Use
+Git and review as safety tools</h3>
+<p><strong>Question:</strong> How would I hand this change to a
+teammate?</p>
+<p><strong>Lessons:</strong> 1. Branches, commits, and small diffs. 2.
+Pull-request descriptions and review feedback. 3. Resolve a conflict and
+explain a rollback.</p>
+<p><strong>Practice:</strong> package one feature on a branch with its
+requirement, test evidence, and known limitations. Review it before
+merging. In solo practice, write a clearly labeled self-review; do not
+pretend it is an independent teammate&#39;s approval.</p>
+<p><strong>AI role:</strong> draft a summary from the actual diff. You
+verify the summary and check that no secrets or fixture data meant to
+stay private are included.</p>
+<p><strong>Your evidence:</strong> a review-ready change and a recovery
+rehearsal. <strong>Move on when:</strong> you can identify the exact
+version you would restore and what restoring code would not undo.
+Companion: <a href="../git-team/GIT-COLLABORATION-AND-REVIEW.html">Git
+Collaboration and Review</a>.</p>
+<h3 id="module-11--release-a-complete-feature-not-merely-compiling-code">Module
+11 — Release a complete feature, not merely compiling code</h3>
+<p><strong>Question:</strong> How do I stop an incomplete feature
+reaching users?</p>
+<p><strong>Lessons:</strong> 1. CI runs checks; it cannot infer missing
+business requirements. 2. Preview/staging separates evaluation from
+production. 3. Approval, release notes, and rollback complete the
+delivery story.</p>
+<p><strong>Practice:</strong> add an acceptance test for “no overwrite.”
+Show an incomplete implementation failing it even though it builds. In
+the future implementation, connect required checks to protected
+merge/release paths and ensure no alternative production path bypasses
+the gate. GitHub and hosting configuration must be checked together; a
+failing test alone does not automatically block every deployment.</p>
+<p><strong>AI role:</strong> explain the workflow and help draft it. You
+inspect which event triggers it and what actually prevents release.</p>
+<p><strong>Your evidence:</strong> a rejected candidate and a passing
+candidate, clearly distinguishing local rehearsal from an actual hosted
+deployment. <strong>Move on when:</strong> you can explain exactly which
+configured control stopped release. Companion: <a href="../ci-cd/CI-CD-FROM-SOLO-TO-TEAM.html">CI/CD From Solo to
+Team</a>.</p>
+<h3 id="module-12--demonstrate-ownership-and-plan-your-next-step">Module
+12 — Demonstrate ownership and plan your next step</h3>
+<p><strong>Question:</strong> Can I explain this project without hiding
+behind the tool?</p>
+<p><strong>Lessons:</strong> 1. Present the user problem and
+architecture. 2. Demonstrate a failure and recovery. 3. Describe
+trade-offs, AI assistance, and remaining work honestly.</p>
+<p><strong>Practice:</strong> record a five-minute walkthrough. Show a
+normal plan, a collision refusal, a failing test, and a recovered
+fixture. Then take a new requirement—such as a new file category—and
+describe the smallest safe change before asking AI to implement it.</p>
+<p><strong>AI role:</strong> act as a reviewer who asks questions. Ask
+it to identify vague claims in your explanation, not inflate your
+accomplishments.</p>
+<p><strong>Your evidence:</strong> a README, a small architecture
+diagram, release evidence, and an honest assistance statement.
+<strong>Finish the core when:</strong> you can explain, modify, test,
+and recover this bounded system. That is a useful milestone, not a
+guarantee of employment or production readiness.</p>
+<h2 id="optional-extensions-add-complexity-only-for-a-reason">Optional
+extensions: add complexity only for a reason</h2>
+<p>These modules are a proposed next stage. Reuse your existing courses
+to study protocol details at implementation time. Do not add all three
+simply because they are fashionable.</p>
+<h3 id="module-13--mcp-expose-a-narrowly-scoped-tool">Module 13 — MCP:
+expose a narrowly scoped tool</h3>
+<p><strong>Lessons:</strong> 1. Separate a tool interface from its
+implementation. 2. Define inputs and outputs. 3. Enforce access in the
+server, not in a prompt.</p>
+<p><strong>Build:</strong> expose a read-only preview operation over
+fictional records. <strong>AI role:</strong> explain the adapter and its
+contract. <strong>Your challenge:</strong> submit malformed input and an
+unauthorized operation. <strong>Evidence:</strong> both are refused by
+application logic, not merely discouraged in instructions. Do not expose
+arbitrary shell commands or unrestricted filesystem access. MCP is the
+tool-connection layer, not an automatic permission system.</p>
+<h3 id="module-14--rag-retrieve-an-allowed-policy-before-answering">Module
+14 — RAG: retrieve an allowed policy before answering</h3>
+<p><strong>Lessons:</strong> 1. Retrieve relevant passages. 2. Show
+sources and handle missing evidence. 3. Restrict retrieval before
+generating an answer.</p>
+<p><strong>Build:</strong> answer “Why would this file go here?” using a
+tiny fictional organization policy. <strong>AI role:</strong> help
+evaluate retrieved passages. <strong>Your challenge:</strong> remove the
+supporting rule or supply a conflicting version.
+<strong>Evidence:</strong> the system admits missing/conflicting support
+rather than fabricating authority. Begin with simple search before
+adding embeddings or a vector database. RAG adds evidence; it does not
+make every answer true.</p>
+<h3 id="module-15--a2a-delegate-a-bounded-task">Module 15 — A2A:
+delegate a bounded task</h3>
+<p><strong>Lessons:</strong> 1. Define a specialist&#39;s responsibility. 2.
+Validate the returned result. 3. Handle timeout, refusal, and partial
+work.</p>
+<p><strong>Build:</strong> ask a simulated specialist to classify a
+document while the main workflow retains approval authority. Implement a
+real protocol exchange only after the mock contract is understood.
+<strong>AI role:</strong> generate failure scenarios. <strong>Your
+challenge:</strong> return an invalid category or time out.
+<strong>Evidence:</strong> the main workflow refuses unsafe execution.
+Compare this with a plain function; retain delegation only if it solves
+a real coordination need.</p>
+<p>After these extensions, transfer one idea to Acme or a synthetic
+Hospital example. For Hospital, use fictional records and policies only;
+completing an exercise is not clinical, legal, or compliance
+qualification.</p>
+<h2 id="your-first-session-one-rule-you-can-explain">Your first session:
+one rule you can explain</h2>
+<p><strong>Time box:</strong> about 30–45 minutes, or stop earlier after
+one useful observation. This is a preview exercise, not a test of your
+worth. No packages, API keys, or file access are involved.</p>
+<p>Read this code before running it:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> proposed_folder(name):</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="bu">isinstance</span>(name, <span class="bu">str</span>) <span class="kw">or</span> <span class="kw">not</span> name.strip():</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">&quot;needs-review&quot;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    clean_name <span class="op">=</span> name.strip().lower()</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> clean_name.endswith(<span class="st">&quot;.pdf&quot;</span>):</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">&quot;documents&quot;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">&quot;needs-review&quot;</span></span></code></pre></div>
+<p><code>def</code> introduces a function: a named piece of work.
+<code>name</code> is its input. <code>isinstance</code> checks the kind
+of value. <code>strip</code> removes surrounding whitespace;
+<code>lower</code> changes letters to lowercase. <code>endswith</code>
+checks a suffix. <code>return</code> sends an answer back. No line
+opens, moves, or deletes a file.</p>
+<ol type="1">
+<li>Predict the output for <code>&quot;invoice.pdf&quot;</code>,
+<code>&quot;SCAN.PDF&quot;</code>, <code>&quot;notes.txt&quot;</code>, <code>&quot;   &quot;</code>,
+and <code>None</code>.</li>
+<li>Say why uppercase PDF names work. Say why <code>None</code> does not
+reach the string operations.</li>
+<li>If you have Python available, paste the function into its
+interactive prompt and call it with each input. Compare your
+observations with your predictions. If not, tracing it on paper is
+enough to begin.</li>
+<li>Manually add a rule that <code>.txt</code> names return
+<code>&quot;text-notes&quot;</code>. Ask for a hint if needed, rather than the
+completed change.</li>
+<li>Explain why <code>&quot;malware.pdf&quot;</code> would still be categorized as
+documents. A name suffix does not verify contents or safety. This
+function proposes a label, not permission to trust or execute a
+file.</li>
+</ol>
+<p><strong>Answer check—read after predicting:</strong> the original
+function returns documents, documents, needs-review, needs-review,
+needs-review, in that order. After your change, <code>&quot;notes.txt&quot;</code>
+should return text-notes. These are expected outcomes for the exercise,
+not a claim that you have run it.</p>
+<p><strong>Teach-back:</strong> “The function normalizes a non-empty
+string, checks a filename ending, and returns a category. It has no
+filesystem side effects. It does not prove the file&#39;s real format.” Use
+your own words rather than memorizing this sentence.</p>
+<p><strong>Small independent challenge:</strong> predict the answer for
+<code>&quot;report.pdf.exe&quot;</code>. Then identify one new test you would add
+before relying on your change.</p>
+<h2 id="a-worked-six-field-specification">A worked six-field
+specification</h2>
+<p>This is a proposed Module 4 assignment. It adds specific boundaries
+to the video&#39;s starter template.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>FilePilot Mini: read-only preview</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Goal</td>
+<td>Help a fictional studio see proposed organization changes without
+changing files.</td>
+</tr>
+<tr>
+<td>Inputs</td>
+<td>A list of records, each with a unique ID and a non-empty filename
+string, plus an explicit list of occupied destination names. No actual
+paths or file contents.</td>
+</tr>
+<tr>
+<td>Outputs</td>
+<td>A proposal per valid record: ID, category, suggested destination,
+and reason; invalid records produce a structured rejection.</td>
+</tr>
+<tr>
+<td>Edge cases</td>
+<td>Empty list returns an empty plan. Duplicate IDs reject the request.
+Unsupported extensions require review. Duplicate proposed destinations
+and already occupied destinations block the affected moves. Define
+comparison as case-insensitive for this exercise.</td>
+</tr>
+<tr>
+<td>Definition of done</td>
+<td>Expected outcomes are specified before implementation; tests cover
+each rule; a deliberate collision bug is caught; preview performs no
+file or network writes; the learner can trace one record end to
+end.</td>
+</tr>
+<tr>
+<td>Constraints</td>
+<td>Fictional metadata only. No deletion, real folders, external
+services, hidden dependencies, or automatic execution. Keep planning
+separate from I/O.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Open question to resolve before building:</strong> should one
+invalid record reject the whole request or only that record? Here,
+duplicate IDs reject the request because identity is ambiguous; other
+invalid records are individually rejected. Write this down so the tests
+do not accidentally invent the product policy.</p>
+<p><strong>Additional release question:</strong> if a later executor
+fails halfway through, how do we know which operations completed? That
+belongs to the journal and recovery design in Module 9, not a silent
+assumption in the preview feature.</p>
+<h2 id="how-to-review-before-saying-done">How to review before saying
+“done”</h2>
+<p><img role="img" aria-label="Four review gates: structure, implementation, behavior, and evidence. A build alone is insufficient; failed acceptance checks return the change for revision before release." src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjgzMCIgdmlld0JveD0iMCAwIDEyMDAgODMwIiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUgZGVzYyI+Cjx0aXRsZSBpZD0idGl0bGUiPkZvdXIgcmV2aWV3IGdhdGVzIGJlZm9yZSByZWxlYXNlPC90aXRsZT48ZGVzYyBpZD0iZGVzYyI+Q2hlY2sgc3RydWN0dXJlLCBpbXBsZW1lbnRhdGlvbiwgYmVoYXZpb3IsIGFuZCBldmlkZW5jZS4gQW4gdW5tZXQgcmVxdWlyZW1lbnQgcmV0dXJucyB0aGUgY2hhbmdlIGZvciByZXZpc2lvbi4gUmVsZWFzZSByZXF1aXJlcyBhY2NlcHRhbmNlIGFuZCBhIHJlY292ZXJ5IHBsYW4sIG5vdCBqdXN0IGEgc3VjY2Vzc2Z1bCBidWlsZC48L2Rlc2M+CjxyZWN0IHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjgzMCIgcng9IjI0IiBmaWxsPSIjZWRmNGZiIi8+CjxnIGZvbnQtZmFtaWx5PSJTZWdvZSBVSSwgQXJpYWwsIHNhbnMtc2VyaWYiIGZpbGw9IiMxNzRkNzkiPjx0ZXh0IHg9IjUwIiB5PSI2NSIgZm9udC1zaXplPSIzOCIgZm9udC13ZWlnaHQ9IjcwMCI+QSBncmVlbiBidWlsZCBpcyBub3QgdGhlIGZpbmlzaCBsaW5lPC90ZXh0Pjx0ZXh0IHg9IjUwIiB5PSIxMTIiIGZvbnQtc2l6ZT0iMjUiPkFzayBmb3VyIGRpZmZlcmVudCBxdWVzdGlvbnMgYmVmb3JlIGFjY2VwdGluZyBhIGNoYW5nZS48L3RleHQ+CjxnIGZpbGw9IndoaXRlIiBzdHJva2U9IiNiYWQ0ZTkiIHN0cm9rZS13aWR0aD0iMiI+PHJlY3QgeD0iNTAiIHk9IjE2MCIgd2lkdGg9IjUyMCIgaGVpZ2h0PSIyMDAiIHJ4PSIxNiIvPjxyZWN0IHg9IjYzMCIgeT0iMTYwIiB3aWR0aD0iNTIwIiBoZWlnaHQ9IjIwMCIgcng9IjE2Ii8+PHJlY3QgeD0iNjMwIiB5PSI0MjAiIHdpZHRoPSI1MjAiIGhlaWdodD0iMjAwIiByeD0iMTYiLz48cmVjdCB4PSI1MCIgeT0iNDIwIiB3aWR0aD0iNTIwIiBoZWlnaHQ9IjIwMCIgcng9IjE2Ii8+PC9nPgo8ZyBmb250LXNpemU9IjMwIiBmb250LXdlaWdodD0iNzAwIj48dGV4dCB4PSI3NSIgeT0iMjEwIj4xLiBTdHJ1Y3R1cmU8L3RleHQ+PHRleHQgeD0iNjU1IiB5PSIyMTAiPjIuIEltcGxlbWVudGF0aW9uPC90ZXh0Pjx0ZXh0IHg9IjY1NSIgeT0iNDcwIj4zLiBCZWhhdmlvcjwvdGV4dD48dGV4dCB4PSI3NSIgeT0iNDcwIj40LiBFdmlkZW5jZTwvdGV4dD48L2c+CjxnIGZvbnQtc2l6ZT0iMjYiPjx0ZXh0IHg9Ijc1IiB5PSIyNzAiPkFyZSByZXNwb25zaWJpbGl0aWVzIHNlcGFyYXRlZD88L3RleHQ+PHRleHQgeD0iNzUiIHk9IjMxMyI+Q2FuIHByZXZpZXcgYWNjaWRlbnRhbGx5IGFjdD88L3RleHQ+PHRleHQgeD0iNjU1IiB5PSIyNzAiPklzIHRoZSBjb2RlIHVuZGVyc3RhbmRhYmxlPzwvdGV4dD48dGV4dCB4PSI2NTUiIHk9IjMxMyI+QXJlIGFzc3VtcHRpb25zIHZpc2libGU/PC90ZXh0Pjx0ZXh0IHg9IjY1NSIgeT0iNTMwIj5XaGF0IGlmIGEgZmlsZSBoYXMgY2hhbmdlZD88L3RleHQ+PHRleHQgeD0iNjU1IiB5PSI1NzMiPldoYXQgaWYgdGhlIGRlc3RpbmF0aW9uIGV4aXN0cz88L3RleHQ+PHRleHQgeD0iNzUiIHk9IjUzMCI+V291bGQgdGVzdHMgY2F0Y2ggYSBicm9rZW4gcnVsZT88L3RleHQ+PHRleHQgeD0iNzUiIHk9IjU3MyI+V2hhdCBkaWQgd2UgYWN0dWFsbHkgcnVuPzwvdGV4dD48L2c+CjxyZWN0IHg9IjUwIiB5PSI2NzQiIHdpZHRoPSIxMTAwIiBoZWlnaHQ9IjExMCIgcng9IjE2IiBmaWxsPSIjZGNlY2ZmIi8+PHRleHQgeD0iNzUiIHk9IjcxOCIgZm9udC1zaXplPSIyNyIgZm9udC13ZWlnaHQ9IjcwMCI+VW5tZXQgcmVxdWlyZW1lbnQg4oaSIHJldmlzZSBhbmQgcmV0ZXN0PC90ZXh0Pjx0ZXh0IHg9Ijc1IiB5PSI3NTciIGZvbnQtc2l6ZT0iMjYiPkFjY2VwdGVkIGJlaGF2aW9yICsgY29uZmlndXJlZCByZWxlYXNlIGdhdGUgKyByZWNvdmVyeSBwbGFuIOKGkiByZWxlYXNlPC90ZXh0PjwvZz4KPGcgc3Ryb2tlPSIjMzY4M2JhIiBzdHJva2Utd2lkdGg9IjQiIGZpbGw9Im5vbmUiPjxwYXRoIGQ9Ik01ODAgMjYwaDQwbS0xMi0xMCAxMiAxMC0xMiAxME04OTAgMzcwdjQwbS0xMC0xMiAxMCAxMiAxMC0xMk02MjAgNTIwaC00MG0xMi0xMC0xMiAxMCAxMiAxME0zMTAgNjMwdjMzbS0xMC0xMiAxMCAxMiAxMC0xMiIvPjwvZz48L3N2Zz4K" alt="Four review gates: structure, implementation, behavior, and evidence. A build alone is insufficient; failed acceptance checks return the change for revision before release." /></p>
+<h3 id="what-the-diagram-teaches-3">What the diagram teaches</h3>
+<p>A green build answers a limited question: can the toolchain produce
+the application? It does not know whether a privacy requirement is
+missing or an undo button is decorative. Each gate asks a different
+question.</p>
+<p>At the structure gate, check responsibilities: why can a preview
+function write files? At the implementation gate, check whether a simple
+rule has become an elaborate framework. At the behavior gate, try a
+collision and a stale approval. At the evidence gate, ask whether the
+tests would actually fail if the code violated the rule.</p>
+<p>Release only through the agreed path, with explicit acceptance checks
+and a recovery plan. Some checks are automated; others require a
+person&#39;s judgment. Do not rename an assistant&#39;s self-review “independent
+approval.”</p>
+<h2 id="how-we-will-use-ai-in-learning-sessions">How we will use AI in
+learning sessions</h2>
+<h3 id="tutor-mode-explain-without-taking-over">Tutor mode: explain
+without taking over</h3>
+<blockquote>
+<p>I am learning, not trying to finish as fast as possible. Ask me to
+predict the output first. Explain one concept at a time in plain
+English. Give a hint before giving finished code. After the explanation,
+ask me a different example to check my understanding.</p>
+</blockquote>
+<h3 id="specification-partner-challenge-my-assumptions">Specification
+partner: challenge my assumptions</h3>
+<blockquote>
+<p>Here is my six-field specification. Identify ambiguities, unsafe side
+effects, and three missing examples. Do not implement yet. Separate
+facts from assumptions and ask me to choose the product rules.</p>
+</blockquote>
+<h3 id="bounded-builder-one-understandable-change">Bounded builder: one
+understandable change</h3>
+<blockquote>
+<p>Implement only this agreed behavior. Keep the patch small, list
+changed files, and explain inputs, outputs, and side effects. Do not add
+dependencies or touch unrelated code without explaining why. Stop if the
+change would exceed the agreed scope.</p>
+</blockquote>
+<h3 id="reviewer-show-evidence-not-reassurance">Reviewer: show evidence,
+not reassurance</h3>
+<blockquote>
+<p>Compare this diff with the specification. Identify concrete failure
+cases and point to the relevant code. Distinguish tests actually run
+from tests you recommend. Do not call it production-ready because it
+compiles. Ask me to explain one risky decision before we accept it.</p>
+</blockquote>
+<p>These prompts are teaching aids, not security controls. Use actual
+permissions and application checks to limit what a tool can do. If the
+assistant still gives an overwhelming answer, ask for a single function
+and a single example.</p>
+<h2 id="a-routine-for-days-when-confidence-is-low">A routine for days
+when confidence is low</h2>
+<p>Reduce the scope, not the standard of evidence. Instead of “build the
+whole feature,” choose “explain why this branch ran.” Instead of “learn
+authentication,” choose “trace where this request is rejected.” You may
+finish a session with a clearer question rather than a completed
+feature.</p>
+<p>Try a 45-minute structure: five minutes to recall yesterday&#39;s rule,
+ten to inspect one example, fifteen to change or test something, ten to
+explain the result, and five to write the next smallest step. The exact
+timing is optional. Stop and take a break if you are circling the same
+problem without new evidence.</p>
+<p>Keep a tiny evidence note if useful: <strong>what I expected; what
+happened; what I can now explain; what remains unclear.</strong> This is
+not a score, streak, progress bar, or public ranking. It is a way to
+avoid forgetting the small things you genuinely learned.</p>
+<p>If AI is unavailable, continue with prediction, tracing, tests,
+documentation, or explaining an existing diff. If you feel dependent on
+it, do one tiny edit before requesting help. Assistance is allowed;
+invisible gaps in understanding are what we want to make visible.</p>
+<h2 id="what-to-postpone">What to postpone</h2>
+<p>Do not start by learning every framework, building a multi-agent
+platform, or comparing yourself with people posting finished demos.
+Postpone paid model APIs, embeddings, Docker, distributed services, and
+a polished React interface until a specific requirement makes them
+useful. This is an ordering decision, not a claim those skills lack
+value.</p>
+<p>Twelve-Factor becomes relevant when you start designing a service
+with configuration, dependencies, logs, and separate environments. It is
+not a checklist that automatically turns a local script into production
+software. <a href="https://12factor.net/">Twelve-Factor
+methodology</a>.</p>
+<h2 id="what-success-will-look-like">What success will look like</h2>
+<p>At the end of the core, you should have a small, bounded project you
+can demonstrate honestly. You can describe its purpose, explain its
+functions, find a bug, reject an unsafe change, and show what remains
+unfinished. Your README can say which parts AI drafted and which
+decisions and checks you performed.</p>
+<p>That is a more useful basis for confidence than telling yourself you
+must already be a senior engineer. The course cannot promise a job, a
+particular income, or a feeling on a deadline. It can give you repeated
+chances to turn “I hope this works” into “Here is what I checked.”</p>
+<p><strong>Begin with the first-session exercise. You do not need to
+earn the right to start by knowing everything first.</strong></p>
+</main>
+<dialog id="diagram-dialog" aria-label="Enlarged diagram">
+<div class="zoom-toolbar"><span>Diagram detail</span><button type="button" id="diagram-close">Close</button></div>
+<div class="zoom-body"><img id="diagram-large" alt></div>
+</dialog>
+<script>
+const diagramDialog = document.getElementById('diagram-dialog');
+const diagramLarge = document.getElementById('diagram-large');
+document.querySelectorAll('main img').forEach((picture) => {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'diagram-button';
+  button.textContent = 'Enlarge diagram';
+  button.addEventListener('click', () => {
+    diagramLarge.src = picture.src;
+    diagramLarge.alt = picture.alt;
+    diagramDialog.showModal();
+  });
+  picture.insertAdjacentElement('afterend', button);
+});
+document.getElementById('diagram-close').addEventListener('click', () => diagramDialog.close());
+</script>
+</body>
+</html>

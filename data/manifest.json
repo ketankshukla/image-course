@@ -2091,12 +2091,29 @@
       "subtitle": "Find your way around the files and publish the next case study.",
       "icon": "🧭",
       "slug": "library-guides",
-      "chaptersCount": 18,
+      "chaptersCount": 20,
       "modules": [
         {
           "number": 1,
-          "title": "Library guides",
+          "title": "Coding with confidence",
           "icon": "🧭",
+          "chapters": [
+            {
+              "number": 19,
+              "title": "Coding with Confidence: Become the Builder, Not Just the Typist",
+              "slug": "coding-with-confidence"
+            },
+            {
+              "number": 20,
+              "title": "Is Learning to Code Still Worth It? A Careful Look at the Video",
+              "slug": "video-fact-check"
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "title": "Library guides",
+          "icon": "🛠️",
           "chapters": [
             {
               "number": 1,
@@ -2111,9 +2128,9 @@
           ]
         },
         {
-          "number": 2,
+          "number": 3,
           "title": "Hands-on team workflows",
-          "icon": "🛠️",
+          "icon": "🧠",
           "chapters": [
             {
               "number": 18,
@@ -2198,8 +2215,8 @@
           ]
         }
       ],
-      "dataUrl": "/library/collections/library-guides.ea08810ef31939939072.json"
+      "dataUrl": "/library/collections/library-guides.53d906bc21a5cf546d2b.json"
     }
   ],
-  "searchUrl": "/library/search.ecbc6a6db518bf50b59e.json"
+  "searchUrl": "/library/search.8efc74c3237364f691c5.json"
 }

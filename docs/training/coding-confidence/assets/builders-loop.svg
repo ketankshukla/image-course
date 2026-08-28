@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+<title id="title">The builder's learning loop</title><desc id="desc">Understand the need, specify one behavior, build a small slice, inspect and test, explain it, and revise the requirement.</desc>
+<rect width="1200" height="800" rx="24" fill="#edf4fb"/>
+<g font-family="Segoe UI, Arial, sans-serif" fill="#174d79">
+<text x="50" y="66" font-size="38" font-weight="700">Build understanding, not just output</text>
+<text x="50" y="112" font-size="25">A learning loop you can repeat with any language or assistant</text>
+<g fill="white" stroke="#bad4e9" stroke-width="2"><rect x="50" y="160" width="330" height="210" rx="16"/><rect x="435" y="160" width="330" height="210" rx="16"/><rect x="820" y="160" width="330" height="210" rx="16"/><rect x="820" y="440" width="330" height="210" rx="16"/><rect x="435" y="440" width="330" height="210" rx="16"/><rect x="50" y="440" width="330" height="210" rx="16"/></g>
+<g font-size="29" font-weight="700"><text x="74" y="210">1. Understand</text><text x="459" y="210">2. Specify</text><text x="844" y="210">3. Build a slice</text><text x="844" y="490">4. Inspect + test</text><text x="459" y="490">5. Explain it</text><text x="74" y="490">6. Revise</text></g>
+<g font-size="25" fill="#29475f"><text x="74" y="266">Whose problem is it?</text><text x="74" y="308">What must stay safe?</text><text x="459" y="266">One clear behavior.</text><text x="459" y="308">Expected outcomes.</text><text x="844" y="266">Small enough to read.</text><text x="844" y="308">AI can help draft it.</text><text x="844" y="546">Try a counterexample.</text><text x="844" y="588">Check actual behavior.</text><text x="459" y="546">Use your own words.</text><text x="459" y="588">Predict a new input.</text><text x="74" y="546">Keep the evidence.</text><text x="74" y="588">Choose the next slice.</text></g>
+<text x="50" y="735" font-size="27" font-weight="700">Your understanding is the outcome. The code is part of the evidence.</text></g>
+<g stroke="#3683ba" stroke-width="4" fill="none"><path d="M387 265h37m-12-10 12 10-12 10M772 265h37m-12-10 12 10-12 10M985 380v48m-10-12 10 12 10-12M810 545h-37m12-10-12 10 12 10M425 545h-37m12-10-12 10 12 10M215 430v-48m-10 12 10-12 10 12"/></g></svg>

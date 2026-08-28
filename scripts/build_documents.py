@@ -9,6 +9,7 @@ ROOT = Path(__file__).resolve().parent.parent
 DOCS = ROOT / "docs"
 HOSPITAL = DOCS / "case-studies" / "hospital"
 TRAINING_EDITIONS = {
+    "coding-confidence": "Coding with Confidence",
     "ci-cd": "CI/CD Workshop", "debugging": "Debugging Workshop", "testing": "Testing Workshop",
     "http-api": "HTTP/API Workshop", "git-team": "Git Team Workshop", "databases": "Database Workshop",
     "identity": "Identity Workshop", "configuration": "Configuration Workshop", "background-jobs": "Reliable Jobs Workshop",

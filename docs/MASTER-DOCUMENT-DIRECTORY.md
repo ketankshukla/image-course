@@ -4,7 +4,7 @@ Your blue-and-white map of the learning workspace: what each document explains, 
 
 ## At a glance
 
-355 documents: 244 individual course lessons and 111 guides, planning documents and maintenance references. Matching HTML and Markdown files count as one document.
+357 documents: 244 individual course lessons and 113 guides, planning documents and maintenance references. Matching HTML and Markdown files count as one document.
 
 Coverage: all Markdown documents under docs and courses; HTML reading editions paired with their Markdown sources; standalone HTML templates and Word/PDF files under docs; root README and AGENTS instructions. Course export bundles, images, code, JSON configuration and generated website files are not individual catalogue entries. This directory is local-only because it also links unpublished authoring notes. It does not publish those notes to the website.
 
@@ -20,7 +20,7 @@ Locations below are relative to the image-course repository root. Links are rela
 ## Directory sections
 
 - [Start here — workspace guides](#orientation) — 5 documents
-- [Hands-on engineering workshops](#training) — 16 documents
+- [Hands-on engineering workshops](#training) — 18 documents
 - [Acme — business operations](#acme) — 15 documents
 - [HarborCare — privacy-first coordination](#hospital) — 16 documents
 - [FilePilot — safe file automation](#filepilot) — 16 documents
@@ -173,6 +173,34 @@ This workshop teaches you to enter a project without trying to understand every 
 [Read HTML](training/codebase/READING-AN-UNFAMILIAR-CODEBASE.html) · [Markdown source](training/codebase/READING-AN-UNFAMILIAR-CODEBASE.md) · [Website reader](https://course.ketanshukla.dev/#course=library-guides&chapter=17)
 
 **Inside:** Lesson 1 — Start with the purpose and operating instructions · Lesson 2 — Find the entry point · Lesson 3 — Follow data, not just names
+
+### Coding with Confidence: Become the Builder, Not Just the Typist
+
+A practical course outline for returning to software development with AI beside you—not in place of your understanding.
+
+**Use it for:** Plan a gradual return to coding through 12 core modules, 3 optional AI extensions, and a safe FilePilot Mini project.
+
+**Location:** `docs/training/coding-confidence/CODING-WITH-CONFIDENCE.md`
+
+**Availability:** Published in website
+
+[Read HTML](training/coding-confidence/CODING-WITH-CONFIDENCE.html) · [Markdown source](training/coding-confidence/CODING-WITH-CONFIDENCE.md) · [Website reader](https://course.ketanshukla.dev/#course=library-guides&chapter=19)
+
+**Inside:** What the video gives us—and what we change · The new working agreement · Build understanding in layers
+
+### Is Learning to Code Still Worth It? A Careful Look at the Video
+
+My assessment: keep the encouragement, strengthen the evidence, and do not abandon the fundamentals. The transcript offers a useful way to approach AI-assisted development: understand an existing system, specify a change, inspect the implementation, and test the outcome. It does not establish that technical specialties, degrees, or manual coding have become obsolete.
+
+**Use it for:** Separate the supplied coding video's useful advice from factual errors, uncertain predictions, and unsupported generalizations.
+
+**Location:** `docs/training/coding-confidence/VIDEO-FACT-CHECK.md`
+
+**Availability:** Published in website
+
+[Read HTML](training/coding-confidence/VIDEO-FACT-CHECK.html) · [Markdown source](training/coding-confidence/VIDEO-FACT-CHECK.md) · [Website reader](https://course.ketanshukla.dev/#course=library-guides&chapter=20)
+
+**Inside:** What is genuinely valuable here? · Claim-by-claim assessment · 1. 0:00–0:26 — Leading AI figures say coding may disappear
 
 ### Configuration and Environments — Know What You Are Running
 
