@@ -1,8 +1,8 @@
 import { investigations } from "./filepilot-investigations";
 
-export type MissionAction = { label: string; next: string };
-export type MissionStep = { title: string; explanation: string; evidence: string[]; actions: MissionAction[]; complete?: boolean; blocked?: boolean };
-export type Mission = { id: number; title: string; topic: string; brief: string; boundary: string; steps: Record<string, MissionStep>; clues?: { id: string; title: string; text: string }[]; comparison?: { title: string; explanation: string }[] };
+import type { MissionAction, MissionStep, Mission } from "./mission-types";
+export type { MissionAction, MissionStep, Mission } from "./mission-types";
+export { advanceMission } from "./mission-types";
 const action = (label: string, next: string): MissionAction => ({ label, next });
 const step = (title: string, explanation: string, evidence: string[], actions: MissionAction[], flags: Partial<MissionStep> = {}): MissionStep => ({ title, explanation, evidence, actions, ...flags });
 const done = (explanation: string, evidence: string[]) => step("Mission complete", explanation, evidence, [], { complete: true });
@@ -80,9 +80,3 @@ export const missions: Mission[] = [
   } },
   ...investigations
 ];
-
-export function advanceMission(mission: Mission, current: string, target: string, inspected: string[] = []): string {
-  if (current === "start" && mission.clues?.some(c => !inspected.includes(c.id))) throw new Error("Inspect every evidence card before choosing a strategy.");
-  if (!mission.steps[current]?.actions.some(a => a.next === target) || !mission.steps[target]) throw new Error("That transition is not available from the current step.");
-  return target;
-}

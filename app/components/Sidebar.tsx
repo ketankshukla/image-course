@@ -57,6 +57,10 @@ export default function Sidebar({
         </p>
       </div>
       <SearchBox query={searchQuery} onSearch={onSearch} />
+      <Link href="/labs/acme" className="block mx-4 my-3 rounded-xl border border-blue-200 bg-blue-50 p-3 text-blue-900 hover:bg-blue-100">
+        <span className="block text-sm font-bold">🏢 Acme Mission Labs</span>
+        <span className="block text-xs mt-1">30 missions: answers, agents & safe releases →</span>
+      </Link>
       <Link href="/labs/filepilot" className="block mx-4 my-3 rounded-xl border border-blue-200 bg-blue-50 p-3 text-blue-900 hover:bg-blue-100">
         <span className="block text-sm font-bold">🗂️ FilePilot Mission Lab</span>
         <span className="block text-xs mt-1">30 missions: search, privacy, recovery & more →</span>
