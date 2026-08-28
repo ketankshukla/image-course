@@ -57,6 +57,7 @@ export default function Sidebar({
         </p>
       </div>
       <SearchBox query={searchQuery} onSearch={onSearch} />
+      <a href="https://wiki.ketanshukla.dev" className="block mx-4 my-3 rounded-xl border border-blue-200 bg-blue-50 p-3 text-blue-900 hover:bg-blue-100"><span className="block text-sm font-bold">📘 Engineering Wiki</span><span className="block text-xs mt-1">Plain-English concepts, examples & connections →</span></a>
       <Link href="/labs/hospital" className="block mx-4 my-3 rounded-xl border border-blue-200 bg-blue-50 p-3 text-blue-900 hover:bg-blue-100">
         <span className="block text-sm font-bold">🏥 Hospital Privacy Labs</span>
         <span className="block text-xs mt-1">30 missions: identity, sharing & recovery →</span>

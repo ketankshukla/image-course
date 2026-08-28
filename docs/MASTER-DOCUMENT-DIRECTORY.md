@@ -4,7 +4,7 @@ Your blue-and-white map of the learning workspace: what each document explains, 
 
 ## At a glance
 
-357 documents: 244 individual course lessons and 113 guides, planning documents and maintenance references. Matching HTML and Markdown files count as one document.
+358 documents: 244 individual course lessons and 114 guides, planning documents and maintenance references. Matching HTML and Markdown files count as one document.
 
 Coverage: all Markdown documents under docs and courses; HTML reading editions paired with their Markdown sources; standalone HTML templates and Word/PDF files under docs; root README and AGENTS instructions. Course export bundles, images, code, JSON configuration and generated website files are not individual catalogue entries. This directory is local-only because it also links unpublished authoring notes. It does not publish those notes to the website.
 
@@ -19,7 +19,7 @@ Locations below are relative to the image-course repository root. Links are rela
 
 ## Directory sections
 
-- [Start here — workspace guides](#orientation) — 5 documents
+- [Start here — workspace guides](#orientation) — 6 documents
 - [Hands-on engineering workshops](#training) — 18 documents
 - [Acme — business operations](#acme) — 15 documents
 - [HarborCare — privacy-first coordination](#hospital) — 16 documents
@@ -83,6 +83,20 @@ The website has three shelves: Courses for the ten visual volumes, Case Studies 
 [Read HTML](PUBLISHING-CASE-STUDIES.html) · [Markdown source](PUBLISHING-CASE-STUDIES.md) · [Website reader](https://course.ketanshukla.dev/#course=library-guides&chapter=2)
 
 **Inside:** One source collection, two reading formats · 1. Create the case-study folder · 2. Declare what to publish
+
+### Wiki publishing and domain routing
+
+The wiki is part of the existing image-course repository and Next.js application. It does not need another GitHub repository, Vercel project, or database. The production target is wiki.ketanshukla.dev; the existing library remains at course.ketanshukla.dev. The developer-profile project is separate and must not be modified when changing the wiki.
+
+**Use it for:** Use this reference to understand the subject described below and its place in the collection.
+
+**Location:** `docs/WIKI-OPERATIONS.md`
+
+**Availability:** Local reference — not in website allowlist
+
+[Markdown source](WIKI-OPERATIONS.md)
+
+**Inside:** Architecture · Source and publication · Routing
 
 ### 🎨 Visual Agent Course
 

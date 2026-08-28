@@ -1,0 +1,522 @@
+[
+  {
+    "slug": "mcp",
+    "title": "MCP — Model Context Protocol",
+    "category": "Agents & tools",
+    "definition": "A shared interface that lets an AI application connect to tools and resources.",
+    "explanation": "Think of MCP as a common way to describe and call capabilities. The host application connects through clients to servers that expose those capabilities. Connecting a server does not mean every operation is appropriate or permitted.",
+    "example": "FilePilot could expose a read-only preview tool. A separate application check must still reject a request outside the permitted practice folder.",
+    "mistake": "Treating tool availability as authorization.",
+    "flow": [
+      "Discover capabilities",
+      "Validate a request",
+      "Return a tool result"
+    ],
+    "question": "Does a connected file tool automatically have permission to delete everything?",
+    "answer": "No. Enforce scope and permission in the application and tool implementation.",
+    "related": [
+      "tools",
+      "authorization",
+      "a2a"
+    ],
+    "projects": [
+      "filepilot",
+      "acme"
+    ],
+    "source": "https://modelcontextprotocol.io/docs/learn/architecture"
+  },
+  {
+    "slug": "rag",
+    "title": "RAG — Retrieval-Augmented Generation",
+    "category": "Knowledge & evidence",
+    "definition": "Find relevant source material and use it as context when generating an answer.",
+    "explanation": "The retrieval step selects material from a collection. The generation step uses that material to compose a response. The answer still needs checking: the retrieved text may be irrelevant, outdated, contradictory, or inaccessible to this user.",
+    "example": "Acme retrieves an allowed refund policy before drafting an answer. If no policy supports a refund, the answer should not invent permission.",
+    "mistake": "Assuming that attaching a citation makes an answer true.",
+    "flow": [
+      "Retrieve allowed sources",
+      "Draft from evidence",
+      "Check the support"
+    ],
+    "question": "What if the best-matching policy belongs to another customer?",
+    "answer": "Do not retrieve or disclose it to this user. Relevance does not override access controls.",
+    "related": [
+      "embeddings",
+      "chunking",
+      "citations"
+    ],
+    "projects": [
+      "acme",
+      "hospital"
+    ],
+    "source": ""
+  },
+  {
+    "slug": "a2a",
+    "title": "A2A — Agent-to-Agent Communication",
+    "category": "Agents & tools",
+    "definition": "A protocol for agents to exchange work and results across system boundaries.",
+    "explanation": "A requester can delegate a bounded task to another agent instead of requiring knowledge of its internal implementation. Agreement on the message format does not guarantee a useful answer; the caller must handle refusals, partial results, and failure.",
+    "example": "An Acme coordinator asks a specialist to assess a shipment exception, then validates the returned recommendation before acting.",
+    "mistake": "Assuming a specialist's response is automatically trusted or authorized.",
+    "flow": [
+      "Send a bounded task",
+      "Receive a result",
+      "Validate before acting"
+    ],
+    "question": "Can a specialist grant itself extra authority in its response?",
+    "answer": "No. The coordinating system must enforce its own policy when interpreting the result.",
+    "related": [
+      "agents",
+      "tools",
+      "timeouts"
+    ],
+    "projects": [
+      "acme",
+      "hospital"
+    ],
+    "source": "https://a2a-protocol.org/latest/topics/what-is-a2a/"
+  },
+  {
+    "slug": "agents",
+    "title": "AI Agents",
+    "category": "Agents & tools",
+    "definition": "Systems that use a model to choose actions or tools while working toward a task.",
+    "explanation": "A fixed workflow follows predefined steps. An agent can choose more of its path dynamically. Greater freedom makes limits, stopping conditions, and inspection more important. A simple function or fixed workflow is often sufficient.",
+    "example": "An assistant may choose whether it needs a policy lookup before drafting a reply, while the application controls whether any external message can be sent.",
+    "mistake": "Adding autonomous decision-making where a predictable rule would solve the problem.",
+    "flow": [
+      "Receive a task",
+      "Choose a bounded action",
+      "Inspect and continue"
+    ],
+    "question": "Does every system that calls a model need multiple agents?",
+    "answer": "No. Start with the simplest design that meets the requirement.",
+    "related": [
+      "mcp",
+      "human-approval",
+      "observability"
+    ],
+    "projects": [
+      "acme",
+      "filepilot"
+    ],
+    "source": "https://www.anthropic.com/engineering/building-effective-agents"
+  },
+  {
+    "slug": "tools",
+    "title": "Tools and Tool Calls",
+    "category": "Agents & tools",
+    "definition": "Named operations that an application can invoke with structured inputs.",
+    "explanation": "A model may propose calling a tool, but application code actually validates and executes the operation. Tools can be read-only or cause side effects. Clearly named operations and narrow inputs make the boundary easier to review.",
+    "example": "FilePilot's preview tool returns proposed moves. Its execution tool, if implemented, needs stronger checks because it changes files.",
+    "mistake": "Hiding a write operation inside something labeled preview.",
+    "flow": [
+      "Propose arguments",
+      "Validate and execute",
+      "Inspect the result"
+    ],
+    "question": "Why separate preview from execution?",
+    "answer": "So inspecting a proposal does not itself cause the proposed changes.",
+    "related": [
+      "mcp",
+      "authorization",
+      "human-approval"
+    ],
+    "projects": [
+      "filepilot",
+      "acme"
+    ],
+    "source": ""
+  },
+  {
+    "slug": "embeddings",
+    "title": "Embeddings",
+    "category": "Knowledge & evidence",
+    "definition": "Numeric representations used to compare items such as text by patterns of similarity.",
+    "explanation": "An embedding model maps text into vectors: lists of numbers. Similarity search can find passages with related wording or meaning even when the exact keywords differ. It is a retrieval aid, not a truth detector.",
+    "example": "A search for reimbursement might retrieve an Acme expense policy even if that passage does not use the user's exact phrase.",
+    "mistake": "Treating a high similarity score as evidence that a statement is correct.",
+    "flow": [
+      "Represent text",
+      "Compare vectors",
+      "Inspect candidate passages"
+    ],
+    "question": "Can similar passages disagree?",
+    "answer": "Yes. Retrieve candidates, then check their dates, scope, and actual claims.",
+    "related": [
+      "rag",
+      "chunking",
+      "citations"
+    ],
+    "projects": [
+      "acme",
+      "filepilot"
+    ],
+    "source": ""
+  },
+  {
+    "slug": "chunking",
+    "title": "Chunking",
+    "category": "Knowledge & evidence",
+    "definition": "Splitting source documents into smaller pieces for retrieval and processing.",
+    "explanation": "The aim is to keep useful context while making individual passages easy to find. A chunk cut in the middle of a rule may omit an exception. Preserve source identifiers and enough surrounding context to interpret what was retrieved.",
+    "example": "A Hospital training policy's sharing exception must remain connected to the conditions that limit it; retrieving only the exception can mislead.",
+    "mistake": "Choosing a chunk size without checking whether complete rules survive.",
+    "flow": [
+      "Identify meaningful sections",
+      "Preserve source context",
+      "Test retrieval quality"
+    ],
+    "question": "Why can an isolated sentence be unsafe evidence?",
+    "answer": "Its meaning may depend on exceptions, definitions, or conditions elsewhere in the document.",
+    "related": [
+      "rag",
+      "embeddings",
+      "citations"
+    ],
+    "projects": [
+      "hospital",
+      "acme"
+    ],
+    "source": ""
+  },
+  {
+    "slug": "citations",
+    "title": "Citations and Evidence",
+    "category": "Knowledge & evidence",
+    "definition": "References that let a reader inspect the material supporting an answer.",
+    "explanation": "A useful citation identifies a source and the relevant passage. Verification asks whether that passage actually supports the associated claim, whether it is current, and whether it is permitted for this reader.",
+    "example": "Acme cites the exact refund rule and explains its conditions instead of linking vaguely to a policy homepage.",
+    "mistake": "A real source can still be used to support a claim it never makes.",
+    "flow": [
+      "State a claim",
+      "Identify its support",
+      "Check the connection"
+    ],
+    "question": "Is a clickable citation sufficient proof?",
+    "answer": "No. Open or inspect the source passage and compare it with the claim.",
+    "related": [
+      "rag",
+      "evaluation",
+      "authorization"
+    ],
+    "projects": [
+      "acme",
+      "hospital"
+    ],
+    "source": ""
+  },
+  {
+    "slug": "authentication",
+    "title": "Authentication",
+    "category": "Safety & control",
+    "definition": "Checking who a person or service is.",
+    "explanation": "Authentication establishes an identity using an appropriate mechanism. Authorization is a separate decision about what that identity may do. Knowing that a requester is a legitimate agency does not establish that it may receive every record.",
+    "example": "In a synthetic Hospital scenario, verify an agency's identity before checking whether its particular request is allowed.",
+    "mistake": "Confusing successful sign-in with unlimited access.",
+    "flow": [
+      "Receive identity evidence",
+      "Verify identity",
+      "Evaluate permissions separately"
+    ],
+    "question": "A requester is signed in. Can it receive every patient field?",
+    "answer": "No. Each request still requires an authorization decision.",
+    "related": [
+      "authorization",
+      "least-privilege",
+      "audit-logs"
+    ],
+    "projects": [
+      "hospital",
+      "acme"
+    ],
+    "source": ""
+  },
+  {
+    "slug": "authorization",
+    "title": "Authorization",
+    "category": "Safety & control",
+    "definition": "Deciding whether an identified requester may perform this action on this resource.",
+    "explanation": "Check the action, resource, identity, and relevant context at the point of access. UI restrictions and prompt instructions are not substitutes for server-side enforcement. Recheck when circumstances or scope change.",
+    "example": "FilePilot permits previewing an approved fixture folder but refuses a request for another directory even if the same user submitted both.",
+    "mistake": "Relying on the assistant to remember a permission rule.",
+    "flow": [
+      "Identify the requester",
+      "Check action and scope",
+      "Allow or refuse"
+    ],
+    "question": "Where should the final access check live?",
+    "answer": "In the trusted application or service that controls the resource, not only in the prompt or interface.",
+    "related": [
+      "authentication",
+      "least-privilege",
+      "human-approval"
+    ],
+    "projects": [
+      "filepilot",
+      "hospital"
+    ],
+    "source": ""
+  },
+  {
+    "slug": "least-privilege",
+    "title": "Least Privilege",
+    "category": "Safety & control",
+    "definition": "Grant only the access needed for the specific task.",
+    "explanation": "A narrow permission reduces the impact of mistakes and misuse. Prefer a read-only operation when writing is unnecessary, a limited resource set rather than all resources, and a bounded duration when practical.",
+    "example": "A Hospital coordination task receives the fictional transport details it needs, not the entire synthetic medical record.",
+    "mistake": "Granting broad access now and hoping to restrict it later.",
+    "flow": [
+      "Define the task",
+      "Grant a narrow scope",
+      "Revoke unnecessary access"
+    ],
+    "question": "Would read access be enough for a report preview?",
+    "answer": "Usually yes. Do not grant write access unless the task actually needs it.",
+    "related": [
+      "authorization",
+      "tools",
+      "human-approval"
+    ],
+    "projects": [
+      "hospital",
+      "filepilot"
+    ],
+    "source": ""
+  },
+  {
+    "slug": "human-approval",
+    "title": "Human Approval",
+    "category": "Safety & control",
+    "definition": "A person reviews a specific proposed action before it is allowed to happen.",
+    "explanation": "Approval should state what will change, which resources are involved, and important consequences. A vague yes cannot safely authorize a different plan. If the underlying state changes, the system may need fresh approval.",
+    "example": "FilePilot shows exact source and destination names. If a destination becomes occupied after approval, execution refuses rather than silently overwriting it.",
+    "mistake": "Treating approval as permanent permission for future changes.",
+    "flow": [
+      "Show the exact plan",
+      "Approve its scope",
+      "Revalidate before execution"
+    ],
+    "question": "Can an approved plan safely run after its inputs change?",
+    "answer": "Not automatically. Detect the change, assess it, and require a new plan or approval when appropriate.",
+    "related": [
+      "authorization",
+      "idempotency",
+      "rollback"
+    ],
+    "projects": [
+      "filepilot",
+      "hospital"
+    ],
+    "source": ""
+  },
+  {
+    "slug": "idempotency",
+    "title": "Idempotency",
+    "category": "Reliability",
+    "definition": "Repeating the same operation does not add another unintended effect.",
+    "explanation": "A request may succeed even when the caller never receives the response. A retry must distinguish that situation from work that never happened. An idempotency key and stored outcome are common implementation tools, but the design must define scope, persistence, and concurrency behavior.",
+    "example": "Acme retries an order request after a lost response without creating another order. FilePilot recognizes an already completed move request.",
+    "mistake": "Assuming a retry is harmless because it uses identical arguments.",
+    "flow": [
+      "Identify the operation",
+      "Record its outcome",
+      "Reuse the outcome on retry"
+    ],
+    "question": "Does idempotency guarantee identical response text every time?",
+    "answer": "No. The important property is the intended effect, within the operation's defined semantics.",
+    "related": [
+      "retries",
+      "timeouts",
+      "audit-logs"
+    ],
+    "projects": [
+      "acme",
+      "filepilot"
+    ],
+    "source": ""
+  },
+  {
+    "slug": "retries",
+    "title": "Retries and Backoff",
+    "category": "Reliability",
+    "definition": "Trying a failed operation again under a bounded policy.",
+    "explanation": "Some failures are temporary; others are invalid requests that will never succeed unchanged. Set a limit, delay repeated attempts, and make sure repeating the operation is safe. If the outcome is unknown, investigate before issuing another consequential action.",
+    "example": "Acme may retry a temporary policy lookup failure. It should not repeatedly submit a payment without duplicate protection.",
+    "mistake": "Retrying every error forever, or retrying writes without understanding their effects.",
+    "flow": [
+      "Classify the failure",
+      "Wait within a budget",
+      "Retry safely or stop"
+    ],
+    "question": "Should a permission denial be retried unchanged?",
+    "answer": "Normally no. Correct the permission or request; repetition does not create authority.",
+    "related": [
+      "idempotency",
+      "timeouts",
+      "observability"
+    ],
+    "projects": [
+      "acme",
+      "filepilot"
+    ],
+    "source": ""
+  },
+  {
+    "slug": "timeouts",
+    "title": "Timeouts",
+    "category": "Reliability",
+    "definition": "Limits on how long an operation is allowed to wait.",
+    "explanation": "A timeout bounds waiting; it does not prove that the remote operation stopped. Decide what the caller should return, whether partial data is acceptable, and how an unknown outcome will be reconciled.",
+    "example": "An Acme dashboard times out a slow service and marks the affected section unavailable instead of displaying invented data or hanging indefinitely.",
+    "mistake": "Treating a timeout as confirmation that no side effect occurred.",
+    "flow": [
+      "Start with a deadline",
+      "Stop waiting when reached",
+      "Reconcile the outcome"
+    ],
+    "question": "Could a timed-out request still complete remotely?",
+    "answer": "Yes. Use operation status checks or safe retry semantics before repeating consequential work.",
+    "related": [
+      "retries",
+      "idempotency",
+      "a2a"
+    ],
+    "projects": [
+      "acme",
+      "hospital"
+    ],
+    "source": ""
+  },
+  {
+    "slug": "observability",
+    "title": "Observability",
+    "category": "Reliability",
+    "definition": "Using operational signals to understand what a system is doing and why it is failing.",
+    "explanation": "Logs describe events, metrics summarize measurements, and traces connect steps of a request. Choose signals that answer actual diagnostic questions. Avoid placing secrets or unnecessary personal information in diagnostic output.",
+    "example": "An Acme trace reveals whether a slow answer spent time retrieving evidence, calling a model, or waiting for a tool.",
+    "mistake": "Collecting large volumes of data without a question to answer or a privacy boundary.",
+    "flow": [
+      "Collect useful signals",
+      "Follow a failed request",
+      "Test an explanation"
+    ],
+    "question": "What would you inspect first for a slow answer?",
+    "answer": "Follow its timing across steps instead of assuming the model was the slow part.",
+    "related": [
+      "audit-logs",
+      "timeouts",
+      "evaluation"
+    ],
+    "projects": [
+      "acme",
+      "hospital"
+    ],
+    "source": ""
+  },
+  {
+    "slug": "audit-logs",
+    "title": "Audit Logs",
+    "category": "Safety & control",
+    "definition": "Records of important actions that help establish who did what and when.",
+    "explanation": "An audit design specifies which events matter, how identity and scope are recorded, who can read the records, and how tampering or missing events are detected. A console message or a temporary browser decision trail is not automatically a production audit system.",
+    "example": "FilePilot records approval, attempted moves, completed moves, and recovery attempts. The website mission trail is only an educational simulation.",
+    "mistake": "Logging sensitive content unnecessarily or claiming an editable log is tamper-proof.",
+    "flow": [
+      "Record identity and action",
+      "Protect the record",
+      "Review relevant events"
+    ],
+    "question": "Is a browser-only mission trail a compliance audit log?",
+    "answer": "No. It is a teaching aid without the retention and integrity guarantees a production design would need.",
+    "related": [
+      "observability",
+      "authorization",
+      "rollback"
+    ],
+    "projects": [
+      "filepilot",
+      "hospital"
+    ],
+    "source": ""
+  },
+  {
+    "slug": "evaluation",
+    "title": "Evaluation and Acceptance Tests",
+    "category": "Software delivery",
+    "definition": "Checks that compare observed behavior with an explicit expectation.",
+    "explanation": "A unit test checks a small part; acceptance tests address user-visible requirements. AI evaluations can also compare answer quality across a representative set of cases. Design the expected outcomes independently of the implementation's assumptions.",
+    "example": "Acme tests whether an answer cites the right policy and refuses unsupported claims, not just whether the response contains text.",
+    "mistake": "Letting the code's current behavior define what correct behavior means.",
+    "flow": [
+      "Define expected behavior",
+      "Run representative cases",
+      "Investigate failures"
+    ],
+    "question": "Can a passing test suite miss an incomplete feature?",
+    "answer": "Yes. Missing requirements produce missing tests; review the specification and coverage.",
+    "related": [
+      "citations",
+      "ci-cd",
+      "observability"
+    ],
+    "projects": [
+      "acme",
+      "filepilot"
+    ],
+    "source": ""
+  },
+  {
+    "slug": "ci-cd",
+    "title": "CI/CD",
+    "category": "Software delivery",
+    "definition": "Automated checks and delivery steps that help move reviewed changes toward release.",
+    "explanation": "Continuous integration checks changes as they are combined. Continuous delivery keeps software releasable, while continuous deployment can release automatically after the configured gates pass. A workflow only enforces the rules actually configured.",
+    "example": "A file organizer builds successfully but its no-overwrite acceptance test fails. A correctly configured required check prevents that candidate from using the protected release path.",
+    "mistake": "Assuming a successful build proves the feature is complete, or that a failing check blocks every possible deployment path.",
+    "flow": [
+      "Propose a change",
+      "Run required checks",
+      "Approve and release"
+    ],
+    "question": "What makes an incomplete but compiling feature fail a release gate?",
+    "answer": "An explicit acceptance check or review requirement connected to the actual protected release path.",
+    "related": [
+      "evaluation",
+      "rollback",
+      "human-approval"
+    ],
+    "projects": [
+      "filepilot",
+      "acme"
+    ],
+    "source": "https://docs.github.com/en/actions/get-started/understand-github-actions"
+  },
+  {
+    "slug": "rollback",
+    "title": "Rollback and Recovery",
+    "category": "Software delivery",
+    "definition": "Returning to a known safe state after a change causes trouble.",
+    "explanation": "Restoring application code does not necessarily reverse database changes, sent messages, or moved files. Recovery must account for what already happened. Sometimes a compensating action is safer than trying to erase history.",
+    "example": "FilePilot attempts an approved undo using its move journal, but refuses if the old destination would overwrite a newly created file.",
+    "mistake": "Calling redeployment a complete undo of every side effect.",
+    "flow": [
+      "Identify completed changes",
+      "Choose a safe recovery",
+      "Verify the resulting state"
+    ],
+    "question": "Does deploying yesterday's code undo today's sent email?",
+    "answer": "No. External effects need their own recovery or compensating procedure.",
+    "related": [
+      "audit-logs",
+      "human-approval",
+      "ci-cd"
+    ],
+    "projects": [
+      "filepilot",
+      "acme"
+    ],
+    "source": ""
+  }
+]

@@ -61,3 +61,10 @@ If the volume includes a `Volume X Course Content.json` file with `modules` and 
 - `app/theme.css` is the shared blue-and-white palette and reading typography, imported after structural `globals.css`. Tailwind colors reference its CSS variables.
 - Article text defaults to 24px with 22/24/28px controls. The validated `libraryReadingSize` browser preference persists between articles and visits; storage is optional.
 - Keep navigation compact, headings in the system sans-serif font, and tables/code horizontally scrollable on mobile. Theme changes do not require editing or rebuilding individual Markdown documents by hand.
+
+### Wiki
+
+- The wiki lives in this application, not another repository or Vercel project. Public hostname: `wiki.ketanshukla.dev`; local/preview path: `/wiki`.
+- `data/wiki.json` is its publication list. Keep slugs stable, validate related slugs, and use fictional teaching examples. `app/wiki` renders entries statically; homepage search receives summaries only.
+- `middleware.ts` routes the exact wiki hostname and canonicalizes production `/wiki` URLs. Preserve asset/API exclusions and do not modify the developer-profile apex domain.
+- Run `node scripts/verify_wiki.cjs`, the production build, and `node scripts/smoke_wiki.mjs <origin>` after wiki/routing changes. See `docs/WIKI-OPERATIONS.md`.
