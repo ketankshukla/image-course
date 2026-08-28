@@ -1,6 +1,11 @@
 # Agent Architecture — Presentation Review Package
 
-Course 1, Lesson 1 adapted into 15 slides with 1,795 spoken words. Estimated narration time is 13–15 minutes at a calm pace, plus learner pauses. This package contains no generated audio, video or presenter.
+Course 1, Lesson 1 adapted into 15 slides with 1,795 spoken words. A synchronized MP4 now accompanies the slide package, using the installed Microsoft Zira Desktop synthetic English voice. There is no on-screen presenter. The original script estimate was 13–15 minutes; the video's measured timing is recorded alongside the MP4.
+
+- [Watch the narrated video](https://course.ketanshukla.dev/presentations/course-01-lesson-01-video.html)
+- [Download MP4](https://course.ketanshukla.dev/presentations/course-01-lesson-01.mp4)
+
+To rebuild on Windows, install FFmpeg, retain the final slide PNGs in `.slide-build/lesson-01`, then run `pwsh -File scripts/render_lesson_video.ps1`. This speaks each narration and holds its slide through the complete audio, with a short gap between slides and extra thinking time at the checkpoint. `public/presentations/course-01-lesson-01-timing.json` supplies the chapter shortcuts.
 
 - [Review slides and narration together](SLIDES-AND-NARRATION.html)
 - [Editable PowerPoint with narration in speaker notes](AGENT-ARCHITECTURE.pptx)

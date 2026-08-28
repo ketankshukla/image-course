@@ -1,0 +1,97 @@
+{
+  "chapters": [
+    {
+      "slide": 1,
+      "title": "An agent needs more than a model",
+      "start": 0.0,
+      "duration": 50.212
+    },
+    {
+      "slide": 2,
+      "title": "Follow the arrows, not just the boxes",
+      "start": 50.212,
+      "duration": 56.675
+    },
+    {
+      "slide": 3,
+      "title": "One request hides several decisions",
+      "start": 106.887,
+      "duration": 54.216
+    },
+    {
+      "slide": 4,
+      "title": "The application agent organizes the work",
+      "start": 161.103,
+      "duration": 59.686
+    },
+    {
+      "slide": 5,
+      "title": "Tools retrieve facts within a boundary",
+      "start": 220.788,
+      "duration": 59.02
+    },
+    {
+      "slide": 6,
+      "title": "A specialist receives a bounded task",
+      "start": 279.808,
+      "duration": 56.805
+    },
+    {
+      "slide": 7,
+      "title": "Approval and authorization are different",
+      "start": 336.613,
+      "duration": 57.945
+    },
+    {
+      "slide": 8,
+      "title": "A safe change leaves a receipt",
+      "start": 394.558,
+      "duration": 55.661
+    },
+    {
+      "slide": 9,
+      "title": "A retry must not become a second credit",
+      "start": 450.219,
+      "duration": 57.49
+    },
+    {
+      "slide": 10,
+      "title": "The human needs evidence, not “Done”",
+      "start": 507.709,
+      "duration": 53.485
+    },
+    {
+      "slide": 11,
+      "title": "Real requests can take different routes",
+      "start": 561.195,
+      "duration": 60.265
+    },
+    {
+      "slide": 12,
+      "title": "Planning and verification need owners",
+      "start": 621.459,
+      "duration": 58.6
+    },
+    {
+      "slide": 13,
+      "title": "Ask three questions at every boundary",
+      "start": 680.059,
+      "duration": 61.265
+    },
+    {
+      "slide": 14,
+      "title": "What should the assistant do next?",
+      "start": 741.324,
+      "duration": 58.207
+    },
+    {
+      "slide": 15,
+      "title": "Useful work. Controlled actions. Evidence.",
+      "start": 799.531,
+      "duration": 66.869
+    }
+  ],
+  "durationSeconds": 866.3998180000001,
+  "voice": "Microsoft Zira Desktop",
+  "type": "Local synthetic narration"
+}
