@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import "./globals.css";
 import "./theme.css";
 
@@ -14,7 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased">{children}</body>
+      <body className="antialiased"><Link href="/how-to-use" className="site-help-link" aria-label="How to use this website"><span className="help-long-label">How to use this website</span><span className="help-short-label">How to use</span></Link>{children}</body>
     </html>
   );
 }

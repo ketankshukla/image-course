@@ -2,6 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Shared help entry: reserve header space instead of covering navigation. */
+.site-help-link { position: fixed; top: 10px; right: 16px; z-index: 70; padding: 9px 14px; border-radius: 9px; background: #e9f3ff; color: #154b78; border: 1px solid #b5d0e8; box-shadow: 0 2px 8px #143b601a; font-size: 14px; font-weight: 700; line-height: 20px; text-decoration: none; }
+.site-help-link:hover { background: #d5e9fc; }
+.site-help-link:focus-visible { outline: 3px solid #318ad0; outline-offset: 3px; }
+.help-short-label { display: none; }
+.course-header.site-header { padding-right: 225px; }
+.fp-mission-nav > div > strong { display: block; padding-right: 210px; }
+@media(max-width: 640px) {
+  .help-long-label { display: none; }
+  .help-short-label { display: inline; }
+  .site-help-link { right: 10px; font-size: 13px; padding: 9px 10px; }
+  .course-header.site-header { padding-left: 12px; padding-right: 115px; }
+  .course-header.site-header > a { gap: 6px; }
+  .course-header.site-header > a span { font-size: 16px; }
+  .course-header.site-header > div { gap: 6px; }
+  .fp-mission-nav > div > strong { padding-right: 110px; }
+}
+
 :root {
   --white: #ffffff;
   --sidebar-width: min(420px, 88vw);
